@@ -1,0 +1,32 @@
+{
+  "pulse_base_national": {
+    "accessed": "2026-08-20",
+    "accessed_utc": "2026-08-20T15:44:56+00:00",
+    "coverage": "2018Q1 - 2026Q2",
+    "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
+    "note": "Registered users and registered merchants. PhonePe's own transactions, not all of UPI.",
+    "publisher": "PhonePe Pulse",
+    "rows": 34,
+    "url": "https://github.com/PhonePe/pulse"
+  },
+  "pulse_txn_national": {
+    "accessed": "2026-08-20",
+    "accessed_utc": "2026-08-20T15:44:56+00:00",
+    "coverage": "2018Q1 - 2026Q2",
+    "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
+    "note": "P2P / Retail (merchant) / Utility split. PhonePe's own transactions, not all of UPI.",
+    "publisher": "PhonePe Pulse",
+    "rows": 102,
+    "url": "https://github.com/PhonePe/pulse"
+  },
+  "pulse_txn_state": {
+    "accessed": "2026-08-20",
+    "accessed_utc": "2026-08-20T15:44:56+00:00",
+    "coverage": "2018Q1 - 2026Q2",
+    "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
+    "note": "State-level transaction count and value. PhonePe's own transactions, not all of UPI.",
+    "publisher": "PhonePe Pulse",
+    "rows": 1224,
+    "url": "https://github.com/PhonePe/pulse"
+  }
+}
