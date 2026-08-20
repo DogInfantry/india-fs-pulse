@@ -1,0 +1,30 @@
+{
+  "period": "2026Q2",
+  "note": "PhonePe's own transactions. Volume share vs value share by leg.",
+  "series": [
+    {
+      "category": "P2P",
+      "volume_share": 0.3075,
+      "value_share": 0.7119,
+      "avg_ticket_inr": 2724.0,
+      "count_bn": 11.89,
+      "amount_lakh_cr": 32.39
+    },
+    {
+      "category": "Retail",
+      "volume_share": 0.6386,
+      "value_share": 0.2304,
+      "avg_ticket_inr": 425.0,
+      "count_bn": 24.69,
+      "amount_lakh_cr": 10.48
+    },
+    {
+      "category": "Utility",
+      "volume_share": 0.0539,
+      "value_share": 0.0577,
+      "avg_ticket_inr": 1259.0,
+      "count_bn": 2.08,
+      "amount_lakh_cr": 2.62
+    }
+  ]
+}

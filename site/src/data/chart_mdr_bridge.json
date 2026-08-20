@@ -1,0 +1,23 @@
+{
+  "period": "2026Q2",
+  "merchant_gmv_lakh_cr": 10.48,
+  "scenarios": [
+    {
+      "rate": "0bps",
+      "revenue_cr": 0.0
+    },
+    {
+      "rate": "10bps",
+      "revenue_cr": 1048.0
+    },
+    {
+      "rate": "30bps",
+      "revenue_cr": 3144.0
+    },
+    {
+      "rate": "50bps",
+      "revenue_cr": 5240.0
+    }
+  ],
+  "note": "Revenue that the merchant leg would generate at each MDR rate. Today it is zero."
+}

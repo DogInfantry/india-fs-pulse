@@ -1,0 +1,46 @@
+{
+  "period": "2026Q2",
+  "source": "PhonePe Pulse (PhonePe's own transactions, not all of UPI)",
+  "categories": [
+    {
+      "category": "P2P",
+      "count": 11889781621,
+      "count_bn": 11.89,
+      "amount_lakh_cr": 32.39,
+      "volume_share": 0.3075,
+      "value_share": 0.7119,
+      "avg_ticket_inr": 2724.0
+    },
+    {
+      "category": "Retail",
+      "count": 24691181013,
+      "count_bn": 24.69,
+      "amount_lakh_cr": 10.48,
+      "volume_share": 0.6386,
+      "value_share": 0.2304,
+      "avg_ticket_inr": 425.0
+    },
+    {
+      "category": "Utility",
+      "count": 2083323057,
+      "count_bn": 2.08,
+      "amount_lakh_cr": 2.62,
+      "volume_share": 0.0539,
+      "value_share": 0.0577,
+      "avg_ticket_inr": 1259.0
+    }
+  ],
+  "merchant_volume_share": 0.6386,
+  "merchant_value_share": 0.2304,
+  "merchant_avg_ticket_inr": 425.0,
+  "registered_merchants": 50705249,
+  "registered_users": 711653262,
+  "mdr_scenarios_cr": {
+    "0bps": 0.0,
+    "10bps": 1048.0,
+    "30bps": 3144.0,
+    "50bps": 5240.0
+  },
+  "gmv_per_merchant_inr": 206685.0,
+  "txns_per_merchant": 487.0
+}

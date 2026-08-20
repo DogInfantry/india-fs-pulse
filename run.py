@@ -26,7 +26,6 @@ FETCH = [
     "data-pipeline/fetch/fetch_bank_stocks.py",
     "data-pipeline/fetch/fetch_worldbank.py",
     "data-pipeline/fetch/fetch_amfi.py",
-    "data-pipeline/fetch/fetch_datagovin.py",
 ]
 TRANSFORM = ["data-pipeline/transform/build_kpis.py"]
 ANALYZE = [
