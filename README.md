@@ -1,5 +1,7 @@
 # India FS Pulse
 
+**[Live site →](https://india-fs-pulse.vercel.app)** · [Point of view](insights/pov-upi-monetization.md) · [Diligence memo](insights/diligence-merchant-payments.md) · [Methodology](docs/sources.md)
+
 **India built the world's largest real-time payments network, and priced the busy half at zero.**
 
 In 2026 Q2, merchant payments were **63.9% of all transactions but only 23.0% of the
