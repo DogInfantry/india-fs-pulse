@@ -1,0 +1,7 @@
+# India FS Pulse - data pipeline
+# Verified against Python 3.14.5 on 2026-08-20.
+pandas>=2.2
+requests>=2.32
+yfinance>=0.2.40
+pyarrow>=17.0        # parquet; pipeline degrades to CSV if the wheel is unavailable
+numpy>=1.26

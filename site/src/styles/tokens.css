@@ -1,0 +1,88 @@
+/* India FS Pulse - design tokens.
+   Firm-neutral editorial palette. Original: no consulting firm's brand colours.
+   Single committed dark theme - see CLAUDE.md. Never hardcode a hex elsewhere. */
+
+:root {
+  /* Surfaces: warm-shifted near-blacks so it reads as ink on paper, not as UI chrome. */
+  --ink:        #0C0F14;
+  --surface:    #131820;
+  --surface-2:  #1B222C;
+  --line:       #262F3B;
+  --line-soft:  #1E262F;
+
+  /* Type */
+  --text:       #E9EDF2;
+  --text-2:     #A6B0BE;
+  --text-3:     #6E7987;
+
+  /* Signal. Crimson focuses attention; everything else recedes. */
+  --signal:      #C02734;
+  --signal-soft: rgba(192, 39, 52, 0.14);
+  --signal-line: rgba(192, 39, 52, 0.42);
+
+  /* Categorical series. Ordered by use; grey is deliberate and comes early. */
+  --s1: #C02734;  /* crimson  - the subject */
+  --s2: #1F7A8C;  /* teal     - the comparator */
+  --s3: #C98A2E;  /* amber    - the third */
+  --s4: #5B6673;  /* grey     - context / "everyone else" */
+  --s5: #7C5CA8;  /* violet   - rare fifth */
+
+  /* Semantic */
+  --pos: #3FA66B;
+  --neg: #C02734;
+  --warn: #C98A2E;
+
+  /* Type scale - editorial serif for display, system sans for UI and data. */
+  --font-display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, monospace;
+
+  --step--1: clamp(0.80rem, 0.77rem + 0.14vw, 0.875rem);
+  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.125rem);
+  --step-1:  clamp(1.25rem, 1.16rem + 0.45vw, 1.55rem);
+  --step-2:  clamp(1.60rem, 1.42rem + 0.90vw, 2.20rem);
+  --step-3:  clamp(2.10rem, 1.70rem + 2.00vw, 3.40rem);
+  --step-4:  clamp(2.60rem, 1.90rem + 3.50vw, 4.60rem);
+
+  /* Rhythm */
+  --measure: 68ch;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius: 14px;
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.021em;
+  line-height: 1.12;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+/* The action title convention: every chart's <h3> IS the finding. */
+.action-title { font-size: var(--step-1); margin: 0.15em 0 0.1em; }
+.kicker {
+  color: var(--signal);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.subtitle { color: var(--text-3); font-size: var(--step--1); margin: 0.35em 0 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

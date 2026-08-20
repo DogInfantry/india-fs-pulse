@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Node / Astro
+node_modules/
+site/dist/
+site/.astro/
+.vercel/
+
+# Raw data pulls are reproducible; do not version them.
+data-pipeline/data/raw/*
+!data-pipeline/data/raw/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
