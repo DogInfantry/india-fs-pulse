@@ -13,10 +13,13 @@
   /* Type */
   --text:       #E9EDF2;
   --text-2:     #A6B0BE;
-  --text-3:     #6E7987;
+  --text-3:     #7F8A97;   /* WCAG AA on every surface token (>=4.56:1) */
 
   /* Signal. Crimson focuses attention; everything else recedes. */
-  --signal:      #C02734;
+  --signal:      #C02734;   /* graphics and fills: 3:1 is the bar for non-text */
+  /* Small red TEXT needs 4.5:1, which the fill colour does not reach on these
+     dark surfaces. Measured, not guessed - see the contrast note in CLAUDE.md. */
+  --signal-text: #DF5F6A;
   --signal-soft: rgba(192, 39, 52, 0.14);
   --signal-line: rgba(192, 39, 52, 0.42);
 
@@ -73,7 +76,7 @@ h1, h2, h3 {
 /* The action title convention: every chart's <h3> IS the finding. */
 .action-title { font-size: var(--step-1); margin: 0.15em 0 0.1em; }
 .kicker {
-  color: var(--signal);
+  color: var(--signal-text);
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 0.72rem;

@@ -55,6 +55,10 @@ def main() -> None:
     write_json("chart_market_structure", {
         "month": latest_month,
         "cap": CAP,
+        "national_volume_mn": round(nat_vol_mn, 2),
+        "cap_excess_share": round(float(excess_pp), 4),
+        "cap_gap_txns_mn": round(float(excess_mn), 1),
+        "top2_volume_share": round(float(top2_vol), 4),
         "note": "Column width is share of transactions; height is share of value. "
                 "Shares are of the NPCI national total, so the residual is real.",
         "apps": [

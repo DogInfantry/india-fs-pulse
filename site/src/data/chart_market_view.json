@@ -2,73 +2,73 @@
   "note": "Median price return by cohort over the window. Price only - excludes dividends.",
   "window": [
     "2021-08-20",
-    "2026-08-20"
+    "2026-08-19"
   ],
   "series": [
     {
       "cohort": "Private",
-      "median_price_return": 0.1726
+      "median_price_return": 0.1516
     },
     {
       "cohort": "Public",
-      "median_price_return": 2.8398
+      "median_price_return": 2.8476
     }
   ],
   "tickers": [
     {
       "ticker": "AXISBANK.NS",
       "cohort": "Private",
-      "price_return": 0.6983
+      "price_return": 0.6766
     },
     {
       "ticker": "BANKBARODA.NS",
       "cohort": "Public",
-      "price_return": 2.8398
+      "price_return": 2.8476
     },
     {
       "ticker": "CANBK.NS",
       "cohort": "Public",
-      "price_return": 4.0106
+      "price_return": 3.9905
     },
     {
       "ticker": "HDFCBANK.NS",
       "cohort": "Private",
-      "price_return": 0.023
+      "price_return": 0.0159
     },
     {
       "ticker": "ICICIBANK.NS",
       "cohort": "Private",
-      "price_return": 1.1563
+      "price_return": 1.1412
     },
     {
       "ticker": "INDUSINDBK.NS",
       "cohort": "Private",
-      "price_return": 0.0622
+      "price_return": 0.0714
     },
     {
       "ticker": "KOTAKBANK.NS",
       "cohort": "Private",
-      "price_return": 0.1726
+      "price_return": 0.1516
     },
     {
       "ticker": "PAYTM.NS",
       "cohort": "Fintech",
-      "price_return": 0.0274
+      "price_return": 0.0145
     },
     {
       "ticker": "PNB.NS",
       "cohort": "Public",
-      "price_return": 2.6762
+      "price_return": 2.66
     },
     {
       "ticker": "SBIN.NS",
       "cohort": "Public",
-      "price_return": 1.817
+      "price_return": 1.8186
     },
     {
       "ticker": "UNIONBANK.NS",
       "cohort": "Public",
-      "price_return": 5.5716
+      "price_return": 5.6506
     }
   ]
 }

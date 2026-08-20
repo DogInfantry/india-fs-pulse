@@ -40,7 +40,11 @@ python run.py all
    NPS as a *method* is public; NPS Prism data is not. The palette is original.
 7. **Date-stamp every snapshot.** Market shares move monthly. Any single-period figure
    carries its period in the subtitle.
-8. **Stale data is labelled stale.** The NPCI CKAN series ends 2023-08. Any chart using
+8. **Never use `pd.read_csv(comment="#")` on the seeded files.** NPCI uses `#` as its
+   third-party-provider marker inside app names, and pandas strips from the first `#`
+   anywhere in a line - which silently turned every row to NaN. Use
+   `common.read_seeded_csv()`, which only treats whole `#`-leading lines as comments.
+9. **Stale data is labelled stale.** The NPCI CKAN series ends 2023-08. Any chart using
    it says so on its face.
 
 ## Data provenance (verified 2026-08-20)
@@ -50,6 +54,7 @@ python run.py all
 | PhonePe Pulse (GitHub raw) | 2018 - 2026 Q2 | open | **Primary.** P2P/Retail/Utility split, state, district |
 | NPCI via India Data Portal CKAN | 2016-08 - **2023-08** | open | History only. **Stale.** Date column is `YYYY-DD-MM`, not ISO |
 | NPCI official site | current | **403 / WAF** | Not scriptable. Hand-seeded into `data/manual/`, see `docs/REFRESH.md` |
+| NPCI Ecosystem Statistics (per-app) | 2023-12 - current | **403 / WAF** | Per-app volume+value. Browser-transcribed. Path is `/product/upi/...`, NOT `/what-we-do/upi/...` |
 | yfinance (NSE) | current | open | `.financials` carries real Net Interest Income / Interest Income |
 | World Bank API | to 2024 | open | Account ownership, GDP |
 | AMFI `NAVAll.txt` | daily | open | Semicolon-delimited |

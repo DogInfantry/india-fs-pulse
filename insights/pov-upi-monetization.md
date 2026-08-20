@@ -24,7 +24,7 @@ registered merchants transacting 487 times a quarter each,
 Rs 206,685 of GMV per merchant per quarter, at
 **Rs 0 of transaction revenue**.
 
-## Three supporting arguments
+## Four supporting arguments
 
 **1. The base is enormous and still compounding.** UPI has grown from
 3,248 million transactions in 2021-07 to
@@ -33,11 +33,13 @@ off a series that starts at 0.1 million in 2016-07. Even now, growth has not dec
 year-on-year reading is 21.5% on volume and
 19.1% on value (2026-07).
 
-**2. Growth is arriving as small tickets, which is the expensive kind.**
+**2. Growth is arriving in the leg that cannot be charged for.** Between 2018Q1 and 2026Q2, Retail contributed **64% of all volume growth** - 24.6 billion of the 38.5 billion additional quarterly transactions. Growth is not merely large, it is concentrated in the merchant leg that zero-MDR prices at nothing.
+
+**3. Growth is arriving as small tickets, which is the expensive kind.**
 The average UPI transaction has fallen to **Rs 1,263**, down 22.7% from January 2019. Every incremental transaction adds switch, fraud and support cost while adding
 no fee income. Volume growth without price is a cost line, not a revenue line.
 
-**3. The revenue foregone is quantifiable, and it is not small.** On the merchant
+**4. The revenue foregone is quantifiable, and it is not small.** On the merchant
 GMV of 10.48 lakh crore in 2026Q2 - again, one
 player - a 10bps MDR would generate Rs 1,048 crore a quarter,
 30bps Rs 3,144 crore, and 50bps Rs 5,240 crore.

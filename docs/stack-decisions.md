@@ -29,6 +29,12 @@ bespoke chart is a four-point cohort comparison, which is cleaner as
 server-rendered SVG with no client JavaScript at all. Removing D3 took out a
 dependency and a bundle.
 
+**Motion and Scrollama.** Installed in the first pass for a scrollytelling hero,
+then removed without being used. The page turned out to be exhibit-driven - fifteen
+figures, each making one point - and scroll-driven sequencing fights that structure
+rather than serving it. Carrying two dependencies for an effect the content does not
+want is how bundles rot.
+
 **WebGPU.** No dataset here is within three orders of magnitude of needing it.
 
 **RBI DBIE.** An Angular application with no documented public REST API. NIM is

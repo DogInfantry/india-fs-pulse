@@ -1,0 +1,53 @@
+---
+/**
+ * Who built this, and how to reach them.
+ *
+ * A portfolio that does not say whose it is fails at its only job. LINKEDIN is
+ * left null deliberately: an empty or placeholder profile link on a live page is
+ * worse than no link, so the slot renders only once a real URL is supplied.
+ */
+const NAME = 'Anklesh Rawat';
+const EMAIL = 'ankleshrawat5@duck.com';
+const GITHUB = 'https://github.com/DogInfantry/india-fs-pulse';
+const LINKEDIN: string | null = null;
+---
+<section class="contact" id="about">
+  <div>
+    <p class="kicker">Who built this</p>
+    <h2>{NAME}</h2>
+    <p class="blurb">
+      A work sample built for the <b>Associate, Financial Services</b> role in Bain's
+      Capability Network FS Centre of Expertise. It was written to answer the parts of
+      that brief that are hard to fake: open-ended research on a live, unresolved
+      question; a point of view with a recommendation attached; a diligence simulation
+      that states what it does not know; and analysis that is reproducible end to end
+      by anyone who clones the repository.
+    </p>
+    <p class="blurb">
+      Everything here is computed by a pipeline that runs with no credentials in about
+      ninety seconds. No figure on this site was typed in by hand.
+    </p>
+  </div>
+  <ul class="links">
+    <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a><span>email</span></li>
+    <li><a href={GITHUB} rel="noopener">github.com/DogInfantry</a><span>source and commit history</span></li>
+    {LINKEDIN && <li><a href={LINKEDIN} rel="noopener">LinkedIn</a><span>profile</span></li>}
+  </ul>
+</section>
+
+<style>
+  .contact { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(1.2rem, 4vw, 3rem);
+             border-top: 1px solid var(--line); padding: clamp(2rem, 5vw, 3.2rem) 0 0; }
+  @media (max-width: 780px) { .contact { grid-template-columns: 1fr; } }
+  h2 { font-size: var(--step-2); margin: 0.3rem 0 0.9rem; }
+  .blurb { color: var(--text-2); font-size: 0.92rem; line-height: 1.7; max-width: 60ch;
+           margin: 0 0 0.8rem; }
+  .blurb b { color: var(--text); }
+  .links { list-style: none; margin: 0; padding: 0; align-self: start; }
+  .links li { padding: 0.7rem 0; border-bottom: 1px solid var(--line-soft); }
+  .links a { color: var(--text); text-decoration-color: var(--signal-line);
+             text-underline-offset: 3px; font-size: 0.92rem; word-break: break-word; }
+  .links a:hover { color: var(--signal-text); }
+  .links span { display: block; color: var(--text-3); font-size: 0.68rem;
+                text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.2rem; }
+</style>

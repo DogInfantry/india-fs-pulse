@@ -1,0 +1,70 @@
+---
+/**
+ * True two-point slopegraph: one line per series, values labelled at both ends,
+ * no axes. Reads rank and direction of change at a glance (Tufte).
+ * Distinct from SlopeLines.astro, which is a multi-point line chart.
+ */
+interface Series { label: string; start: number; end: number }
+interface Props { series: Series[]; startLabel: string; endLabel: string; unit?: string }
+const { series, startLabel, endLabel, unit = '%' } = Astro.props;
+
+const W = 620, H = 340, PAD = { t: 34, b: 26, l: 128, r: 128 };
+const all = series.flatMap((s) => [s.start, s.end]);
+const lo = Math.min(...all) * 0.9;
+const hi = Math.max(...all) * 1.06;
+const y = (v: number) => PAD.t + (1 - (v - lo) / (hi - lo)) * (H - PAD.t - PAD.b);
+const xa = PAD.l, xb = W - PAD.r;
+const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
+// Nudge labels apart when two series land on nearly the same value.
+const place = (side: 'start' | 'end') => {
+  const sorted = [...series].sort((a, b) => b[side] - a[side]);
+  const used: number[] = [];
+  const map = new Map<string, number>();
+  for (const s of sorted) {
+    let py = y(s[side]);
+    while (used.some((u) => Math.abs(u - py) < 14)) py += 14;
+    used.push(py); map.set(s.label, py);
+  }
+  return map;
+};
+const ya = place('start'), yb = place('end');
+---
+<figure class="slopegraph">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img"
+       aria-label={`Change from ${startLabel} to ${endLabel}: ${series.map((s) => `${s.label} ${fmt(s.start)} to ${fmt(s.end)}`).join('; ')}`}>
+    <text class="head" x={xa} y={18} text-anchor="end">{startLabel}</text>
+    <text class="head" x={xb} y={18} text-anchor="start">{endLabel}</text>
+    {series.map((s, i) => {
+      const rising = s.end >= s.start;
+      return (
+        <g class:list={['s', i === 0 && 'lead', rising ? 'up' : 'down']}>
+          <line x1={xa} x2={xb} y1={y(s.start)} y2={y(s.end)} />
+          <circle cx={xa} cy={y(s.start)} r="3.5" />
+          <circle cx={xb} cy={y(s.end)} r="3.5" />
+          <text class="lbl" x={xa - 10} y={ya.get(s.label)! + 4} text-anchor="end">
+            {s.label} <tspan class="num">{fmt(s.start)}</tspan>
+          </text>
+          <text class="lbl" x={xb + 10} y={yb.get(s.label)! + 4} text-anchor="start">
+            <tspan class="num">{fmt(s.end)}</tspan>
+          </text>
+        </g>
+      );
+    })}
+  </svg>
+</figure>
+
+<style>
+  .slopegraph { overflow-x: auto; overflow-y: hidden; }
+  .slopegraph svg { width: 100%; min-width: 460px; height: auto; overflow: visible; }
+  @media (max-width: 460px) { .slopegraph svg { overflow: hidden; } }
+  .head { fill: var(--text-3); font-size: 11px; font-weight: 700; text-transform: uppercase;
+          letter-spacing: 0.06em; font-family: var(--font-sans); }
+  .s line { stroke: var(--s4); stroke-width: 1.8; }
+  .s circle { fill: var(--s4); }
+  .s .lbl { fill: var(--text-2); font-size: 11.5px; font-family: var(--font-sans); }
+  .s .num { fill: var(--text); font-weight: 700; }
+  .s.lead line { stroke: var(--signal); stroke-width: 2.6; }
+  .s.lead circle { fill: var(--signal); }
+  .s.up line { stroke-dasharray: none; }
+  .s.down line { opacity: 0.75; }
+</style>

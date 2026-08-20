@@ -1,0 +1,45 @@
+---
+/**
+ * The "read this first" panel.
+ *
+ * Five modules produce five findings; without this a reviewer has to assemble
+ * the storyline themselves. Every figure is passed in from computed data, so
+ * this cannot drift from the exhibits below it.
+ */
+interface Finding { n: string; claim: string; href: string }
+interface Props { answer: string; findings: Finding[] }
+const { answer, findings } = Astro.props;
+---
+<section class="exec">
+  <p class="kicker">The answer, first</p>
+  <p class="answer" set:html={answer} />
+  <ol class="findings">
+    {findings.map((f) => (
+      <li>
+        <a href={f.href}>
+          <b>{f.n}</b>
+          <span>{f.claim}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .exec { border: 1px solid var(--line); border-left: 3px solid var(--signal);
+          border-radius: 0 var(--radius) var(--radius) 0; background: var(--surface);
+          padding: clamp(1.2rem, 3vw, 2rem); margin: 1rem 0 0; }
+  .answer { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.45;
+            color: var(--text); margin: 0.5rem 0 1.3rem; max-width: 62ch; }
+  .answer :global(strong) { color: var(--signal-text); font-weight: 600; }
+  .findings { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px;
+              background: var(--line); border: 1px solid var(--line); border-radius: 10px;
+              overflow: hidden; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); }
+  .findings a { display: block; background: var(--surface-2); padding: 0.95rem 1.05rem;
+                height: 100%; text-decoration: none; transition: background 0.15s ease; }
+  .findings a:hover { background: #212936; }
+  .findings b { display: block; font-family: var(--font-display); font-size: 1.5rem;
+                color: var(--signal-text); line-height: 1.1; }
+  .findings span { display: block; margin-top: 0.3rem; color: var(--text-2);
+                   font-size: 0.79rem; line-height: 1.5; }
+</style>

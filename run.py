@@ -71,6 +71,7 @@ def task_analyze() -> None:
 
 
 def task_site() -> None:
+    run_py("site/scripts/make_og.py")   # social card, drawn from the computed data
     site = ROOT / "site"
     if not (site / "node_modules").exists():
         run_cmd(["npm", "install"], site)

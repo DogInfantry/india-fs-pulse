@@ -1,0 +1,60 @@
+---
+/**
+ * Small-multiples grid: one sparkline panel per series, shared y-scale so the
+ * panels are honestly comparable, with a reference line where one is supplied.
+ * Server-rendered SVG, no client JavaScript.
+ */
+interface Series { app: string; values: (number | null)[] }
+interface Props { months: string[]; series: Series[]; reference?: number; unit?: string }
+const { months, series, reference, unit = '%' } = Astro.props;
+
+const W = 240, H = 108, PAD = { t: 12, r: 8, b: 16, l: 8 };
+const all = series.flatMap((s) => s.values).filter((v): v is number => v !== null);
+const hi = Math.max(...all, reference ?? 0) * 1.1;
+const x = (i: number) => PAD.l + (i * (W - PAD.l - PAD.r)) / Math.max(months.length - 1, 1);
+const y = (v: number) => PAD.t + (1 - v / hi) * (H - PAD.t - PAD.b);
+const pct = (v: number) => `${(v * 100).toFixed(1)}${unit}`;
+---
+<div class="sm">
+  {series.map((s) => {
+    const pts = s.values.map((v, i) => (v === null ? null : `${x(i)},${y(v)}`)).filter(Boolean).join(' ');
+    const last = [...s.values].reverse().find((v) => v !== null) as number;
+    const first = s.values.find((v) => v !== null) as number;
+    const over = reference !== undefined && last > reference;
+    return (
+      <figure class:list={['panel', over && 'over']}>
+        <figcaption>
+          <b>{s.app}</b>
+          <span class="now">{pct(last)}</span>
+        </figcaption>
+        <svg viewBox={`0 0 ${W} ${H}`} role="img"
+             aria-label={`${s.app}: ${pct(first)} to ${pct(last)}`}>
+          {reference !== undefined && (
+            <line class="ref" x1={PAD.l} x2={W - PAD.r} y1={y(reference)} y2={y(reference)} />
+          )}
+          <polyline class="line" points={pts} />
+          <circle class="dot" cx={x(months.length - 1)} cy={y(last)} r="3" />
+        </svg>
+        <p class="foot">{months[0]} → {months.at(-1)}</p>
+      </figure>
+    );
+  })}
+</div>
+
+<style>
+  .sm { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.7rem; }
+  .panel { margin: 0; padding: 0.7rem 0.8rem; border: 1px solid var(--line);
+           border-radius: 10px; background: var(--surface-2); }
+  .panel.over { border-color: var(--signal-line); }
+  figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 0.4rem; }
+  figcaption b { font-size: 0.78rem; color: var(--text); font-family: var(--font-sans); }
+  .now { font-size: 0.78rem; font-weight: 700; color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .panel.over .now { color: var(--signal-text); }
+  svg { width: 100%; height: auto; display: block; }
+  .line { fill: none; stroke: var(--s2); stroke-width: 2; stroke-linejoin: round; }
+  .panel.over .line { stroke: var(--signal); }
+  .dot { fill: var(--s2); }
+  .panel.over .dot { fill: var(--signal); }
+  .ref { stroke: var(--warn); stroke-width: 1; stroke-dasharray: 3 3; }
+  .foot { margin: 0.25rem 0 0; color: var(--text-3); font-size: 0.62rem; }
+</style>

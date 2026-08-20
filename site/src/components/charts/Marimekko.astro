@@ -1,0 +1,115 @@
+---
+/**
+ * Variable-width bar chart (a "bar Mekko"), rendered on the server as SVG.
+ *
+ * Column WIDTH is share of national transactions; column HEIGHT is the average
+ * ticket. Area is therefore proportional to rupees moved, so the exhibit carries
+ * structure, segmentation and scale at once - which a stacked bar cannot.
+ *
+ * The 30% cap is drawn on the width axis, because the cap is a rule about width.
+ */
+interface App {
+  app: string;
+  volume_share: number;
+  value_share: number;
+  avg_ticket_inr: number;
+  breaches_cap: boolean;
+}
+interface Props { apps: App[]; cap: number; month: string }
+const { apps, cap, month } = Astro.props;
+
+const W = 860, H = 400, PAD = { t: 28, r: 14, b: 54, l: 56 };
+const plotW = W - PAD.l - PAD.r;
+const plotH = H - PAD.t - PAD.b;
+
+const maxTicket = Math.max(...apps.map((a) => a.avg_ticket_inr));
+const yTop = Math.ceil(maxTicket / 500) * 500;
+const x = (share: number) => PAD.l + share * plotW;
+const y = (ticket: number) => PAD.t + (1 - ticket / yTop) * plotH;
+
+let cursor = 0;
+const cols = apps.map((a) => {
+  const x0 = cursor;
+  cursor += a.volume_share;
+  return { ...a, x0, x1: cursor };
+});
+const ticks = Array.from({ length: 5 }, (_, i) => (yTop * i) / 4);
+const xTicks = [0, 0.25, 0.5, 0.75, 1];
+const inr = (v: number) => `₹${Math.round(v).toLocaleString('en-IN')}`;
+---
+<figure class="mekko">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img"
+       aria-label={`Market structure for ${month}: column width is share of transactions, height is average ticket`}>
+    {ticks.map((t) => (
+      <g>
+        <line class="grid" x1={PAD.l} x2={W - PAD.r} y1={y(t)} y2={y(t)} />
+        <text class="tick" x={PAD.l - 8} y={y(t) + 4} text-anchor="end">{inr(t)}</text>
+      </g>
+    ))}
+
+    {cols.map((c) => (
+      <g>
+        <rect class:list={['col', c.breaches_cap && 'breach', c.app === 'All other apps' && 'residual']}
+              x={x(c.x0) + 1} y={y(c.avg_ticket_inr)}
+              width={Math.max(x(c.x1) - x(c.x0) - 2, 1)}
+              height={PAD.t + plotH - y(c.avg_ticket_inr)}>
+          <title>{c.app}: {(c.volume_share * 100).toFixed(1)}% of transactions, {(c.value_share * 100).toFixed(1)}% of value, average ticket {inr(c.avg_ticket_inr)}</title>
+        </rect>
+        {c.volume_share > 0.055 && (
+          <>
+            <text class="name" x={(x(c.x0) + x(c.x1)) / 2} y={y(c.avg_ticket_inr) - 16} text-anchor="middle">{c.app}</text>
+            <text class="share" x={(x(c.x0) + x(c.x1)) / 2} y={y(c.avg_ticket_inr) - 4} text-anchor="middle">
+              {(c.volume_share * 100).toFixed(1)}%
+            </text>
+          </>
+        )}
+      </g>
+    ))}
+
+    <line class="axis" x1={PAD.l} x2={W - PAD.r} y1={PAD.t + plotH} y2={PAD.t + plotH} />
+    {xTicks.map((t) => (
+      <text class="tick" x={x(t)} y={PAD.t + plotH + 18} text-anchor="middle">{(t * 100).toFixed(0)}%</text>
+    ))}
+
+    <line class="cap" x1={x(cap)} x2={x(cap)} y1={PAD.t - 6} y2={PAD.t + plotH} />
+    <text class="caplabel" x={x(cap) + 6} y={PAD.t + 4}>{(cap * 100).toFixed(0)}% cap</text>
+
+    <text class="axis-title" x={PAD.l + plotW / 2} y={H - 12} text-anchor="middle">
+      cumulative share of national UPI transactions →
+    </text>
+    <text class="axis-title" transform={`rotate(-90 14 ${PAD.t + plotH / 2})`} x="14" y={PAD.t + plotH / 2} text-anchor="middle">
+      average ticket
+    </text>
+  </svg>
+  <p class="legend">
+    <span><i class="sw breach"></i> above the {(cap * 100).toFixed(0)}% cap</span>
+    <span><i class="sw ok"></i> within the cap</span>
+    <span><i class="sw res"></i> everyone else</span>
+    <span class="hint">Area ≈ rupees moved. Hover a column for detail.</span>
+  </p>
+</figure>
+
+<style>
+  .mekko { overflow-x: auto; overflow-y: hidden; }
+  .mekko svg { width: 100%; min-width: 640px; height: auto; overflow: visible; }
+  @media (max-width: 640px) { .mekko svg { overflow: hidden; } }
+  .grid { stroke: var(--line-soft); }
+  .axis { stroke: var(--line); }
+  .tick { fill: var(--text-3); font-size: 10.5px; font-family: var(--font-sans); }
+  .axis-title { fill: var(--text-3); font-size: 11px; font-family: var(--font-sans); }
+  .col { fill: var(--s2); opacity: 0.85; transition: opacity 0.15s ease; }
+  .col:hover { opacity: 1; }
+  .col.breach { fill: var(--signal); }
+  .col.residual { fill: var(--s4); opacity: 0.55; }
+  .name { fill: var(--text); font-size: 11.5px; font-weight: 600; font-family: var(--font-sans); }
+  .share { fill: var(--text-3); font-size: 10.5px; font-family: var(--font-sans); }
+  .cap { stroke: var(--warn); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .caplabel { fill: var(--warn); font-size: 10.5px; font-weight: 700; font-family: var(--font-sans); }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 0.7rem 0 0;
+            color: var(--text-3); font-size: 0.72rem; align-items: center; }
+  .sw { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 0.3rem; }
+  .sw.breach { background: var(--signal); }
+  .sw.ok { background: var(--s2); }
+  .sw.res { background: var(--s4); opacity: 0.55; }
+  .hint { margin-left: auto; }
+</style>

@@ -1,0 +1,87 @@
+---
+/**
+ * Waterfall / bridge, rendered on the server as SVG.
+ *
+ * Steps are {label, value, type}: 'start' and 'end' are absolute totals drawn
+ * from the baseline; 'delta' steps float between the running totals. Positive
+ * deltas take the signal colour when `highlight` names them, so the exhibit can
+ * point at the component that carries the argument.
+ */
+interface Step { label: string; value: number; type: 'start' | 'delta' | 'end' }
+interface Props {
+  steps: Step[];
+  unit?: string;
+  highlight?: string;
+  format?: 'bn' | 'lakhcr';
+}
+const { steps, unit = '', highlight, format = 'bn' } = Astro.props;
+
+const fmt = (v: number) =>
+  format === 'lakhcr' ? `₹${v.toFixed(2)}` : v.toFixed(1);
+
+// Running totals so each delta knows where to float.
+let run = 0;
+const bars = steps.map((s) => {
+  if (s.type === 'start') { run = s.value; return { ...s, y0: 0, y1: s.value }; }
+  if (s.type === 'end') return { ...s, y0: 0, y1: s.value };
+  const from = run; run += s.value;
+  return { ...s, y0: Math.min(from, run), y1: Math.max(from, run) };
+});
+
+const W = 820, H = 360, PAD = { t: 30, r: 16, b: 62, l: 62 };
+const plotW = W - PAD.l - PAD.r, plotH = H - PAD.t - PAD.b;
+const top = Math.max(...bars.map((b) => b.y1)) * 1.12;
+const y = (v: number) => PAD.t + (1 - v / top) * plotH;
+const bw = (plotW / bars.length) * 0.62;
+const cx = (i: number) => PAD.l + (i + 0.5) * (plotW / bars.length);
+const ticks = Array.from({ length: 5 }, (_, i) => (top * i) / 4);
+---
+<figure class="wf">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img"
+       aria-label={`Bridge: ${steps.map((s) => `${s.label} ${fmt(s.value)}`).join(', ')}`}>
+    {ticks.map((t) => (
+      <g>
+        <line class="grid" x1={PAD.l} x2={W - PAD.r} y1={y(t)} y2={y(t)} />
+        <text class="tick" x={PAD.l - 8} y={y(t) + 4} text-anchor="end">{fmt(t)}</text>
+      </g>
+    ))}
+
+    {bars.map((b, i) => (
+      <g>
+        {i > 0 && (
+          <line class="connector"
+                x1={cx(i - 1) + bw / 2} x2={cx(i) - bw / 2}
+                y1={y(b.type === 'delta' ? (b.value >= 0 ? b.y0 : b.y1) : bars[i - 1].y1)}
+                y2={y(b.type === 'delta' ? (b.value >= 0 ? b.y0 : b.y1) : bars[i - 1].y1)} />
+        )}
+        <rect
+          class:list={['bar', b.type, b.label === highlight && 'hot', b.type === 'delta' && b.value < 0 && 'neg']}
+          x={cx(i) - bw / 2} y={y(b.y1)}
+          width={bw} height={Math.max(y(b.y0) - y(b.y1), 2)} />
+        <text class="value" x={cx(i)} y={y(b.y1) - 7} text-anchor="middle">
+          {b.type === 'delta' && b.value > 0 ? '+' : ''}{fmt(b.value)}
+        </text>
+        <text class="label" x={cx(i)} y={H - 34} text-anchor="middle">{b.label}</text>
+      </g>
+    ))}
+    <line class="axis" x1={PAD.l} x2={W - PAD.r} y1={PAD.t + plotH} y2={PAD.t + plotH} />
+    {unit && <text class="tick" x={PAD.l - 8} y={PAD.t - 12} text-anchor="end">{unit}</text>}
+  </svg>
+</figure>
+
+<style>
+  .wf { overflow-x: auto; overflow-y: hidden; }
+  .wf svg { width: 100%; min-width: 600px; height: auto; overflow: visible; }
+  @media (max-width: 600px) { .wf svg { overflow: hidden; } }
+  .grid { stroke: var(--line-soft); }
+  .axis { stroke: var(--line); }
+  .connector { stroke: var(--text-3); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.7; }
+  .tick { fill: var(--text-3); font-size: 10.5px; font-family: var(--font-sans); }
+  .bar { fill: var(--s4); }
+  .bar.start, .bar.end { fill: var(--s2); }
+  .bar.delta { fill: var(--s4); }
+  .bar.delta.hot { fill: var(--signal); }
+  .bar.delta.neg { fill: var(--warn); }
+  .value { fill: var(--text); font-size: 11px; font-weight: 700; font-family: var(--font-sans); }
+  .label { fill: var(--text-2); font-size: 11px; font-family: var(--font-sans); }
+</style>

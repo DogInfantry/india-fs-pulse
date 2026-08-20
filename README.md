@@ -11,6 +11,12 @@ rate could ever be charged on, and under the zero-MDR regime it earns **nothing*
 50.7 million merchants, 487 transactions each per quarter, ₹2.07 lakh of GMV each,
 ₹0 of payment revenue.
 
+And the market that carries it is **concentrated at the same time as it is unmonetised**:
+PhonePe holds 45.9% of national UPI volume and Google Pay 32.3% — both above the 30%
+per-app cap due in December 2026. Complying would mean **4.3 billion transactions a
+month changing app**. At the observed rate of share drift, the leader reaches the cap
+in about 470 months.
+
 This repository is the analysis behind that claim — a reproducible Python pipeline
 over six public sources, five analysis modules, and a static site. **Every figure is
 computed from a committed dataset. Nothing is typed in by hand.**
@@ -23,8 +29,10 @@ computed from a committed dataset. Nothing is typed in by hand.**
 | **Sector scan** | [The private-bank margin advantage is half pricing, half funding](insights/pov-deposit-war.md) |
 | **PE diligence** | [Underwrite distribution economics, not transaction economics](insights/diligence-merchant-payments.md) — with an explicit ambiguity register |
 | **Survey analytics** | [Episode-level NPS reveals what brand-level NPS hides](insights/survey-nps-episodes.md) *(synthetic panel, clearly labelled)* |
+| **Market structure** | [Concentrated and unmonetised at once — which is why the share cap cannot bind](insights/pov-market-structure.md) |
+| **Wealth & asset mgmt** | [India's fund shelf is four times more administered than it is diverse](insights/wealth-fund-shelf.md) |
 | **Gap analysis** | [India runs two different payments markets, not one](insights/gap-geographic.md) |
-| **Method** | [Sources, provenance, and what this analysis cannot know](docs/sources.md) |
+| **Method** | [Sources and provenance](docs/sources.md) · [data dictionary](docs/data-dictionary.md) · [stack decisions](docs/stack-decisions.md) |
 
 ## Run it
 
@@ -70,6 +78,7 @@ is generated into [`docs/sources.md`](docs/sources.md).
 | Source | Coverage | Access |
 |---|---|---|
 | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018 Q1 – 2026 Q2 | open, no auth |
+| NPCI per-app statistics | 2023-12 – 2026-07 | transcribed ([why](docs/REFRESH.md)) |
 | NPCI monthly statistics | 2016-07 – 2026-07 | open mirror to 2023-08, then transcribed ([why](docs/REFRESH.md)) |
 | yfinance (11 NSE tickers) | 5 years | open |
 | World Bank | to 2025 | open |

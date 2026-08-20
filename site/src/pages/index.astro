@@ -4,6 +4,12 @@ import Figure from '../components/Figure.astro';
 import EChart from '../components/EChart.astro';
 import SlopeLines from '../components/charts/SlopeLines.astro';
 import GapMatrix from '../components/GapMatrix.astro';
+import ExecSummary from '../components/ExecSummary.astro';
+import Contact from '../components/Contact.astro';
+import Marimekko from '../components/charts/Marimekko.astro';
+import Waterfall from '../components/charts/Waterfall.astro';
+import Slopegraph from '../components/charts/Slopegraph.astro';
+import SmallMultiples from '../components/charts/SmallMultiples.astro';
 import Workbench from '../components/Workbench.astro';
 
 import hero from '../data/upi_monetisation.json';
@@ -15,6 +21,13 @@ import nps from '../data/chart_nps_episodes.json';
 import stateGap from '../data/chart_state_gap.json';
 import unit from '../data/chart_unit_economics.json';
 import trend from '../data/kpi_upi_trend.json';
+import structure from '../data/chart_market_structure.json';
+import shareTrend from '../data/chart_share_trend.json';
+import hhi from '../data/chart_hhi.json';
+import bridge from '../data/chart_growth_bridge.json';
+import shelf from '../data/chart_fund_shelf.json';
+import inclusion from '../data/chart_inclusion.json';
+import marketView from '../data/chart_market_view.json';
 
 const pc = (v: number, dp = 1) => `${(v * 100).toFixed(dp)}%`;
 const inr = (v: number) =>
@@ -166,6 +179,107 @@ const optStates = {
     data: material.map((s) => [s.volume_share, Math.round(s.avg_ticket_inr), s.state, s.intensity_index]),
   }],
 };
+
+/* ---- Market structure helpers ---- */
+const leaders = structure.apps.filter((a) => a.app !== 'All other apps').slice(0, 2);
+const top2 = structure.top2_volume_share;
+const capMoveBn = structure.cap_gap_txns_mn / 1000;   // computed in analysis/06, not here
+const slopeSeries = shareTrend.series.slice(0, 5).map((s) => ({
+  label: s.app,
+  start: (s.values.find((v) => v !== null) ?? 0) * 100,
+  end: ([...s.values].reverse().find((v) => v !== null) ?? 0) * 100,
+}));
+
+/* ---- Exhibit: concentration over time ---- */
+const optHhi = {
+  grid: { top: 26, left: 8, right: 16, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', data: hhi.months, axisTick: { show: false },
+           axisLabel: { color: '#6E7987', fontSize: 10, interval: 2 } },
+  yAxis: { type: 'value', name: 'HHI', min: 2500,
+           nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis' },
+  series: [{ type: 'line', data: hhi.values, smooth: 0.2, showSymbol: false,
+             lineStyle: { width: 2.5, color: '#C02734' },
+             areaStyle: { color: 'rgba(192,39,52,0.10)' } }],
+};
+
+/* ---- Exhibit: transactions per banked adult ---- */
+const incl = inclusion.series.filter((r) => r.txns_per_banked_adult_per_month);
+const optInclusion = {
+  grid: { top: 30, left: 8, right: 46, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', data: incl.map((r) => String(r.year)), axisTick: { show: false } },
+  yAxis: { type: 'value', name: 'UPI transactions per banked adult per month',
+           nameTextStyle: { color: '#6E7987', fontSize: 10 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis' },
+  series: [{ type: 'bar', barWidth: '44%', itemStyle: { color: '#C02734' },
+             data: incl.map((r) => r.txns_per_banked_adult_per_month),
+             label: { show: true, position: 'top', color: '#A6B0BE', fontSize: 11 } }],
+};
+
+/* ---- Exhibit: the market's verdict on the margin franchise ---- */
+const optMarketView = {
+  grid: { top: 26, left: 8, right: 60, bottom: 4, containLabel: true },
+  xAxis: { type: 'value', axisLabel: { formatter: (v) => `${Math.round(v * 100)}%` },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  yAxis: { type: 'category', axisTick: { show: false }, axisLine: { show: false },
+           data: marketView.series.map((s) => s.cohort) },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
+             valueFormatter: (v) => `${(v * 100).toFixed(0)}%` },
+  series: [{ type: 'bar', barWidth: '48%',
+             data: marketView.series.map((s, i) => ({ value: s.median_price_return,
+               itemStyle: { color: i === 0 ? '#5B6673' : '#C02734' } })),
+             label: { show: true, position: 'right', color: '#A6B0BE', fontSize: 11,
+                      formatter: (p) => `${(p.value * 100).toFixed(0)}%` } }],
+};
+
+/* ---- Exhibit: the fund shelf ---- */
+const optShelf = {
+  legend: { data: ['Listed schemes', 'Distinct strategies'] },
+  grid: { top: 34, left: 8, right: 16, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', axisTick: { show: false },
+           data: shelf.by_asset_class.map((r) => r.asset_class),
+           axisLabel: { color: '#8A94A6', fontSize: 10, rotate: 22 } },
+  yAxis: { type: 'value', splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  series: [
+    { name: 'Listed schemes', type: 'bar', itemStyle: { color: '#5B6673' },
+      data: shelf.by_asset_class.map((r) => r.schemes) },
+    { name: 'Distinct strategies', type: 'bar', itemStyle: { color: '#C02734' },
+      data: shelf.by_asset_class.map((r) => r.strategies) },
+  ],
+};
+
+
+/* ---- Executive summary ---- */
+const nimGap = Math.round(nim.gap_bps.at(-1));
+const wrapperX = shelf.listed_schemes / shelf.distinct_strategies;
+const execAnswer = `India's payments rails have separated volume from value and priced the busy half at zero. `
+  + `Merchant payments are <strong>${pc(merchant.volume_share, 0)} of transactions but ${pc(merchant.value_share, 0)} of the rupees</strong>, `
+  + `and merchant is the only leg an MDR could touch. The market is concentrated at the same time as it is unmonetised — `
+  + `which is why the share cap cannot bind, and why the investable business here is <strong>distribution, not transactions</strong>.`;
+const execFindings = [
+  { n: pc(merchant.volume_share, 0) + ' / ' + pc(merchant.value_share, 0),
+    claim: 'Merchant payments carry the transactions; P2P carries the rupees. The busy leg earns nothing.',
+    href: '#module-a' },
+  { n: pc(top2, 0),
+    claim: `Two apps intermediate four in five transactions — and both breach the ${(structure.cap * 100).toFixed(0)}% cap due this December.`,
+    href: '#module-structure' },
+  { n: capMoveBn.toFixed(1) + 'bn',
+    claim: 'Transactions a month that would have to change app for the cap to bind. It will not bind.',
+    href: '#module-structure' },
+  { n: nimGap + 'bps',
+    claim: 'The private-bank margin advantage — and it splits almost evenly between pricing and funding.',
+    href: '#module-c' },
+  { n: '₹0',
+    claim: `${(unit.merchants / 1e6).toFixed(1)}M merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, no payment revenue.`,
+    href: '#module-d' },
+  { n: wrapperX.toFixed(1) + '×',
+    claim: "Wrappers per real strategy on India’s fund shelf. Most of the product count is packaging.",
+    href: '#module-wealth' },
+];
+
 ---
 
 <Base
@@ -199,11 +313,13 @@ const optStates = {
   </header>
 
   <main id="main">
+    <div class="wrap"><ExecSummary answer={execAnswer} findings={execFindings} /></div>
+
     <section class="wrap module" id="module-a">
       <h2 class="section-head"><span>A</span> Payments landscape and the monetisation gap</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 1 · Market structure"
+          kicker="Exhibit 1 · Volume against value"
           title={`Merchant payments carry ${pc(merchant.volume_share, 0)} of transactions but ${pc(merchant.value_share, 0)} of the rupees`}
           subtitle={`P2P is the mirror image: ${pc(p2p.volume_share, 0)} of transactions, ${pc(p2p.value_share, 0)} of value. Volume and value have separated.`}
           source={SOURCE_PULSE}
@@ -229,14 +345,67 @@ const optStates = {
         >
           <EChart id="c-trend" option={optTrend} />
         </Figure>
+
+        <Figure
+          kicker="Exhibit 4 · Growth bridge"
+          title={bridge.note}
+          subtitle="Where the extra transactions came from. The merchant leg is the one a discount rate could be charged on."
+          source={SOURCE_PULSE}
+          wide
+        >
+          <Waterfall steps={bridge.steps} unit={bridge.unit} highlight={bridge.highlight} />
+        </Figure>
+      </div>
+    </section>
+
+    <section class="wrap module" id="module-structure">
+      <h2 class="section-head"><span>B</span> Market structure and the share cap</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 5 · Who captures the value"
+          title={`Two apps intermediate ${(top2 * 100).toFixed(0)}% of India's transactions — and both sit above the ${(structure.cap * 100).toFixed(0)}% cap`}
+          subtitle={`${structure.month}. Column width is share of transactions, height is average ticket, so area is roughly rupees moved.`}
+          source="NPCI UPI Ecosystem Statistics, per-application volume and value, transcribed 2026-08-21. Shares computed against the NPCI national monthly total."
+          wide
+        >
+          <Marimekko apps={structure.apps} cap={structure.cap} month={structure.month} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 6 · The cap gap"
+          title={`Complying would move ${capMoveBn.toFixed(1)} billion transactions a month between apps`}
+          subtitle={`Share of national UPI volume by app. The dashed line is the ${(structure.cap * 100).toFixed(0)}% cap; panels that breach it are marked.`}
+          source="NPCI UPI Ecosystem Statistics and NPCI monthly product statistics."
+          wide
+        >
+          <SmallMultiples months={shareTrend.months} series={shareTrend.series} reference={shareTrend.cap} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 7 · Share shift"
+          title="The leaders have barely moved; the challengers started from nothing"
+          subtitle="Share of national UPI volume, first period against latest."
+          source="NPCI UPI Ecosystem Statistics."
+        >
+          <Slopegraph series={slopeSeries} startLabel={shareTrend.months[0]} endLabel={shareTrend.months.at(-1)} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 8 · Concentration"
+          title="Concentration is falling — nowhere near fast enough to matter by December"
+          subtitle="Herfindahl-Hirschman Index on true national volume shares. Above 2,500 is 'highly concentrated' by most competition authorities."
+          source="Computed from NPCI per-application data."
+        >
+          <EChart id="c-hhi" option={optHhi} />
+        </Figure>
       </div>
     </section>
 
     <section class="wrap module" id="module-b">
-      <h2 class="section-head"><span>B</span> Banking health scan</h2>
+      <h2 class="section-head"><span>C</span> Banking health scan</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 4 · Cohort margins"
+          kicker="Exhibit 9 · Cohort margins"
           title={`Private banks hold a ${Math.round(nim.gap_bps.at(-1)!)}bps margin advantage that has not closed`}
           subtitle="NIM proxy: net interest income over average total assets, computed from filed statements. The shaded band is the gap."
           source="Filed annual income statements and balance sheets, retrieved via yfinance. A proxy, not reported NIM — banks use average earning assets, a smaller denominator."
@@ -245,21 +414,39 @@ const optStates = {
         </Figure>
 
         <Figure
-          kicker="Exhibit 5 · Margin decomposition"
+          kicker="Exhibit 10 · Margin decomposition"
           title="The advantage splits almost evenly between what banks earn and what they pay"
           subtitle={`FY${spread.fy}. Neither lever alone closes the gap, which is why it persists.`}
           source="Filed annual income statements and balance sheets, retrieved via yfinance."
         >
           <EChart id="c-spread" option={optSpread} />
         </Figure>
+
+        <Figure
+          kicker="Exhibit 11 · Financial inclusion"
+          title={`Each banked adult now runs ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions a month`}
+          subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story — and the cost base.`}
+          source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0–14. UPI volume is the mean month of each year."
+        >
+          <EChart id="c-inclusion" option={optInclusion} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 12 · The market's verdict"
+          title="The thinner-margin cohort massively outperformed — the franchise was already in the price"
+          subtitle={`Median price return by cohort, ${marketView.window[0]} to ${marketView.window[1]}.`}
+          source="Daily closes via yfinance. Price return only — excludes dividends, which understates the higher-yielding public cohort."
+        >
+          <EChart id="c-marketview" option={optMarketView} />
+        </Figure>
       </div>
     </section>
 
     <section class="wrap module" id="module-c">
-      <h2 class="section-head"><span>C</span> Private equity diligence simulation</h2>
+      <h2 class="section-head"><span>D</span> Private equity diligence simulation</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 6 · Unit economics"
+          kicker="Exhibit 13 · Unit economics"
           title={`${(unit.merchants / 1e6).toFixed(1)} million merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, ₹0 of payment revenue`}
           subtitle={`Each merchant runs ${Math.round(unit.txns_per_merchant_quarter)} transactions a quarter. The bars show what one merchant would be worth per year if an MDR existed.`}
           source={SOURCE_PULSE}
@@ -276,10 +463,10 @@ const optStates = {
     </section>
 
     <section class="wrap module" id="module-d">
-      <h2 class="section-head"><span>D</span> Survey analytics</h2>
+      <h2 class="section-head"><span>E</span> Survey analytics</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 7 · Episode-level NPS"
+          kicker="Exhibit 14 · Episode-level NPS"
           title="One brand contains both the best and the worst episode in the market"
           subtitle="Scored per customer episode rather than per brand. A blended brand NPS averages these opposites into a number that hides the problem."
           source="SYNTHETIC panel — 2,000 respondents generated from a documented, seeded model (analysis/04_survey_nps.py). The method is the artefact; the figures illustrate it and are not market fact."
@@ -292,10 +479,10 @@ const optStates = {
     </section>
 
     <section class="wrap module" id="module-e">
-      <h2 class="section-head"><span>E</span> Geographic gap</h2>
+      <h2 class="section-head"><span>F</span> Geographic gap</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 8 · Two markets, not one"
+          kicker="Exhibit 15 · Two markets, not one"
           title="Merchant-heavy states transact often and small; remittance-heavy states rarely and large"
           subtitle="Red states transact more often than their rupee share implies — where zero-MDR costs land. Bubble size is share of national transactions; states under 1% are omitted."
           source={SOURCE_PULSE + ' Deliberately a composition measure, not per-capita: no population denominator is invented.'}
@@ -306,8 +493,21 @@ const optStates = {
       </div>
     </section>
 
+    <section class="wrap module" id="module-wealth">
+      <h2 class="section-head"><span>G</span> Wealth and asset management</h2>
+      <Figure
+        kicker="Exhibit 16 · The fund shelf"
+        title={`${shelf.listed_schemes.toLocaleString('en-IN')} listed schemes are really ${shelf.distinct_strategies.toLocaleString('en-IN')} strategies`}
+        subtitle={`Strip the Direct/Regular and Growth/IDCW wrappers and roughly ${Math.round((1 - shelf.distinct_strategies / shelf.listed_schemes) * 100)}% of the product count disappears. Counts schemes, not rupees.`}
+        source={`AMFI daily NAV file, ${shelf.nav_date}. ${shelf.caveat}`}
+        wide
+      >
+        <EChart id="c-shelf" option={optShelf} height={320} />
+      </Figure>
+    </section>
+
     <section class="wrap module" id="workbench">
-      <h2 class="section-head"><span>F</span> Analyst workbench</h2>
+      <h2 class="section-head"><span>H</span> Analyst workbench</h2>
       <Figure
         kicker="Interactive · Client-ready dashboard"
         title="Sort, filter and re-rank the state data without leaving the page"
@@ -320,7 +520,7 @@ const optStates = {
     </section>
 
     <section class="wrap module" id="gap-matrix">
-      <h2 class="section-head"><span>G</span> Gap analyser</h2>
+      <h2 class="section-head"><span>I</span> Gap analyser</h2>
       <Figure
         kicker="Traceability"
         title="Every line of the job description, mapped to the artefact that demonstrates it"
@@ -333,7 +533,7 @@ const optStates = {
     </section>
 
     <section class="wrap module" id="memos">
-      <h2 class="section-head"><span>H</span> The memos</h2>
+      <h2 class="section-head"><span>J</span> The memos</h2>
       <div class="memo-grid">
         <a href="/insights/pov-upi-monetization"><span class="kicker">Point of view</span><b>India's payments network monetises the wrong leg</b></a>
         <a href="/insights/pov-deposit-war"><span class="kicker">Sector scan</span><b>The private-bank margin advantage is half pricing, half funding</b></a>
@@ -344,6 +544,8 @@ const optStates = {
       </div>
     </section>
   </main>
+
+  <div class="wrap"><Contact /></div>
 
   <footer class="wrap site-foot">
     <p>
@@ -370,7 +572,7 @@ const optStates = {
 
   .hero { padding: clamp(3.5rem, 10vw, 7rem) 0 clamp(2rem, 5vw, 3.5rem); }
   .hero h1 { font-size: var(--step-4); margin: 0.5rem 0 0; max-width: 20ch; }
-  .hero h1 em { color: var(--signal); font-style: normal; }
+  .hero h1 em { color: var(--signal-text); font-style: normal; }
   .lede { color: var(--text-2); font-size: var(--step-1); max-width: 58ch; margin: 1.4rem 0 0;
           line-height: 1.5; }
   .lede strong { color: var(--text); }
@@ -383,7 +585,7 @@ const optStates = {
               letter-spacing: 0.07em; }
   .stats dd { margin: 0.35rem 0 0; font-family: var(--font-display); font-size: var(--step-2);
               line-height: 1; }
-  .stats dd.zero { color: var(--signal); }
+  .stats dd.zero { color: var(--signal-text); }
 
   .tags { margin: 1.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .tags span { border: 1px solid var(--line); color: var(--text-3); border-radius: 999px;
@@ -392,7 +594,7 @@ const optStates = {
   .module { padding: clamp(2rem, 6vw, 3.5rem) 0; }
   .section-head { font-size: var(--step-2); display: flex; align-items: baseline; gap: 0.75rem;
                   margin: 0 0 1.5rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--line); }
-  .section-head span { color: var(--signal); font-family: var(--font-sans); font-size: 0.72rem;
+  .section-head span { color: var(--signal-text); font-family: var(--font-sans); font-size: 0.72rem;
                        font-weight: 700; border: 1px solid var(--signal-line); border-radius: 6px;
                        padding: 0.1rem 0.45rem; letter-spacing: 0.05em; }
 

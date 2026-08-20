@@ -126,8 +126,8 @@ const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
     border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none;
   }
   thead th:hover { color: var(--text); }
-  thead th[data-sorted='asc'] .arrow::after { content: ' ▲'; color: var(--signal); }
-  thead th[data-sorted='desc'] .arrow::after { content: ' ▼'; color: var(--signal); }
+  thead th[data-sorted='asc'] .arrow::after { content: ' ▲'; color: var(--signal-text); }
+  thead th[data-sorted='desc'] .arrow::after { content: ' ▼'; color: var(--signal-text); }
   td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--line-soft); color: var(--text-2); }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   tbody tr:hover td { background: rgba(255, 255, 255, 0.025); color: var(--text); }

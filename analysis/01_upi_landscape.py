@@ -54,6 +54,29 @@ def main() -> None:
         "note": "Revenue that the merchant leg would generate at each MDR rate. Today it is zero.",
     })
 
+
+    # --- Growth bridge: which leg actually produced the growth?
+    # If the merchant leg dominates the delta, then growth is arriving in the
+    # only leg that cannot be charged for - which is the whole argument.
+    pulse = load("pulse_txn_national")
+    per_period = pulse.groupby(["period", "category"])["count"].sum().unstack().dropna()
+    open_p, close_p = per_period.index[0], per_period.index[-1]
+    opening, closing = per_period.loc[open_p], per_period.loc[close_p]
+    order = (closing - opening).sort_values(ascending=False)
+    steps = [{"label": open_p, "value": round(float(opening.sum()) / 1e9, 2), "type": "start"}]
+    for cat in order.index:
+        steps.append({"label": cat, "value": round(float(order[cat]) / 1e9, 2), "type": "delta"})
+    steps.append({"label": close_p, "value": round(float(closing.sum()) / 1e9, 2), "type": "end"})
+    biggest = str(order.index[0])
+    contribution = float(order.iloc[0]) / float(order.sum())
+    write_json("chart_growth_bridge", {
+        "unit": "billion transactions per quarter",
+        "highlight": biggest,
+        "steps": steps,
+        "note": f"{biggest} contributed {contribution:.0%} of all volume growth between "
+                f"{open_p} and {close_p}.",
+    })
+
     body = f"""
 ## The answer
 
@@ -71,7 +94,7 @@ registered merchants transacting {hero['txns_per_merchant']:,.0f} times a quarte
 {inr(hero['gmv_per_merchant_inr'])} of GMV per merchant per quarter, at
 **{inr(0)} of transaction revenue**.
 
-## Three supporting arguments
+## Four supporting arguments
 
 **1. The base is enormous and still compounding.** UPI has grown from
 {base.volume_mn:,.0f} million transactions in {base.month} to
@@ -80,13 +103,15 @@ off a series that starts at {first.volume_mn:,.1f} million in {first.month}. Eve
 year-on-year reading is {pct(latest_yoy.volume_yoy)} on volume and
 {pct(latest_yoy.value_yoy)} on value ({latest_yoy.month}).
 
-**2. Growth is arriving as small tickets, which is the expensive kind.**
+**2. Growth is arriving in the leg that cannot be charged for.** Between {open_p} and {close_p}, {biggest} contributed **{pct(contribution, 0)} of all volume growth** - {order.iloc[0] / 1e9:.1f} billion of the {order.sum() / 1e9:.1f} billion additional quarterly transactions. Growth is not merely large, it is concentrated in the merchant leg that zero-MDR prices at nothing.
+
+**3. Growth is arriving as small tickets, which is the expensive kind.**
 The average UPI transaction has fallen to **{inr(ticket_now)}**{
     f", down {pct(ticket_drop)} from January 2019" if ticket_drop else ""
 }. Every incremental transaction adds switch, fraud and support cost while adding
 no fee income. Volume growth without price is a cost line, not a revenue line.
 
-**3. The revenue foregone is quantifiable, and it is not small.** On the merchant
+**4. The revenue foregone is quantifiable, and it is not small.** On the merchant
 GMV of {merchant['amount_lakh_cr']:.2f} lakh crore in {hero['period']} - again, one
 player - a {"10bps"} MDR would generate {inr(float(mdr['10bps']) * 1e7)} a quarter,
 30bps {inr(float(mdr['30bps']) * 1e7)}, and 50bps {inr(float(mdr['50bps']) * 1e7)}.

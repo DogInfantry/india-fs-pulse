@@ -14,6 +14,7 @@ cohort COMPARISON (public vs private), where the bias is common to both.
 from __future__ import annotations
 
 import sys
+import time
 import warnings
 from pathlib import Path
 
@@ -61,9 +62,21 @@ def fundamentals() -> pd.DataFrame:
     rows = []
     for ticker, (name, cohort) in COHORTS.items():
         try:
-            handle = yf.Ticker(ticker)
-            income = handle.financials
-            balance = handle.balance_sheet
+            # yfinance intermittently raises KeyError on a healthy ticker. Left
+            # unretried it silently drops a bank from the cohort and shifts the
+            # published margin - so retry before accepting an absence as real.
+            income = balance = None
+            for attempt in range(3):
+                try:
+                    handle = yf.Ticker(ticker)
+                    income = handle.financials
+                    balance = handle.balance_sheet
+                    if income is not None and not income.empty:
+                        break
+                except Exception:  # noqa: BLE001 - transient; surfaced below if it persists
+                    if attempt == 2:
+                        raise
+                time.sleep(1.5 * (attempt + 1))
             if income is None or income.empty:
                 print(f"   {ticker:<15} no income statement, skipped")
                 continue
@@ -86,6 +99,10 @@ def fundamentals() -> pd.DataFrame:
         df.ticker.nunique() >= len(COHORTS) * 0.6,
         f"only {df.ticker.nunique()}/{len(COHORTS)} tickers returned fundamentals",
     )
+    # A cohort mean computed from one or two banks is not a cohort mean.
+    for cohort in ("Private", "Public"):
+        got = df[df.cohort == cohort].ticker.nunique()
+        expect(got >= 3, f"only {got} {cohort} banks returned data; cohort mean would be unstable")
     return df
 
 

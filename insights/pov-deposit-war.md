@@ -50,8 +50,8 @@ same year, each banked adult now runs **14.9 transactions a month** - up from
 4.0 in 2021. Access stopped being the constraint some years ago; usage intensity
 is the story now, and it is what makes the zero-MDR cost base grow.
 
-**The market's verdict.** Over 2021-08-20 to 2026-08-20, the median private bank returned
-17% on price against 284% for the median public bank. The market has NOT paid for the margin franchise - public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
+**The market's verdict.** Over 2021-08-20 to 2026-08-19, the median private bank returned
+15% on price against 285% for the median public bank. The market has NOT paid for the margin franchise - public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
 return only - dividends excluded, so this understates total return for the higher-
 yielding public cohort.
 

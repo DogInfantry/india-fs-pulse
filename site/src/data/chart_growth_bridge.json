@@ -1,0 +1,32 @@
+{
+  "unit": "billion transactions per quarter",
+  "highlight": "Retail",
+  "steps": [
+    {
+      "label": "2018Q1",
+      "value": 0.14,
+      "type": "start"
+    },
+    {
+      "label": "Retail",
+      "value": 24.6,
+      "type": "delta"
+    },
+    {
+      "label": "P2P",
+      "value": 11.84,
+      "type": "delta"
+    },
+    {
+      "label": "Utility",
+      "value": 2.08,
+      "type": "delta"
+    },
+    {
+      "label": "2026Q2",
+      "value": 38.66,
+      "type": "end"
+    }
+  ],
+  "note": "Retail contributed 64% of all volume growth between 2018Q1 and 2026Q2."
+}
