@@ -28,5 +28,15 @@
     "publisher": "PhonePe Pulse",
     "rows": 1224,
     "url": "https://github.com/PhonePe/pulse"
+  },
+  "upi_monthly": {
+    "accessed": "2026-08-20",
+    "accessed_utc": "2026-08-20T15:51:37+00:00",
+    "coverage": "2016-07 - 2026-07",
+    "licence": "NPCI terms apply to the underlying data",
+    "note": "CKAN mirror STOPS AT 2023-08. Rows after that are hand-seeded from npci.org.in, which returns HTTP 403 to scripted access. The `provenance` column marks which is which.",
+    "publisher": "NPCI via India Data Portal (CKAN mirror)",
+    "rows": 116,
+    "url": "https://ckandev.indiadataportal.com/dataset/150fe363-f61f-41f2-9215-15f61358f427/resource/8b176063-658a-41d7-9401-7461808d87a2/download/upi-product-statistics.csv"
   }
 }

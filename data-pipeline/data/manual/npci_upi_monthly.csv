@@ -1,0 +1,51 @@
+# NPCI UPI monthly headline statistics - hand-seeded.
+#
+# WHY THIS FILE EXISTS: npci.org.in serves HTTP 403 to every scripted request
+# (WAF). The open CKAN mirror of the same series stops at 2023-08. These rows
+# were read from the NPCI "Monthly Statistics" table in a real browser session
+# on 2026-08-20 and transcribed verbatim. See docs/REFRESH.md to update.
+#
+# JOIN CHECK: the browser table's August-2023 row (10,586.02 Mn / 15,76,536.54 Cr)
+# matches the CKAN mirror's final row exactly, so the two sources are the same
+# series with no level shift at the seam.
+#
+# GAPS, deliberately not filled: 2024-04, 2024-05, 2025-04, 2025-05. NPCI renders
+# only the newest 10 months per financial year with no pagination. Interpolating
+# them would violate CLAUDE.md rule 1.
+#
+# 2026-08 is excluded because it was month-to-date when accessed.
+#
+# Units: volume_mn = million transactions; value_cr = INR crore.
+
+month,volume_mn,value_cr,banks_live,source_url,accessed
+2023-09,10555.69,1579133.18,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2023-10,11408.79,1715768.34,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2023-11,11235.29,1739740.61,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2023-12,12020.23,1822949.45,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-01,12203.02,1841083.97,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-02,12102.67,1827869.35,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-03,13440.00,1978353.23,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-06,13885.14,2007081.20,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-07,14435.55,2064292.41,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-08,14963.05,2060735.57,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-09,15041.75,2063994.71,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-10,16584.97,2349821.46,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-11,15482.02,2155187.41,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2024-12,16730.01,2324699.94,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-01,16996.01,2348037.11,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-02,16106.19,2196481.70,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-03,18301.51,2477221.59,,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-06,18395.01,2403930.69,675,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-07,19467.95,2508498.10,684,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-08,20008.31,2485472.90,688,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-09,19633.43,2489736.52,686,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-10,20700.92,2727790.71,683,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-11,20466.98,2631632.64,684,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2025-12,21634.67,2796712.71,685,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-01,21703.46,2833481.26,691,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-02,20394.20,2684229.30,694,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-03,22641.14,2952542.03,705,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-04,22346.80,2902988.05,713,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-05,23201.95,2990424.18,720,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-06,22716.08,2892138.66,731,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
+2026-07,23658.35,2987880.48,741,https://www.npci.org.in/product/upi/product-statistics,2026-08-20
