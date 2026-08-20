@@ -1,0 +1,47 @@
+---
+/**
+ * The standard frame for every exhibit.
+ *
+ * The action-title convention lives here: `title` must state the FINDING, not
+ * the contents. "Merchant payments are 64% of transactions but 23% of rupees",
+ * never "Transaction split by category".
+ */
+interface Props {
+  kicker: string;
+  title: string;
+  subtitle?: string;
+  source: string;
+  wide?: boolean;
+}
+const { kicker, title, subtitle, source, wide = false } = Astro.props;
+---
+<figure class:list={["fig", wide && "wide"]}>
+  <figcaption>
+    <p class="kicker">{kicker}</p>
+    <h3 class="action-title">{title}</h3>
+    {subtitle && <p class="subtitle">{subtitle}</p>}
+  </figcaption>
+  <div class="body"><slot /></div>
+  <p class="source">{source}</p>
+</figure>
+
+<style>
+  .fig {
+    margin: 0;
+    padding: clamp(1.1rem, 3vw, 1.75rem);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .fig.wide { grid-column: 1 / -1; }
+  figcaption { margin-bottom: 0.9rem; }
+  .body { min-height: 40px; }
+  .source {
+    margin: 1rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line-soft);
+    color: var(--text-3);
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+</style>

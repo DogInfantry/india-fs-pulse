@@ -1,0 +1,83 @@
+---
+/**
+ * Direct-labelled line chart, rendered on the server as plain SVG.
+ *
+ * Four data points per cohort does not need a charting library, a canvas, or a
+ * kilobyte of JavaScript. Labels sit at the line ends instead of in a legend so
+ * the eye never has to travel (Knaflic). The shaded band is the cohort gap -
+ * the actual subject of the exhibit.
+ */
+interface Series { cohort: string; values: number[] }
+interface Props {
+  periods: string[];
+  series: Series[];
+  gapBps: number[];
+  unit?: string;
+}
+const { periods, series, gapBps, unit = '%' } = Astro.props;
+
+const W = 720, H = 320, PAD = { t: 24, r: 118, b: 34, l: 46 };
+const all = series.flatMap((s) => s.values);
+const min = Math.min(...all), max = Math.max(...all);
+const lo = Math.floor((min - 0.35) * 2) / 2;
+const hi = Math.ceil((max + 0.35) * 2) / 2;
+
+const x = (i: number) => PAD.l + (i * (W - PAD.l - PAD.r)) / Math.max(periods.length - 1, 1);
+const y = (v: number) => PAD.t + ((hi - v) * (H - PAD.t - PAD.b)) / (hi - lo);
+
+const colours = ['var(--s1)', 'var(--s2)', 'var(--s3)'];
+const ticks = Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4);
+
+// The band between the first two series is the gap being discussed.
+const band = series.length >= 2
+  ? [...periods.map((_, i) => `${x(i)},${y(series[0].values[i])}`),
+     ...periods.map((_, i) => `${x(periods.length - 1 - i)},${y(series[1].values[periods.length - 1 - i])}`)].join(' ')
+  : null;
+const lastGap = gapBps.at(-1);
+---
+<svg viewBox={`0 0 ${W} ${H}`} class="slope" role="img"
+     aria-label={`${series.map((s) => s.cohort).join(' versus ')} over ${periods.join(', ')}`}>
+  {ticks.map((t) => (
+    <g>
+      <line x1={PAD.l} x2={W - PAD.r} y1={y(t)} y2={y(t)} class="grid" />
+      <text x={PAD.l - 8} y={y(t) + 4} class="tick" text-anchor="end">{t.toFixed(1)}{unit}</text>
+    </g>
+  ))}
+  {band && <polygon points={band} class="band" />}
+  {periods.map((p, i) => (
+    <text x={x(i)} y={H - 12} class="tick" text-anchor="middle">{p}</text>
+  ))}
+  {series.map((s, si) => (
+    <g style={`--c:${colours[si % colours.length]}`}>
+      <polyline class="line" points={s.values.map((v, i) => `${x(i)},${y(v)}`).join(' ')} />
+      {s.values.map((v, i) => <circle class="dot" cx={x(i)} cy={y(v)} r="4" />)}
+      <text class="label" x={W - PAD.r + 10} y={y(s.values.at(-1)!) + 4}>
+        {s.cohort} <tspan class="value">{s.values.at(-1)!.toFixed(2)}{unit}</tspan>
+      </text>
+    </g>
+  ))}
+  {lastGap !== undefined && series.length >= 2 && (
+    <g>
+      <line class="gapline" x1={x(periods.length - 1) + 14} x2={x(periods.length - 1) + 14}
+            y1={y(series[0].values.at(-1)!)} y2={y(series[1].values.at(-1)!)} />
+      <text class="gaptext" text-anchor="middle"
+            x={x(periods.length - 1) + 14}
+            y={(y(series[0].values.at(-1)!) + y(series[1].values.at(-1)!)) / 2 - 6}>
+        {Math.round(lastGap)}bps
+      </text>
+    </g>
+  )}
+</svg>
+
+<style>
+  .slope { width: 100%; height: auto; overflow: visible; }
+  .grid { stroke: var(--line-soft); stroke-width: 1; }
+  .tick { fill: var(--text-3); font-size: 11px; font-family: var(--font-sans); }
+  .band { fill: var(--signal); opacity: 0.07; }
+  .line { fill: none; stroke: var(--c); stroke-width: 2.5; stroke-linejoin: round; }
+  .dot { fill: var(--c); }
+  .label { fill: var(--text-2); font-size: 12px; font-family: var(--font-sans); }
+  .value { fill: var(--c); font-weight: 700; }
+  .gapline { stroke: var(--signal); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .gaptext { fill: var(--signal); font-size: 11px; font-weight: 700; font-family: var(--font-sans); }
+</style>

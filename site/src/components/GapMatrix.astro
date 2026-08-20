@@ -1,0 +1,118 @@
+---
+/**
+ * Gap analyser, meaning one: JD-to-artefact traceability.
+ *
+ * Rows are the requirements as written in the job description. Columns are what
+ * in this repository demonstrates each one. The "not covered" rows are kept
+ * deliberately - a self-assessment that only ever says "full" is not an
+ * assessment.
+ */
+const rows = [
+  { need: 'Drive open-ended research', level: 'full',
+    artefact: 'Five-module scan built from six live sources; two of them replaced after the sources FABLE proposed proved stale or blocked',
+    href: '/#module-a' },
+  { need: 'Create industry points of view', level: 'full',
+    artefact: 'pov-upi-monetization.md - governing thought, three supporting arguments, ranked recommendation',
+    href: '/insights/pov-upi-monetization' },
+  { need: 'Sector and industry scans', level: 'full',
+    artefact: 'pov-deposit-war.md - public vs private bank cohort scan, margin decomposed into pricing and funding',
+    href: '/insights/pov-deposit-war' },
+  { need: 'Summarise key themes, trends and challenges', level: 'full',
+    artefact: 'Every memo closes with a "so what" and a "what would change this answer"',
+    href: '/insights/pov-upi-monetization' },
+  { need: 'Survey analytics', level: 'partial',
+    artefact: 'Episode-level NPS on a seeded synthetic panel. The method is real; the panel is generated, because episode benchmarks are proprietary',
+    href: '/insights/survey-nps-episodes' },
+  { need: 'Private equity diligence support', level: 'full',
+    artefact: 'diligence-merchant-payments.md - market attractiveness, unit economics, red flags, listed comparable',
+    href: '/insights/diligence-merchant-payments' },
+  { need: 'Build FS data assets and IP', level: 'full',
+    artefact: 'Reproducible pipeline: six fetchers, schema validation, automatic provenance ledger, monthly refresh',
+    href: '/methodology' },
+  { need: 'Client-ready visualisation dashboards (e.g. Tableau)', level: 'partial',
+    artefact: 'Interactive analyst workbench and a chart system in code. Not built in Tableau itself',
+    href: '/#workbench' },
+  { need: 'Structured communication of insights', level: 'full',
+    artefact: 'Answer-first throughout: every exhibit title states the finding, not the contents',
+    href: '/#module-a' },
+  { need: 'Deal with ambiguity; tackle diligence questions', level: 'full',
+    artefact: 'An explicit ambiguity register: five unknowns, why each is unresolved, and which one the recommendation is fragile to',
+    href: '/insights/diligence-merchant-payments' },
+  { need: 'Python / R / Alteryx knowledge', level: 'full',
+    artefact: 'Python pipeline end to end; runs with no credentials in 84 seconds',
+    href: '/methodology' },
+  { need: 'Advanced Microsoft Excel and PowerPoint', level: 'none',
+    artefact: 'Not demonstrated here. This project was scoped as web-only; the pipeline emits tidy CSV, so a model workbook and a deck are a short addition',
+    href: null },
+];
+const label = { full: 'Demonstrated', partial: 'Partial', none: 'Not covered' } as const;
+const counts = { full: 0, partial: 0, none: 0 };
+rows.forEach((r) => counts[r.level as keyof typeof counts]++);
+---
+<div class="matrix">
+  <div class="controls">
+    <span class="hint">{counts.full} demonstrated &middot; {counts.partial} partial &middot; {counts.none} not covered</span>
+    <div class="filters">
+      <button data-filter="all" class="on">All</button>
+      <button data-filter="full">Demonstrated</button>
+      <button data-filter="partial">Partial</button>
+      <button data-filter="none">Gaps</button>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>What the job description asks for</th><th>Status</th><th>Where it is demonstrated</th></tr></thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr data-level={r.level}>
+          <td class="need">{r.need}</td>
+          <td><span class:list={['badge', r.level]}>{label[r.level as keyof typeof label]}</span></td>
+          <td class="artefact">
+            {r.href ? <a href={r.href}>{r.artefact}</a> : <span class="muted">{r.artefact}</span>}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const root = document.currentScript?.previousElementSibling as HTMLElement | null;
+  document.querySelectorAll<HTMLButtonElement>('.matrix .filters button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const want = btn.dataset.filter;
+      const scope = btn.closest('.matrix') ?? root;
+      scope?.querySelectorAll<HTMLButtonElement>('.filters button').forEach((b) => b.classList.toggle('on', b === btn));
+      scope?.querySelectorAll<HTMLTableRowElement>('tbody tr').forEach((tr) => {
+        tr.hidden = want !== 'all' && tr.dataset.level !== want;
+      });
+    });
+  });
+</script>
+
+<style>
+  .controls { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between;
+              align-items: center; margin-bottom: 0.9rem; }
+  .hint { color: var(--text-3); font-size: 0.75rem; }
+  .filters { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .filters button {
+    background: transparent; border: 1px solid var(--line); color: var(--text-2);
+    padding: 0.28rem 0.7rem; border-radius: 999px; font-size: 0.72rem; cursor: pointer;
+    font-family: inherit;
+  }
+  .filters button.on { border-color: var(--signal-line); color: var(--text); background: var(--signal-soft); }
+  .matrix { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 620px; }
+  th { text-align: left; color: var(--text-3); font-weight: 600; font-size: 0.68rem;
+       text-transform: uppercase; letter-spacing: 0.07em; padding: 0 0.75rem 0.6rem 0; }
+  td { padding: 0.7rem 0.75rem 0.7rem 0; border-top: 1px solid var(--line-soft); vertical-align: top; }
+  .need { color: var(--text); font-weight: 600; width: 27%; }
+  .artefact { color: var(--text-2); line-height: 1.5; }
+  .artefact a { color: var(--text-2); text-decoration-color: var(--signal-line); text-underline-offset: 3px; }
+  .artefact a:hover { color: var(--text); }
+  .muted { color: var(--text-3); }
+  .badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 999px;
+           font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
+  .badge.full { background: rgba(63,166,107,0.14); color: var(--pos); }
+  .badge.partial { background: rgba(201,138,46,0.16); color: var(--warn); }
+  .badge.none { background: var(--signal-soft); color: #E4707A; }
+</style>

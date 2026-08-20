@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const memos = await getCollection('insights');
+  return memos.map((memo) => ({ params: { slug: memo.id }, props: { memo } }));
+}
+
+const { memo } = Astro.props;
+const { Content } = await render(memo);
+const generated = memo.data.generated.toISOString().slice(0, 10);
+---
+<Base title={`${memo.data.title} — India FS Pulse`} description={memo.data.title}>
+  <article class="memo">
+    <a class="back" href="/">← India FS Pulse</a>
+    <p class="kicker">Memo</p>
+    <h1>{memo.data.title}</h1>
+    <p class="meta">
+      Generated {generated} by <code>{memo.data.generator}</code>.
+      Every figure below is interpolated from a computed value, so the prose cannot
+      drift from the data.
+    </p>
+    <div class="prose"><Content /></div>
+    <footer>
+      <h2>Sources</h2>
+      <ul>{memo.data.sources.map((s) => <li>{s}</li>)}</ul>
+      <p><a href="/methodology">Full source list and method notes →</a></p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .memo { max-width: 74ch; margin: 0 auto; padding: clamp(2rem, 6vw, 4rem) var(--gutter) 5rem; }
+  .back { color: var(--text-3); font-size: 0.8rem; text-decoration: none; }
+  .back:hover { color: var(--signal); }
+  h1 { font-size: var(--step-3); margin: 0.4rem 0 0.8rem; }
+  .meta { color: var(--text-3); font-size: 0.78rem; line-height: 1.6;
+          border-left: 2px solid var(--line); padding-left: 0.9rem; margin-bottom: 2rem; }
+  .meta code { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-2); }
+
+  .prose { color: var(--text-2); line-height: 1.72; }
+  .prose :global(h2) { color: var(--text); font-size: var(--step-1); margin: 2.4rem 0 0.8rem;
+                       padding-bottom: 0.4rem; border-bottom: 1px solid var(--line); }
+  .prose :global(h3) { color: var(--text); font-size: 1.02rem; margin: 1.8rem 0 0.5rem; }
+  .prose :global(strong) { color: var(--text); }
+  .prose :global(blockquote) { margin: 1.5rem 0; padding: 0.9rem 1.2rem;
+    background: rgba(201, 138, 46, 0.09); border-left: 3px solid var(--warn);
+    border-radius: 0 8px 8px 0; color: var(--text-2); font-size: 0.92rem; }
+  .prose :global(table) { width: 100%; border-collapse: collapse; margin: 1.4rem 0;
+                          font-size: 0.84rem; display: block; overflow-x: auto; }
+  .prose :global(th) { text-align: left; color: var(--text-3); font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.06em; padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .prose :global(td) { padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--line-soft);
+                       vertical-align: top; }
+  .prose :global(li) { margin: 0.4rem 0; }
+  .prose :global(a) { color: var(--text); text-decoration-color: var(--signal-line); }
+
+  footer { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+  footer h2 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+              color: var(--text-3); font-family: var(--font-sans); }
+  footer ul { color: var(--text-3); font-size: 0.78rem; padding-left: 1.1rem; }
+  footer a { color: var(--text-2); font-size: 0.82rem; }
+</style>

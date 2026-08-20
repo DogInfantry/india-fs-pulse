@@ -1,0 +1,135 @@
+---
+/**
+ * The interactive dashboard requirement, met without a BI dependency.
+ *
+ * Perspective, Superset, Panel, Redash and Vizro were all evaluated (see
+ * docs/stack-decisions.md). Every one of them either needs a live Python or
+ * Node backend, which a static free-hosted site cannot have, or ships several
+ * megabytes of WASM to pivot 36 rows. Sorting, filtering and ranking that many
+ * rows is a table and forty lines of DOM code, and it keeps Lighthouse at 95+.
+ */
+interface StateRow {
+  state: string; volume_share: number; value_share: number;
+  intensity_index: number; avg_ticket_inr: number;
+}
+interface Props { states: StateRow[]; period: string }
+const { states, period } = Astro.props;
+
+const cols = [
+  { key: 'state', label: 'State / UT', type: 'text' },
+  { key: 'volume_share', label: 'Share of txns', type: 'pct' },
+  { key: 'value_share', label: 'Share of value', type: 'pct' },
+  { key: 'avg_ticket_inr', label: 'Avg ticket', type: 'inr' },
+  { key: 'intensity_index', label: 'Intensity', type: 'num' },
+];
+const fmt = (row: StateRow, key: string, type: string) => {
+  const v = (row as any)[key];
+  if (type === 'pct') return `${(v * 100).toFixed(2)}%`;
+  if (type === 'inr') return `₹${Math.round(v).toLocaleString('en-IN')}`;
+  if (type === 'num') return Number(v).toFixed(3);
+  return String(v).replace(/\b\w/g, (c) => c.toUpperCase());
+};
+const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
+---
+<div class="wb">
+  <div class="bar">
+    <label class="search">
+      <span class="sr">Filter states</span>
+      <input type="search" placeholder="Filter states…" data-wb-filter autocomplete="off" />
+    </label>
+    <span class="meta" data-wb-count>{sorted.length} of {sorted.length} · {period}</span>
+    <span class="legend"><i class="hot"></i> merchant-heavy (intensity ≥ 1.0)</span>
+  </div>
+  <div class="scroll">
+    <table data-wb-table>
+      <thead>
+        <tr>
+          {cols.map((c, i) => (
+            <th data-key={c.key} data-type={c.type} class:list={[i > 0 && 'num']} tabindex="0" role="button">
+              {c.label}<span class="arrow" aria-hidden="true"></span>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {sorted.map((row) => (
+          <tr data-name={row.state.toLowerCase()} class:list={[row.intensity_index >= 1 && 'hot']}>
+            {cols.map((c, i) => (
+              <td class:list={[i > 0 && 'num']} data-v={(row as any)[c.key]}>{fmt(row, c.key, c.type)}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.wb').forEach((wb) => {
+    const table = wb.querySelector<HTMLTableElement>('[data-wb-table]')!;
+    const tbody = table.tBodies[0];
+    const rows = Array.from(tbody.rows);
+    const count = wb.querySelector<HTMLElement>('[data-wb-count]')!;
+    const period = count.textContent?.split('·')[1]?.trim() ?? '';
+    let sortKey = 1, dir = -1;
+
+    const refresh = () => {
+      const q = (wb.querySelector<HTMLInputElement>('[data-wb-filter]')!.value || '').toLowerCase();
+      let shown = 0;
+      rows.forEach((r) => {
+        const hit = !q || (r.dataset.name ?? '').includes(q);
+        r.hidden = !hit;
+        if (hit) shown++;
+      });
+      count.textContent = `${shown} of ${rows.length} · ${period}`;
+    };
+
+    const sortBy = (index: number) => {
+      const isText = table.tHead!.rows[0].cells[index].dataset.type === 'text';
+      const ordered = [...rows].sort((a, b) => {
+        const av = a.cells[index].dataset.v ?? '', bv = b.cells[index].dataset.v ?? '';
+        return (isText ? av.localeCompare(bv) : Number(av) - Number(bv)) * dir;
+      });
+      ordered.forEach((r) => tbody.appendChild(r));
+      table.tHead!.rows[0].querySelectorAll('th').forEach((th, i) => {
+        th.dataset.sorted = i === index ? (dir === 1 ? 'asc' : 'desc') : '';
+      });
+    };
+
+    table.tHead!.rows[0].querySelectorAll<HTMLTableCellElement>('th').forEach((th, i) => {
+      const go = () => { dir = sortKey === i ? -dir : (th.dataset.type === 'text' ? 1 : -1); sortKey = i; sortBy(i); };
+      th.addEventListener('click', go);
+      th.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+    wb.querySelector<HTMLInputElement>('[data-wb-filter]')!.addEventListener('input', refresh);
+    sortBy(1);
+  });
+</script>
+
+<style>
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 0.8rem; }
+  .search input {
+    background: var(--ink); border: 1px solid var(--line); color: var(--text);
+    border-radius: 8px; padding: 0.4rem 0.7rem; font: inherit; font-size: 0.8rem; min-width: 200px;
+  }
+  .search input:focus { outline: 2px solid var(--signal-line); outline-offset: 1px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .meta, .legend { color: var(--text-3); font-size: 0.72rem; }
+  .legend { margin-left: auto; display: inline-flex; align-items: center; gap: 0.35rem; }
+  .legend i.hot { width: 9px; height: 9px; border-radius: 2px; background: var(--signal); display: inline-block; }
+  .scroll { max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  thead th {
+    position: sticky; top: 0; z-index: 1; background: var(--surface-2); cursor: pointer;
+    text-align: left; color: var(--text-3); font-size: 0.66rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none;
+  }
+  thead th:hover { color: var(--text); }
+  thead th[data-sorted='asc'] .arrow::after { content: ' ▲'; color: var(--signal); }
+  thead th[data-sorted='desc'] .arrow::after { content: ' ▼'; color: var(--signal); }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--line-soft); color: var(--text-2); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:hover td { background: rgba(255, 255, 255, 0.025); color: var(--text); }
+  tbody tr.hot td:first-child { box-shadow: inset 3px 0 0 var(--signal); color: var(--text); }
+</style>

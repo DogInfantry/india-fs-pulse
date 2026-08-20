@@ -1,0 +1,20 @@
+---
+/**
+ * One ECharts island, hydrated lazily.
+ *
+ * The option object is emitted as inert JSON next to its container; a single
+ * shared module (src/scripts/charts.ts) imports ECharts ONCE and initialises
+ * each chart when it first scrolls into view. That keeps ECharts out of the
+ * critical path and off the initial payload.
+ */
+interface Props { id: string; option: Record<string, unknown>; height?: number; }
+const { id, option, height = 340 } = Astro.props;
+---
+<div class="chart" data-echart id={id} style={`height:${height}px`} role="img">
+  <script type="application/json" set:html={JSON.stringify(option)} />
+</div>
+
+<style>
+  .chart { width: 100%; }
+  .chart :global(canvas) { display: block; }
+</style>

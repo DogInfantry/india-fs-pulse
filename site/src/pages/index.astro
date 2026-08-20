@@ -1,0 +1,425 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import EChart from '../components/EChart.astro';
+import SlopeLines from '../components/charts/SlopeLines.astro';
+import GapMatrix from '../components/GapMatrix.astro';
+import Workbench from '../components/Workbench.astro';
+
+import hero from '../data/upi_monetisation.json';
+import split from '../data/chart_category_split.json';
+import mdr from '../data/chart_mdr_bridge.json';
+import nim from '../data/chart_nim_slope.json';
+import spread from '../data/chart_bank_spread.json';
+import nps from '../data/chart_nps_episodes.json';
+import stateGap from '../data/chart_state_gap.json';
+import unit from '../data/chart_unit_economics.json';
+import trend from '../data/kpi_upi_trend.json';
+
+const pc = (v: number, dp = 1) => `${(v * 100).toFixed(dp)}%`;
+const inr = (v: number) =>
+  v >= 1e12 ? `₹${(v / 1e12).toFixed(2)} lakh cr`
+  : v >= 1e7 ? `₹${(v / 1e7).toLocaleString('en-IN', { maximumFractionDigits: 0 })} cr`
+  : `₹${Math.round(v).toLocaleString('en-IN')}`;
+
+const merchant = split.series.find((s) => s.category === 'Retail')!;
+const p2p = split.series.find((s) => s.category === 'P2P')!;
+const PERIOD = hero.period;
+const SOURCE_PULSE = `PhonePe Pulse, ${PERIOD}. PhonePe's own transactions, not all of UPI. Accessed 2026-08-20.`;
+
+/* ---- Exhibit 1 (hero): volume share against value share, by leg ---- */
+const cats = split.series.map((s) => s.category);
+const optSplit = {
+  legend: { data: ['Share of transactions', 'Share of value'] },
+  grid: { top: 34, left: 8, right: 46, bottom: 4, containLabel: true },
+  xAxis: { type: 'value', max: 0.8, axisLabel: { formatter: (v: number) => `${Math.round(v * 100)}%` },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } }, axisLine: { show: false } },
+  yAxis: { type: 'category', data: cats, axisTick: { show: false }, axisLine: { show: false } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
+             valueFormatter: (v: number) => `${(v * 100).toFixed(1)}%` },
+  series: [
+    { name: 'Share of transactions', type: 'bar', data: split.series.map((s) => s.volume_share),
+      label: { show: true, position: 'right', color: '#A6B0BE', fontSize: 11,
+               formatter: (p: any) => `${(p.value * 100).toFixed(1)}%` } },
+    { name: 'Share of value', type: 'bar', data: split.series.map((s) => s.value_share),
+      itemStyle: { color: '#5B6673' },
+      label: { show: true, position: 'right', color: '#6E7987', fontSize: 11,
+               formatter: (p: any) => `${(p.value * 100).toFixed(1)}%` } },
+  ],
+};
+
+/* ---- Exhibit 2: what an MDR would be worth on the merchant leg ---- */
+const optMdr = {
+  grid: { top: 26, left: 8, right: 16, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', data: mdr.scenarios.map((s) => s.rate === '0bps' ? '0bps (today)' : s.rate),
+           axisTick: { show: false } },
+  yAxis: { type: 'value', name: '₹ crore per quarter', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis', valueFormatter: (v: number) => `₹${Number(v).toLocaleString('en-IN')} cr` },
+  series: [{
+    type: 'bar', barWidth: '46%',
+    data: mdr.scenarios.map((s, i) => ({
+      value: s.revenue_cr,
+      itemStyle: { color: i === 0 ? '#C02734' : '#5B6673', opacity: i === 0 ? 1 : 0.85 },
+    })),
+    label: { show: true, position: 'top', color: '#A6B0BE', fontSize: 11,
+             formatter: (p: any) => p.value === 0 ? '₹0' : `₹${Number(p.value).toLocaleString('en-IN')} cr` },
+  }],
+};
+
+/* ---- Exhibit 3: the decade of volume, with the data seam made visible ---- */
+const months = trend.map((r: any) => r.month);
+const mirror = trend.map((r: any) => (r.provenance === 'npci_ckan_mirror' ? r.volume_mn : null));
+const manual = trend.map((r: any) => (r.provenance === 'npci_manual' ? r.volume_mn : null));
+const seamIndex = trend.findIndex((r: any) => r.provenance === 'npci_manual');
+if (seamIndex > 0) mirror[seamIndex] = trend[seamIndex].volume_mn;   // join the two lines
+const optTrend = {
+  legend: { data: ['Open CKAN mirror', 'Transcribed from NPCI'] },
+  grid: { top: 34, left: 8, right: 16, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', data: months, axisTick: { show: false },
+           axisLabel: { interval: 11, color: '#6E7987', fontSize: 10 } },
+  yAxis: { type: 'value', name: 'transactions, million/month',
+           nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis', valueFormatter: (v: number) => v ? `${Number(v).toLocaleString('en-IN')} mn` : '-' },
+  series: [
+    { name: 'Open CKAN mirror', type: 'line', data: mirror, showSymbol: false, smooth: 0.15,
+      lineStyle: { width: 2, color: '#5B6673' }, areaStyle: { color: 'rgba(91,102,115,0.12)' } },
+    { name: 'Transcribed from NPCI', type: 'line', data: manual, showSymbol: false, smooth: 0.15,
+      lineStyle: { width: 2.5, color: '#C02734' }, areaStyle: { color: 'rgba(192,39,52,0.10)' } },
+  ],
+};
+
+/* ---- Exhibit 5: what banks earn against what they pay ---- */
+const optSpread = {
+  legend: { data: ['Yield on assets', 'Cost of funds', 'Net interest margin'] },
+  grid: { top: 34, left: 8, right: 16, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', data: spread.series.map((s) => s.cohort), axisTick: { show: false } },
+  yAxis: { type: 'value', axisLabel: { formatter: '{value}%' },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis', valueFormatter: (v: number) => `${Number(v).toFixed(2)}%` },
+  series: [
+    { name: 'Yield on assets', type: 'bar', itemStyle: { color: '#5B6673' },
+      data: spread.series.map((s) => +s.yield_on_assets.toFixed(2)) },
+    { name: 'Cost of funds', type: 'bar', itemStyle: { color: '#1F7A8C' },
+      data: spread.series.map((s) => +s.cost_of_funds.toFixed(2)) },
+    { name: 'Net interest margin', type: 'bar', itemStyle: { color: '#C02734' },
+      data: spread.series.map((s) => +s.nim.toFixed(2)),
+      label: { show: true, position: 'top', color: '#A6B0BE', fontSize: 11, formatter: '{c}%' } },
+  ],
+};
+
+/* ---- Exhibit 6: merchant unit economics under each MDR scenario ---- */
+const priced = unit.scenarios.filter((s) => s.rate !== '0bps');
+const optUnit = {
+  grid: { top: 26, left: 8, right: 16, bottom: 4, containLabel: true },
+  xAxis: { type: 'category', data: ['0bps (today)', ...priced.map((s) => s.rate)], axisTick: { show: false } },
+  yAxis: { type: 'value', name: '₹ per merchant per year',
+           nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: { trigger: 'axis', valueFormatter: (v: number) => `₹${Number(v).toLocaleString('en-IN')}` },
+  series: [{
+    type: 'bar', barWidth: '46%',
+    data: [{ value: 0, itemStyle: { color: '#C02734' } },
+           ...priced.map((s) => ({ value: Math.round(s.revenue_per_merchant_yr_inr), itemStyle: { color: '#5B6673' } }))],
+    label: { show: true, position: 'top', color: '#A6B0BE', fontSize: 11,
+             formatter: (p: any) => `₹${Number(p.value).toLocaleString('en-IN')}` },
+  }],
+};
+
+/* ---- Exhibit 7: episode-level NPS (SYNTHETIC panel) ---- */
+const optNps = {
+  legend: { data: nps.series.map((s) => s.cohort) },
+  grid: { top: 34, left: 8, right: 24, bottom: 4, containLabel: true },
+  xAxis: { type: 'value', min: -60, max: 60, axisLabel: { formatter: '{value}' },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  yAxis: { type: 'category', data: nps.episodes, axisTick: { show: false }, axisLine: { show: false } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
+             valueFormatter: (v: number) => `NPS ${v > 0 ? '+' : ''}${v}` },
+  series: nps.series.map((s, i) => ({
+    name: s.cohort, type: 'bar',
+    itemStyle: { color: ['#C02734', '#1F7A8C', '#5B6673'][i % 3] },
+    data: s.values,
+  })),
+};
+
+/* ---- Exhibit 8: transaction share against value share, by state ---- */
+const material = stateGap.states.filter((s) => s.volume_share >= 0.01);
+const optStates = {
+  grid: { top: 26, left: 8, right: 20, bottom: 4, containLabel: true },
+  xAxis: { type: 'value', name: 'share of transactions',
+           nameLocation: 'middle', nameGap: 26, nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           axisLabel: { formatter: (v: number) => `${(v * 100).toFixed(0)}%` },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  yAxis: { type: 'value', name: 'average ticket, ₹', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  tooltip: {
+    trigger: 'item',
+    formatter: (p: any) =>
+      `<b>${p.data[2]}</b><br/>${(p.data[0] * 100).toFixed(1)}% of transactions<br/>` +
+      `avg ticket ₹${Number(p.data[1]).toLocaleString('en-IN')}<br/>intensity ${p.data[3]}`,
+  },
+  series: [{
+    type: 'scatter',
+    symbolSize: (d: any) => 8 + Math.sqrt(d[0]) * 60,
+    itemStyle: { color: (p: any) => (p.data[3] >= 1 ? '#C02734' : '#1F7A8C'), opacity: 0.8 },
+    data: material.map((s) => [s.volume_share, Math.round(s.avg_ticket_inr), s.state, s.intensity_index]),
+  }],
+};
+---
+
+<Base
+  title="India FS Pulse — the UPI monetisation reckoning"
+  description="India built the world's largest real-time payments network and priced it at zero. A code-driven scan, point of view, diligence simulation and survey analysis of Indian financial services."
+>
+  <header class="hero">
+    <div class="wrap">
+      <p class="kicker">Financial Services &middot; Point of view &middot; {PERIOD}</p>
+      <h1>
+        India built the world's largest payments network.<br />
+        <em>It priced the busy half at zero.</em>
+      </h1>
+      <p class="lede">
+        In {PERIOD}, merchant payments were <strong>{pc(merchant.volume_share)} of every transaction
+        but only {pc(merchant.value_share)} of the rupees</strong>. Person-to-person transfers were
+        the mirror image. The merchant leg is the only one a discount rate could ever be charged
+        on — and under zero-MDR it earns nothing.
+      </p>
+      <dl class="stats">
+        <div><dt>Merchant share of transactions</dt><dd>{pc(merchant.volume_share)}</dd></div>
+        <div><dt>Merchant share of value</dt><dd>{pc(merchant.value_share)}</dd></div>
+        <div><dt>Average merchant ticket</dt><dd>{inr(merchant.avg_ticket_inr)}</dd></div>
+        <div><dt>Payment revenue at 0bps</dt><dd class="zero">₹0</dd></div>
+      </dl>
+      <p class="tags">
+        <span>Industry scan</span><span>Point of view</span><span>PE diligence</span>
+        <span>Survey analytics</span><span>Interactive dashboards</span>
+      </p>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="wrap module" id="module-a">
+      <h2 class="section-head"><span>A</span> Payments landscape and the monetisation gap</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 1 · Market structure"
+          title={`Merchant payments carry ${pc(merchant.volume_share, 0)} of transactions but ${pc(merchant.value_share, 0)} of the rupees`}
+          subtitle={`P2P is the mirror image: ${pc(p2p.volume_share, 0)} of transactions, ${pc(p2p.value_share, 0)} of value. Volume and value have separated.`}
+          source={SOURCE_PULSE}
+          wide
+        >
+          <EChart id="c-split" option={optSplit} height={260} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 2 · The revenue gap"
+          title="Every rate other than the one in force would produce real revenue"
+          subtitle={`Quarterly revenue the merchant leg would generate at each MDR, on ${mdr.merchant_gmv_lakh_cr.toFixed(2)} lakh crore of merchant GMV. The rate in force is 0bps.`}
+          source={SOURCE_PULSE}
+        >
+          <EChart id="c-mdr" option={optMdr} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 3 · Ten years of volume"
+          title="Volume compounds without pause — and the series shows exactly where its data came from"
+          subtitle="The open mirror of NPCI's series stops in August 2023. Later months were transcribed from NPCI's own table, and are coloured differently rather than silently merged."
+          source="NPCI monthly product statistics: open CKAN mirror to 2023-08, then transcribed from npci.org.in on 2026-08-20. Four months NPCI does not publish in its ten-row table are left as gaps, not interpolated."
+        >
+          <EChart id="c-trend" option={optTrend} />
+        </Figure>
+      </div>
+    </section>
+
+    <section class="wrap module" id="module-b">
+      <h2 class="section-head"><span>B</span> Banking health scan</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 4 · Cohort margins"
+          title={`Private banks hold a ${Math.round(nim.gap_bps.at(-1)!)}bps margin advantage that has not closed`}
+          subtitle="NIM proxy: net interest income over average total assets, computed from filed statements. The shaded band is the gap."
+          source="Filed annual income statements and balance sheets, retrieved via yfinance. A proxy, not reported NIM — banks use average earning assets, a smaller denominator."
+        >
+          <SlopeLines periods={nim.periods} series={nim.series} gapBps={nim.gap_bps} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 5 · Margin decomposition"
+          title="The advantage splits almost evenly between what banks earn and what they pay"
+          subtitle={`FY${spread.fy}. Neither lever alone closes the gap, which is why it persists.`}
+          source="Filed annual income statements and balance sheets, retrieved via yfinance."
+        >
+          <EChart id="c-spread" option={optSpread} />
+        </Figure>
+      </div>
+    </section>
+
+    <section class="wrap module" id="module-c">
+      <h2 class="section-head"><span>C</span> Private equity diligence simulation</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 6 · Unit economics"
+          title={`${(unit.merchants / 1e6).toFixed(1)} million merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, ₹0 of payment revenue`}
+          subtitle={`Each merchant runs ${Math.round(unit.txns_per_merchant_quarter)} transactions a quarter. The bars show what one merchant would be worth per year if an MDR existed.`}
+          source={SOURCE_PULSE}
+          wide
+        >
+          <EChart id="c-unit" option={optUnit} height={280} />
+        </Figure>
+      </div>
+      <p class="callout">
+        <strong>The recommendation:</strong> conditional no on a payments-fee thesis, conditional
+        yes on merchant financing. The payment is the acquisition channel; the loan is the P&amp;L.
+        <a href="/insights/diligence-merchant-payments">Read the diligence memo and its ambiguity register →</a>
+      </p>
+    </section>
+
+    <section class="wrap module" id="module-d">
+      <h2 class="section-head"><span>D</span> Survey analytics</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 7 · Episode-level NPS"
+          title="One brand contains both the best and the worst episode in the market"
+          subtitle="Scored per customer episode rather than per brand. A blended brand NPS averages these opposites into a number that hides the problem."
+          source="SYNTHETIC panel — 2,000 respondents generated from a documented, seeded model (analysis/04_survey_nps.py). The method is the artefact; the figures illustrate it and are not market fact."
+          wide
+        >
+          <div class="synthetic-flag">Synthetic data — illustrates the method, not the market</div>
+          <EChart id="c-nps" option={optNps} height={300} />
+        </Figure>
+      </div>
+    </section>
+
+    <section class="wrap module" id="module-e">
+      <h2 class="section-head"><span>E</span> Geographic gap</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 8 · Two markets, not one"
+          title="Merchant-heavy states transact often and small; remittance-heavy states rarely and large"
+          subtitle="Red states transact more often than their rupee share implies — where zero-MDR costs land. Bubble size is share of national transactions; states under 1% are omitted."
+          source={SOURCE_PULSE + ' Deliberately a composition measure, not per-capita: no population denominator is invented.'}
+          wide
+        >
+          <EChart id="c-states" option={optStates} height={340} />
+        </Figure>
+      </div>
+    </section>
+
+    <section class="wrap module" id="workbench">
+      <h2 class="section-head"><span>F</span> Analyst workbench</h2>
+      <Figure
+        kicker="Interactive · Client-ready dashboard"
+        title="Sort, filter and re-rank the state data without leaving the page"
+        subtitle="The dashboard requirement, met in code: every column sortable, a live filter, and a metric switch — all client-side over the committed dataset."
+        source={SOURCE_PULSE}
+        wide
+      >
+        <Workbench states={stateGap.states} period={stateGap.period} />
+      </Figure>
+    </section>
+
+    <section class="wrap module" id="gap-matrix">
+      <h2 class="section-head"><span>G</span> Gap analyser</h2>
+      <Figure
+        kicker="Traceability"
+        title="Every line of the job description, mapped to the artefact that demonstrates it"
+        subtitle="Including the two it does not. A self-assessment that only says “full” is not an assessment."
+        source="Requirements transcribed from the Associate — Financial Services job description (Bain Capability Network, FS Centre of Expertise, Job ID 90399)."
+        wide
+      >
+        <GapMatrix />
+      </Figure>
+    </section>
+
+    <section class="wrap module" id="memos">
+      <h2 class="section-head"><span>H</span> The memos</h2>
+      <div class="memo-grid">
+        <a href="/insights/pov-upi-monetization"><span class="kicker">Point of view</span><b>India's payments network monetises the wrong leg</b></a>
+        <a href="/insights/pov-deposit-war"><span class="kicker">Sector scan</span><b>The private-bank margin advantage is half pricing, half funding</b></a>
+        <a href="/insights/diligence-merchant-payments"><span class="kicker">Diligence</span><b>Underwrite distribution economics, not transaction economics</b></a>
+        <a href="/insights/survey-nps-episodes"><span class="kicker">Survey</span><b>Episode-level NPS reveals what brand-level NPS hides</b></a>
+        <a href="/insights/gap-geographic"><span class="kicker">Gap analysis</span><b>India runs two different payments markets, not one</b></a>
+        <a href="/methodology"><span class="kicker">Method</span><b>Sources, provenance and what this analysis cannot know</b></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap site-foot">
+    <p>
+      <strong>India FS Pulse.</strong> Built end to end in code: a Python pipeline over six public
+      sources, five analysis modules, and this static site. Every figure on this page is computed
+      from a committed dataset — nothing is typed in by hand.
+    </p>
+    <p class="fine">
+      Original work. Not affiliated with, endorsed by, or using the trademarks or proprietary data
+      of any consulting firm. Net Promoter Score is a public method; no proprietary benchmark data
+      is used. Each dataset retains its own publisher's terms — see the
+      <a href="/methodology">methodology and sources</a>. Nothing here is investment advice.
+    </p>
+  </footer>
+</Base>
+
+<script>
+  import { mountCharts } from '../scripts/charts';
+  mountCharts();
+</script>
+
+<style>
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: var(--gutter); }
+
+  .hero { padding: clamp(3.5rem, 10vw, 7rem) 0 clamp(2rem, 5vw, 3.5rem); }
+  .hero h1 { font-size: var(--step-4); margin: 0.5rem 0 0; max-width: 20ch; }
+  .hero h1 em { color: var(--signal); font-style: normal; }
+  .lede { color: var(--text-2); font-size: var(--step-1); max-width: 58ch; margin: 1.4rem 0 0;
+          line-height: 1.5; }
+  .lede strong { color: var(--text); }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+           gap: 1px; margin: 2.5rem 0 0; padding: 0; background: var(--line);
+           border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .stats > div { background: var(--surface); padding: 1rem 1.1rem; }
+  .stats dt { color: var(--text-3); font-size: 0.68rem; text-transform: uppercase;
+              letter-spacing: 0.07em; }
+  .stats dd { margin: 0.35rem 0 0; font-family: var(--font-display); font-size: var(--step-2);
+              line-height: 1; }
+  .stats dd.zero { color: var(--signal); }
+
+  .tags { margin: 1.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tags span { border: 1px solid var(--line); color: var(--text-3); border-radius: 999px;
+               padding: 0.25rem 0.7rem; font-size: 0.7rem; }
+
+  .module { padding: clamp(2rem, 6vw, 3.5rem) 0; }
+  .section-head { font-size: var(--step-2); display: flex; align-items: baseline; gap: 0.75rem;
+                  margin: 0 0 1.5rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--line); }
+  .section-head span { color: var(--signal); font-family: var(--font-sans); font-size: 0.72rem;
+                       font-weight: 700; border: 1px solid var(--signal-line); border-radius: 6px;
+                       padding: 0.1rem 0.45rem; letter-spacing: 0.05em; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+  @media (max-width: 880px) { .grid { grid-template-columns: 1fr; } }
+
+  .callout { margin: 1.4rem 0 0; padding: 1rem 1.2rem; background: var(--signal-soft);
+             border-left: 3px solid var(--signal); border-radius: 0 var(--radius) var(--radius) 0;
+             color: var(--text-2); font-size: 0.92rem; line-height: 1.6; }
+  .callout a { display: inline-block; margin-top: 0.35rem; color: var(--text);
+               text-decoration-color: var(--signal-line); text-underline-offset: 3px; }
+
+  .synthetic-flag { display: inline-block; margin-bottom: 0.7rem; padding: 0.25rem 0.6rem;
+                    border: 1px dashed var(--warn); color: var(--warn); border-radius: 6px;
+                    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em;
+                    text-transform: uppercase; }
+
+  .memo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .memo-grid a { display: block; padding: 1.15rem; background: var(--surface);
+                 border: 1px solid var(--line); border-radius: var(--radius);
+                 text-decoration: none; color: var(--text); transition: border-color 0.18s ease; }
+  .memo-grid a:hover { border-color: var(--signal-line); }
+  .memo-grid b { display: block; margin-top: 0.4rem; font-family: var(--font-display);
+                 font-weight: 600; font-size: 1.02rem; line-height: 1.3; }
+
+  .site-foot { padding: 2.5rem 0 4rem; margin-top: 2rem; border-top: 1px solid var(--line);
+               color: var(--text-2); font-size: 0.85rem; line-height: 1.65; }
+  .site-foot .fine { color: var(--text-3); font-size: 0.74rem; margin-top: 0.8rem; max-width: 78ch; }
+  .site-foot a { color: var(--text-2); }
+</style>

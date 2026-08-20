@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import provenance from '../../../data-pipeline/data/processed/_provenance.json';
+
+const datasets = Object.entries(provenance as Record<string, any>).sort(([a], [b]) => a.localeCompare(b));
+const accessed = datasets[0]?.[1]?.accessed ?? '';
+
+const rejected = [
+  { name: 'RBI DBIE (data.rbi.org.in)', why: 'An Angular application with no documented public REST API. Net interest margin is derived from filed income statements instead, which is more defensible than screen-scraping a portal.' },
+  { name: 'NPCI direct scraping', why: 'npci.org.in returns HTTP 403 to every scripted request. Recent months are transcribed from a browser session with per-row provenance instead. The overlap month matches the open mirror exactly, confirming no level shift at the seam.' },
+  { name: 'data.gov.in', why: 'The public sandbox key authenticates, but filtered resource queries time out and many finance resources have no active API. It would add nothing the spine does not already cover.' },
+  { name: 'Perspective, Superset, Panel, Redash, Vizro, glue', why: 'Each needs a live Python or Node backend, which a static free-hosted site cannot have — or ships several megabytes of WASM to pivot 36 rows. The workbench is built in code instead, which keeps the page fast.' },
+  { name: 'D3', why: 'Dropped after the charts were specified. A four-point cohort chart is server-rendered SVG with no JavaScript at all, and ECharts covers the rest. Removing it took a dependency and a client bundle out of the project.' },
+  { name: 'WebGPU', why: 'No dataset here is remotely large enough to justify it.' },
+];
+---
+<Base title="Methodology and sources — India FS Pulse" description="Every dataset, its publisher, coverage and access date, plus what this analysis deliberately does not do.">
+  <article class="doc">
+    <a class="back" href="/">← India FS Pulse</a>
+    <p class="kicker">Method</p>
+    <h1>Sources, provenance, and what this analysis cannot know</h1>
+    <p class="lede">
+      Every figure on this site is computed by a script from a committed dataset. Nothing is
+      typed in by hand. This page is generated from the provenance ledger the fetchers write,
+      so it cannot drift from what the pipeline actually pulled.
+    </p>
+
+    <h2>Datasets</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Dataset</th><th>Publisher</th><th>Coverage</th><th>Rows</th><th>Terms</th></tr></thead>
+        <tbody>
+          {datasets.map(([name, e]) => (
+            <tr>
+              <td><code>{name}</code></td>
+              <td><a href={e.url} rel="noopener noreferrer nofollow" target="_blank">{e.publisher}</a></td>
+              <td>{e.coverage}</td>
+              <td class="num">{Number(e.rows).toLocaleString('en-IN')}</td>
+              <td class="terms">{e.licence}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="note">All accessed {accessed}. Code in this repository is MIT licensed; each dataset retains its publisher's own terms.</p>
+
+    <h2>Caveats carried into every exhibit</h2>
+    <ul class="caveats">
+      {datasets.filter(([, e]) => e.note).map(([name, e]) => (
+        <li><code>{name}</code> — {e.note}</li>
+      ))}
+    </ul>
+
+    <h2>What was deliberately not used</h2>
+    <dl class="rejected">
+      {rejected.map((r) => (<div><dt>{r.name}</dt><dd>{r.why}</dd></div>))}
+    </dl>
+
+    <h2>Three rules the pipeline enforces</h2>
+    <ol class="rules">
+      <li><b>Never fabricate a number.</b> If a value was not fetched or computed it stays a visible gap. Four months NPCI does not publish are left empty rather than interpolated.</li>
+      <li><b>Fail loud on shape change.</b> Each fetcher validates its schema and range. The bank fetcher refused to run when a NIM came back negative — correctly, because the company was a payments firm, not a bank.</li>
+      <li><b>Synthetic data announces itself.</b> The survey panel is generated. It says so in the filename, on the chart, and at the top of the memo.</li>
+    </ol>
+  </article>
+</Base>
+
+<style>
+  .doc { max-width: 82ch; margin: 0 auto; padding: clamp(2rem, 6vw, 4rem) var(--gutter) 5rem; }
+  .back { color: var(--text-3); font-size: 0.8rem; text-decoration: none; }
+  .back:hover { color: var(--signal); }
+  h1 { font-size: var(--step-3); margin: 0.4rem 0 1rem; }
+  h2 { font-size: var(--step-1); margin: 2.6rem 0 0.9rem; padding-bottom: 0.4rem;
+       border-bottom: 1px solid var(--line); }
+  .lede { color: var(--text-2); font-size: 1.02rem; line-height: 1.7; max-width: 66ch; }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 640px; }
+  th { text-align: left; color: var(--text-3); font-size: 0.66rem; text-transform: uppercase;
+       letter-spacing: 0.06em; padding: 0.5rem 0.7rem 0.5rem 0; border-bottom: 1px solid var(--line); }
+  td { padding: 0.6rem 0.7rem 0.6rem 0; border-bottom: 1px solid var(--line-soft);
+       color: var(--text-2); vertical-align: top; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .terms { font-size: 0.72rem; color: var(--text-3); }
+  code { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text); }
+  a { color: var(--text-2); text-decoration-color: var(--signal-line); }
+  .note { color: var(--text-3); font-size: 0.76rem; margin-top: 0.7rem; }
+  .caveats { color: var(--text-2); font-size: 0.86rem; line-height: 1.65; padding-left: 1.1rem; }
+  .caveats li { margin: 0.5rem 0; }
+  .rejected > div { padding: 0.85rem 0; border-bottom: 1px solid var(--line-soft); }
+  .rejected dt { color: var(--text); font-weight: 700; font-size: 0.9rem; }
+  .rejected dd { margin: 0.3rem 0 0; color: var(--text-2); font-size: 0.86rem; line-height: 1.6; }
+  .rules { color: var(--text-2); font-size: 0.9rem; line-height: 1.7; padding-left: 1.2rem; }
+  .rules li { margin: 0.6rem 0; }
+  .rules b { color: var(--text); }
+</style>
