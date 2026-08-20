@@ -1,6 +1,6 @@
 ---
 title: "The private-bank margin advantage is half pricing, half funding"
-generated: 2026-08-20
+generated: 2026-08-21
 generator: analysis/02_banking_health.py
 sources:
   - Filed annual income statements and balance sheets via yfinance
@@ -41,6 +41,19 @@ Sub-module A is a *deposit* question for banks.
   width, and underwrite convergence only where deposit mix is actually shifting.
 - **The link to payments:** whoever owns the transaction owns the relationship that
   produces the cheap deposit. That is the strategic reason banks tolerate zero MDR.
+
+## Two further readings
+
+**Inclusion: the rails are deep, not just wide.** Account ownership reached
+89.0% of adults in 2024 (973.6mn banked adults). Against UPI volume that
+same year, each banked adult now runs **14.9 transactions a month** - up from
+4.0 in 2021. Access stopped being the constraint some years ago; usage intensity
+is the story now, and it is what makes the zero-MDR cost base grow.
+
+**The market's verdict.** Over 2021-08-20 to 2026-08-20, the median private bank returned
+17% on price against 284% for the median public bank. The market has NOT paid for the margin franchise - public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
+return only - dividends excluded, so this understates total return for the higher-
+yielding public cohort.
 
 ## Method and its limits
 

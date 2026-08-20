@@ -1,0 +1,35 @@
+{
+  "note": "Account ownership is World Bank Findex (% of population 15+). The 15+ base is total population minus ages 0-14. UPI volume is the mean month of that year.",
+  "series": [
+    {
+      "year": 2011,
+      "account_ownership_pct": 35.2,
+      "banked_adults_mn": 307.1,
+      "txns_per_banked_adult_per_month": null
+    },
+    {
+      "year": 2014,
+      "account_ownership_pct": 53.1,
+      "banked_adults_mn": 492.1,
+      "txns_per_banked_adult_per_month": null
+    },
+    {
+      "year": 2017,
+      "account_ownership_pct": 79.9,
+      "banked_adults_mn": 783.6,
+      "txns_per_banked_adult_per_month": 0.0
+    },
+    {
+      "year": 2021,
+      "account_ownership_pct": 77.5,
+      "banked_adults_mn": 812.4,
+      "txns_per_banked_adult_per_month": 4.0
+    },
+    {
+      "year": 2024,
+      "account_ownership_pct": 89.0,
+      "banked_adults_mn": 973.6,
+      "txns_per_banked_adult_per_month": 14.9
+    }
+  ]
+}

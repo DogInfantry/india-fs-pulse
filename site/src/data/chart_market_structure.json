@@ -1,0 +1,84 @@
+{
+  "month": "2026-07",
+  "cap": 0.3,
+  "note": "Column width is share of transactions; height is share of value. Shares are of the NPCI national total, so the residual is real.",
+  "apps": [
+    {
+      "app": "PhonePe",
+      "volume_share": 0.4589,
+      "value_share": 0.4833,
+      "avg_ticket_inr": 1330.0,
+      "breaches_cap": true
+    },
+    {
+      "app": "Google Pay",
+      "volume_share": 0.3233,
+      "value_share": 0.3351,
+      "avg_ticket_inr": 1309.0,
+      "breaches_cap": true
+    },
+    {
+      "app": "Paytm",
+      "volume_share": 0.0805,
+      "value_share": 0.0685,
+      "avg_ticket_inr": 1074.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "All other apps",
+      "volume_share": 0.0406,
+      "value_share": 0.0507,
+      "avg_ticket_inr": 1577.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "Navi",
+      "volume_share": 0.04,
+      "value_share": 0.0162,
+      "avg_ticket_inr": 510.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "super.money",
+      "volume_share": 0.0185,
+      "value_share": 0.007,
+      "avg_ticket_inr": 477.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "BHIM",
+      "volume_share": 0.0102,
+      "value_share": 0.0096,
+      "avg_ticket_inr": 1182.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "FamApp",
+      "volume_share": 0.0087,
+      "value_share": 0.0009,
+      "avg_ticket_inr": 137.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "WhatsApp",
+      "volume_share": 0.0071,
+      "value_share": 0.0043,
+      "avg_ticket_inr": 772.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "Axis Bank apps",
+      "volume_share": 0.0061,
+      "value_share": 0.0047,
+      "avg_ticket_inr": 970.0,
+      "breaches_cap": false
+    },
+    {
+      "app": "CRED",
+      "volume_share": 0.006,
+      "value_share": 0.0198,
+      "avg_ticket_inr": 4172.0,
+      "breaches_cap": false
+    }
+  ]
+}

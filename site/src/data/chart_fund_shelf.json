@@ -1,0 +1,111 @@
+{
+  "nav_date": "20-Aug-2026",
+  "listed_schemes": 14288,
+  "distinct_strategies": 3353,
+  "fund_houses": 52,
+  "caveat": "Scheme counts, not AUM. AMFI's NAV file carries no assets under management.",
+  "by_asset_class": [
+    {
+      "asset_class": "Debt",
+      "schemes": 8016,
+      "strategies": 1525
+    },
+    {
+      "asset_class": "Equity",
+      "schemes": 3110,
+      "strategies": 809
+    },
+    {
+      "asset_class": "Index",
+      "schemes": 1150,
+      "strategies": 326
+    },
+    {
+      "asset_class": "Hybrid",
+      "schemes": 838,
+      "strategies": 166
+    },
+    {
+      "asset_class": "Fund of funds",
+      "schemes": 747,
+      "strategies": 206
+    },
+    {
+      "asset_class": "ETF",
+      "schemes": 280,
+      "strategies": 278
+    },
+    {
+      "asset_class": "Solution oriented",
+      "schemes": 145,
+      "strategies": 41
+    },
+    {
+      "asset_class": "Other",
+      "schemes": 2,
+      "strategies": 2
+    }
+  ],
+  "top_houses": [
+    {
+      "fund_house": "ICICI Prudential Mutual Fund",
+      "schemes": 2498,
+      "strategies": 621
+    },
+    {
+      "fund_house": "Nippon India Mutual Fund",
+      "schemes": 1865,
+      "strategies": 454
+    },
+    {
+      "fund_house": "Kotak Mahindra Mutual Fund",
+      "schemes": 920,
+      "strategies": 256
+    },
+    {
+      "fund_house": "UTI Mutual Fund",
+      "schemes": 1363,
+      "strategies": 222
+    },
+    {
+      "fund_house": "HDFC Mutual Fund",
+      "schemes": 568,
+      "strategies": 150
+    },
+    {
+      "fund_house": "SBI Mutual Fund",
+      "schemes": 485,
+      "strategies": 122
+    },
+    {
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "schemes": 461,
+      "strategies": 117
+    },
+    {
+      "fund_house": "Mirae Asset Mutual Fund",
+      "schemes": 272,
+      "strategies": 97
+    },
+    {
+      "fund_house": "Bandhan Mutual Fund",
+      "schemes": 431,
+      "strategies": 91
+    },
+    {
+      "fund_house": "DSP Mutual Fund",
+      "schemes": 359,
+      "strategies": 91
+    },
+    {
+      "fund_house": "Axis Mutual Fund",
+      "schemes": 412,
+      "strategies": 89
+    },
+    {
+      "fund_house": "Motilal Oswal Mutual Fund",
+      "schemes": 214,
+      "strategies": 89
+    }
+  ]
+}

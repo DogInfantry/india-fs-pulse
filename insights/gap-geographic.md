@@ -1,6 +1,6 @@
 ---
 title: "India runs two different payments markets, not one"
-generated: 2026-08-20
+generated: 2026-08-21
 generator: analysis/05_geo_gap.py
 sources:
   - PhonePe Pulse state-level transaction data

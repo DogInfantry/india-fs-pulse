@@ -12,6 +12,7 @@ other non-empty line is a header (category if it contains a bracket, else house)
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -21,6 +22,21 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import banner, expect, expect_nonempty, get_text, record_source, write_processed  # noqa: E402
 
 URL = "https://www.amfiindia.com/spages/NAVAll.txt"
+
+# Category headers always name a scheme structure first; anything else that
+# happens to contain brackets is a fund house.
+CATEGORY_RE = re.compile(r"^(Open Ended|Close Ended|Interval Fund)\s+Schemes?\s*\(", re.I)
+
+# Legacy AMFI labels ("Income", "Growth") predate the 2018 category scheme.
+ASSET_RULES = [
+    (r"equity|elss|growth$", "Equity"),
+    (r"debt|income|liquid|money market|gilt", "Debt"),
+    (r"hybrid|balanced", "Hybrid"),
+    (r"solution oriented|retirement|children", "Solution oriented"),
+    (r"fof|fund of fund", "Fund of funds"),
+    (r"etf", "ETF"),
+    (r"index", "Index"),
+]
 
 
 def parse(text: str) -> pd.DataFrame:
@@ -46,9 +62,11 @@ def parse(text: str) -> pd.DataFrame:
                 "fund_house": house,
                 "category": category,
             })
-        elif "(" in line and ")" in line:
+        elif CATEGORY_RE.match(line):
             category = line
         else:
+            # Fund house names can contain brackets too ("IL&FS Mutual Fund (IDF)"),
+            # so a bracket alone is not enough to call a line a category header.
             house = line
     df = pd.DataFrame(rows)
     expect_nonempty(df, "AMFI NAVAll", minimum=5000)
@@ -61,8 +79,19 @@ def parse(text: str) -> pd.DataFrame:
 def main() -> None:
     banner("AMFI: daily NAV scheme master")
     df = parse(get_text(URL))
-    df["asset_class"] = (
-        df.category.str.extract(r"\((.*?)\s*(?:Scheme|-)", expand=False).str.strip().fillna("Other")
+    inner = df.category.str.extract(r"\((.*)\)", expand=False).fillna("")
+
+    def classify(text: str) -> str:
+        low = text.lower()
+        for pattern, label in ASSET_RULES:
+            if re.search(pattern, low):
+                return label
+        return "Other"
+
+    df["asset_class"] = inner.map(classify)
+    expect(
+        (df.asset_class == "Other").mean() < 0.10,
+        f"{(df.asset_class == 'Other').mean():.1%} of schemes unclassified - AMFI labels changed",
     )
     print(f"   {len(df):,} schemes across {df.fund_house.nunique()} fund houses")
     print(f"   NAV date: {df.nav_date.dropna().mode().iloc[0]}")

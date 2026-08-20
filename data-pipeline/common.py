@@ -6,6 +6,7 @@ capture so `docs/sources.md` is generated rather than hand-maintained
 """
 from __future__ import annotations
 
+import io
 import json
 import time
 from datetime import date, datetime, timezone
@@ -111,6 +112,18 @@ def record_source(
         "accessed_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     PROVENANCE.write_text(json.dumps(ledger, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def read_seeded_csv(path: Path) -> pd.DataFrame:
+    """Read a hand-seeded CSV whose header block is '#'-prefixed comment lines.
+
+    pandas' `comment='#'` cannot be used here: it strips from the first '#'
+    ANYWHERE in a line, and NPCI's own data contains '#' as its third-party
+    provider marker ("Phone Pe #"), which silently truncated every row to NaN.
+    Only whole lines that START with '#' are comments.
+    """
+    body = [ln for ln in path.read_text(encoding="utf-8").splitlines() if not ln.lstrip().startswith("#")]
+    return pd.read_csv(io.StringIO(chr(10).join(body)))
 
 
 def banner(title: str) -> None:

@@ -1,0 +1,148 @@
+# NPCI UPI per-application statistics - hand-seeded.
+#
+# WHY THIS FILE EXISTS: npci.org.in serves HTTP 403 to every scripted request.
+# These rows were read from the "UPI Applications" tab of the NPCI Ecosystem
+# Statistics page in a real browser session on 2026-08-21. See docs/REFRESH.md.
+#
+# WHAT IT IS: monthly volume and value for the ten largest UPI apps. This is the
+# only open source that attributes UPI activity to a PLAYER - PhonePe Pulse is
+# PhonePe-only and the headline NPCI series is market-total.
+#
+# COVERAGE LIMIT: NPCI renders only 10 rows and offers no pagination, so this is
+# the top ten by volume, not the full field. Shares are therefore computed
+# against the NPCI NATIONAL monthly total (data/processed/upi_monthly.csv), not
+# against the sum of these rows - which also yields an honest "everyone else"
+# residual rather than pretending the ten apps are the whole market.
+#
+# WHY THE SERIES STARTS 2023-12: for earlier months NPCI renders the same capped
+# ten rows ALPHABETICALLY rather than by size, so PhonePe is not even present in
+# December 2022. Those months are unusable, not merely inconvenient.
+#
+# App names are transcribed VERBATIM and drift over time ("Phone Pe" / "PhonePe",
+# "Fampay" / "FamApp by Trio"). Normalisation happens in fetch_upi_apps.py so the
+# raw record stays checkable against the source. A trailing "#" is NPCI's own
+# marker for a third-party application provider (TPAP).
+#
+# Units: volume_mn = million transactions; value_cr = INR crore.
+
+month,app_raw,volume_mn,value_cr,source_url,accessed
+2023-12,PhonePe,5642.66,901006.65,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Google Pay,4375.29,629285.36,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Paytm Payments Bank App,1573.61,191555.71,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Cred,105.31,37293.27,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Axis Bank Apps,86.9,6100.01,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Amazon Pay,54.16,5982.84,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,ICICI Bank Apps,40.09,20884.56,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Fampay,34.23,392.53,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Yes Bank Apps,28.37,12368.87,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2023-12,Kotak Mahindra Bank Apps,26.36,4738.2,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,PhonePe #,6716.09,1009064.99,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,Google Pay #,5103.99,707241.27,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,Paytm,1104.89,120840.45,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,Cred #,138.42,45720.01,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,Axis Bank Apps,75.07,6614.04,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,Amazon Pay #,67.07,7377.3,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,ICICI Bank Apps,51.65,29996.18,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,FamApp by Trio #,50.78,641.36,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,Kotak Mahindra Bank Apps,42.65,6073.08,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-06,WhatsApp #,37.18,2923.79,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,PhonePe #,7984.05,1176300.32,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,Google Pay #,6140.47,822598.36,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,Paytm #,1150.96,125739.66,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,Navi #,202.53,11317.09,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,Cred #,143.07,50979.94,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,Axis Bank Apps,128.36,6159.9,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,super.money #,101.81,3866.39,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,Amazon Pay #,91.94,9330.97,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,FamApp by Trio #,75.74,870.68,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2024-12,ICICI Bank Apps,61.86,21904.55,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Phone Pe #,8547.04,1198690.03,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Google Pay #,6540.92,840931.06,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Paytm #,1269.16,134171.16,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Navi #,406.01,21814.51,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,super.money #,218.96,7716.48,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Cred #,138.32,51384.11,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Axis Bank Apps,126.27,9388.51,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,FamApp by Trio #,112.75,1439.64,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,Amazon Pay #,93.25,9942.48,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-06,BHIM,73.07,11725.85,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Phone Pe #,9799.14,1360501.94,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Google Pay #,7311.67,956693.92,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Paytm #,1624.45,175716.1,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Navi #,671.89,35715.89,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,super.money #,286.86,11745.61,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,FamApp by Trio #,159.05,2007.01,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Cred #,157.25,59073.03,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,BHIM,155.75,20246.97,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Axis Bank Apps,144.75,13612.02,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2025-12,Whatsapp #,100.45,7399.16,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Phone Pe #,9913.63,1377458.79,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Google Pay #,7229.11,956985.04,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Paytm #,1659.49,181973.34,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Navi #,709.26,37955.69,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,super.money #,298.41,12546.39,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,BHIM,172.07,22025.89,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,FamApp by Trio #,161.18,2038.12,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Cred #,156.86,58840.62,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Axis Bank Apps,152.6,13206.89,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-01,Whatsapp #,112.65,8358.21,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Phone Pe #,9284.22,1310392.95,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Google Pay #,6767.14,903051.6,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Paytm #,1595.09,174128.86,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Navi #,650.28,36563.0,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,super.money #,289.32,12314.08,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,BHIM,175.93,21263.92,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,FamApp by Trio #,149.06,1898.62,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Cred #,145.98,54045.92,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Axis Bank Apps,132.11,12157.93,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-02,Whatsapp #,112.89,8557.08,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Phone Pe #,10503.81,1448286.63,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Google Pay #,7535.71,999480.47,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Paytm #,1770.0,192610.34,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Navi #,790.34,43044.76,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,super.money #,341.24,14788.83,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,BHIM,202.44,24718.8,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,FamApp by Trio #,168.6,2250.14,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Cred #,163.2,62029.55,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Axis Bank Apps,135.4,13180.82,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-03,Whatsapp #,130.74,9917.41,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Phone Pe #,10330.3,1431722.56,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Google Pay #,7359.44,972068.42,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Paytm #,1778.06,194317.77,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Navi #,801.87,42683.85,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,super.money #,369.41,16365.13,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,BHIM,210.17,25198.44,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,FamApp by Trio #,182.87,2503.31,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Cred #,157.51,56569.08,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Whatsapp #,138.69,10498.22,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-04,Axis Bank Apps,125.81,10253.66,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Phone Pe #,10734.58,1467168.63,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Google Pay #,7598.37,1002878.34,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Paytm #,1836.02,199103.37,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Navi #,824.11,43601.66,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,super.money #,418.84,19422.73,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,BHIM,227.49,26013.59,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,FamApp by Trio #,197.32,2738.59,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Cred #,157.19,61002.44,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Whatsapp #,150.43,11425.02,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-05,Axis Bank Apps,134.2,13185.15,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Phone Pe #,10483.73,1419193.39,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Google Pay #,7407.71,967055.79,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Paytm #,1798.84,192617.38,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Navi #,842.51,43948.56,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,super.money #,430.24,20252.4,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,BHIM,223.54,25612.81,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,FamApp by Trio #,195.31,2666.23,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Whatsapp #,150.48,11391.85,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Cred #,141.78,55116.79,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-06,Axis Bank Apps,136.16,13120.62,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Phone Pe #,10857.91,1443982.58,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Google Pay #,7649.82,1001101.5,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Paytm #,1903.87,204565.74,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Navi #,947.08,48318.02,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,super.money #,437.27,20838.19,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,BHIM,242.27,28632.66,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,FamApp by Trio #,206.19,2820.96,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Whatsapp #,167.89,12957.07,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Axis Bank Apps,143.77,13939.94,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21
+2026-07,Cred #,142.1,59278.7,https://www.npci.org.in/product/ecosystem-statistics/upi,2026-08-21

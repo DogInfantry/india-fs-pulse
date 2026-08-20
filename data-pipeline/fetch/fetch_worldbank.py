@@ -19,6 +19,9 @@ INDICATORS = {
     "FX.OWN.TOTL.FE.ZS": "account_ownership_female_pct",
     "NY.GDP.MKTP.CD": "gdp_current_usd",
     "SP.POP.TOTL": "population",
+    # 0-14 lets us derive the 15+ base that account ownership is measured against,
+    # rather than assuming an adult share.
+    "SP.POP.0014.TO": "population_0_14",
 }
 
 

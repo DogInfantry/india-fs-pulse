@@ -26,6 +26,7 @@ from common import (  # noqa: E402
     expect_columns,
     expect_nonempty,
     get_text,
+    read_seeded_csv,
     record_source,
     write_processed,
 )
@@ -57,7 +58,7 @@ def load_manual() -> pd.DataFrame:
     if not path.exists():
         print("   note: no manual NPCI seed file; series ends at the CKAN cut-off")
         return pd.DataFrame()
-    df = pd.read_csv(path, comment="#")
+    df = read_seeded_csv(path)
     expect_columns(df, ["month", "volume_mn", "value_cr", "source_url", "accessed"], "manual NPCI")
     df["provenance"] = "npci_manual"
     if "banks_live" not in df.columns:

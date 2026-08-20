@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parent
 FETCH = [
     "data-pipeline/fetch/fetch_pulse.py",
     "data-pipeline/fetch/fetch_upi_history.py",
+    "data-pipeline/fetch/fetch_upi_apps.py",
     "data-pipeline/fetch/fetch_bank_stocks.py",
     "data-pipeline/fetch/fetch_worldbank.py",
     "data-pipeline/fetch/fetch_amfi.py",
@@ -34,6 +35,8 @@ ANALYZE = [
     "analysis/03_pe_diligence.py",
     "analysis/04_survey_nps.py",
     "analysis/05_geo_gap.py",
+    "analysis/06_competitive_structure.py",
+    "analysis/07_wealth_amfi.py",
 ]
 
 
