@@ -1,7 +1,7 @@
 {
   "amfi_fund_houses": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:58:28+00:00",
+    "accessed_utc": "2026-08-20T16:44:24+00:00",
     "coverage": "19-Aug-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
@@ -11,7 +11,7 @@
   },
   "amfi_schemes": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:58:28+00:00",
+    "accessed_utc": "2026-08-20T16:44:24+00:00",
     "coverage": "19-Aug-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
@@ -21,7 +21,7 @@
   },
   "bank_fundamentals": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:58:18+00:00",
+    "accessed_utc": "2026-08-20T16:44:21+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
@@ -31,17 +31,17 @@
   },
   "bank_prices": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:58:18+00:00",
+    "accessed_utc": "2026-08-20T16:44:21+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
     "publisher": "Yahoo Finance",
-    "rows": 13579,
+    "rows": 13561,
     "url": "https://finance.yahoo.com/"
   },
   "pulse_base_national": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:57:59+00:00",
+    "accessed_utc": "2026-08-20T16:44:12+00:00",
     "coverage": "2018Q1 - 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "Registered users and registered merchants. PhonePe's own transactions, not all of UPI.",
@@ -51,7 +51,7 @@
   },
   "pulse_txn_national": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:57:59+00:00",
+    "accessed_utc": "2026-08-20T16:44:12+00:00",
     "coverage": "2018Q1 - 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "P2P / Retail (merchant) / Utility split. PhonePe's own transactions, not all of UPI.",
@@ -61,7 +61,7 @@
   },
   "pulse_txn_state": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:57:59+00:00",
+    "accessed_utc": "2026-08-20T16:44:12+00:00",
     "coverage": "2018Q1 - 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "State-level transaction count and value. PhonePe's own transactions, not all of UPI.",
@@ -71,7 +71,7 @@
   },
   "upi_monthly": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:58:03+00:00",
+    "accessed_utc": "2026-08-20T16:44:14+00:00",
     "coverage": "2016-07 - 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "CKAN mirror STOPS AT 2023-08. Rows after that are hand-seeded from npci.org.in, which returns HTTP 403 to scripted access. The `provenance` column marks which is which.",
@@ -81,7 +81,7 @@
   },
   "worldbank_india": {
     "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T15:58:22+00:00",
+    "accessed_utc": "2026-08-20T16:44:21+00:00",
     "coverage": "1960 - 2025",
     "licence": "CC BY 4.0",
     "note": "Indicators: FX.OWN.TOTL.ZS, FX.OWN.TOTL.FE.ZS, NY.GDP.MKTP.CD, SP.POP.TOTL",

@@ -12,7 +12,7 @@ retains its own publisher's terms**, recorded below.
 | `amfi_fund_houses` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 19-Aug-2026 | 51 | 2026-08-20 | AMFI terms; publicly published daily NAV file |
 | `amfi_schemes` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 19-Aug-2026 | 14,283 | 2026-08-20 | AMFI terms; publicly published daily NAV file |
 | `bank_fundamentals` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 47 | 2026-08-20 | Yahoo Finance terms; personal/research use |
-| `bank_prices` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 13,579 | 2026-08-20 | Yahoo Finance terms; personal/research use |
+| `bank_prices` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 13,561 | 2026-08-20 | Yahoo Finance terms; personal/research use |
 | `pulse_base_national` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 34 | 2026-08-20 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
 | `pulse_txn_national` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 102 | 2026-08-20 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
 | `pulse_txn_state` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 1,224 | 2026-08-20 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
