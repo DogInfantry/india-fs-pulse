@@ -1,0 +1,36 @@
+{
+  "metric": "NIM proxy (net interest income / average total assets), %",
+  "caveat": "Proxy, not reported NIM: banks use average EARNING assets, a smaller denominator.",
+  "periods": [
+    "FY2023",
+    "FY2024",
+    "FY2025",
+    "FY2026"
+  ],
+  "series": [
+    {
+      "cohort": "Private",
+      "values": [
+        3.75,
+        4.04,
+        3.72,
+        3.52
+      ]
+    },
+    {
+      "cohort": "Public",
+      "values": [
+        2.58,
+        2.78,
+        2.6,
+        2.37
+      ]
+    }
+  ],
+  "gap_bps": [
+    116,
+    126,
+    112,
+    114
+  ]
+}

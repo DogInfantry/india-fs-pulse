@@ -1,0 +1,29 @@
+{
+  "period": "2026Q2",
+  "merchants": 50705249,
+  "gmv_per_merchant_quarter_inr": 206685.0,
+  "txns_per_merchant_quarter": 487.0,
+  "scenarios": [
+    {
+      "rate": "0bps",
+      "revenue_per_merchant_yr_inr": 0.0,
+      "revenue_cr_yr": 0
+    },
+    {
+      "rate": "10bps",
+      "revenue_per_merchant_yr_inr": 826.7,
+      "revenue_cr_yr": 4192
+    },
+    {
+      "rate": "30bps",
+      "revenue_per_merchant_yr_inr": 2480.2,
+      "revenue_cr_yr": 12576
+    },
+    {
+      "rate": "50bps",
+      "revenue_per_merchant_yr_inr": 4133.7,
+      "revenue_cr_yr": 20960
+    }
+  ],
+  "note": "Merchant-side unit economics from PhonePe Pulse. Today's MDR is 0bps."
+}

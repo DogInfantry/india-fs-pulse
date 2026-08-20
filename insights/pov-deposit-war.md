@@ -1,0 +1,52 @@
+---
+title: "The private-bank margin advantage is half pricing, half funding"
+generated: 2026-08-20
+generator: analysis/02_banking_health.py
+sources:
+  - Filed annual income statements and balance sheets via yfinance
+---
+
+<!-- GENERATED FILE. Edit the analysis script, not this file. -->
+## The answer
+
+Private banks out-earn public banks by **114 basis points** of
+net interest margin (FY2026: 3.52% versus
+2.37%), and the gap has been persistent, running
+116bps as far back as FY2023. Decomposed, that advantage
+**splits almost evenly between what private banks earn and what they pay**.
+
+## Three supporting arguments
+
+**1. The gap decomposes cleanly into pricing and funding.** In FY2026,
+Neither side dominates. Private banks earned 7.38% on assets against 6.79% for public banks - a 59bps asset-side advantage - while paying 3.86% for funding against 4.42% - a 56bps liability-side advantage. The two halves are within 3% of each other, so a public bank cannot close the gap by repricing loans alone; it has to win the deposit too. The two components sum to 115bps against a measured NIM gap
+of 114bps, so the decomposition is complete.
+
+**2. The gap is stable, which means it is structural, not cyclical.** Across
+FY2023 to FY2026 the cohort gap moved from
+116bps to 114bps. A cyclical gap would
+compress when rates fall; a franchise gap does not.
+
+**3. The mechanism is deposit mix, and payments is upstream of it.** Low-cost
+current and savings balances are won through primary-relationship behaviour -
+salary credit, bill payment, and everyday transactions. That is precisely the
+behaviour UPI now intermediates, which is why the payments question in
+Sub-module A is a *deposit* question for banks.
+
+## So what
+
+- **For a bank client:** closing a 114bps margin gap needs both
+  levers. The 56bps funding half is won through primary-account status,
+  which is a payments and behaviour problem, not a treasury one.
+- **For an investor:** treat the cohort gap as a franchise moat with a measurable
+  width, and underwrite convergence only where deposit mix is actually shifting.
+- **The link to payments:** whoever owns the transaction owns the relationship that
+  produces the cheap deposit. That is the strategic reason banks tolerate zero MDR.
+
+## Method and its limits
+
+NIM here is a **proxy**: net interest income divided by average total assets,
+computed from filed annual income statements and balance sheets (10
+NSE-listed banks). Reported NIM uses average *earning* assets, a smaller
+denominator, so these levels read low by roughly 20-40bps. The **comparison** is
+sound because the bias applies equally to both cohorts; the **levels** should not be
+quoted against a bank's disclosed NIM.

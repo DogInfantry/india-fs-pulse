@@ -142,12 +142,12 @@ def main() -> None:
     for name, df in [("bank_fundamentals", fund), ("bank_prices", px)]:
         record_source(
             name,
-            url="https://finance.yahoo.com/ (via yfinance)",
+            url="https://finance.yahoo.com/",
             publisher="Yahoo Finance",
             coverage=f"{len(COHORTS)} NSE tickers",
             rows=len(df),
             licence="Yahoo Finance terms; personal/research use",
-            note="NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
+            note="Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
         )
 
 

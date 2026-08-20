@@ -1,0 +1,20 @@
+{
+  "fy": 2026,
+  "note": "Decomposition of the NIM proxy into what banks earn and what they pay.",
+  "series": [
+    {
+      "cohort": "Private",
+      "yield_on_assets": 7.38,
+      "cost_of_funds": 3.86,
+      "nim": 3.52,
+      "banks": 5
+    },
+    {
+      "cohort": "Public",
+      "yield_on_assets": 6.79,
+      "cost_of_funds": 4.42,
+      "nim": 2.37,
+      "banks": 5
+    }
+  ]
+}

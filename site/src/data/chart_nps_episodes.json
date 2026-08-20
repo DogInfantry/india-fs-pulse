@@ -1,0 +1,44 @@
+{
+  "synthetic": true,
+  "label": "SYNTHETIC DATA - illustrates the method, not the market",
+  "seed": 20260820,
+  "respondents": 2000,
+  "episodes": [
+    "Open an account",
+    "Make a payment",
+    "Get support",
+    "Apply for credit"
+  ],
+  "series": [
+    {
+      "cohort": "Neobank / payments app",
+      "overall": 11.8,
+      "values": [
+        41.9,
+        47.2,
+        -47.1,
+        5.4
+      ]
+    },
+    {
+      "cohort": "Private bank",
+      "overall": 5.0,
+      "values": [
+        2.2,
+        20.1,
+        -2.9,
+        0.5
+      ]
+    },
+    {
+      "cohort": "Public bank",
+      "overall": -29.9,
+      "values": [
+        -39.9,
+        -10.2,
+        -31.9,
+        -37.7
+      ]
+    }
+  ]
+}

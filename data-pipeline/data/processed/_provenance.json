@@ -24,20 +24,20 @@
     "accessed_utc": "2026-08-20T15:58:18+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
-    "note": "NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
+    "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
     "publisher": "Yahoo Finance",
     "rows": 47,
-    "url": "https://finance.yahoo.com/ (via yfinance)"
+    "url": "https://finance.yahoo.com/"
   },
   "bank_prices": {
     "accessed": "2026-08-20",
     "accessed_utc": "2026-08-20T15:58:18+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
-    "note": "NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
+    "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
     "publisher": "Yahoo Finance",
     "rows": 13579,
-    "url": "https://finance.yahoo.com/ (via yfinance)"
+    "url": "https://finance.yahoo.com/"
   },
   "pulse_base_national": {
     "accessed": "2026-08-20",

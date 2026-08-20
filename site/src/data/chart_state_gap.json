@@ -1,0 +1,258 @@
+{
+  "period": "2026Q2",
+  "metric": "Intensity index = share of transactions / share of value. Above 1.0 = transacts more often than its rupee share implies (merchant-heavy).",
+  "states": [
+    {
+      "state": "Maharashtra",
+      "volume_share": 0.131,
+      "value_share": 0.1201,
+      "intensity_index": 1.09,
+      "avg_ticket_inr": 1079.0
+    },
+    {
+      "state": "Karnataka",
+      "volume_share": 0.1162,
+      "value_share": 0.1163,
+      "intensity_index": 0.999,
+      "avg_ticket_inr": 1178.0
+    },
+    {
+      "state": "Telangana",
+      "volume_share": 0.1003,
+      "value_share": 0.1127,
+      "intensity_index": 0.89,
+      "avg_ticket_inr": 1322.0
+    },
+    {
+      "state": "Uttar Pradesh",
+      "volume_share": 0.0948,
+      "value_share": 0.0866,
+      "intensity_index": 1.095,
+      "avg_ticket_inr": 1075.0
+    },
+    {
+      "state": "Andhra Pradesh",
+      "volume_share": 0.084,
+      "value_share": 0.1016,
+      "intensity_index": 0.826,
+      "avg_ticket_inr": 1424.0
+    },
+    {
+      "state": "Rajasthan",
+      "volume_share": 0.066,
+      "value_share": 0.0701,
+      "intensity_index": 0.942,
+      "avg_ticket_inr": 1249.0
+    },
+    {
+      "state": "Bihar",
+      "volume_share": 0.0592,
+      "value_share": 0.0589,
+      "intensity_index": 1.006,
+      "avg_ticket_inr": 1170.0
+    },
+    {
+      "state": "Madhya Pradesh",
+      "volume_share": 0.0591,
+      "value_share": 0.0565,
+      "intensity_index": 1.046,
+      "avg_ticket_inr": 1125.0
+    },
+    {
+      "state": "West Bengal",
+      "volume_share": 0.0461,
+      "value_share": 0.0486,
+      "intensity_index": 0.948,
+      "avg_ticket_inr": 1241.0
+    },
+    {
+      "state": "Odisha",
+      "volume_share": 0.0394,
+      "value_share": 0.0366,
+      "intensity_index": 1.076,
+      "avg_ticket_inr": 1094.0
+    },
+    {
+      "state": "Delhi",
+      "volume_share": 0.0303,
+      "value_share": 0.0259,
+      "intensity_index": 1.172,
+      "avg_ticket_inr": 1004.0
+    },
+    {
+      "state": "Gujarat",
+      "volume_share": 0.0299,
+      "value_share": 0.0285,
+      "intensity_index": 1.05,
+      "avg_ticket_inr": 1121.0
+    },
+    {
+      "state": "Haryana",
+      "volume_share": 0.0292,
+      "value_share": 0.0278,
+      "intensity_index": 1.053,
+      "avg_ticket_inr": 1117.0
+    },
+    {
+      "state": "Tamil Nadu",
+      "volume_share": 0.0271,
+      "value_share": 0.0289,
+      "intensity_index": 0.938,
+      "avg_ticket_inr": 1255.0
+    },
+    {
+      "state": "Jharkhand",
+      "volume_share": 0.0211,
+      "value_share": 0.02,
+      "intensity_index": 1.055,
+      "avg_ticket_inr": 1115.0
+    },
+    {
+      "state": "Chhattisgarh",
+      "volume_share": 0.0167,
+      "value_share": 0.0149,
+      "intensity_index": 1.121,
+      "avg_ticket_inr": 1050.0
+    },
+    {
+      "state": "Assam",
+      "volume_share": 0.0142,
+      "value_share": 0.0114,
+      "intensity_index": 1.243,
+      "avg_ticket_inr": 946.0
+    },
+    {
+      "state": "Kerala",
+      "volume_share": 0.0076,
+      "value_share": 0.0074,
+      "intensity_index": 1.033,
+      "avg_ticket_inr": 1139.0
+    },
+    {
+      "state": "Punjab",
+      "volume_share": 0.0073,
+      "value_share": 0.0081,
+      "intensity_index": 0.899,
+      "avg_ticket_inr": 1309.0
+    },
+    {
+      "state": "Uttarakhand",
+      "volume_share": 0.0064,
+      "value_share": 0.0056,
+      "intensity_index": 1.139,
+      "avg_ticket_inr": 1033.0
+    },
+    {
+      "state": "Jammu & Kashmir",
+      "volume_share": 0.0049,
+      "value_share": 0.0045,
+      "intensity_index": 1.088,
+      "avg_ticket_inr": 1081.0
+    },
+    {
+      "state": "Himachal Pradesh",
+      "volume_share": 0.0019,
+      "value_share": 0.0018,
+      "intensity_index": 1.073,
+      "avg_ticket_inr": 1096.0
+    },
+    {
+      "state": "Goa",
+      "volume_share": 0.0014,
+      "value_share": 0.0015,
+      "intensity_index": 0.94,
+      "avg_ticket_inr": 1251.0
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "volume_share": 0.0011,
+      "value_share": 0.001,
+      "intensity_index": 1.007,
+      "avg_ticket_inr": 1169.0
+    },
+    {
+      "state": "Dadra & Nagar Haveli & Daman & Diu",
+      "volume_share": 0.0009,
+      "value_share": 0.0006,
+      "intensity_index": 1.464,
+      "avg_ticket_inr": 804.0
+    },
+    {
+      "state": "Chandigarh",
+      "volume_share": 0.0007,
+      "value_share": 0.0006,
+      "intensity_index": 1.172,
+      "avg_ticket_inr": 1004.0
+    },
+    {
+      "state": "Tripura",
+      "volume_share": 0.0006,
+      "value_share": 0.0006,
+      "intensity_index": 1.006,
+      "avg_ticket_inr": 1170.0
+    },
+    {
+      "state": "Meghalaya",
+      "volume_share": 0.0006,
+      "value_share": 0.0005,
+      "intensity_index": 1.083,
+      "avg_ticket_inr": 1086.0
+    },
+    {
+      "state": "Puducherry",
+      "volume_share": 0.0005,
+      "value_share": 0.0005,
+      "intensity_index": 1.017,
+      "avg_ticket_inr": 1157.0
+    },
+    {
+      "state": "Sikkim",
+      "volume_share": 0.0004,
+      "value_share": 0.0004,
+      "intensity_index": 0.964,
+      "avg_ticket_inr": 1221.0
+    },
+    {
+      "state": "Nagaland",
+      "volume_share": 0.0003,
+      "value_share": 0.0004,
+      "intensity_index": 0.888,
+      "avg_ticket_inr": 1325.0
+    },
+    {
+      "state": "Manipur",
+      "volume_share": 0.0003,
+      "value_share": 0.0004,
+      "intensity_index": 0.725,
+      "avg_ticket_inr": 1623.0
+    },
+    {
+      "state": "Ladakh",
+      "volume_share": 0.0002,
+      "value_share": 0.0003,
+      "intensity_index": 0.705,
+      "avg_ticket_inr": 1670.0
+    },
+    {
+      "state": "Andaman & Nicobar Islands",
+      "volume_share": 0.0002,
+      "value_share": 0.0002,
+      "intensity_index": 0.874,
+      "avg_ticket_inr": 1347.0
+    },
+    {
+      "state": "Mizoram",
+      "volume_share": 0.0001,
+      "value_share": 0.0001,
+      "intensity_index": 0.896,
+      "avg_ticket_inr": 1313.0
+    },
+    {
+      "state": "Lakshadweep",
+      "volume_share": 0.0,
+      "value_share": 0.0,
+      "intensity_index": 1.179,
+      "avg_ticket_inr": 998.0
+    }
+  ]
+}
