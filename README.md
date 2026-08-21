@@ -33,7 +33,6 @@ computed from a committed dataset. Nothing is typed in by hand.**
 | **Wealth & asset mgmt** | [India's fund shelf is four times more administered than it is diverse](insights/wealth-fund-shelf.md) |
 | **Gap analysis** | [India runs two different payments markets, not one](insights/gap-geographic.md) |
 | **Method** | [Sources and provenance](docs/sources.md) · [data dictionary](docs/data-dictionary.md) · [stack decisions](docs/stack-decisions.md) |
-| **Resources** | [Every link, endpoint and tooling verdict](docs/resources.md) |
 
 ## Run it
 

@@ -1,6 +1,6 @@
 ---
 title: "The private-bank margin advantage is half pricing, half funding"
-generated: 2026-08-21
+generated: 2026-08-20
 generator: analysis/02_banking_health.py
 sources:
   - Filed annual income statements and balance sheets via yfinance

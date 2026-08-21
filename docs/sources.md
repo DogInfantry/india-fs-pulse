@@ -9,17 +9,17 @@ retains its own publisher's terms**, recorded below.
 
 | Dataset | Publisher | Coverage | Rows | Accessed | Licence / terms |
 |---|---|---|---|---|---|
-| `amfi_fund_houses` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 20-Aug-2026 | 52 | 2026-08-21 | AMFI terms; publicly published daily NAV file |
-| `amfi_schemes` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 20-Aug-2026 | 14,288 | 2026-08-21 | AMFI terms; publicly published daily NAV file |
-| `bank_fundamentals` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 47 | 2026-08-21 | Yahoo Finance terms; personal/research use |
-| `bank_prices` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 13,568 | 2026-08-21 | Yahoo Finance terms; personal/research use |
-| `pulse_base_national` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 34 | 2026-08-21 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
-| `pulse_txn_national` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 102 | 2026-08-21 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
+| `amfi_fund_houses` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 20-Aug-2026 | 52 | 2026-08-20 | AMFI terms; publicly published daily NAV file |
+| `amfi_schemes` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 20-Aug-2026 | 14,288 | 2026-08-20 | AMFI terms; publicly published daily NAV file |
+| `bank_fundamentals` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 47 | 2026-08-20 | Yahoo Finance terms; personal/research use |
+| `bank_prices` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 13,550 | 2026-08-20 | Yahoo Finance terms; personal/research use |
+| `pulse_base_national` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 34 | 2026-08-20 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
+| `pulse_txn_national` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 102 | 2026-08-20 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
 | `pulse_txn_state` | [PhonePe Pulse](https://github.com/PhonePe/pulse) | 2018Q1 - 2026Q2 | 1,224 | 2026-08-20 | CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE) |
-| `upi_apps` | [NPCI (UPI Ecosystem Statistics)](https://www.npci.org.in/product/ecosystem-statistics/upi) | 2023-12 - 2026-07 | 132 | 2026-08-21 | NPCI terms apply to the underlying data |
-| `upi_apps_hhi` | [NPCI (UPI Ecosystem Statistics)](https://www.npci.org.in/product/ecosystem-statistics/upi) | 2023-12 - 2026-07 | 12 | 2026-08-21 | NPCI terms apply to the underlying data |
-| `upi_monthly` | [NPCI via India Data Portal (CKAN mirror)](https://ckandev.indiadataportal.com/dataset/150fe363-f61f-41f2-9215-15f61358f427/resource/8b176063-658a-41d7-9401-7461808d87a2/download/upi-product-statistics.csv) | 2016-07 - 2026-07 | 116 | 2026-08-21 | NPCI terms apply to the underlying data |
-| `worldbank_india` | [World Bank Open Data](https://api.worldbank.org/v2/country/IND/indicator/) | 1960 - 2025 | 66 | 2026-08-21 | CC BY 4.0 |
+| `upi_apps` | [NPCI (UPI Ecosystem Statistics)](https://www.npci.org.in/product/ecosystem-statistics/upi) | 2023-12 - 2026-07 | 132 | 2026-08-20 | NPCI terms apply to the underlying data |
+| `upi_apps_hhi` | [NPCI (UPI Ecosystem Statistics)](https://www.npci.org.in/product/ecosystem-statistics/upi) | 2023-12 - 2026-07 | 12 | 2026-08-20 | NPCI terms apply to the underlying data |
+| `upi_monthly` | [NPCI via India Data Portal (CKAN mirror)](https://ckandev.indiadataportal.com/dataset/150fe363-f61f-41f2-9215-15f61358f427/resource/8b176063-658a-41d7-9401-7461808d87a2/download/upi-product-statistics.csv) | 2016-07 - 2026-07 | 116 | 2026-08-20 | NPCI terms apply to the underlying data |
+| `worldbank_india` | [World Bank Open Data](https://api.worldbank.org/v2/country/IND/indicator/) | 1960 - 2025 | 66 | 2026-08-20 | CC BY 4.0 |
 
 ## Notes and caveats
 

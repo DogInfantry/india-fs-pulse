@@ -21,7 +21,3 @@ Thumbs.db
 
 .vercel
 .env*
-
-# Claude plugin state: churns every session, not project content.
-.claude/data/
-.claude/settings.local.json
