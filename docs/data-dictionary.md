@@ -56,15 +56,24 @@ Yahoo Finance · 11 NSE tickers · 47 rows · accessed 2026-08-21
 
 ## `bank_prices`
 
-Yahoo Finance · 11 NSE tickers · 13,568 rows · accessed 2026-08-21
+Yahoo Finance · 11 NSE tickers · 13,580 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
-| `date` | str | YYYY-MM-DD | 2021-08-20 |
+| `date` | str | YYYY-MM-DD | 2021-08-23 |
 | `ticker` | str |  | AXISBANK.NS |
 | `bank` | str |  | Axis Bank |
 | `cohort` | str |  | Private |
-| `close` | float64 |  | 736.6039428710938 |
+| `close` | float64 |  | 732.474365234375 |
+
+## `india_rates`
+
+FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI · 1968-01 - 2026-06 · 702 rows · accessed 2026-08-21
+
+| Column | Type | Unit | Example |
+|---|---|---|---|
+| `month` | str | YYYY-MM | 1968-01 |
+| `call_money_rate_pct` | float64 | per cent | 6.0 |
 
 ## `kpi_bank_nim`
 
@@ -92,8 +101,14 @@ Derived by the pipeline · 36 rows
 | `avg_ticket_inr` | float64 | INR | 1079.1249601869474 |
 | `volume_share` | float64 | fraction of total (0-1) | 0.1309852723382619 |
 | `value_share` | float64 | fraction of total (0-1) | 0.120123133253109 |
-| `intensity_index` | float64 |  | 1.090425039632171 |
 | `ticket_vs_national` | float64 |  | 0.9170735847530848 |
+| `merchant_volume_share` | float64 | fraction of total (0-1) | 0.6739137042004196 |
+| `merchant_value_share` | float64 | fraction of total (0-1) | 0.2379336723625698 |
+| `p2p_volume_share` | float64 | fraction of total (0-1) | 0.2742890732242307 |
+| `p2p_value_share` | float64 | fraction of total (0-1) | 0.7093016613615388 |
+| `utility_volume_share` | float64 | fraction of total (0-1) | 0.0517972225753497 |
+| `utility_value_share` | float64 | fraction of total (0-1) | 0.0527646662758913 |
+| `merchant_avg_ticket_inr` | float64 | INR | 380.9985805527307 |
 
 ## `kpi_upi_trend`
 
@@ -142,7 +157,7 @@ PhonePe Pulse · 2018Q1 - 2026Q2 · 102 rows · accessed 2026-08-21
 
 ## `pulse_txn_state`
 
-PhonePe Pulse · 2018Q1 - 2026Q2 · 1,224 rows · accessed 2026-08-20
+PhonePe Pulse · 2018Q1 - 2026Q2 · 1,224 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -153,6 +168,19 @@ PhonePe Pulse · 2018Q1 - 2026Q2 · 1,224 rows · accessed 2026-08-20
 | `count` | int64 | transactions | 9089 |
 | `amount_inr` | float64 | INR | 18569126.204451814 |
 | `avg_ticket_inr` | float64 | INR | 2043.0329194027745 |
+
+## `pulse_txn_state_mix`
+
+PhonePe Pulse · 2026Q2 · 108 rows · accessed 2026-08-21
+
+| Column | Type | Unit | Example |
+|---|---|---|---|
+| `period` | str | YYYYQn | 2026Q2 |
+| `state` | str |  | andaman & nicobar islands |
+| `category` | str |  | P2P |
+| `count` | int64 | transactions | 2318395 |
+| `amount_inr` | float64 | INR | 6919716967.907633 |
+| `avg_ticket_inr` | float64 | INR | 2984.70147145229 |
 
 ## `survey_SYNTHETIC_nps`
 
@@ -218,3 +246,5 @@ World Bank Open Data · 1960 - 2025 · 66 rows · accessed 2026-08-21
 | `gdp_current_usd` | float64 |  | 37029883876.1839 |
 | `population` | float64 |  | 435990338.0 |
 | `population_0_14` | float64 |  | 176938244.0 |
+| `npl_pct_gross_loans` | float64 |  | 4.4017855944882 |
+| `domestic_credit_private_pct_gdp` | float64 |  | 7.84313262772837 |

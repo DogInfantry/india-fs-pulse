@@ -70,14 +70,30 @@ column-level detail is in `docs/data-dictionary.md`.
 | **NPCI monthly** (headline) | https://www.npci.org.in/product/upi/product-statistics | **403 to scripts.** Browser-only. Note the path is `/product/upi/...` — the older `/what-we-do/upi/...` is dead |
 | **NPCI per-app** (market share) | https://www.npci.org.in/product/ecosystem-statistics/upi | **403 to scripts.** "UPI Applications" tab. Browser-only |
 | NPCI CKAN mirror | `https://ckandev.indiadataportal.com/dataset/150fe363-f61f-41f2-9215-15f61358f427/resource/8b176063-658a-41d7-9401-7461808d87a2/download/upi-product-statistics.csv` | Open, but **frozen at 2023-08**. History only |
-| World Bank | `https://api.worldbank.org/v2/country/IND/indicator/{code}?format=json` | `FX.OWN.TOTL.ZS`, `FX.OWN.TOTL.FE.ZS`, `NY.GDP.MKTP.CD`, `SP.POP.TOTL`, `SP.POP.0014.TO` |
+| World Bank | `https://api.worldbank.org/v2/country/IND/indicator/{code}?format=json` | `FX.OWN.TOTL.ZS`, `FX.OWN.TOTL.FE.ZS`, `NY.GDP.MKTP.CD`, `SP.POP.TOTL`, `SP.POP.0014.TO`, plus `FB.AST.NPER.ZS` (NPLs, 4.81% in 2022 → **2.06% in 2025**) and `FS.AST.PRVT.GD.ZS` (private credit, **44.0% of GDP**) |
 | yfinance | `yf.Ticker("HDFCBANK.NS").financials` | `.financials` carries real Net Interest Income / Interest Income. Intermittently throws `KeyError` — the fetcher retries |
+| **PhonePe Pulse** (per-state mix) | `https://raw.githubusercontent.com/PhonePe/pulse/main/data/aggregated/transaction/country/india/state/{slug}/{year}/{q}.json` | The P2P / merchant / utility split **within** each state. All 36 slugs resolve under a plain space→hyphen substitution. Reconciles to the country file at ratio 1.000000 |
+| **FRED** (India call money rate) | `https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRSTCI01INM156N` | **No API key needed** — the charting CSV endpoint is unauthenticated, unlike FRED's JSON API. Monthly, 1968-01 → 2026-06, 702 observations. Sourced from RBI via OECD, so this is the open route to RBI rate data |
 | AMFI | https://www.amfiindia.com/spages/NAVAll.txt | Semicolon-delimited, refreshed daily |
 | mfapi.in | `https://api.mfapi.in/mf/{scheme_code}` · `/mf/search?q=` | Open, CORS-enabled |
 
-**Rejected data sources**, and why — RBI DBIE (Angular app, no public REST API; NIM is
-derived from filed statements instead) and data.gov.in (the public sandbox key
-authenticates, but filtered queries time out and many finance resources have no live API).
+### Rejected data sources, with the evidence
+
+Recording a rejection matters as much as recording an adoption: the JD asks for the
+ability to *identify relevant tools and sources*, and a probe that came back empty
+demonstrates that better than an endpoint that happened to work.
+
+| Source | Probed | Verdict |
+|---|---|---|
+| **RBI DBIE** | — | Angular application, no public REST API. **Worked around, not abandoned:** RBI's call money series is available through FRED (above), so the rate data is in the pipeline after all. NIM is still derived from filed statements |
+| **data.gov.in** | Key `579b46…f3b`. `/catalog` 404s; `/lists` works and returns 8,256 resources. Pulled all 8,500 rows, keyword-matched 132 against UPI / bank / insurance / payment / NBFC | **Rejected.** Effectively everything relevant is a 2013–2018 snapshot: PMJDY to Mar-2016, card PoS transactions 2017, priority-sector lending 2014. Nothing current, nothing both state-level and recent |
+| **Alpha Vantage** | Key `XBJ6…XNO`. `GLOBAL_QUOTE` for `HDFCBANK.BSE` returned live data | **Rejected.** Free tier rate-limits from the second call in a session (`OVERVIEW` and `FX_MONTHLY` both returned the throttle notice immediately), and it duplicates yfinance, which is already wired and unmetered. A key-gated source would also need to skip gracefully under rule 5 |
+| **NPCI (direct)** | — | HTTP 403 to every scripted request. Transcribed by hand instead; see `docs/REFRESH.md` |
+
+**Keys held but unused:** data.gov.in and Alpha Vantage, above. FRED issued a key
+(`0d54…1fe2`) and it works, but the keyless CSV endpoint serves the same series, so the
+pipeline does not use it — rule 5 says `python run.py data` must run with zero
+environment variables, and it still does.
 
 ## How to refresh the browser-only sources
 

@@ -66,17 +66,19 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 | `run.py` | Task runner. Registers every fetch / analysis script — **add new scripts here** |
 | `data-pipeline/common.py` | Paths, `get_json`/`get_text`, `expect*` guards, `write_processed`, `record_source`, `read_seeded_csv` |
 | `data-pipeline/fetch/fetch_pulse.py` | **Primary.** National + state transactions, user/merchant base |
+| `data-pipeline/fetch/fetch_pulse_state_mix.py` | P2P / merchant / utility split **within** each state. Reconciles the 36 state files against the country file |
 | `data-pipeline/fetch/fetch_upi_history.py` | NPCI monthly: CKAN mirror + manual seed, joined |
 | `data-pipeline/fetch/fetch_upi_apps.py` | NPCI per-app shares, HHI, national reconciliation |
 | `data-pipeline/fetch/fetch_bank_stocks.py` | yfinance fundamentals (NIM proxy) + 5y prices; retries flaky tickers |
-| `data-pipeline/fetch/fetch_worldbank.py` · `fetch_amfi.py` | Inclusion denominators · fund scheme universe |
+| `data-pipeline/fetch/fetch_worldbank.py` · `fetch_amfi.py` | Inclusion denominators, NPLs, private credit · fund scheme universe |
+| `data-pipeline/fetch/fetch_fred_rates.py` | India call money rate, monthly to 2026-06. **Keyless** CSV endpoint, so rule 5 holds |
 | `data-pipeline/data/manual/*.csv` | Hand-seeded NPCI rows. **Header comments are `#`-leading lines only** |
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json` |
 | `analysis/_lib.py` | `load`, `write_json`, `write_memo`, `inr`, `pct` |
 | `analysis/01..07_*.py` | Seven modules → `insights/*.md` + chart JSON |
 | `site/src/pages/index.astro` | The whole scrollable report: 16 exhibits, 10 sections |
-| `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines` |
-| `site/src/components/` | `Figure` (action-title frame), `EChart`, `Workbench`, `GapMatrix`, `ExecSummary`, `Contact` |
+| `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram` |
+| `site/src/components/` | `Figure` (action-title frame), `EChart`, `Workbench` (cartogram + table + detail, linked), `GapMatrix` (Harvey balls), `ExecSummary`, `Contact`, `Monogram` |
 | `site/scripts/make_og.py` | Social card, drawn from computed data (Pillow) |
 | `docs/build_docs.py` | Generates `sources.md` + `data-dictionary.md` from the provenance ledger |
 | `docs/resources.md` | **All external links, tooling verdicts, data endpoints** |
@@ -103,8 +105,8 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 
 ## Current state — all green
 
-- `python run.py data` — ~115s, zero secrets, 15 processed datasets
-- `python run.py analyze` — 7 modules, **21 artefacts byte-identical across runs**
+- `python run.py data` — ~120s, zero secrets, 8 fetchers, 17 processed datasets
+- `python run.py analyze` — 7 modules, **26 artefacts byte-identical across runs**
 - `python run.py site` — 9 pages
 - Lighthouse: **Accessibility 100 · Best Practices 100 · SEO 100 · Agentic 100**,
   63 audits passed / 0 failed. **LCP 676 ms, CLS 0.00**
@@ -116,6 +118,8 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 | Finding | Figure |
 |---|---|
 | Merchant payments: share of transactions vs share of value | **63.9% / 23.0%** |
+| Merchant share of own transactions: most vs least (material states) | **Delhi 68.5% vs West Bengal 56.4%** |
+| Rate travel over FY2023-FY2026 vs movement in the NIM gap | **250bps vs 2bps** — the gap survived a full cycle |
 | Merchant contribution to all volume growth since 2018Q1 | **64%** |
 | PhonePe / Google Pay share of national UPI volume | **45.9% / 32.3%** — both above the 30% cap |
 | Transactions that must change app for the cap to bind | **4.3 bn a month** |
@@ -127,30 +131,53 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 
 ## Active task
 
-**Pass 2 is complete, committed and deployed.** Nothing is half-finished.
+**Pass 3 is complete.** Nothing is half-finished. It did four things:
 
-The one open item is external: **the LinkedIn URL.** `site/src/components/Contact.astro`
-has `const LINKEDIN: string | null = null` and renders that row only when it is set —
-deliberately, so no placeholder link ships. Set the constant and rebuild.
+1. **Exhibit F was rebuilt on a real measure.** See the gotcha below - the old
+   `intensity_index` was a tautology, and it had the sign backwards in practice.
+2. **The Workbench became three linked views** - tile cartogram, sortable table, detail
+   panel - and the "metric switch" its subtitle had always promised now exists.
+3. **The Gap Analyser was de-slopped**: Harvey balls instead of coloured pill badges,
+   link labels instead of paragraphs, filter chips deleted.
+4. **Two new sources**, both keyless: FRED's India call money rate, and World Bank NPLs
+   and private-credit depth.
 
 ## Next steps, in order
 
-1. **LinkedIn URL** into `Contact.astro` (one line, blocked on the user).
-2. **Excel + PowerPoint deliverables** — the JD names both as hard requirements, and
-   the gap matrix carries an honest "Not covered" row for them. The user chose web-only;
-   the pipeline emits tidy CSV, so `openpyxl` + `python-pptx` is roughly an hour.
-3. **Extend the per-app series** — currently 12 months (2023-12 → 2026-07). More months
+1. **Excel + PowerPoint deliverables** — the JD names both as hard requirements, and the
+   gap matrix still carries an honest "Not covered" row for them. The pipeline emits tidy
+   CSV, so `openpyxl` + `python-pptx` is roughly an hour.
+2. **Extend the per-app series** — currently 12 months (2023-12 → 2026-07). More months
    sharpen the HHI trend. Browser-transcribed; see `docs/REFRESH.md`.
+3. **A second operator's state-level mix.** This is now the single biggest weakness in
+   the geographic module: the merchant-share ranking is PhonePe's. If Google Pay's mix
+   inverted it, the finding would be about distribution rather than about India. Nothing
+   open publishes it today — say so rather than pretending otherwise.
 4. **AMFI quarterly AAUM** — would restate the wealth module in rupees rather than
    scheme counts, which is the version that informs a fee pool.
 5. **Insurance** — the last JD-named sector with no coverage. IRDAI is PDF-only.
-6. **Housekeeping:** `.claude/data/*.sqlite*` and the `*.parquet` files are tracked and
-   churn every session. Untrack with
-   `git rm -r --cached .claude/data "data-pipeline/data/processed/*.parquet"` then add
-   both to `.gitignore` — CSV is the contract, parquet is only a convenience.
+6. **An asset-quality exhibit.** `npl_pct_gross_loans` is now fetched (4.81% → 2.06%)
+   and used in no chart. It is most of why the public-bank cohort re-rated +284%.
+7. **Dead `vendor` script** in `site/package.json` points at `scripts/vendor-assets.mjs`,
+   which does not exist. One-line deletion.
 
 ## Gotchas — things that actually bit us
 
+- **A ratio of two shares can be a tautology.** `intensity_index = volume_share /
+  value_share` looked like a merchant-behaviour measure. It is algebraically identical to
+  `national_avg_ticket / state_avg_ticket` - verified to 4.4e-16 across all 36 states -
+  so the exhibit plotted one variable on the y-axis and the *same* variable as colour.
+  Worse, it inverted: it ranked Assam most merchant-intense because Assam has the
+  smallest ticket, when Assam is among the most P2P-heavy states in the country. **Before
+  trusting a derived index, correlate it against its own inputs.** The replacement is
+  measured merchant share, which correlates -0.05 with ticket size.
+- **`aria-hidden` does not satisfy WCAG 2.5.3.** The cartogram tiles show "DL" and "68%"
+  with both spans `aria-hidden`, and Lighthouse still failed `label-content-name-mismatch`:
+  a voice-control user says what they *see*, so the accessible name must contain the
+  visible text. The name now starts with the code and the value, and the metric switch
+  rewrites it whenever the displayed value changes.
+- **`0` is falsy, so `.filter(x => x.value)` silently drops a real zero.** Cost a year of
+  the inclusion series before anyone noticed. Use `!= null`.
 - **`#` is data, not a comment.** NPCI marks third-party providers with a trailing `#`
   ("Phone Pe #"). `pd.read_csv(comment='#')` silently truncated every row to `NaN`.
 - **Fund houses have brackets too.** `IL&FS Mutual Fund (IDF)` was parsed as a category
