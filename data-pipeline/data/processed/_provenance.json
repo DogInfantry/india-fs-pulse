@@ -1,7 +1,7 @@
 {
   "amfi_fund_houses": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:45+00:00",
+    "accessed_utc": "2026-08-21T12:05:24+00:00",
     "coverage": "20-Aug-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
@@ -11,7 +11,7 @@
   },
   "amfi_schemes": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:45+00:00",
+    "accessed_utc": "2026-08-21T12:05:24+00:00",
     "coverage": "20-Aug-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
@@ -21,7 +21,7 @@
   },
   "bank_fundamentals": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:38+00:00",
+    "accessed_utc": "2026-08-21T12:05:18+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
@@ -31,7 +31,7 @@
   },
   "bank_prices": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:38+00:00",
+    "accessed_utc": "2026-08-21T12:05:18+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
@@ -41,8 +41,8 @@
   },
   "india_rates": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:42+00:00",
-    "coverage": "1968-01 - 2026-06",
+    "accessed_utc": "2026-08-21T12:05:22+00:00",
+    "coverage": "1968-01 to 2026-06",
     "licence": "FRED terms of use; underlying series (c) OECD. Free to redistribute with attribution.",
     "note": "India immediate/call money interbank rate, monthly. Fetched from FRED's keyless CSV endpoint so the pipeline needs no credentials. Months FRED does not publish are dropped, never interpolated.",
     "publisher": "FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI",
@@ -51,8 +51,8 @@
   },
   "pulse_base_national": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:00+00:00",
-    "coverage": "2018Q1 - 2026Q2",
+    "accessed_utc": "2026-08-21T12:04:40+00:00",
+    "coverage": "2018Q1 to 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "Registered users and registered merchants. PhonePe's own transactions, not all of UPI.",
     "publisher": "PhonePe Pulse",
@@ -61,8 +61,8 @@
   },
   "pulse_txn_national": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:00+00:00",
-    "coverage": "2018Q1 - 2026Q2",
+    "accessed_utc": "2026-08-21T12:04:40+00:00",
+    "coverage": "2018Q1 to 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "P2P / Retail (merchant) / Utility split. PhonePe's own transactions, not all of UPI.",
     "publisher": "PhonePe Pulse",
@@ -71,8 +71,8 @@
   },
   "pulse_txn_state": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:00+00:00",
-    "coverage": "2018Q1 - 2026Q2",
+    "accessed_utc": "2026-08-21T12:04:40+00:00",
+    "coverage": "2018Q1 to 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "State-level transaction count and value. PhonePe's own transactions, not all of UPI.",
     "publisher": "PhonePe Pulse",
@@ -81,7 +81,7 @@
   },
   "pulse_txn_state_mix": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:15+00:00",
+    "accessed_utc": "2026-08-21T12:04:57+00:00",
     "coverage": "2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "P2P / merchant / utility split within each state, from the per-state aggregated endpoint. Reconciled against the country file. PhonePe's own transactions, not all of UPI.",
@@ -91,8 +91,8 @@
   },
   "upi_apps": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:20+00:00",
-    "coverage": "2023-12 - 2026-07",
+    "accessed_utc": "2026-08-21T12:05:01+00:00",
+    "coverage": "2023-12 to 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "Top ten apps by volume, transcribed from a browser session because NPCI returns HTTP 403 to scripted access. Shares are computed against the NPCI national monthly total, so they are true market shares and the residual is real.",
     "publisher": "NPCI (UPI Ecosystem Statistics)",
@@ -101,8 +101,8 @@
   },
   "upi_apps_hhi": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:20+00:00",
-    "coverage": "2023-12 - 2026-07",
+    "accessed_utc": "2026-08-21T12:05:01+00:00",
+    "coverage": "2023-12 to 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "Top ten apps by volume, transcribed from a browser session because NPCI returns HTTP 403 to scripted access. Shares are computed against the NPCI national monthly total, so they are true market shares and the residual is real.",
     "publisher": "NPCI (UPI Ecosystem Statistics)",
@@ -111,8 +111,8 @@
   },
   "upi_monthly": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:18+00:00",
-    "coverage": "2016-07 - 2026-07",
+    "accessed_utc": "2026-08-21T12:05:00+00:00",
+    "coverage": "2016-07 to 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "CKAN mirror STOPS AT 2023-08. Rows after that are hand-seeded from npci.org.in, which returns HTTP 403 to scripted access. The `provenance` column marks which is which.",
     "publisher": "NPCI via India Data Portal (CKAN mirror)",
@@ -121,8 +121,8 @@
   },
   "worldbank_india": {
     "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T09:11:41+00:00",
-    "coverage": "1960 - 2025",
+    "accessed_utc": "2026-08-21T12:05:20+00:00",
+    "coverage": "1960 to 2025",
     "licence": "CC BY 4.0",
     "note": "Indicators: FX.OWN.TOTL.ZS, FX.OWN.TOTL.FE.ZS, NY.GDP.MKTP.CD, SP.POP.TOTL, SP.POP.0014.TO, FB.AST.NPER.ZS, FS.AST.PRVT.GD.ZS",
     "publisher": "World Bank Open Data",

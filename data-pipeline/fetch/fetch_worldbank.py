@@ -58,7 +58,7 @@ def main() -> None:
         "worldbank_india",
         url="https://api.worldbank.org/v2/country/IND/indicator/",
         publisher="World Bank Open Data",
-        coverage=f"{merged.year.min()} - {merged.year.max()}",
+        coverage=f"{merged.year.min()} to {merged.year.max()}",
         rows=len(merged),
         licence="CC BY 4.0",
         note="Indicators: " + ", ".join(INDICATORS),

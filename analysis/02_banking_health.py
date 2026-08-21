@@ -203,7 +203,7 @@ same window India's call money rate ranged from **{rate_lo:.2f}% to {rate_hi:.2f
 at the end). {rate_verdict}
 
 **3. The mechanism is deposit mix, and payments is upstream of it.** Low-cost
-current and savings balances are won through primary-relationship behaviour -
+current and savings balances are won through primary-relationship behaviour:
 salary credit, bill payment, and everyday transactions. That is precisely the
 behaviour UPI now intermediates, which is why the payments question in
 Sub-module A is a *deposit* question for banks.

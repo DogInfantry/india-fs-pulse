@@ -72,8 +72,8 @@ def main() -> None:
 ## The answer
 
 Digital payments in India are not one market. In {period}, the ten largest states
-carried **{pct(top10_share)} of all transactions**, but the more useful split is not size -
-it is *what kind of transaction* a state runs. Measuring each state's merchant share
+carried **{pct(top10_share)} of all transactions**, but the more useful split is not size.
+It is *what kind of transaction* a state runs. Measuring each state's merchant share
 of its own transactions separates retail economies from remittance economies, and the
 two carry different economics and need different strategies. Across the material
 states the merchant share ranges over **{spread_pp:.0f} percentage points**.
@@ -105,7 +105,7 @@ against the separately-fetched country file: the 36 state files reconcile to the
 national totals at a ratio of 1.000000 on both transaction count and value, and imply
 a national merchant share of {pct(national_merchant)}.
 
-Three limits, stated plainly. This is **one operator's** mix, not the market's -
+Three limits, stated plainly. This is **one operator's** mix, not the market's,
 though a *within-state* mix ratio is far less sensitive to PhonePe's uneven regional
 footprint than a *between-state* volume ratio would be, which is the main reason this
 measure is preferred. There is **no population denominator** in the open data used

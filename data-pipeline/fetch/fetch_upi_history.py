@@ -87,7 +87,7 @@ def main() -> None:
         "upi_monthly",
         url=CKAN_URL,
         publisher="NPCI via India Data Portal (CKAN mirror)",
-        coverage=f"{combined.month.min()} - {combined.month.max()}",
+        coverage=f"{combined.month.min()} to {combined.month.max()}",
         rows=len(combined),
         licence="NPCI terms apply to the underlying data",
         note=(

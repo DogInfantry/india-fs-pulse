@@ -68,7 +68,7 @@ Yahoo Finance · 11 NSE tickers · 13,580 rows · accessed 2026-08-21
 
 ## `india_rates`
 
-FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI · 1968-01 - 2026-06 · 702 rows · accessed 2026-08-21
+FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI · 1968-01 to 2026-06 · 702 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -128,7 +128,7 @@ Derived by the pipeline · 116 rows
 
 ## `pulse_base_national`
 
-PhonePe Pulse · 2018Q1 - 2026Q2 · 34 rows · accessed 2026-08-21
+PhonePe Pulse · 2018Q1 to 2026Q2 · 34 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -140,7 +140,7 @@ PhonePe Pulse · 2018Q1 - 2026Q2 · 34 rows · accessed 2026-08-21
 
 ## `pulse_txn_national`
 
-PhonePe Pulse · 2018Q1 - 2026Q2 · 102 rows · accessed 2026-08-21
+PhonePe Pulse · 2018Q1 to 2026Q2 · 102 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -157,7 +157,7 @@ PhonePe Pulse · 2018Q1 - 2026Q2 · 102 rows · accessed 2026-08-21
 
 ## `pulse_txn_state`
 
-PhonePe Pulse · 2018Q1 - 2026Q2 · 1,224 rows · accessed 2026-08-21
+PhonePe Pulse · 2018Q1 to 2026Q2 · 1,224 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -196,7 +196,7 @@ Derived by the pipeline · 8,000 rows
 
 ## `upi_apps`
 
-NPCI (UPI Ecosystem Statistics) · 2023-12 - 2026-07 · 132 rows · accessed 2026-08-21
+NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 132 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -213,7 +213,7 @@ NPCI (UPI Ecosystem Statistics) · 2023-12 - 2026-07 · 132 rows · accessed 202
 
 ## `upi_apps_hhi`
 
-NPCI (UPI Ecosystem Statistics) · 2023-12 - 2026-07 · 12 rows · accessed 2026-08-21
+NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 12 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -222,7 +222,7 @@ NPCI (UPI Ecosystem Statistics) · 2023-12 - 2026-07 · 12 rows · accessed 2026
 
 ## `upi_monthly`
 
-NPCI via India Data Portal (CKAN mirror) · 2016-07 - 2026-07 · 116 rows · accessed 2026-08-21
+NPCI via India Data Portal (CKAN mirror) · 2016-07 to 2026-07 · 116 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -236,7 +236,7 @@ NPCI via India Data Portal (CKAN mirror) · 2016-07 - 2026-07 · 116 rows · acc
 
 ## `worldbank_india`
 
-World Bank Open Data · 1960 - 2025 · 66 rows · accessed 2026-08-21
+World Bank Open Data · 1960 to 2025 · 66 rows · accessed 2026-08-21
 
 | Column | Type | Unit | Example |
 |---|---|---|---|

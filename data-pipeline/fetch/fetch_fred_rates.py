@@ -85,7 +85,7 @@ def main() -> None:
         "india_rates",
         url=PAGE.format(series=next(iter(SERIES))),
         publisher="FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI",
-        coverage=f"{merged.month.iloc[0]} - {merged.month.iloc[-1]}",
+        coverage=f"{merged.month.iloc[0]} to {merged.month.iloc[-1]}",
         rows=len(merged),
         licence="FRED terms of use; underlying series (c) OECD. Free to redistribute with attribution.",
         note="India immediate/call money interbank rate, monthly. Fetched from FRED's keyless "

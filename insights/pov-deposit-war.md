@@ -30,7 +30,7 @@ same window India's call money rate ranged from **4.25% to 6.75%**
 at the end). A 250bps swing in funding costs moved the cohort gap by only 2bps, so the advantage is not a rate artefact. It is a franchise.
 
 **3. The mechanism is deposit mix, and payments is upstream of it.** Low-cost
-current and savings balances are won through primary-relationship behaviour -
+current and savings balances are won through primary-relationship behaviour:
 salary credit, bill payment, and everyday transactions. That is precisely the
 behaviour UPI now intermediates, which is why the payments question in
 Sub-module A is a *deposit* question for banks.
@@ -54,7 +54,7 @@ same year, each banked adult now runs **14.9 transactions a month**, up from
 is the story now, and it is what makes the zero-MDR cost base grow.
 
 **The market's verdict.** Over 2021-08-23 to 2026-08-21, the median private bank returned
-18% on price against 289% for the median public bank. The market has NOT paid for the margin franchise: public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
+18% on price against 293% for the median public bank. The market has NOT paid for the margin franchise: public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
 return only, dividends excluded, so this understates total return for the higher-
 yielding public cohort.
 

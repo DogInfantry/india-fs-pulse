@@ -177,7 +177,7 @@ def main() -> None:
     write_processed(state, "pulse_txn_state")
     write_processed(base, "pulse_base_national")
 
-    coverage = f"{national.period.min()} - {national.period.max()}"
+    coverage = f"{national.period.min()} to {national.period.max()}"
     entries = [
         ("pulse_txn_national", national, "P2P / Retail (merchant) / Utility split"),
         ("pulse_txn_state", state, "State-level transaction count and value"),

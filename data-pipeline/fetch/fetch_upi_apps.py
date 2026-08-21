@@ -137,7 +137,7 @@ def main() -> None:
     for name, frame in [("upi_apps", out), ("upi_apps_hhi", hhi)]:
         record_source(
             name, url=URL, publisher="NPCI (UPI Ecosystem Statistics)",
-            coverage=f"{out.month.min()} - {out.month.max()}", rows=len(frame),
+            coverage=f"{out.month.min()} to {out.month.max()}", rows=len(frame),
             licence="NPCI terms apply to the underlying data",
             note=("Top ten apps by volume, transcribed from a browser session because NPCI "
                   "returns HTTP 403 to scripted access. Shares are computed against the NPCI "

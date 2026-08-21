@@ -7,11 +7,11 @@
   "series": [
     {
       "cohort": "Private",
-      "median_price_return": 0.1777
+      "median_price_return": 0.1794
     },
     {
       "cohort": "Public",
-      "median_price_return": 2.8891
+      "median_price_return": 2.9294
     }
   ],
   "tickers": [
@@ -19,67 +19,67 @@
       "ticker": "AXISBANK.NS",
       "bank": "Axis Bank",
       "cohort": "Private",
-      "price_return": 0.6952
+      "price_return": 0.7008
     },
     {
       "ticker": "BANKBARODA.NS",
       "bank": "Bank of Baroda",
       "cohort": "Public",
-      "price_return": 2.8891
+      "price_return": 2.9294
     },
     {
       "ticker": "CANBK.NS",
       "bank": "Canara Bank",
       "cohort": "Public",
-      "price_return": 3.9807
+      "price_return": 4.0213
     },
     {
       "ticker": "HDFCBANK.NS",
       "bank": "HDFC Bank",
       "cohort": "Private",
-      "price_return": 0.024
+      "price_return": 0.0191
     },
     {
       "ticker": "ICICIBANK.NS",
       "bank": "ICICI Bank",
       "cohort": "Private",
-      "price_return": 1.1605
+      "price_return": 1.1623
     },
     {
       "ticker": "INDUSINDBK.NS",
       "bank": "IndusInd Bank",
       "cohort": "Private",
-      "price_return": 0.0469
+      "price_return": 0.0498
     },
     {
       "ticker": "KOTAKBANK.NS",
       "bank": "Kotak Mahindra Bank",
       "cohort": "Private",
-      "price_return": 0.1777
+      "price_return": 0.1794
     },
     {
       "ticker": "PAYTM.NS",
       "bank": "One97 (Paytm)",
       "cohort": "Fintech",
-      "price_return": 0.0473
+      "price_return": 0.0456
     },
     {
       "ticker": "PNB.NS",
       "bank": "Punjab National Bank",
       "cohort": "Public",
-      "price_return": 2.574
+      "price_return": 2.5758
     },
     {
       "ticker": "SBIN.NS",
       "bank": "State Bank of India",
       "cohort": "Public",
-      "price_return": 1.7871
+      "price_return": 1.7996
     },
     {
       "ticker": "UNIONBANK.NS",
       "bank": "Union Bank of India",
       "cohort": "Public",
-      "price_return": 5.6141
+      "price_return": 5.6268
     }
   ]
 }
