@@ -1,76 +1,99 @@
 ---
 /**
- * Gap analyser, meaning one: JD-to-artefact traceability.
+ * Gap analyser: JD-to-artefact traceability.
  *
- * Rows are the requirements as written in the job description. Columns are what
- * in this repository demonstrates each one. The "not covered" rows are kept
- * deliberately - a self-assessment that only ever says "full" is not an
+ * Rows are the requirements as written in the job description. Coverage is a
+ * Harvey ball, the convention this exact table has used in consulting decks for
+ * decades - a geometric glyph, read at a glance, no colour needed. It replaced a
+ * row of coloured pill badges reading "Demonstrated" / "Partial", which is the
+ * house style of generated UI rather than of a coverage matrix.
+ *
+ * The artefact column is a link, not a paragraph. The artefact argues its own
+ * case one click away. A caveat is kept ONLY where coverage is short of full,
+ * because that is where the reader is owed one - and the "Not covered" row is
+ * kept deliberately: a self-assessment that only ever says "full" is not an
  * assessment.
  */
 const rows = [
   { need: 'Drive open-ended research', level: 'full',
-    artefact: 'Seven-module scan across payments, banking, wealth and inclusion, built from seven live sources — two replaced after the originally proposed ones proved stale or WAF-blocked',
-    href: '/#module-a' },
+    artefact: 'Seven-module scan, seven live sources', href: '/#module-a' },
   { need: 'Create industry points of view', level: 'full',
-    artefact: 'pov-upi-monetization.md - governing thought, three supporting arguments, ranked recommendation',
-    href: '/insights/pov-upi-monetization' },
+    artefact: 'pov-upi-monetization.md', href: '/insights/pov-upi-monetization' },
   { need: 'Sector and industry scans', level: 'full',
-    artefact: 'Banking (pov-deposit-war.md), market structure (pov-market-structure.md) and wealth (wealth-fund-shelf.md) — three sector scans, each with its own recommendation',
-    href: '/insights/pov-deposit-war' },
+    artefact: 'Banking, market structure, wealth', href: '/insights/pov-deposit-war' },
   { need: 'Summarise key themes, trends and challenges', level: 'full',
-    artefact: 'Every memo closes with a "so what" and a "what would change this answer"',
-    href: '/insights/pov-upi-monetization' },
+    artefact: 'Every memo closes with a “so what”', href: '/insights/pov-upi-monetization' },
   { need: 'Survey analytics', level: 'partial',
-    artefact: 'Episode-level NPS on a seeded synthetic panel. The method is real; the panel is generated, because episode benchmarks are proprietary',
-    href: '/insights/survey-nps-episodes' },
+    artefact: 'Episode-level NPS', href: '/insights/survey-nps-episodes',
+    note: 'Method is real; the panel is a seeded synthetic one, because episode benchmarks are proprietary.' },
   { need: 'Private equity diligence support', level: 'full',
-    artefact: 'diligence-merchant-payments.md - market attractiveness, unit economics, red flags, listed comparable',
-    href: '/insights/diligence-merchant-payments' },
+    artefact: 'diligence-merchant-payments.md', href: '/insights/diligence-merchant-payments' },
   { need: 'Build FS data assets and IP', level: 'full',
-    artefact: 'Reproducible pipeline: six fetchers, schema validation, automatic provenance ledger, monthly refresh',
-    href: '/methodology' },
+    artefact: 'Reproducible pipeline, generated provenance', href: '/methodology' },
   { need: 'Client-ready visualisation dashboards (e.g. Tableau)', level: 'partial',
-    artefact: 'Marimekko, waterfall, slopegraph and small-multiples exhibits plus an interactive workbench — all in code, none in Tableau itself',
-    href: '/#workbench' },
+    artefact: 'Linked cartogram, table and detail panel', href: '/#workbench',
+    note: 'Bespoke exhibits and an interactive workbench, all in code — but not in Tableau itself.' },
   { need: 'Structured communication of insights', level: 'full',
-    artefact: 'Answer-first throughout: every exhibit title states the finding, not the contents',
-    href: '/#module-a' },
+    artefact: 'Answer-first: every title is the finding', href: '/#module-a' },
   { need: 'Quantify a live policy question', level: 'full',
-    artefact: 'The 30% share cap: both leaders breach it, and complying would move 4.3bn transactions a month between apps — the arithmetic says it cannot bind',
-    href: '/insights/pov-market-structure' },
+    artefact: 'The 30% share cap, priced', href: '/insights/pov-market-structure' },
   { need: 'Deal with ambiguity; tackle diligence questions', level: 'full',
-    artefact: 'An explicit ambiguity register: five unknowns, why each is unresolved, and which one the recommendation is fragile to',
-    href: '/insights/diligence-merchant-payments' },
+    artefact: 'Explicit ambiguity register', href: '/insights/diligence-merchant-payments' },
   { need: 'Python / R / Alteryx knowledge', level: 'full',
-    artefact: 'Python pipeline end to end; runs with no credentials in 84 seconds',
-    href: '/methodology' },
+    artefact: 'Python end to end, zero credentials', href: '/methodology' },
   { need: 'Advanced Microsoft Excel and PowerPoint', level: 'none',
-    artefact: 'Not demonstrated here. This project was scoped as web-only; the pipeline emits tidy CSV, so a model workbook and a deck are a short addition',
-    href: null },
+    artefact: 'Not demonstrated', href: null,
+    note: 'Scoped as web-only. The pipeline emits tidy CSV, so a model workbook and a deck are a short addition.' },
 ];
-const label = { full: 'Demonstrated', partial: 'Partial', none: 'Not covered' } as const;
+
+const LABEL = { full: 'Demonstrated', partial: 'Partial', none: 'Not covered' } as const;
+type Level = keyof typeof LABEL;
+
 const counts = { full: 0, partial: 0, none: 0 };
-rows.forEach((r) => counts[r.level as keyof typeof counts]++);
+rows.forEach((r) => counts[r.level as Level]++);
+const pct = (n: number) => (n / rows.length) * 100;
 ---
 <div class="matrix">
-  <div class="controls">
-    <span class="hint">{counts.full} demonstrated &middot; {counts.partial} partial &middot; {counts.none} not covered</span>
-    <div class="filters">
-      <button data-filter="all" class="on">All</button>
-      <button data-filter="full">Demonstrated</button>
-      <button data-filter="partial">Partial</button>
-      <button data-filter="none">Gaps</button>
+  <div class="summary">
+    <div class="propbar" role="img"
+         aria-label={`${counts.full} of ${rows.length} requirements demonstrated, ${counts.partial} partial, ${counts.none} not covered.`}>
+      <i class="full" style={`width:${pct(counts.full)}%`}></i>
+      <i class="partial" style={`width:${pct(counts.partial)}%`}></i>
+      <i class="none" style={`width:${pct(counts.none)}%`}></i>
     </div>
+    <p class="key">
+      <span><b>{counts.full}</b> demonstrated</span>
+      <span><b>{counts.partial}</b> partial</span>
+      <span><b>{counts.none}</b> not covered</span>
+      <span class="of">of {rows.length} requirements</span>
+    </p>
   </div>
+
   <table>
-    <thead><tr><th>What the job description asks for</th><th>Status</th><th>Where it is demonstrated</th></tr></thead>
+    <thead>
+      <tr>
+        <th scope="col">What the job description asks for</th>
+        <th scope="col" class="mid">Coverage</th>
+        <th scope="col">Artefact</th>
+      </tr>
+    </thead>
     <tbody>
       {rows.map((r) => (
-        <tr data-level={r.level}>
-          <td class="need">{r.need}</td>
-          <td><span class:list={['badge', r.level]}>{label[r.level as keyof typeof label]}</span></td>
+        <tr>
+          <th scope="row" class="need">{r.need}</th>
+          <td class="mid">
+            <svg class:list={['ball', r.level]} viewBox="0 0 16 16" width="15" height="15"
+                 role="img" aria-label={LABEL[r.level as Level]}>
+              <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.4" />
+              {r.level === 'full' && <circle cx="8" cy="8" r="6.6" fill="currentColor" />}
+              {r.level === 'partial' && <path d="M8 1.4 A6.6 6.6 0 0 0 8 14.6 Z" fill="currentColor" />}
+            </svg>
+          </td>
           <td class="artefact">
-            {r.href ? <a href={r.href}>{r.artefact}</a> : <span class="muted">{r.artefact}</span>}
+            {r.href
+              ? <a href={r.href}>{r.artefact}</a>
+              : <span class="muted">{r.artefact}</span>}
+            {r.note && <span class="note">{r.note}</span>}
           </td>
         </tr>
       ))}
@@ -78,44 +101,40 @@ rows.forEach((r) => counts[r.level as keyof typeof counts]++);
   </table>
 </div>
 
-<script>
-  const root = document.currentScript?.previousElementSibling as HTMLElement | null;
-  document.querySelectorAll<HTMLButtonElement>('.matrix .filters button').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const want = btn.dataset.filter;
-      const scope = btn.closest('.matrix') ?? root;
-      scope?.querySelectorAll<HTMLButtonElement>('.filters button').forEach((b) => b.classList.toggle('on', b === btn));
-      scope?.querySelectorAll<HTMLTableRowElement>('tbody tr').forEach((tr) => {
-        tr.hidden = want !== 'all' && tr.dataset.level !== want;
-      });
-    });
-  });
-</script>
-
 <style>
-  .controls { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between;
-              align-items: center; margin-bottom: 0.9rem; }
-  .hint { color: var(--text-3); font-size: 0.75rem; }
-  .filters { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-  .filters button {
-    background: transparent; border: 1px solid var(--line); color: var(--text-2);
-    padding: 0.28rem 0.7rem; border-radius: 999px; font-size: 0.72rem; cursor: pointer;
-    font-family: inherit;
-  }
-  .filters button.on { border-color: var(--signal-line); color: var(--text); background: var(--signal-soft); }
   .matrix { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 620px; }
-  th { text-align: left; color: var(--text-3); font-weight: 600; font-size: 0.68rem;
-       text-transform: uppercase; letter-spacing: 0.07em; padding: 0 0.75rem 0.6rem 0; }
-  td { padding: 0.7rem 0.75rem 0.7rem 0; border-top: 1px solid var(--line-soft); vertical-align: top; }
-  .need { color: var(--text); font-weight: 600; width: 27%; }
+
+  .summary { margin-bottom: 1.2rem; }
+  .propbar { display: flex; height: 6px; border-radius: 999px; overflow: hidden;
+             background: var(--surface-2); border: 1px solid var(--line); max-width: 460px; }
+  .propbar i { display: block; height: 100%; }
+  .propbar i.full { background: var(--text-2); }
+  .propbar i.partial { background: var(--text-3); }
+  .propbar i.none { background: var(--signal); }
+  .key { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0.55rem 0 0;
+         color: var(--text-3); font-size: 0.72rem; max-width: 460px; }
+  .key b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .key .of { margin-left: auto; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.83rem; min-width: 560px; }
+  th[scope='col'] { text-align: left; color: var(--text-3); font-weight: 600; font-size: 0.68rem;
+                    text-transform: uppercase; letter-spacing: 0.07em; padding: 0 0.75rem 0.6rem 0; }
+  td, th[scope='row'] { padding: 0.7rem 0.75rem 0.7rem 0;
+                        border-top: 1px solid var(--line-soft); vertical-align: top; }
+  .mid { text-align: center; width: 92px; padding-right: 0; }
+  .need { color: var(--text); font-weight: 600; width: 40%; text-align: left; }
+
+  /* Harvey balls: one geometric glyph, no colour required to read it. */
+  .ball { display: block; margin: 1px auto 0; }
+  .ball.full { color: var(--text); }
+  .ball.partial { color: var(--text-2); }
+  .ball.none { color: var(--signal-text); }
+
   .artefact { color: var(--text-2); line-height: 1.5; }
-  .artefact a { color: var(--text-2); text-decoration-color: var(--signal-line); text-underline-offset: 3px; }
+  .artefact a { color: var(--text-2); text-decoration-color: var(--signal-line);
+                text-underline-offset: 3px; }
   .artefact a:hover { color: var(--text); }
   .muted { color: var(--text-3); }
-  .badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 999px;
-           font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
-  .badge.full { background: rgba(63,166,107,0.14); color: var(--pos); }
-  .badge.partial { background: rgba(201,138,46,0.16); color: var(--warn); }
-  .badge.none { background: var(--signal-soft); color: #E4707A; }
+  .note { display: block; margin-top: 0.28rem; color: var(--text-3); font-size: 0.73rem;
+          line-height: 1.45; max-width: 46ch; }
 </style>

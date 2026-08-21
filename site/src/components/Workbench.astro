@@ -5,41 +5,122 @@
  * Perspective, Superset, Panel, Redash and Vizro were all evaluated (see
  * docs/stack-decisions.md). Every one of them either needs a live Python or
  * Node backend, which a static free-hosted site cannot have, or ships several
- * megabytes of WASM to pivot 36 rows. Sorting, filtering and ranking that many
- * rows is a table and forty lines of DOM code, and it keeps Lighthouse at 95+.
+ * megabytes of WASM to pivot 36 rows.
+ *
+ * Three linked views over one array: a tile cartogram, a sortable table, and a
+ * detail panel. Selecting in either view drives the other two.
+ *
+ * The metric switch here is the one the page's subtitle used to promise while
+ * the component did not have it. The `intensity_index` column is gone: it was
+ * algebraically identical to average ticket, so the table showed one variable
+ * twice. Measured merchant share replaces it.
  */
+import HexCartogram from './charts/HexCartogram.astro';
+
 interface StateRow {
-  state: string; volume_share: number; value_share: number;
-  intensity_index: number; avg_ticket_inr: number;
+  state: string;
+  volume_share: number;
+  value_share: number;
+  merchant_volume_share: number;
+  merchant_value_share: number;
+  p2p_volume_share: number;
+  utility_volume_share: number;
+  merchant_avg_ticket_inr: number;
+  avg_ticket_inr: number;
 }
 interface Props { states: StateRow[]; period: string }
 const { states, period } = Astro.props;
 
+const METRICS = [
+  { key: 'merchant_volume_share', type: 'pct', label: 'Merchant share',
+    caption: 'Merchant share of a state’s own transactions' },
+  { key: 'avg_ticket_inr', type: 'inr', label: 'Avg ticket',
+    caption: 'Average transaction size' },
+  { key: 'volume_share', type: 'pct', label: 'Share of national',
+    caption: 'Share of all national transactions' },
+];
+
 const cols = [
   { key: 'state', label: 'State / UT', type: 'text' },
+  { key: 'merchant_volume_share', label: 'Merchant share', type: 'pct' },
   { key: 'volume_share', label: 'Share of txns', type: 'pct' },
   { key: 'value_share', label: 'Share of value', type: 'pct' },
   { key: 'avg_ticket_inr', label: 'Avg ticket', type: 'inr' },
-  { key: 'intensity_index', label: 'Intensity', type: 'num' },
 ];
+
 const fmt = (row: StateRow, key: string, type: string) => {
   const v = (row as any)[key];
   if (type === 'pct') return `${(v * 100).toFixed(2)}%`;
   if (type === 'inr') return `₹${Math.round(v).toLocaleString('en-IN')}`;
-  if (type === 'num') return Number(v).toFixed(3);
-  return String(v).replace(/\b\w/g, (c) => c.toUpperCase());
+  return String(v);
 };
-const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
+
+const sorted = [...states].sort((a, b) => b.merchant_volume_share - a.merchant_volume_share);
+/* Volume-weighted, so it matches the national figure the pipeline computes. */
+const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s.volume_share, 0);
 ---
 <div class="wb">
+  <div class="switch" role="group" aria-label="Colour the map and rank the table by">
+    <span class="lbl">Rank by</span>
+    {METRICS.map((m, i) => (
+      <button
+        type="button"
+        data-wb-metric={m.key}
+        data-caption={m.caption}
+        data-type={m.type}
+        class:list={[i === 0 && 'on']}
+        aria-pressed={i === 0 ? 'true' : 'false'}
+      >{m.label}</button>
+    ))}
+  </div>
+
+  <div class="split">
+    <div class="mapside">
+      <HexCartogram states={states} />
+      <p class="hint">
+        Select a tile for its full breakdown. Equal tiles, so land area does not distort the
+        reading — Delhi gets as much ink as Rajasthan.
+      </p>
+    </div>
+
+    <div class="detail" data-wb-detail aria-live="polite">
+      <p class="empty" data-wb-empty>
+        Select a state on the map or in the table to break out its transaction mix.
+      </p>
+      <div class="card" data-wb-card hidden>
+        <p class="kicker" data-wb-rank></p>
+        <h4 data-wb-name></h4>
+        <div class="mixbar" aria-hidden="true">
+          <i class="m" data-wb-bar-merchant></i>
+          <i class="p" data-wb-bar-p2p></i>
+          <i class="u" data-wb-bar-utility></i>
+        </div>
+        <p class="mixkey">
+          <span><i class="m"></i>Merchant <b data-wb-merchant></b></span>
+          <span><i class="p"></i>P2P <b data-wb-p2p></b></span>
+          <span><i class="u"></i>Utility <b data-wb-utility></b></span>
+        </p>
+        <dl>
+          <div><dt>Merchant share of value</dt><dd data-wb-mval></dd></div>
+          <div><dt>Average ticket</dt><dd data-wb-ticket></dd></div>
+          <div><dt>Merchant average ticket</dt><dd data-wb-mticket></dd></div>
+          <div><dt>Share of national transactions</dt><dd data-wb-vol></dd></div>
+          <div><dt>Share of national value</dt><dd data-wb-val></dd></div>
+        </dl>
+        <p class="vs" data-wb-vs></p>
+      </div>
+    </div>
+  </div>
+
   <div class="bar">
     <label class="search">
       <span class="sr">Filter states</span>
       <input type="search" placeholder="Filter states…" data-wb-filter autocomplete="off" />
     </label>
     <span class="meta" data-wb-count>{sorted.length} of {sorted.length} · {period}</span>
-    <span class="legend"><i class="hot"></i> merchant-heavy (intensity ≥ 1.0)</span>
+    <span class="legend">National merchant share {(nationalMerchant * 100).toFixed(1)}%</span>
   </div>
+
   <div class="scroll">
     <table data-wb-table>
       <thead>
@@ -53,7 +134,7 @@ const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
       </thead>
       <tbody>
         {sorted.map((row) => (
-          <tr data-name={row.state.toLowerCase()} class:list={[row.intensity_index >= 1 && 'hot']}>
+          <tr data-name={row.state.toLowerCase()} data-state={row.state} tabindex="0">
             {cols.map((c, i) => (
               <td class:list={[i > 0 && 'num']} data-v={(row as any)[c.key]}>{fmt(row, c.key, c.type)}</td>
             ))}
@@ -64,49 +145,198 @@ const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
   </div>
 </div>
 
-<script>
-  document.querySelectorAll<HTMLElement>('.wb').forEach((wb) => {
-    const table = wb.querySelector<HTMLTableElement>('[data-wb-table]')!;
+<script define:vars={{ statesData: states }}>
+  document.querySelectorAll('.wb').forEach((wb) => {
+    const byState = new Map(statesData.map((s) => [s.state, s]));
+    const table = wb.querySelector('[data-wb-table]');
     const tbody = table.tBodies[0];
     const rows = Array.from(tbody.rows);
-    const count = wb.querySelector<HTMLElement>('[data-wb-count]')!;
-    const period = count.textContent?.split('·')[1]?.trim() ?? '';
-    let sortKey = 1, dir = -1;
+    const headCells = Array.from(table.tHead.rows[0].cells);
+    const tiles = Array.from(wb.querySelectorAll('[data-carto-tile]'));
+    const count = wb.querySelector('[data-wb-count]');
+    const period = count.textContent.split('·')[1].trim();
 
+    const pc = (v, dp = 1) => `${(v * 100).toFixed(dp)}%`;
+    const inr = (v) => `₹${Math.round(v).toLocaleString('en-IN')}`;
+    const national = statesData.reduce((a, s) => a + s.merchant_volume_share * s.volume_share, 0);
+
+    let sortKey = 1;
+    let dir = -1;
+
+    function sortBy(index, forceDir) {
+      if (forceDir) { dir = forceDir; sortKey = index; }
+      const isText = headCells[index].dataset.type === 'text';
+      [...rows]
+        .sort((a, b) => {
+          const av = a.cells[index].dataset.v || '';
+          const bv = b.cells[index].dataset.v || '';
+          return (isText ? av.localeCompare(bv) : Number(av) - Number(bv)) * dir;
+        })
+        .forEach((r) => tbody.appendChild(r));
+      headCells.forEach((th, i) => {
+        th.dataset.sorted = i === index ? (dir === 1 ? 'asc' : 'desc') : '';
+      });
+    }
+
+    /* ---- metric switch: recolours the map, relabels the scale, re-ranks ---- */
+    const DATASET_KEY = {
+      merchant_volume_share: 'merchant',
+      avg_ticket_inr: 'ticket',
+      volume_share: 'volume',
+    };
+    let metric = 'merchant_volume_share';
+    let metricType = 'pct';
+
+    const applyMetric = () => {
+      const vals = tiles.map((t) => Number(t.dataset[DATASET_KEY[metric]]));
+      const lo = Math.min(...vals);
+      const hi = Math.max(...vals);
+      const show = (v) => (metricType === 'inr' ? inr(v) : `${(v * 100).toFixed(0)}%`);
+      tiles.forEach((t, i) => {
+        const v = vals[i];
+        t.style.setProperty('--t', (hi === lo ? 0.5 : (v - lo) / (hi - lo)).toFixed(3));
+        const out = t.querySelector('[data-carto-val]');
+        if (out) out.textContent = show(v);
+        /* WCAG 2.5.3: the visible value just changed, so the accessible name
+           must change with it or voice control can no longer address the tile. */
+        t.setAttribute('aria-label', `${t.dataset.code} ${show(v)}. ${t.dataset.desc}`);
+      });
+      wb.querySelector('[data-carto-lo]').textContent = show(lo);
+      wb.querySelector('[data-carto-hi]').textContent = show(hi);
+      const on = wb.querySelector('[data-wb-metric].on');
+      if (on) wb.querySelector('[data-carto-caption]').textContent = on.dataset.caption;
+      const idx = headCells.findIndex((c) => c.dataset.key === metric);
+      if (idx > -1) sortBy(idx, -1);
+    };
+
+    wb.querySelectorAll('[data-wb-metric]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        metric = btn.dataset.wbMetric;
+        metricType = btn.dataset.type;
+        wb.querySelectorAll('[data-wb-metric]').forEach((b) => {
+          b.classList.toggle('on', b === btn);
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        applyMetric();
+      });
+    });
+
+    /* ---- detail panel, driven from either view ---- */
+    const card = wb.querySelector('[data-wb-card]');
+    const empty = wb.querySelector('[data-wb-empty]');
+    const ranked = [...statesData].sort((a, b) => b.merchant_volume_share - a.merchant_volume_share);
+    const set = (sel, text) => { const n = wb.querySelector(sel); if (n) n.textContent = text; };
+    const width = (sel, v) => { const n = wb.querySelector(sel); if (n) n.style.width = `${v * 100}%`; };
+
+    const select = (name) => {
+      const s = byState.get(name);
+      if (!s) return;
+      const rank = ranked.findIndex((x) => x.state === name) + 1;
+      set('[data-wb-rank]', `Rank ${rank} of ${statesData.length} by merchant share`);
+      set('[data-wb-name]', s.state);
+      set('[data-wb-merchant]', pc(s.merchant_volume_share));
+      set('[data-wb-p2p]', pc(s.p2p_volume_share));
+      set('[data-wb-utility]', pc(s.utility_volume_share));
+      set('[data-wb-mval]', pc(s.merchant_value_share));
+      set('[data-wb-ticket]', inr(s.avg_ticket_inr));
+      set('[data-wb-mticket]', inr(s.merchant_avg_ticket_inr));
+      set('[data-wb-vol]', pc(s.volume_share, 2));
+      set('[data-wb-val]', pc(s.value_share, 2));
+      const d = (s.merchant_volume_share - national) * 100;
+      set('[data-wb-vs]',
+        `${Math.abs(d).toFixed(1)}pp ${d >= 0 ? 'above' : 'below'} the national merchant share of ${pc(national)}.`);
+      width('[data-wb-bar-merchant]', s.merchant_volume_share);
+      width('[data-wb-bar-p2p]', s.p2p_volume_share);
+      width('[data-wb-bar-utility]', s.utility_volume_share);
+      card.hidden = false;
+      empty.hidden = true;
+      tiles.forEach((t) => t.toggleAttribute('data-active', t.dataset.state === name));
+      rows.forEach((r) => r.classList.toggle('sel', r.dataset.state === name));
+    };
+
+    tiles.forEach((t) => t.addEventListener('click', () => select(t.dataset.state)));
+    rows.forEach((r) => {
+      r.addEventListener('click', () => select(r.dataset.state));
+      r.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(r.dataset.state); }
+      });
+    });
+
+    /* ---- filter: hides table rows AND dims the non-matching tiles ---- */
     const refresh = () => {
-      const q = (wb.querySelector<HTMLInputElement>('[data-wb-filter]')!.value || '').toLowerCase();
+      const term = (wb.querySelector('[data-wb-filter]').value || '').toLowerCase();
       let shown = 0;
       rows.forEach((r) => {
-        const hit = !q || (r.dataset.name ?? '').includes(q);
+        const hit = !term || (r.dataset.name || '').includes(term);
         r.hidden = !hit;
         if (hit) shown++;
       });
+      tiles.forEach((t) => t.toggleAttribute(
+        'data-dim', Boolean(term) && !t.dataset.state.toLowerCase().includes(term)));
       count.textContent = `${shown} of ${rows.length} · ${period}`;
     };
 
-    const sortBy = (index: number) => {
-      const isText = table.tHead!.rows[0].cells[index].dataset.type === 'text';
-      const ordered = [...rows].sort((a, b) => {
-        const av = a.cells[index].dataset.v ?? '', bv = b.cells[index].dataset.v ?? '';
-        return (isText ? av.localeCompare(bv) : Number(av) - Number(bv)) * dir;
-      });
-      ordered.forEach((r) => tbody.appendChild(r));
-      table.tHead!.rows[0].querySelectorAll('th').forEach((th, i) => {
-        th.dataset.sorted = i === index ? (dir === 1 ? 'asc' : 'desc') : '';
-      });
-    };
-
-    table.tHead!.rows[0].querySelectorAll<HTMLTableCellElement>('th').forEach((th, i) => {
-      const go = () => { dir = sortKey === i ? -dir : (th.dataset.type === 'text' ? 1 : -1); sortKey = i; sortBy(i); };
+    headCells.forEach((th, i) => {
+      const go = () => {
+        dir = sortKey === i ? -dir : (th.dataset.type === 'text' ? 1 : -1);
+        sortKey = i;
+        sortBy(i);
+      };
       th.addEventListener('click', go);
-      th.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      th.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+      });
     });
-    wb.querySelector<HTMLInputElement>('[data-wb-filter]')!.addEventListener('input', refresh);
-    sortBy(1);
+
+    wb.querySelector('[data-wb-filter]').addEventListener('input', refresh);
+    applyMetric();
   });
 </script>
 
 <style>
+  .switch { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .switch .lbl { color: var(--text-3); font-size: 0.68rem; text-transform: uppercase;
+                 letter-spacing: 0.07em; margin-right: 0.25rem; }
+  .switch button {
+    background: transparent; border: 1px solid var(--line); color: var(--text-2);
+    padding: 0.3rem 0.7rem; border-radius: 7px; font: inherit; font-size: 0.74rem;
+    cursor: pointer;
+  }
+  .switch button.on { border-color: var(--text); color: var(--text); background: var(--surface-2); }
+  .switch button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+  .split { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+           gap: clamp(1rem, 3vw, 2rem); align-items: start; margin-bottom: 1.2rem; }
+  @media (max-width: 820px) { .split { grid-template-columns: 1fr; } }
+  .hint { color: var(--text-3); font-size: 0.7rem; margin: 0.7rem 0 0; max-width: 44ch; line-height: 1.5; }
+
+  .detail { border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem;
+            background: var(--surface-2); min-height: 200px; }
+  .detail .empty { color: var(--text-3); font-size: 0.8rem; margin: 0; line-height: 1.6; }
+  .detail h4 { font-family: var(--font-display); font-size: 1.15rem; margin: 0.2rem 0 0.9rem; }
+  .detail .kicker { font-size: 0.64rem; margin: 0; }
+
+  .mixbar { display: flex; height: 10px; border-radius: 999px; overflow: hidden;
+            border: 1px solid var(--line); }
+  .mixbar i { display: block; height: 100%; }
+  i.m { background: var(--signal); }
+  i.p { background: var(--s2); }
+  i.u { background: var(--s4); }
+  .mixkey { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.55rem 0 0.9rem;
+            color: var(--text-3); font-size: 0.7rem; }
+  .mixkey span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .mixkey i { width: 9px; height: 9px; border-radius: 2px; }
+  .mixkey b { color: var(--text); font-variant-numeric: tabular-nums; }
+
+  .detail dl { margin: 0; display: grid; gap: 1px; background: var(--line);
+               border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .detail dl > div { background: var(--surface); display: flex; justify-content: space-between;
+                     gap: 1rem; padding: 0.45rem 0.7rem; }
+  .detail dt { color: var(--text-3); font-size: 0.72rem; }
+  .detail dd { margin: 0; color: var(--text); font-size: 0.76rem;
+               font-variant-numeric: tabular-nums; }
+  .vs { margin: 0.7rem 0 0; color: var(--text-2); font-size: 0.73rem; line-height: 1.5; }
+
   .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 0.8rem; }
   .search input {
     background: var(--ink); border: 1px solid var(--line); color: var(--text);
@@ -115,8 +345,8 @@ const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
   .search input:focus { outline: 2px solid var(--signal-line); outline-offset: 1px; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .meta, .legend { color: var(--text-3); font-size: 0.72rem; }
-  .legend { margin-left: auto; display: inline-flex; align-items: center; gap: 0.35rem; }
-  .legend i.hot { width: 9px; height: 9px; border-radius: 2px; background: var(--signal); display: inline-block; }
+  .legend { margin-left: auto; }
+
   .scroll { max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: 10px; }
   table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
   thead th {
@@ -126,10 +356,14 @@ const sorted = [...states].sort((a, b) => b.volume_share - a.volume_share);
     border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none;
   }
   thead th:hover { color: var(--text); }
+  thead th:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; }
   thead th[data-sorted='asc'] .arrow::after { content: ' ▲'; color: var(--signal-text); }
   thead th[data-sorted='desc'] .arrow::after { content: ' ▼'; color: var(--signal-text); }
   td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--line-soft); color: var(--text-2); }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr { cursor: pointer; }
   tbody tr:hover td { background: rgba(255, 255, 255, 0.025); color: var(--text); }
-  tbody tr.hot td:first-child { box-shadow: inset 3px 0 0 var(--signal); color: var(--text); }
+  tbody tr:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; }
+  tbody tr.sel td { background: var(--signal-soft); color: var(--text); }
+  tbody tr.sel td:first-child { box-shadow: inset 3px 0 0 var(--signal); }
 </style>

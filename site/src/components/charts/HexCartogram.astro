@@ -1,0 +1,205 @@
+---
+/**
+ * Tile cartogram of India: one equal tile per state or union territory.
+ *
+ * Equal tiles, not true geography, and that is the point. A choropleth encodes
+ * value in a shape whose AREA is fixed by land mass, so Rajasthan shouts and
+ * Delhi whispers regardless of what the data says. Here Delhi - the most
+ * merchant-heavy state in the country - gets exactly as much ink as Rajasthan.
+ *
+ * Built from CSS Grid over real <button> elements rather than SVG: keyboard
+ * focus, activation and labelling all come free from the platform, and the
+ * whole thing is server-rendered with zero client JS at rest.
+ *
+ * Colour is one accent at varying strength, never a rainbow - the tokens file
+ * forbids hardcoded hex, so the ramp is an opacity over --signal.
+ */
+interface StateRow {
+  state: string;
+  volume_share: number;
+  merchant_volume_share: number;
+  avg_ticket_inr: number;
+}
+interface Props {
+  states: StateRow[];
+  metric?: string;
+  label?: string;
+}
+const {
+  states,
+  metric = 'merchant_volume_share',
+  label = 'Merchant share of a state’s own transactions',
+} = Astro.props;
+
+/* Grid position and two-letter code per state, hand-authored to approximate
+   India's arrangement. Keys are Pulse's own names, title-cased upstream. */
+const GRID: Record<string, [number, number, string]> = {
+  'Ladakh':                             [4, 0, 'LA'],
+  'Jammu & Kashmir':                    [3, 1, 'JK'],
+  'Himachal Pradesh':                   [4, 1, 'HP'],
+  'Punjab':                             [3, 2, 'PB'],
+  'Chandigarh':                         [4, 2, 'CH'],
+  'Uttarakhand':                        [5, 2, 'UK'],
+  'Haryana':                            [3, 3, 'HR'],
+  'Delhi':                              [4, 3, 'DL'],
+  'Uttar Pradesh':                      [5, 3, 'UP'],
+  'Sikkim':                             [8, 3, 'SK'],
+  'Arunachal Pradesh':                  [9, 3, 'AR'],
+  'Rajasthan':                          [2, 4, 'RJ'],
+  'Bihar':                              [6, 4, 'BR'],
+  'Assam':                              [8, 4, 'AS'],
+  'Nagaland':                           [9, 4, 'NL'],
+  'Gujarat':                            [1, 5, 'GJ'],
+  'Madhya Pradesh':                     [3, 5, 'MP'],
+  'Jharkhand':                          [5, 5, 'JH'],
+  'West Bengal':                        [6, 5, 'WB'],
+  'Meghalaya':                          [7, 5, 'ML'],
+  'Manipur':                            [9, 5, 'MN'],
+  'Dadra & Nagar Haveli & Daman & Diu': [2, 6, 'DD'],
+  'Maharashtra':                        [3, 6, 'MH'],
+  'Chhattisgarh':                       [4, 6, 'CG'],
+  'Odisha':                             [5, 6, 'OD'],
+  'Tripura':                            [7, 6, 'TR'],
+  'Mizoram':                            [8, 6, 'MZ'],
+  'Goa':                                [2, 7, 'GA'],
+  'Telangana':                          [4, 7, 'TG'],
+  'Andhra Pradesh':                     [5, 7, 'AP'],
+  'Karnataka':                          [3, 8, 'KA'],
+  'Andaman & Nicobar Islands':          [7, 8, 'AN'],
+  'Lakshadweep':                        [1, 9, 'LD'],
+  'Kerala':                             [3, 9, 'KL'],
+  'Tamil Nadu':                         [4, 9, 'TN'],
+  'Puducherry':                         [5, 9, 'PY'],
+};
+
+const placed = states.filter((s) => GRID[s.state]);
+/* Surfaced on the page rather than silently dropped: an unplaced state is a
+   grid that has fallen out of step with the data, and should be visible. */
+const unplaced = states.filter((s) => !GRID[s.state]).map((s) => s.state);
+
+const vals = placed.map((s) => Number((s as any)[metric]));
+const lo = vals.length ? Math.min(...vals) : 0;
+const hi = vals.length ? Math.max(...vals) : 1;
+const norm = (v: number) => (hi === lo ? 0.5 : (v - lo) / (hi - lo));
+
+const pc0 = (v: number) => `${(v * 100).toFixed(0)}%`;
+const inr0 = (v: number) => `₹${Math.round(v).toLocaleString('en-IN')}`;
+
+/* WCAG 2.5.3 (Label in Name): a voice-control user says what they SEE, so the
+   accessible name has to START with the visible text - the code and the value -
+   before the description. Keep this in sync with the Workbench metric switch,
+   which rewrites both when the displayed value changes. */
+const tiles = placed.map((s) => {
+  const [col, row, code] = GRID[s.state];
+  const desc = `${s.state}. Merchant payments are ${(s.merchant_volume_share * 100).toFixed(1)}% `
+    + `of its own transactions; average ticket ${inr0(s.avg_ticket_inr)}; `
+    + `${(s.volume_share * 100).toFixed(2)}% of national transactions.`;
+  const shown = pc0(s.merchant_volume_share);
+  return { ...s, col, row, code, desc, shown, t: norm(Number((s as any)[metric])) };
+});
+---
+<div class="carto-wrap">
+  <div
+    class="carto"
+    role="group"
+    aria-label={`Tile cartogram of India. ${label}. One equal tile per state or union territory, so land area does not distort the reading.`}
+  >
+    {tiles.map((t) => (
+      <button
+        type="button"
+        class="tile"
+        style={`grid-column:${t.col + 1};grid-row:${t.row + 1};--t:${t.t.toFixed(3)}`}
+        data-carto-tile
+        data-state={t.state}
+        data-merchant={t.merchant_volume_share}
+        data-ticket={Math.round(t.avg_ticket_inr)}
+        data-volume={t.volume_share}
+        data-code={t.code}
+        data-desc={t.desc}
+        aria-label={`${t.code} ${t.shown}. ${t.desc}`}
+      >
+        <span class="ab" aria-hidden="true">{t.code}</span>
+        <span class="v" aria-hidden="true" data-carto-val>{t.shown}</span>
+      </button>
+    ))}
+  </div>
+
+  <p class="scale">
+    <span data-carto-lo>{pc0(lo)}</span>
+    <span class="ramp" aria-hidden="true"></span>
+    <span data-carto-hi>{pc0(hi)}</span>
+    <span class="cap" data-carto-caption>{label}</span>
+  </p>
+
+  {unplaced.length > 0 && (
+    <p class="unplaced">
+      No tile assigned, so absent from the map: {unplaced.join(', ')}. Still listed in the table.
+    </p>
+  )}
+</div>
+
+<style>
+  .carto-wrap { margin: 0 0 1.1rem; }
+  .carto {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-template-rows: repeat(10, minmax(0, 1fr));
+    gap: 4px;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1;   /* keeps every tile square without JS */
+  }
+  .tile {
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: var(--surface-2);
+    color: var(--text);
+    font: inherit;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease;
+  }
+  /* The ramp lives on an overlay so its opacity never fades the label. */
+  .tile::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--signal);
+    opacity: calc(0.10 + var(--t) * 0.85);
+  }
+  .tile > * { position: relative; z-index: 1; }
+  .ab { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em; line-height: 1; }
+  .v  { font-size: 0.52rem; color: var(--text-2); line-height: 1;
+        font-variant-numeric: tabular-nums; }
+
+  .tile:hover, .tile[data-active] { transform: translateY(-1px); border-color: var(--text); }
+  .tile[data-active] { box-shadow: 0 0 0 2px var(--text); }
+  .tile:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  .tile[data-dim] { opacity: 0.28; }
+
+  .scale {
+    display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;
+    margin: 0.75rem 0 0; color: var(--text-3); font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .ramp {
+    width: 96px; height: 8px; border-radius: 999px; border: 1px solid var(--line);
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--signal) 10%, var(--surface-2)),
+      var(--signal));
+  }
+  .cap { margin-left: 0.35rem; }
+  .unplaced { margin: 0.6rem 0 0; color: var(--warn); font-size: 0.7rem; }
+
+  @media (max-width: 520px) {
+    .carto { max-width: 100%; gap: 3px; }
+    .v { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile { transition: none; }
+    .tile:hover, .tile[data-active] { transform: none; }
+  }
+</style>

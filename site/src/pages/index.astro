@@ -11,6 +11,7 @@ import Waterfall from '../components/charts/Waterfall.astro';
 import Slopegraph from '../components/charts/Slopegraph.astro';
 import SmallMultiples from '../components/charts/SmallMultiples.astro';
 import Workbench from '../components/Workbench.astro';
+import Monogram from '../components/Monogram.astro';
 
 import hero from '../data/upi_monetisation.json';
 import split from '../data/chart_category_split.json';
@@ -28,6 +29,7 @@ import bridge from '../data/chart_growth_bridge.json';
 import shelf from '../data/chart_fund_shelf.json';
 import inclusion from '../data/chart_inclusion.json';
 import marketView from '../data/chart_market_view.json';
+import meta from '../data/pipeline_meta.json';
 
 const pc = (v: number, dp = 1) => `${(v * 100).toFixed(dp)}%`;
 const inr = (v: number) =>
@@ -156,27 +158,47 @@ const optNps = {
   })),
 };
 
-/* ---- Exhibit 8: transaction share against value share, by state ---- */
-const material = stateGap.states.filter((s) => s.volume_share >= 0.01);
+/* ---- Exhibit 15: merchant intensity against merchant ticket, by state ----
+   Both axes are now independent variables. The previous version plotted share
+   of transactions against average ticket and coloured by an "intensity index"
+   that was algebraically identical to the y-axis, so the colour carried no
+   information at all. Merchant share is measured, not derived. */
+const MIN_STATE = stateGap.min_share_for_extremes;
+const natMerchant = stateGap.national_merchant_volume_share;
+const material = stateGap.states.filter((s) => s.volume_share >= MIN_STATE);
+const mRank = [...material].sort((a, b) => b.merchant_volume_share - a.merchant_volume_share);
+const mHigh = mRank[0];
+const mLow = mRank[mRank.length - 1];
 const optStates = {
-  grid: { top: 26, left: 8, right: 20, bottom: 4, containLabel: true },
-  xAxis: { type: 'value', name: 'share of transactions',
-           nameLocation: 'middle', nameGap: 26, nameTextStyle: { color: '#6E7987', fontSize: 11 },
+  grid: { top: 26, left: 8, right: 24, bottom: 4, containLabel: true },
+  xAxis: { type: 'value', name: 'merchant share of the state’s own transactions',
+           nameLocation: 'middle', nameGap: 28, nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           scale: true,
            axisLabel: { formatter: (v: number) => `${(v * 100).toFixed(0)}%` },
            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
-  yAxis: { type: 'value', name: 'average ticket, ₹', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+  yAxis: { type: 'value', name: 'merchant average ticket, ₹', scale: true,
+           nameTextStyle: { color: '#6E7987', fontSize: 11 },
            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
   tooltip: {
     trigger: 'item',
     formatter: (p: any) =>
-      `<b>${p.data[2]}</b><br/>${(p.data[0] * 100).toFixed(1)}% of transactions<br/>` +
-      `avg ticket ₹${Number(p.data[1]).toLocaleString('en-IN')}<br/>intensity ${p.data[3]}`,
+      `<b>${p.data[2]}</b><br/>${(p.data[0] * 100).toFixed(1)}% of its transactions are merchant<br/>` +
+      `merchant avg ticket ₹${Number(p.data[1]).toLocaleString('en-IN')}<br/>` +
+      `${(p.data[3] * 100).toFixed(2)}% of national transactions`,
   },
   series: [{
     type: 'scatter',
-    symbolSize: (d: any) => 8 + Math.sqrt(d[0]) * 60,
-    itemStyle: { color: (p: any) => (p.data[3] >= 1 ? '#C02734' : '#1F7A8C'), opacity: 0.8 },
-    data: material.map((s) => [s.volume_share, Math.round(s.avg_ticket_inr), s.state, s.intensity_index]),
+    symbolSize: (d: any) => 8 + Math.sqrt(d[3]) * 60,
+    itemStyle: { color: (p: any) => (p.data[0] >= natMerchant ? '#C02734' : '#1F7A8C'), opacity: 0.8 },
+    data: material.map((s) => [s.merchant_volume_share, Math.round(s.merchant_avg_ticket_inr),
+                               s.state, s.volume_share]),
+    markLine: {
+      silent: true, symbol: 'none',
+      lineStyle: { color: '#5B6673', type: 'dashed', width: 1 },
+      label: { formatter: `national ${(natMerchant * 100).toFixed(0)}%`,
+               color: '#6E7987', fontSize: 10, position: 'insideEndTop' },
+      data: [{ xAxis: natMerchant }],
+    },
   }],
 };
 
@@ -205,7 +227,8 @@ const optHhi = {
 };
 
 /* ---- Exhibit: transactions per banked adult ---- */
-const incl = inclusion.series.filter((r) => r.txns_per_banked_adult_per_month);
+// `!= null` not truthiness: a computed 0 is a real observation, and would vanish.
+const incl = inclusion.series.filter((r) => r.txns_per_banked_adult_per_month != null && r.txns_per_banked_adult_per_month > 0);
 const optInclusion = {
   grid: { top: 30, left: 8, right: 46, bottom: 4, containLabel: true },
   xAxis: { type: 'category', data: incl.map((r) => String(r.year)), axisTick: { show: false } },
@@ -360,6 +383,11 @@ const execFindings = [
 
     <section class="wrap module" id="module-structure">
       <h2 class="section-head"><span>B</span> Market structure and the share cap</h2>
+      <ul class="entities" aria-label="Apps analysed in this section">
+        {structure.apps.filter((a) => a.app !== 'All other apps').map((a) => (
+          <li><Monogram name={a.app} /><span>{a.app}</span><b>{pc(a.volume_share, 1)}</b></li>
+        ))}
+      </ul>
       <div class="grid">
         <Figure
           kicker="Exhibit 5 · Who captures the value"
@@ -403,6 +431,11 @@ const execFindings = [
 
     <section class="wrap module" id="module-b">
       <h2 class="section-head"><span>C</span> Banking health scan</h2>
+      <ul class="entities" aria-label="Banks in the two cohorts">
+        {marketView.tickers.filter((t) => t.cohort !== 'Fintech').map((t) => (
+          <li><Monogram name={t.bank} tone={t.cohort === 'Private' ? 1 : 2} /><span>{t.bank}</span><b>{t.cohort}</b></li>
+        ))}
+      </ul>
       <div class="grid">
         <Figure
           kicker="Exhibit 9 · Cohort margins"
@@ -482,10 +515,10 @@ const execFindings = [
       <h2 class="section-head"><span>F</span> Geographic gap</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 15 · Two markets, not one"
-          title="Merchant-heavy states transact often and small; remittance-heavy states rarely and large"
-          subtitle="Red states transact more often than their rupee share implies — where zero-MDR costs land. Bubble size is share of national transactions; states under 1% are omitted."
-          source={SOURCE_PULSE + ' Deliberately a composition measure, not per-capita: no population denominator is invented.'}
+          kicker="Exhibit 15 · One spends, one sends"
+          title={`${mHigh.state} runs ${pc(mHigh.merchant_volume_share, 0)} of its transactions through merchants; ${mLow.state} runs ${pc(mLow.merchant_volume_share, 0)}`}
+          subtitle={`Merchant share is measured from each state's own category split, not inferred from ticket size. Red is above the national ${pc(natMerchant, 0)}; bubble size is share of national transactions; states under ${(MIN_STATE * 100).toFixed(0)}% are omitted.`}
+          source={SOURCE_PULSE + ' Per-state category files, reconciled against the country file at a ratio of 1.000000. A composition measure, not per-capita: no population denominator is invented.'}
           wide
         >
           <EChart id="c-states" option={optStates} height={340} />
@@ -510,8 +543,8 @@ const execFindings = [
       <h2 class="section-head"><span>H</span> Analyst workbench</h2>
       <Figure
         kicker="Interactive · Client-ready dashboard"
-        title="Sort, filter and re-rank the state data without leaving the page"
-        subtitle="The dashboard requirement, met in code: every column sortable, a live filter, and a metric switch — all client-side over the committed dataset."
+        title="Every state's payment mix, three linked ways, without leaving the page"
+        subtitle="The dashboard requirement, met in code: a tile cartogram, a sortable table and a detail panel, all linked — select in one and the others follow. Metric switch, live filter, no BI backend."
         source={SOURCE_PULSE}
         wide
       >
@@ -549,9 +582,10 @@ const execFindings = [
 
   <footer class="wrap site-foot">
     <p>
-      <strong>India FS Pulse.</strong> Built end to end in code: a Python pipeline over six public
-      sources, five analysis modules, and this static site. Every figure on this page is computed
-      from a committed dataset — nothing is typed in by hand.
+      <strong>India FS Pulse.</strong> Built end to end in code: a Python pipeline over {meta.publishers} public
+      sources, {meta.fetchers} fetchers and {meta.analysis_modules} analysis modules, feeding this static site. Every figure on this page
+      is computed from a committed dataset — including these counts, which are read from the
+      provenance ledger rather than retyped.
     </p>
     <p class="fine">
       Original work. Not affiliated with, endorsed by, or using the trademarks or proprietary data
@@ -597,6 +631,15 @@ const execFindings = [
   .section-head span { color: var(--signal-text); font-family: var(--font-sans); font-size: 0.72rem;
                        font-weight: 700; border: 1px solid var(--signal-line); border-radius: 6px;
                        padding: 0.1rem 0.45rem; letter-spacing: 0.05em; }
+
+  .entities { list-style: none; display: flex; flex-wrap: wrap; gap: 0.45rem;
+              margin: -0.6rem 0 1.4rem; padding: 0; }
+  .entities li { display: inline-flex; align-items: center; gap: 0.45rem;
+                 border: 1px solid var(--line); border-radius: 999px;
+                 padding: 0.22rem 0.7rem 0.22rem 0.25rem; background: var(--surface); }
+  .entities span { color: var(--text-2); font-size: 0.76rem; white-space: nowrap; }
+  .entities b { color: var(--text-3); font-size: 0.68rem; font-weight: 600;
+                font-variant-numeric: tabular-nums; }
 
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
   @media (max-width: 880px) { .grid { grid-template-columns: 1fr; } }

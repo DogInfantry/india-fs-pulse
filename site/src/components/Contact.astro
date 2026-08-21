@@ -2,14 +2,14 @@
 /**
  * Who built this, and how to reach them.
  *
- * A portfolio that does not say whose it is fails at its only job. LINKEDIN is
- * left null deliberately: an empty or placeholder profile link on a live page is
- * worse than no link, so the slot renders only once a real URL is supplied.
+ * A portfolio that does not say whose it is fails at its only job. LINKEDIN
+ * stayed null until a real URL existed - an empty or placeholder profile link on
+ * a live page is worse than no link - so the row is still rendered conditionally.
  */
 const NAME = 'Anklesh Rawat';
 const EMAIL = 'ankleshrawat5@duck.com';
 const GITHUB = 'https://github.com/DogInfantry/india-fs-pulse';
-const LINKEDIN: string | null = null;
+const LINKEDIN: string | null = 'https://www.linkedin.com/in/anklesh-rawat-00508a1aa/';
 ---
 <section class="contact" id="about">
   <div>

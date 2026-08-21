@@ -1,0 +1,79 @@
+---
+/**
+ * A typographic mark for a company named in the analysis.
+ *
+ * Deliberately NOT a brand logo. Three reasons, in order of weight:
+ *
+ *  1. This project's own rule 6 bans firm trademarks. Applying that only to
+ *     consultancies while pasting PhonePe's and HDFC's marks onto a job
+ *     application would be inconsistent, and trademark use on a page that is
+ *     itself a pitch is not obviously nominative fair use.
+ *  2. The site ships zero external assets - no webfonts, no CDN, no remote
+ *     images. That is what keeps it CSP-clean and Lighthouse at 100.
+ *  3. A restrained monogram reads as a consulting exhibit. A grid of downloaded
+ *     brand PNGs reads as a link farm.
+ *
+ * Costs nothing: pure CSS and text, no network request, no image decode.
+ */
+interface Props {
+  name: string;
+  tone?: 1 | 2 | 3 | 4 | 5;
+  size?: number;
+}
+const { name, tone, size = 26 } = Astro.props;
+
+/* Words that carry no identity, so they never win a slot in the initials. */
+const NOISE = new Set(['of', 'and', 'the', 'app', 'apps', 'bank', 'ltd', 'limited', 'india']);
+
+function initials(raw: string): string {
+  /* Split on non-letters AND on camelCase humps, so "PhonePe" -> [Phone, Pe]
+     and "super.money" -> [super, money]. */
+  const tokens = raw
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .split(/[^A-Za-z]+/)
+    .filter(Boolean);
+  const strong = tokens.filter((t) => !NOISE.has(t.toLowerCase()));
+  const use = strong.length ? strong : tokens;
+  if (use.length >= 2) return (use[0][0] + use[1][0]).toUpperCase();
+  if (use.length === 1) return use[0].slice(0, 2).toUpperCase();
+  return raw.slice(0, 2).toUpperCase();
+}
+
+/* Deterministic slot so the same company keeps the same colour across every
+   exhibit and across rebuilds. Explicit `tone` overrides it. */
+function slot(raw: string): number {
+  let h = 0;
+  for (const ch of raw) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return (h % 5) + 1;
+}
+
+const t = tone ?? slot(name);
+const text = initials(name);
+---
+<span
+  class="mono"
+  style={`--tone: var(--s${t}); --size: ${size}px`}
+  title={name}
+  aria-hidden="true"
+>{text}</span>
+
+<style>
+  .mono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size);
+    height: var(--size);
+    flex: 0 0 auto;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--tone) 22%, var(--surface-2));
+    border: 1px solid color-mix(in srgb, var(--tone) 55%, transparent);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: calc(var(--size) * 0.4);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    user-select: none;
+  }
+</style>
