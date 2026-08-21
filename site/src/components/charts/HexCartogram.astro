@@ -4,14 +4,14 @@
  *
  * Equal tiles, not true geography, and that is the point. A choropleth encodes
  * value in a shape whose AREA is fixed by land mass, so Rajasthan shouts and
- * Delhi whispers regardless of what the data says. Here Delhi - the most
+ * Delhi whispers regardless of what the data says. Here Delhi: the most
  * merchant-heavy state in the country - gets exactly as much ink as Rajasthan.
  *
  * Built from CSS Grid over real <button> elements rather than SVG: keyboard
  * focus, activation and labelling all come free from the platform, and the
  * whole thing is server-rendered with zero client JS at rest.
  *
- * Colour is one accent at varying strength, never a rainbow - the tokens file
+ * Colour is one accent at varying strength, never a rainbow: the tokens file
  * forbids hardcoded hex, so the ramp is an opacity over --signal.
  */
 interface StateRow {
@@ -86,7 +86,7 @@ const pc0 = (v: number) => `${(v * 100).toFixed(0)}%`;
 const inr0 = (v: number) => `₹${Math.round(v).toLocaleString('en-IN')}`;
 
 /* WCAG 2.5.3 (Label in Name): a voice-control user says what they SEE, so the
-   accessible name has to START with the visible text - the code and the value -
+   accessible name has to START with the visible text: the code and the value -
    before the description. Keep this in sync with the Workbench metric switch,
    which rewrites both when the displayed value changes. */
 const tiles = placed.map((s) => {

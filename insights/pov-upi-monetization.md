@@ -3,8 +3,8 @@ title: "India's payments network monetises the wrong leg"
 generated: 2026-08-21
 generator: analysis/01_upi_landscape.py
 sources:
-  - PhonePe Pulse (github.com/PhonePe/pulse) - category split and merchant base
-  - NPCI monthly product statistics - headline volume and value series
+  - "PhonePe Pulse (github.com/PhonePe/pulse): category split and merchant base"
+  - "NPCI monthly product statistics: headline volume and value series"
 ---
 
 <!-- GENERATED FILE. Edit the analysis script, not this file. -->
@@ -16,7 +16,7 @@ volume side at zero. In 2026Q2, merchant payments were
 23.0% of the rupees moved**. Person-to-person transfers
 were the mirror image: 30.8% of transactions,
 71.2% of value. The merchant leg is the only leg a merchant
-discount rate could ever be charged on - and under the zero-MDR regime it earns
+discount rate could ever be charged on, and under the zero-MDR regime it earns
 **nothing**.
 
 The consequence, sized on one player's disclosed data: 50,705,249
@@ -28,20 +28,20 @@ Rs 206,685 of GMV per merchant per quarter, at
 
 **1. The base is enormous and still compounding.** UPI has grown from
 3,248 million transactions in 2021-07 to
-23,658 million in 2026-07 - a **49% five-year CAGR**,
+23,658 million in 2026-07: a **49% five-year CAGR**,
 off a series that starts at 0.1 million in 2016-07. Even now, growth has not decayed to maturity: the most recent
 year-on-year reading is 21.5% on volume and
 19.1% on value (2026-07).
 
-**2. Growth is arriving in the leg that cannot be charged for.** Between 2018Q1 and 2026Q2, Retail contributed **64% of all volume growth** - 24.6 billion of the 38.5 billion additional quarterly transactions. Growth is not merely large, it is concentrated in the merchant leg that zero-MDR prices at nothing.
+**2. Growth is arriving in the leg that cannot be charged for.** Between 2018Q1 and 2026Q2, Retail contributed **64% of all volume growth**, 24.6 billion of the 38.5 billion additional quarterly transactions. Growth is not merely large, it is concentrated in the merchant leg that zero-MDR prices at nothing.
 
 **3. Growth is arriving as small tickets, which is the expensive kind.**
 The average UPI transaction has fallen to **Rs 1,263**, down 22.7% from January 2019. Every incremental transaction adds switch, fraud and support cost while adding
 no fee income. Volume growth without price is a cost line, not a revenue line.
 
 **4. The revenue foregone is quantifiable, and it is not small.** On the merchant
-GMV of 10.48 lakh crore in 2026Q2 - again, one
-player - a 10bps MDR would generate Rs 1,048 crore a quarter,
+GMV of 10.48 lakh crore in 2026Q2, again, one
+player: a 10bps MDR would generate Rs 1,048 crore a quarter,
 30bps Rs 3,144 crore, and 50bps Rs 5,240 crore.
 The policy choice is therefore not "should payments be cheap" but "who funds a
 Rs 3,144 crore-a-quarter subsidy, and for how long".
@@ -64,8 +64,8 @@ scales with the existing transaction base rather than against it.
 
 ## What would change this answer
 
-- **MDR returns for large merchants.** A tiered MDR - zero for small merchants,
-  priced above a threshold - would make the merchant leg directly monetisable and
+- **MDR returns for large merchants.** A tiered MDR: zero for small merchants,
+  priced above a threshold, would make the merchant leg directly monetisable and
   reverse the ranking above.
 - **The 30% market-share cap is enforced.** A binding cap redistributes volume
   rather than growing it, and changes who can afford the subsidy.

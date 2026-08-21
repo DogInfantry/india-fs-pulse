@@ -1,7 +1,7 @@
 """Sub-module B: Indian banking health scan.
 
 Governing thought: the public-private gap in Indian banking is a funding-cost
-gap, not a lending gap - which is why it has not closed and will not close on
+gap, not a lending gap, which is why it has not closed and will not close on
 its own.
 """
 from __future__ import annotations
@@ -115,9 +115,9 @@ def main() -> None:
         title = "The private-bank margin advantage is half pricing, half funding"
         argument_one = (
             f"Neither side dominates. Private banks earned {priv.yield_on_assets:.2f}% on assets "
-            f"against {publ.yield_on_assets:.2f}% for public banks - a {yield_gap:.0f}bps asset-side "
-            f"advantage - while paying {priv.cost_of_funds:.2f}% for funding against "
-            f"{publ.cost_of_funds:.2f}% - a {funding_gap:.0f}bps liability-side advantage. The two "
+            f"against {publ.yield_on_assets:.2f}% for public banks: a {yield_gap:.0f}bps asset-side "
+            f"advantage, while paying {priv.cost_of_funds:.2f}% for funding against "
+            f"{publ.cost_of_funds:.2f}%: a {funding_gap:.0f}bps liability-side advantage. The two "
             f"halves are within {skew:.0%} of each other, so a public bank cannot close the gap by "
             f"repricing loans alone; it has to win the deposit too."
         )
@@ -144,7 +144,7 @@ def main() -> None:
     verdict = (
         "The market has paid for the margin franchise."
         if ret_priv > ret_publ else
-        "The market has NOT paid for the margin franchise - public banks outperformed "
+        "The market has NOT paid for the margin franchise: public banks outperformed "
         "despite the thinner spread, which says the gap was already in the price."
     )
     own_pct = inc1["account_ownership_pct"]
@@ -171,7 +171,7 @@ def main() -> None:
     if rate_swing >= 100:
         rate_verdict = (
             f"A {rate_swing:.0f}bps swing in funding costs moved the cohort gap by only "
-            f"{gap_move:.0f}bps, so the advantage is not a rate artefact - it is a franchise."
+            f"{gap_move:.0f}bps, so the advantage is not a rate artefact. It is a franchise."
         )
     else:
         rate_verdict = (
@@ -222,13 +222,13 @@ Sub-module A is a *deposit* question for banks.
 
 **Inclusion: the rails are deep, not just wide.** Account ownership reached
 {own_pct}% of adults in {own_year} ({banked}mn banked adults). Against UPI volume that
-same year, each banked adult now runs **{tpa} transactions a month** - up from
+same year, each banked adult now runs **{tpa} transactions a month**, up from
 {tpa0} in {yr0}. Access stopped being the constraint some years ago; usage intensity
 is the story now, and it is what makes the zero-MDR cost base grow.
 
 **The market's verdict.** Over {win}, the median private bank returned
 {priv_ret} on price against {publ_ret} for the median public bank. {verdict} Price
-return only - dividends excluded, so this understates total return for the higher-
+return only, dividends excluded, so this understates total return for the higher-
 yielding public cohort.
 
 ## Method and its limits

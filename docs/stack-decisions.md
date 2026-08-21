@@ -20,7 +20,7 @@ choosing a tool is only half of a sourcing decision.
 **Perspective, Superset, Panel, Redash, Vizro, glue.** All were evaluated as the
 "client-ready dashboard" layer. Superset, Redash, Panel and Vizro need a live
 Python or Node backend, which a static, free-hosted site cannot have. Perspective
-runs client-side, but ships multiple megabytes of WASM — a real choice for a
+runs client-side, but ships multiple megabytes of WASM: a real choice for a
 million-row streaming grid, and the wrong one for 36 rows of state data against a
 Lighthouse target of 95. The workbench was built in code instead.
 
@@ -30,15 +30,41 @@ server-rendered SVG with no client JavaScript at all. Removing D3 took out a
 dependency and a bundle.
 
 **Motion and Scrollama.** Installed in the first pass for a scrollytelling hero,
-then removed without being used. The page turned out to be exhibit-driven - fifteen
-figures, each making one point - and scroll-driven sequencing fights that structure
+then removed without being used.
+
+> **Reversed in part, pass 4.** The page did want a guided opening after all: sixteen
+> exhibits in a grid gave a cold reader no path in. `Scrolly.astro` now tells the whole
+> thesis in four sticky steps. The dependencies stayed out. `position: sticky` is CSS,
+> step activation is the same `IntersectionObserver` the chart loader already runs, and
+> the bar is sized by custom properties the script writes. Zero bytes of library. The
+> original objection was to scroll-hijacking the whole document, and that still stands:
+> this is an opening that hands off to the exhibits, not a treatment applied to all
+> sixteen.
+
+The rest of the original note still applies: The page turned out to be exhibit-driven - fifteen
+figures, each making one point, and scroll-driven sequencing fights that structure
 rather than serving it. Carrying two dependencies for an effect the content does not
 want is how bundles rot.
 
 **WebGPU.** No dataset here is within three orders of magnitude of needing it.
 
+**geohacker/india for the state map.** The obvious GeoJSON source, and unusable: it is a
+pre-2014 GADM extract with no Telangana, no Ladakh, "Orissa" and "Uttaranchal". Telangana
+is 10% of the volume in this project. A map that omits it is wrong, not merely dated.
+`udit-001/india-maps-data` was used instead: 760 districts dissolved to exactly the 36
+states the data carries, and its boundary reaches 37.08N / 80.33E, which is India's
+official depiction including Aksai Chin. Both facts are asserted in
+`site/scripts/build_india_map.py`, so a source that fails either breaks the build rather
+than shipping a wrong map quietly.
+
+**Full brand logos.** Only 7 of the 19 companies named here have a freely redistributable
+mark, and the twelve missing include State Bank of India and every other public-sector
+bank. Marks are used for the payment apps, where the three that matter cover 86% of
+national volume; the banks stay on monograms, because marks on three of five private banks
+and none of five public ones would imply something about the cohorts that is not true.
+
 **RBI DBIE.** An Angular application with no documented public REST API. NIM is
-derived from filed income statements instead — more defensible than scraping a
+derived from filed income statements instead, more defensible than scraping a
 portal, and it produces a number this project computed rather than quoted.
 
 **data.gov.in.** The public sandbox key authenticates and `/lists` returns 285,833
@@ -56,7 +82,7 @@ makes zero third-party requests.
 
 1. **PhonePe Pulse replaced the NPCI CKAN CSV as the primary source.** The CSV was
    described as verified; it is live but ends 2023-08. Pulse is current to 2026Q2,
-   open, and splits P2P from merchant — which the headline series does not.
+   open, and splits P2P from merchant, which the headline series does not.
 2. **`make` became `run.py`.** `make` is not installed on Windows; a stdlib task
    runner works on both the dev box and CI.
 3. **The workbench is hand-built rather than Perspective.** See above.

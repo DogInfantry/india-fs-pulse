@@ -11,7 +11,7 @@ const { memo } = Astro.props;
 const { Content } = await render(memo);
 const generated = memo.data.generated.toISOString().slice(0, 10);
 ---
-<Base title={`${memo.data.title} — India FS Pulse`} description={memo.data.title}>
+<Base title={`${memo.data.title}: India FS Pulse`} description={memo.data.title}>
   <article class="memo">
     <a class="back" href="/">← India FS Pulse</a>
     <p class="kicker">Memo</p>

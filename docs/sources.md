@@ -41,10 +41,10 @@ retains its own publisher's terms**, recorded below.
 
 ## Sources deliberately not used
 
-- **RBI DBIE** (data.rbi.org.in) - an Angular application with no documented
+- **RBI DBIE** (data.rbi.org.in): an Angular application with no documented
   public REST API. NIM is derived from filed income statements instead, which
   is more defensible than screen-scraping a portal.
-- **data.gov.in** - the public sandbox key authenticates, but filtered resource
+- **data.gov.in**: the public sandbox key authenticates, but filtered resource
   queries time out, and many finance resources have no active API. It would add
   nothing the spine does not already cover.
 - **NPCI direct scraping** - npci.org.in serves HTTP 403 to scripted requests.

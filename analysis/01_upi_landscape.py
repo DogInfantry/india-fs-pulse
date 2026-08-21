@@ -2,7 +2,7 @@
 
 Governing thought: India's payments network monetises the wrong leg. The
 merchant leg carries the transactions; the P2P leg carries the rupees; and the
-merchant leg - the only one MDR could ever touch - is priced at zero.
+merchant leg: the only one MDR could ever touch - is priced at zero.
 """
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ def main() -> None:
 
     # --- Growth bridge: which leg actually produced the growth?
     # If the merchant leg dominates the delta, then growth is arriving in the
-    # only leg that cannot be charged for - which is the whole argument.
+    # only leg that cannot be charged for, which is the whole argument.
     pulse = load("pulse_txn_national")
     per_period = pulse.groupby(["period", "category"])["count"].sum().unstack().dropna()
     open_p, close_p = per_period.index[0], per_period.index[-1]
@@ -86,7 +86,7 @@ volume side at zero. In {hero['period']}, merchant payments were
 {pct(merchant['value_share'])} of the rupees moved**. Person-to-person transfers
 were the mirror image: {pct(p2p['volume_share'])} of transactions,
 {pct(p2p['value_share'])} of value. The merchant leg is the only leg a merchant
-discount rate could ever be charged on - and under the zero-MDR regime it earns
+discount rate could ever be charged on, and under the zero-MDR regime it earns
 **nothing**.
 
 The consequence, sized on one player's disclosed data: {hero['registered_merchants']:,}
@@ -98,12 +98,12 @@ registered merchants transacting {hero['txns_per_merchant']:,.0f} times a quarte
 
 **1. The base is enormous and still compounding.** UPI has grown from
 {base.volume_mn:,.0f} million transactions in {base.month} to
-{last.volume_mn:,.0f} million in {last.month} - a **{pct(cagr, 0)} five-year CAGR**,
+{last.volume_mn:,.0f} million in {last.month}: a **{pct(cagr, 0)} five-year CAGR**,
 off a series that starts at {first.volume_mn:,.1f} million in {first.month}. Even now, growth has not decayed to maturity: the most recent
 year-on-year reading is {pct(latest_yoy.volume_yoy)} on volume and
 {pct(latest_yoy.value_yoy)} on value ({latest_yoy.month}).
 
-**2. Growth is arriving in the leg that cannot be charged for.** Between {open_p} and {close_p}, {biggest} contributed **{pct(contribution, 0)} of all volume growth** - {order.iloc[0] / 1e9:.1f} billion of the {order.sum() / 1e9:.1f} billion additional quarterly transactions. Growth is not merely large, it is concentrated in the merchant leg that zero-MDR prices at nothing.
+**2. Growth is arriving in the leg that cannot be charged for.** Between {open_p} and {close_p}, {biggest} contributed **{pct(contribution, 0)} of all volume growth**, {order.iloc[0] / 1e9:.1f} billion of the {order.sum() / 1e9:.1f} billion additional quarterly transactions. Growth is not merely large, it is concentrated in the merchant leg that zero-MDR prices at nothing.
 
 **3. Growth is arriving as small tickets, which is the expensive kind.**
 The average UPI transaction has fallen to **{inr(ticket_now)}**{
@@ -112,8 +112,8 @@ The average UPI transaction has fallen to **{inr(ticket_now)}**{
 no fee income. Volume growth without price is a cost line, not a revenue line.
 
 **4. The revenue foregone is quantifiable, and it is not small.** On the merchant
-GMV of {merchant['amount_lakh_cr']:.2f} lakh crore in {hero['period']} - again, one
-player - a {"10bps"} MDR would generate {inr(float(mdr['10bps']) * 1e7)} a quarter,
+GMV of {merchant['amount_lakh_cr']:.2f} lakh crore in {hero['period']}, again, one
+player: a {"10bps"} MDR would generate {inr(float(mdr['10bps']) * 1e7)} a quarter,
 30bps {inr(float(mdr['30bps']) * 1e7)}, and 50bps {inr(float(mdr['50bps']) * 1e7)}.
 The policy choice is therefore not "should payments be cheap" but "who funds a
 {inr(float(mdr['30bps']) * 1e7)}-a-quarter subsidy, and for how long".
@@ -136,8 +136,8 @@ scales with the existing transaction base rather than against it.
 
 ## What would change this answer
 
-- **MDR returns for large merchants.** A tiered MDR - zero for small merchants,
-  priced above a threshold - would make the merchant leg directly monetisable and
+- **MDR returns for large merchants.** A tiered MDR: zero for small merchants,
+  priced above a threshold, would make the merchant leg directly monetisable and
   reverse the ranking above.
 - **The 30% market-share cap is enforced.** A binding cap redistributes volume
   rather than growing it, and changes who can afford the subsidy.
@@ -150,8 +150,8 @@ scales with the existing transaction base rather than against it.
         "India's payments network monetises the wrong leg",
         body,
         sources=[
-            "PhonePe Pulse (github.com/PhonePe/pulse) - category split and merchant base",
-            "NPCI monthly product statistics - headline volume and value series",
+            "PhonePe Pulse (github.com/PhonePe/pulse): category split and merchant base",
+            "NPCI monthly product statistics: headline volume and value series",
         ],
     )
     print(f"   merchant {pct(merchant['volume_share'])} volume / {pct(merchant['value_share'])} value; "

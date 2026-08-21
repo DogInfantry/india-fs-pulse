@@ -3,8 +3,8 @@ title: "India runs two payments markets: one that spends, one that sends"
 generated: 2026-08-21
 generator: analysis/05_geo_gap.py
 sources:
-  - PhonePe Pulse state-level transaction data
-  - PhonePe Pulse per-state category split
+  - "PhonePe Pulse state-level transaction data"
+  - "PhonePe Pulse per-state category split"
 ---
 
 <!-- GENERATED FILE. Edit the analysis script, not this file. -->
@@ -21,7 +21,7 @@ states the merchant share ranges over **12 percentage points**.
 
 **1. Merchant-heavy states are the urban retail economies.** The highest merchant
 shares sit in **Delhi** (68.5% of its own transactions), **Haryana** (67.9% of its own transactions), **Karnataka** (67.5% of its own transactions). These are dense, high-income, high-merchant-density states
-where the everyday retail leg dominates - the leg that generates processing cost and,
+where the everyday retail leg dominates: the leg that generates processing cost and,
 at zero MDR, no revenue.
 
 **2. P2P-heavy states are the remittance economies.** At the other end sit **West Bengal** (56.4% of its own transactions), **Bihar** (56.6% of its own transactions), **Assam** (57.3% of its own transactions).
@@ -60,7 +60,7 @@ distribution rather than about India. Nothing open publishes that today.
 
 This module previously ranked states by transaction share divided by value share,
 calling it an "intensity index". That quantity is identical to national average ticket
-divided by state average ticket - it restated ticket size and nothing else. Measured
+divided by state average ticket. It restated ticket size and nothing else. Measured
 against the real merchant share it correlates at -0.05, i.e. not at all.
 The old index ranked Assam most merchant-intense; Assam is in fact among the most
 P2P-heavy states here. The exhibit was replaced rather than relabelled.

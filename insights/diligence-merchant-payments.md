@@ -3,8 +3,8 @@ title: "Underwrite distribution economics, not transaction economics"
 generated: 2026-08-21
 generator: analysis/03_pe_diligence.py
 sources:
-  - PhonePe Pulse - merchant base and merchant GMV
-  - One97 Communications filed statements via yfinance
+  - "PhonePe Pulse: merchant base and merchant GMV"
+  - "One97 Communications filed statements via yfinance"
 ---
 
 <!-- GENERATED FILE. Edit the analysis script, not this file. -->
@@ -13,8 +13,8 @@ sources:
 **Conditional no on a payments-fee thesis; conditional yes on a merchant-financing
 thesis.** The merchant payments market is enormous and still compounding, but at
 0bps MDR the payment itself is not a revenue event. An investment here has to be
-underwritten as **distribution economics** - the right to lend to, and sell software
-to, a merchant base - not as **transaction economics**. If the sponsor's model
+underwritten as **distribution economics**: the right to lend to, and sell software
+to, a merchant base, not as **transaction economics**. If the sponsor's model
 depends on MDR returning, the answer is no, because that is a policy bet, not a
 business plan.
 
@@ -44,7 +44,7 @@ each running 487 transactions a quarter is a distribution asset most lenders
 would pay a great deal to rent. The constraint is that the transaction carries no price.
 
 **2. The unit economics only work at the merchant level, and only with a second
-product.** At 30bps - a rate that does not exist - a merchant is worth
+product.** At 30bps: a rate that does not exist: a merchant is worth
 Rs 2,480 a year. Any working-capital product priced off the same relationship
 dwarfs that. The payment is the acquisition channel; the loan is the P&L.
 
@@ -69,7 +69,7 @@ dwarfs that. The payment is the acquisition channel; the loan is the P&L.
 - **Credit on UPI at scale**, where interchange is permitted, converts the base into
   a fee-bearing channel without a policy change.
 - **A tiered MDR** exempting small merchants would monetise large-merchant GMV with
-  political cover. Low probability, high impact - a genuine option, not a base case.
+  political cover. Low probability, high impact: a genuine option, not a base case.
 - **Merchant software and settlement**, priced as SaaS, is chargeable today and is
   not exposed to the MDR debate at all.
 
@@ -89,7 +89,7 @@ tackle diligence questions. Stated explicitly, here is what this analysis does
 
 **How this changes the recommendation.** The conditional *no* is robust to all five:
 none of them makes a 0bps payment fee-bearing. The conditional *yes* is fragile to
-the credit-loss question specifically - if UPI-originated loss rates run materially
+the credit-loss question specifically: if UPI-originated loss rates run materially
 above unsecured norms, the merchant-financing thesis fails and there is no third leg
 to fall back on. That single unknown is where diligence spend should concentrate.
 

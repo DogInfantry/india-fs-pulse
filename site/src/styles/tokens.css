@@ -24,9 +24,9 @@
   --signal-line: rgba(192, 39, 52, 0.42);
 
   /* Categorical series. Ordered by use; grey is deliberate and comes early. */
-  --s1: #C02734;  /* crimson  - the subject */
-  --s2: #1F7A8C;  /* teal     - the comparator */
-  --s3: #C98A2E;  /* amber    - the third */
+  --s1: #C02734;  /* crimson: the subject */
+  --s2: #1F7A8C;  /* teal: the comparator */
+  --s3: #C98A2E;  /* amber: the third */
   --s4: #5B6673;  /* grey     - context / "everyone else" */
   --s5: #7C5CA8;  /* violet   - rare fifth */
 

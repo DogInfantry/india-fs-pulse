@@ -1,7 +1,7 @@
 """Shared helpers for the analysis layer.
 
 Analysis scripts read ONLY from data-pipeline/data/processed and site/src/data.
-They never fetch, and they never hardcode a figure - every number in a memo is
+They never fetch, and they never hardcode a figure: every number in a memo is
 interpolated from a computed value so the prose cannot drift from the data.
 """
 from __future__ import annotations
@@ -50,7 +50,9 @@ def write_memo(slug: str, title: str, body: str, *, sources: list[str]) -> None:
         f"generated: {date.today().isoformat()}",
         "generator: analysis/" + Path(sys.argv[0]).name,
         "sources:",
-        *[f"  - {s}" for s in sources],
+        # json.dumps quotes and escapes: a source label containing ": " would
+        # otherwise parse as a YAML mapping and fail the content collection.
+        *[f"  - {json.dumps(s)}" for s in sources],
         "---",
         "",
         "<!-- GENERATED FILE. Edit the analysis script, not this file. -->",

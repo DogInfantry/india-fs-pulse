@@ -3,19 +3,19 @@ title: "India's fund shelf is four times more administered than it is diverse"
 generated: 2026-08-21
 generator: analysis/07_wealth_amfi.py
 sources:
-  - AMFI daily NAV file (NAVAll.txt), 20-Aug-2026
+  - "AMFI daily NAV file (NAVAll.txt), 20-Aug-2026"
 ---
 
 <!-- GENERATED FILE. Edit the analysis script, not this file. -->
 > **This module counts schemes, not rupees.** AMFI's daily NAV file is the full
 > scheme universe with no AUM attached, so nothing below says where the money is.
-> It describes the **shelf** - what is on offer, and in how many wrappers.
+> It describes the **shelf**: what is on offer, and in how many wrappers.
 
 ## The answer
 
 On 20-Aug-2026 the Indian mutual fund industry listed **14,288 schemes** across
-52 fund houses. Strip the plan and option wrappers - the same fund sold as
-Direct and Regular, as Growth and IDCW - and those collapse to
+52 fund houses. Strip the plan and option wrappers: the same fund sold as
+Direct and Regular, as Growth and IDCW, and those collapse to
 **3,353 distinct strategies**. About **77% of the apparent
 product count is packaging**, roughly 4.3 listed schemes for every real
 investment decision.
@@ -35,7 +35,7 @@ Direct-plan reform of 2013 created and that nobody has since simplified.
 
 **2. Scheme count and investor attention point in different directions.** Debt is
 the largest category on the shelf at 56% of listed schemes,
-against 22% for equity - the opposite of where retail
+against 22% for equity: the opposite of where retail
 narrative sits. Much of that debt count is close-ended and interval product that a
 retail investor will never choose. Counting products is not the same as counting
 customers, and neither is the same as counting money.
@@ -50,7 +50,7 @@ AUM weighting.
   3,353, not 14,288. Interfaces that present the listed count are
   presenting an artefact of plan structure as if it were choice.
 - **For an asset manager:** the wrapper multiple is a fixed operating cost carried
-  per strategy - compliance, NAV publication, reconciliation, statements - on
+  per strategy: compliance, NAV publication, reconciliation, statements, on
   products that are the same portfolio underneath.
 - **For diligence on a wealth platform:** ask whether "products supported" is
   counted in schemes or strategies. The two differ by 4.3x, and the larger

@@ -98,10 +98,10 @@ def main() -> None:
 ## The answer
 
 Measured at the level of the customer **episode** rather than the brand,
-digital-first providers do not have a loyalty advantage - they have an
+digital-first providers do not have a loyalty advantage. They have an
 *episode-shaped* one. On this synthetic panel the neobank cohort scores
 **{by_episode.loc[neo, best]:+.0f} NPS on "{best}"** and
-**{by_episode.loc[neo, worst]:+.0f} on "{worst}"** - a {spread:.0f}-point spread inside
+**{by_episode.loc[neo, worst]:+.0f} on "{worst}"**: a {spread:.0f}-point spread inside
 a single brand. A blended brand-level NPS ({overall[neo]:+.0f}) hides that entirely.
 
 ## Three supporting arguments

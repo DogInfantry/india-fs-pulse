@@ -5,19 +5,19 @@
 **India built the world's largest real-time payments network, and priced the busy half at zero.**
 
 In 2026 Q2, merchant payments were **63.9% of all transactions but only 23.0% of the
-rupees moved**. Person-to-person transfers were the mirror image — 30.8% of
+rupees moved**. Person-to-person transfers were the mirror image: 30.8% of
 transactions, 71.2% of value. The merchant leg is the only one a merchant discount
 rate could ever be charged on, and under the zero-MDR regime it earns **nothing**:
 50.7 million merchants, 487 transactions each per quarter, ₹2.07 lakh of GMV each,
 ₹0 of payment revenue.
 
 And the market that carries it is **concentrated at the same time as it is unmonetised**:
-PhonePe holds 45.9% of national UPI volume and Google Pay 32.3% — both above the 30%
+PhonePe holds 45.9% of national UPI volume and Google Pay 32.3%: both above the 30%
 per-app cap due in December 2026. Complying would mean **4.3 billion transactions a
 month changing app**. At the observed rate of share drift, the leader reaches the cap
 in about 470 months.
 
-This repository is the analysis behind that claim — a reproducible Python pipeline
+This repository is the analysis behind that claim: a reproducible Python pipeline
 over six public sources, five analysis modules, and a static site. **Every figure is
 computed from a committed dataset. Nothing is typed in by hand.**
 
@@ -27,9 +27,9 @@ computed from a committed dataset. Nothing is typed in by hand.**
 |---|---|
 | **Point of view** | [India's payments network monetises the wrong leg](insights/pov-upi-monetization.md) |
 | **Sector scan** | [The private-bank margin advantage is half pricing, half funding](insights/pov-deposit-war.md) |
-| **PE diligence** | [Underwrite distribution economics, not transaction economics](insights/diligence-merchant-payments.md) — with an explicit ambiguity register |
+| **PE diligence** | [Underwrite distribution economics, not transaction economics](insights/diligence-merchant-payments.md), with an explicit ambiguity register |
 | **Survey analytics** | [Episode-level NPS reveals what brand-level NPS hides](insights/survey-nps-episodes.md) *(synthetic panel, clearly labelled)* |
-| **Market structure** | [Concentrated and unmonetised at once — which is why the share cap cannot bind](insights/pov-market-structure.md) |
+| **Market structure** | [Concentrated and unmonetised at once, which is why the share cap cannot bind](insights/pov-market-structure.md) |
 | **Wealth & asset mgmt** | [India's fund shelf is four times more administered than it is diverse](insights/wealth-fund-shelf.md) |
 | **Gap analysis** | [India runs two different payments markets, not one](insights/gap-geographic.md) |
 | **Method** | [Sources and provenance](docs/sources.md) · [data dictionary](docs/data-dictionary.md) · [stack decisions](docs/stack-decisions.md) |
@@ -66,9 +66,9 @@ flowchart LR
 1. **Never fabricate a number.** Not fetched or computed → it stays a visible gap. Four
    months NPCI does not publish are left empty rather than interpolated.
 2. **Fail loud on shape change.** Each fetcher validates schema and range. The bank
-   fetcher refused to run when a margin came back negative — correctly: the company
+   fetcher refused to run when a margin came back negative, correctly: the company
    was a payments firm, not a bank.
-3. **Synthetic data announces itself** — in the filename, on the chart, and in the memo.
+3. **Synthetic data announces itself**: in the filename, on the chart, and in the memo.
 
 ## Data spine
 
@@ -85,7 +85,7 @@ is generated into [`docs/sources.md`](docs/sources.md).
 | AMFI | daily | open |
 
 The NPCI series joins two sources. The overlap month agrees to the rupee across both,
-so there is no level shift at the seam — and the site colours the two halves
+so there is no level shift at the seam, and the site colours the two halves
 differently rather than merging them silently.
 
 ## Notes

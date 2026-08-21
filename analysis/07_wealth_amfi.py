@@ -1,4 +1,4 @@
-"""Sub-module G: wealth and asset management - the shape of India's fund shelf.
+"""Sub-module G: wealth and asset management: the shape of India's fund shelf.
 
 Governing thought: the Indian mutual fund industry looks like it offers 14,000
 products. Strip the plan and option wrappers and it offers roughly a quarter of
@@ -73,13 +73,13 @@ def main() -> None:
     body = f"""
 > **This module counts schemes, not rupees.** AMFI's daily NAV file is the full
 > scheme universe with no AUM attached, so nothing below says where the money is.
-> It describes the **shelf** - what is on offer, and in how many wrappers.
+> It describes the **shelf**: what is on offer, and in how many wrappers.
 
 ## The answer
 
 On {nav_date} the Indian mutual fund industry listed **{listed:,} schemes** across
-{houses} fund houses. Strip the plan and option wrappers - the same fund sold as
-Direct and Regular, as Growth and IDCW - and those collapse to
+{houses} fund houses. Strip the plan and option wrappers: the same fund sold as
+Direct and Regular, as Growth and IDCW, and those collapse to
 **{strategies:,} distinct strategies**. About **{pct(packaging, 0)} of the apparent
 product count is packaging**, roughly {wrappers:.1f} listed schemes for every real
 investment decision.
@@ -99,7 +99,7 @@ Direct-plan reform of 2013 created and that nobody has since simplified.
 
 **2. Scheme count and investor attention point in different directions.** Debt is
 the largest category on the shelf at {pct(debt.schemes / listed, 0)} of listed schemes,
-against {pct(equity.schemes / listed, 0)} for equity - the opposite of where retail
+against {pct(equity.schemes / listed, 0)} for equity: the opposite of where retail
 narrative sits. Much of that debt count is close-ended and interval product that a
 retail investor will never choose. Counting products is not the same as counting
 customers, and neither is the same as counting money.
@@ -114,7 +114,7 @@ AUM weighting.
   {strategies:,}, not {listed:,}. Interfaces that present the listed count are
   presenting an artefact of plan structure as if it were choice.
 - **For an asset manager:** the wrapper multiple is a fixed operating cost carried
-  per strategy - compliance, NAV publication, reconciliation, statements - on
+  per strategy: compliance, NAV publication, reconciliation, statements, on
   products that are the same portfolio underneath.
 - **For diligence on a wealth platform:** ask whether "products supported" is
   counted in schemes or strategies. The two differ by {wrappers:.1f}x, and the larger

@@ -3,7 +3,7 @@
 MEASURED, not inferred. An earlier version of this module ranked states by an
 "intensity index" of transaction share over value share. That index is
 algebraically identical to national_avg_ticket / state_avg_ticket, so it was a
-restatement of ticket size wearing a merchant-behaviour label - and it had the
+restatement of ticket size wearing a merchant-behaviour label, and it had the
 sign backwards in practice: it put Assam top for merchant intensity because Assam
 has the smallest average ticket, when Assam is in fact among the most P2P-heavy
 states in the country.
@@ -82,7 +82,7 @@ states the merchant share ranges over **{spread_pp:.0f} percentage points**.
 
 **1. Merchant-heavy states are the urban retail economies.** The highest merchant
 shares sit in {high_str}. These are dense, high-income, high-merchant-density states
-where the everyday retail leg dominates - the leg that generates processing cost and,
+where the everyday retail leg dominates: the leg that generates processing cost and,
 at zero MDR, no revenue.
 
 **2. P2P-heavy states are the remittance economies.** At the other end sit {low_str}.
@@ -121,7 +121,7 @@ distribution rather than about India. Nothing open publishes that today.
 
 This module previously ranked states by transaction share divided by value share,
 calling it an "intensity index". That quantity is identical to national average ticket
-divided by state average ticket - it restated ticket size and nothing else. Measured
+divided by state average ticket. It restated ticket size and nothing else. Measured
 against the real merchant share it correlates at {ticket_corr:+.2f}, i.e. not at all.
 The old index ranked Assam most merchant-intense; Assam is in fact among the most
 P2P-heavy states here. The exhibit was replaced rather than relabelled.

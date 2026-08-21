@@ -54,7 +54,7 @@ Same WAF problem, different table. To add newly published months:
 3. Set the month and year with the two dropdowns above the table.
 4. Read off `Application Name`, `Total Volume (In Mn.)` and `Total Value (Cr)`.
 5. Append to `data-pipeline/data/manual/npci_upi_apps.csv`, transcribing the app
-   name **verbatim** — normalisation happens in `fetch_upi_apps.py`, so the raw
+   name **verbatim**. Normalisation happens in `fetch_upi_apps.py`, so the raw
    record stays checkable.
 6. Re-run `python run.py data`.
 
@@ -63,7 +63,7 @@ Same WAF problem, different table. To add newly published months:
 - **Only ten rows render, with no pagination.** This is the top ten by volume, not
   the whole field. Shares are therefore computed against the NPCI *national* total,
   never against the sum of these rows.
-- **Before roughly 2024 the ten rows are alphabetical, not ranked** — so PhonePe is
+- **Before roughly 2024 the ten rows are alphabetical, not ranked**, so PhonePe is
   not even present in December 2022. Those months are unusable; the series starts
   2023-12 for that reason.
 - **The `#` in an app name is NPCI's third-party-provider marker, not a comment.**
