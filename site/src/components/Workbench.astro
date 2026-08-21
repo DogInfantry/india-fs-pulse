@@ -228,13 +228,31 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
                  + `<br/>${pc(s.volume_share, 2)} of national transactions`;
           },
         },
-        visualMap: {
-          min: lo, max: hi, calculable: false, orient: 'horizontal',
-          left: 6, bottom: 6, itemWidth: 10, itemHeight: 78,
-          textStyle: { color: p.muted, fontSize: 10 },
-          text: [show(hi), show(lo)],
-          inRange: { color: [p.surface, p.series[0]] },
-        },
+        /* Merchant share clusters tightly, roughly 56 to 69 per cent across the
+           material states, so a plain low-to-high ramp renders the whole country
+           one shade of red and says nothing. It gets a diverging scale centred on
+           the national figure instead, symmetric so equal distances either side
+           read as equal: teal below, crimson above. That is the same encoding
+           Exhibit 15 uses, so the two agree. Metrics with no meaningful centre
+           keep a sequential ramp. */
+        visualMap: (() => {
+          const base = {
+            calculable: false, orient: 'horizontal',
+            left: 6, bottom: 6, itemWidth: 10, itemHeight: 78,
+            textStyle: { color: p.muted, fontSize: 10 },
+          };
+          if (key !== 'merchant_volume_share') {
+            return { ...base, min: lo, max: hi, text: [show(hi), show(lo)],
+                     inRange: { color: [p.surface, p.series[0]] } };
+          }
+          const spread = Math.max(national - lo, hi - national);
+          return {
+            ...base,
+            min: national - spread, max: national + spread,
+            text: [`${show(national + spread)} above`, `${show(national - spread)} below`],
+            inRange: { color: [p.series[1], p.surface, p.series[0]] },
+          };
+        })(),
         series: [{
           type: 'map', map: 'india', roam: false, selectedMode: 'single',
           left: 6, right: 6, top: 14, bottom: 34,
