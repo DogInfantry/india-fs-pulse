@@ -1,7 +1,7 @@
 {
   "amfi_fund_houses": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:04:01+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:45+00:00",
     "coverage": "20-Aug-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
@@ -10,8 +10,8 @@
     "url": "https://www.amfiindia.com/spages/NAVAll.txt"
   },
   "amfi_schemes": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:04:01+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:45+00:00",
     "coverage": "20-Aug-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
@@ -20,8 +20,8 @@
     "url": "https://www.amfiindia.com/spages/NAVAll.txt"
   },
   "bank_fundamentals": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:56+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:38+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
@@ -30,18 +30,28 @@
     "url": "https://finance.yahoo.com/"
   },
   "bank_prices": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:56+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:38+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
     "publisher": "Yahoo Finance",
-    "rows": 13550,
+    "rows": 13580,
     "url": "https://finance.yahoo.com/"
   },
+  "india_rates": {
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:42+00:00",
+    "coverage": "1968-01 - 2026-06",
+    "licence": "FRED terms of use; underlying series (c) OECD. Free to redistribute with attribution.",
+    "note": "India immediate/call money interbank rate, monthly. Fetched from FRED's keyless CSV endpoint so the pipeline needs no credentials. Months FRED does not publish are dropped, never interpolated.",
+    "publisher": "FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI",
+    "rows": 702,
+    "url": "https://fred.stlouisfed.org/series/IRSTCI01INM156N"
+  },
   "pulse_base_national": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:46+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:00+00:00",
     "coverage": "2018Q1 - 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "Registered users and registered merchants. PhonePe's own transactions, not all of UPI.",
@@ -50,8 +60,8 @@
     "url": "https://github.com/PhonePe/pulse"
   },
   "pulse_txn_national": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:46+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:00+00:00",
     "coverage": "2018Q1 - 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "P2P / Retail (merchant) / Utility split. PhonePe's own transactions, not all of UPI.",
@@ -60,8 +70,8 @@
     "url": "https://github.com/PhonePe/pulse"
   },
   "pulse_txn_state": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:46+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:00+00:00",
     "coverage": "2018Q1 - 2026Q2",
     "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
     "note": "State-level transaction count and value. PhonePe's own transactions, not all of UPI.",
@@ -69,9 +79,19 @@
     "rows": 1224,
     "url": "https://github.com/PhonePe/pulse"
   },
+  "pulse_txn_state_mix": {
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:15+00:00",
+    "coverage": "2026Q2",
+    "licence": "CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
+    "note": "P2P / merchant / utility split within each state, from the per-state aggregated endpoint. Reconciled against the country file. PhonePe's own transactions, not all of UPI.",
+    "publisher": "PhonePe Pulse",
+    "rows": 108,
+    "url": "https://github.com/PhonePe/pulse"
+  },
   "upi_apps": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:49+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:20+00:00",
     "coverage": "2023-12 - 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "Top ten apps by volume, transcribed from a browser session because NPCI returns HTTP 403 to scripted access. Shares are computed against the NPCI national monthly total, so they are true market shares and the residual is real.",
@@ -80,8 +100,8 @@
     "url": "https://www.npci.org.in/product/ecosystem-statistics/upi"
   },
   "upi_apps_hhi": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:49+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:20+00:00",
     "coverage": "2023-12 - 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "Top ten apps by volume, transcribed from a browser session because NPCI returns HTTP 403 to scripted access. Shares are computed against the NPCI national monthly total, so they are true market shares and the residual is real.",
@@ -90,8 +110,8 @@
     "url": "https://www.npci.org.in/product/ecosystem-statistics/upi"
   },
   "upi_monthly": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:48+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:18+00:00",
     "coverage": "2016-07 - 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "CKAN mirror STOPS AT 2023-08. Rows after that are hand-seeded from npci.org.in, which returns HTTP 403 to scripted access. The `provenance` column marks which is which.",
@@ -100,11 +120,11 @@
     "url": "https://ckandev.indiadataportal.com/dataset/150fe363-f61f-41f2-9215-15f61358f427/resource/8b176063-658a-41d7-9401-7461808d87a2/download/upi-product-statistics.csv"
   },
   "worldbank_india": {
-    "accessed": "2026-08-20",
-    "accessed_utc": "2026-08-20T20:03:57+00:00",
+    "accessed": "2026-08-21",
+    "accessed_utc": "2026-08-21T09:11:41+00:00",
     "coverage": "1960 - 2025",
     "licence": "CC BY 4.0",
-    "note": "Indicators: FX.OWN.TOTL.ZS, FX.OWN.TOTL.FE.ZS, NY.GDP.MKTP.CD, SP.POP.TOTL, SP.POP.0014.TO",
+    "note": "Indicators: FX.OWN.TOTL.ZS, FX.OWN.TOTL.FE.ZS, NY.GDP.MKTP.CD, SP.POP.TOTL, SP.POP.0014.TO, FB.AST.NPER.ZS, FS.AST.PRVT.GD.ZS",
     "publisher": "World Bank Open Data",
     "rows": 66,
     "url": "https://api.worldbank.org/v2/country/IND/indicator/"

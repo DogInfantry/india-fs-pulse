@@ -22,10 +22,12 @@ ROOT = Path(__file__).resolve().parent
 # Explicit and ordered. Transform depends on every fetcher having landed.
 FETCH = [
     "data-pipeline/fetch/fetch_pulse.py",
+    "data-pipeline/fetch/fetch_pulse_state_mix.py",   # depends on fetch_pulse's output
     "data-pipeline/fetch/fetch_upi_history.py",
     "data-pipeline/fetch/fetch_upi_apps.py",
     "data-pipeline/fetch/fetch_bank_stocks.py",
     "data-pipeline/fetch/fetch_worldbank.py",
+    "data-pipeline/fetch/fetch_fred_rates.py",
     "data-pipeline/fetch/fetch_amfi.py",
 ]
 TRANSFORM = ["data-pipeline/transform/build_kpis.py"]

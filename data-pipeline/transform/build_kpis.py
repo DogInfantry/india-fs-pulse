@@ -12,7 +12,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import PROCESSED, SITE_DATA, banner, expect, write_processed  # noqa: E402
+from common import PROCESSED, PROVENANCE, SITE_DATA, banner, expect, write_processed  # noqa: E402
 
 MERCHANT = "Retail"  # PhonePe's label for merchant payments
 
@@ -91,18 +91,72 @@ def bank_nim() -> pd.DataFrame:
 
 
 def state_gap() -> pd.DataFrame:
-    """Geographic gap without inventing a population denominator: compare each
-    state's share of transactions with its share of value. States that transact
-    far more often than their rupee share implies are merchant-heavy - i.e. the
-    states carrying the zero-MDR burden."""
+    """Geographic gap, measured rather than inferred.
+
+    This used to carry an `intensity_index` of volume_share / value_share. That
+    index is algebraically identical to national_ticket / state_ticket, so it
+    restated average ticket size and could say nothing independent about merchant
+    behaviour. It is gone. `ticket_vs_national` below is the same quantity stated
+    honestly, and the merchant shares are the real measure: what fraction of a
+    state's OWN transactions are merchant payments - the leg zero-MDR applies to.
+    """
     df = read("pulse_txn_state")
     latest = df[df.period == df.period.max()].copy()
+    period = latest.period.max()
+
     latest["volume_share"] = latest["count"] / latest["count"].sum()
     latest["value_share"] = latest["amount_inr"] / latest["amount_inr"].sum()
-    latest["intensity_index"] = latest["volume_share"] / latest["value_share"]
     national_ticket = latest["amount_inr"].sum() / latest["count"].sum()
     latest["ticket_vs_national"] = latest["avg_ticket_inr"] / national_ticket
+
+    mix = read("pulse_txn_state_mix")
+    mix = mix[mix.period == period]
+    expect(len(mix) > 0, f"pulse_txn_state_mix has no rows for {period}")
+
+    # Category shares WITHIN each state, so a big state and a small one compare.
+    totals = mix.groupby("state")[["count", "amount_inr"]].sum()
+    wide = mix.pivot_table(index="state", columns="category",
+                           values=["count", "amount_inr"], aggfunc="sum").fillna(0.0)
+    for cat, label in ((MERCHANT, "merchant"), ("P2P", "p2p"), ("Utility", "utility")):
+        expect(("count", cat) in wide.columns, f"state mix is missing category {cat!r}")
+        latest[f"{label}_volume_share"] = latest.state.map(
+            wide[("count", cat)] / totals["count"])
+        latest[f"{label}_value_share"] = latest.state.map(
+            wide[("amount_inr", cat)] / totals["amount_inr"])
+    latest["merchant_avg_ticket_inr"] = latest.state.map(
+        wide[("amount_inr", MERCHANT)] / wide[("count", MERCHANT)])
+
+    missing = latest[latest.merchant_volume_share.isna()].state.tolist()
+    expect(not missing, f"states present in totals but absent from the mix: {missing}")
+    shares = latest[["merchant_volume_share", "p2p_volume_share", "utility_volume_share"]].sum(axis=1)
+    expect(bool(((shares - 1.0).abs() < 1e-6).all()),
+           "per-state category shares do not sum to 1 - a category is missing")
+
     return latest.sort_values("volume_share", ascending=False).reset_index(drop=True)
+
+
+def pipeline_meta() -> dict:
+    """Counts the site prose used to hardcode.
+
+    The footer said "six public sources, five analysis modules" while run.py
+    listed seven modules. Anything a human retypes eventually drifts, so these
+    are counted from the tree and the provenance ledger instead (CLAUDE.md rule 1).
+    """
+    root = PROCESSED.parents[2]
+    fetchers = sorted((root / "data-pipeline" / "fetch").glob("fetch_*.py"))
+    modules = sorted(p for p in (root / "analysis").glob("*.py") if p.stem[0].isdigit())
+    publishers: set[str] = set()
+    if PROVENANCE.exists():
+        ledger = json.loads(PROVENANCE.read_text(encoding="utf-8"))
+        publishers = {v["publisher"] for v in ledger.values() if v.get("publisher")}
+    expect(bool(fetchers) and bool(modules), "pipeline_meta counted nothing - wrong root?")
+    return {
+        "fetchers": len(fetchers),
+        "analysis_modules": len(modules),
+        "publishers": len(publishers),
+        "publisher_names": sorted(publishers),
+        "datasets": len(list(PROCESSED.glob("*.csv"))),
+    }
 
 
 def main() -> None:
@@ -128,14 +182,18 @@ def main() -> None:
 
     states = state_gap()
     write_processed(states, "kpi_state_gap")
-    print(f"   state gap: {len(states)} states, most merchant-intense = "
-          f"{states.sort_values('intensity_index', ascending=False).state.iloc[0]}")
+    material = states[states.volume_share >= 0.01]
+    lead = material.nlargest(1, "merchant_volume_share").iloc[0]
+    print(f"   state gap: {len(states)} states; most merchant-heavy material state = "
+          f"{lead.state.title()} at {lead.merchant_volume_share:.1%} of its own transactions")
 
     for name in ["kpi_upi_trend", "kpi_bank_nim", "kpi_state_gap"]:
         frame = pd.read_csv(PROCESSED / f"{name}.csv")
         (SITE_DATA / f"{name}.json").write_text(
             frame.to_json(orient="records", double_precision=4), encoding="utf-8"
         )
+    (SITE_DATA / "pipeline_meta.json").write_text(
+        json.dumps(pipeline_meta(), indent=2), encoding="utf-8")
     print(f"   site data written to {SITE_DATA.relative_to(SITE_DATA.parents[3])}")
 
 
