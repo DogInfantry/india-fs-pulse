@@ -203,14 +203,26 @@ const steps = [
 
   .steps { list-style: none; margin: 0; padding: 0; }
   .step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center;
-          max-width: 46ch; opacity: 0.35; transition: opacity 0.35s ease; }
-  .step[data-on] { opacity: 1; }
-  .n { color: var(--signal-text); font-family: var(--font-sans); font-size: 0.7rem;
+          max-width: 46ch; padding-left: 1rem;
+          border-left: 2px solid transparent; transition: border-color 0.35s ease; }
+  .step[data-on] { border-left-color: var(--signal); }
+
+  /* De-emphasis is a colour change between two AA-rated tokens, never opacity.
+     Fading text to 35% put the inactive steps under the contrast threshold and
+     cost three Lighthouse accessibility points; --text-3 is documented as
+     >=4.56:1 on every surface token, so this reads as recessed and still passes. */
+  .n, .lede, .body { color: var(--text-3); transition: color 0.35s ease; }
+  .lede :global(strong) { color: var(--text-3); font-weight: 600; transition: color 0.35s ease; }
+  .step[data-on] .n { color: var(--signal-text); }
+  .step[data-on] .lede { color: var(--text); }
+  .step[data-on] .lede :global(strong) { color: var(--signal-text); }
+  .step[data-on] .body { color: var(--text-2); }
+
+  .n { font-family: var(--font-sans); font-size: 0.7rem;
        font-weight: 700; letter-spacing: 0.14em; margin: 0 0 0.5rem; }
   .lede { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.35;
-          margin: 0 0 0.7rem; color: var(--text); }
-  .lede :global(strong) { color: var(--signal-text); font-weight: 600; }
-  .body { margin: 0; color: var(--text-2); font-size: 0.92rem; line-height: 1.65; }
+          margin: 0 0 0.7rem; }
+  .body { margin: 0; font-size: 0.92rem; line-height: 1.65; }
 
   @media (max-width: 880px) {
     .inner { grid-template-columns: 1fr; gap: 0; }
@@ -220,14 +232,15 @@ const steps = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .seg { transition: none; }
-    .step { opacity: 1; }
+    .seg, .step, .n, .lede, .body { transition: none; }
   }
 </style>
 
 <noscript>
   <style>
-    .scrolly .step { opacity: 1; }
+    .scrolly .n { color: var(--signal-text) !important; }
+    .scrolly .lede { color: var(--text) !important; }
+    .scrolly .body { color: var(--text-2) !important; }
     .scrolly .sticky { position: static; height: auto; }
     .scrolly .seg span { opacity: 0.85 !important; }
   </style>
