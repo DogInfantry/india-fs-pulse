@@ -1,0 +1,65 @@
+---
+/**
+ * Geographic choropleth of India, rendered by ECharts over the boundary file
+ * that site/scripts/build_india_map.py produces.
+ *
+ * Two deliberate properties.
+ *
+ * PAY ON USE. The GeoJSON is NOT imported into the page; it is fetched from
+ * public/ the first time the map is actually shown. So a reader who never opens
+ * the map pays nothing, and the initial payload is unchanged. Same reasoning as
+ * the lazily imported ECharts bundle itself.
+ *
+ * THE TABLE IS THE ACCESSIBLE PATH. An ECharts map is a canvas, so it cannot be
+ * keyboard-navigated. That is why the tile cartogram, which is real <button>
+ * elements, is kept as a switchable view, and why the sortable table sits
+ * directly below carrying every value the map encodes. This element is marked
+ * role="img" with a summarising label rather than pretending to be interactive
+ * to assistive technology.
+ *
+ * The component owns only the container and the loader contract. The Workbench
+ * drives it, because selection, the metric switch and the filter all have to stay
+ * in step with the cartogram and the table.
+ */
+interface Props {
+  src?: string;
+  height?: number;
+  label?: string;
+}
+const {
+  src = '/india_states.geojson',
+  height = 440,
+  label = 'Choropleth of India shaded by merchant share of each state’s own transactions. The sortable table below carries the same values.',
+} = Astro.props;
+---
+<div class="map-wrap">
+  <div
+    class="map"
+    data-india-map
+    data-src={src}
+    style={`height:${height}px`}
+    role="img"
+    aria-label={label}
+  >
+    <p class="pending" data-india-pending>Loading the map…</p>
+  </div>
+</div>
+
+<style>
+  .map-wrap { width: 100%; max-width: 440px; }
+  .map {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-2);
+    position: relative;
+  }
+  .pending {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0; color: var(--text-3); font-size: 0.75rem;
+  }
+  .map[data-ready] .pending { display: none; }
+
+  @media (max-width: 820px) { .map-wrap { max-width: 100%; } }
+</style>

@@ -49,7 +49,8 @@ const merge = (base: any, extra: any): any => {
 };
 
 let echartsPromise: Promise<ECharts> | null = null;
-const loadECharts = () => (echartsPromise ??= import('echarts'));
+/** Shared so the Workbench map reuses the same chunk rather than pulling a second copy. */
+export const loadECharts = () => (echartsPromise ??= import('echarts'));
 
 export function mountCharts(): void {
   const nodes = document.querySelectorAll<HTMLElement>('[data-echart]');

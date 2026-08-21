@@ -7,8 +7,14 @@
  * Node backend, which a static free-hosted site cannot have, or ships several
  * megabytes of WASM to pivot 36 rows.
  *
- * Three linked views over one array: a tile cartogram, a sortable table, and a
- * detail panel. Selecting in either view drives the other two.
+ * Linked views over one array: a geographic choropleth, a tile cartogram, a
+ * sortable table and a detail panel. Selecting in any of them drives the rest.
+ *
+ * Two map views on purpose. The choropleth is what a reader expects and can
+ * orient themselves in. The cartogram gives every state equal ink, which the
+ * choropleth cannot: land area is fixed by geography, so Rajasthan shouts and
+ * Delhi, the most merchant-heavy state in the country, nearly vanishes. The
+ * cartogram is also the accessible path, being real buttons rather than canvas.
  *
  * The metric switch here is the one the page's subtitle used to promise while
  * the component did not have it. The `intensity_index` column is gone: it was
@@ -16,6 +22,7 @@
  * twice. Measured merchant share replaces it.
  */
 import HexCartogram from './charts/HexCartogram.astro';
+import IndiaChoropleth from './charts/IndiaChoropleth.astro';
 
 interface StateRow {
   state: string;
@@ -60,6 +67,7 @@ const sorted = [...states].sort((a, b) => b.merchant_volume_share - a.merchant_v
 const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s.volume_share, 0);
 ---
 <div class="wb">
+  <script type="application/json" data-wb-data set:html={JSON.stringify(states)} />
   <div class="switch" role="group" aria-label="Colour the map and rank the table by">
     <span class="lbl">Rank by</span>
     {METRICS.map((m, i) => (
@@ -76,10 +84,20 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
 
   <div class="split">
     <div class="mapside">
-      <HexCartogram states={states} />
-      <p class="hint">
-        Select a tile for its full breakdown. Equal tiles, so land area does not distort the
-        reading — Delhi gets as much ink as Rajasthan.
+      <div class="viewswitch" role="group" aria-label="Choose the map view">
+        <button type="button" data-wb-view="map" class="on" aria-pressed="true">Map</button>
+        <button type="button" data-wb-view="carto" aria-pressed="false">Equal-area tiles</button>
+      </div>
+
+      <div data-wb-pane="map">
+        <IndiaChoropleth />
+      </div>
+      <div data-wb-pane="carto" hidden>
+        <HexCartogram states={states} />
+      </div>
+
+      <p class="hint" data-wb-hint>
+        Select a state for its full breakdown. Boundaries follow India's official depiction.
       </p>
     </div>
 
@@ -145,8 +163,14 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
   </div>
 </div>
 
-<script define:vars={{ statesData: states }}>
+<script>
+  /* A bundled module, not define:vars: it needs `import`, both to reuse the single
+     shared ECharts chunk and to read the palette from tokens.css. The state array
+     therefore arrives as inert JSON in the DOM, the same pattern EChart.astro uses. */
+  import { loadECharts, palette } from '../scripts/charts';
+
   document.querySelectorAll('.wb').forEach((wb) => {
+    const statesData = JSON.parse(wb.querySelector('[data-wb-data]').textContent);
     const byState = new Map(statesData.map((s) => [s.state, s]));
     const table = wb.querySelector('[data-wb-table]');
     const tbody = table.tBodies[0];
@@ -160,59 +184,116 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
     const inr = (v) => `₹${Math.round(v).toLocaleString('en-IN')}`;
     const national = statesData.reduce((a, s) => a + s.merchant_volume_share * s.volume_share, 0);
 
-    let sortKey = 1;
-    let dir = -1;
+    const FIELD = {
+      merchant_volume_share: { ds: 'merchant', show: (v) => `${(v * 100).toFixed(0)}%` },
+      avg_ticket_inr:        { ds: 'ticket',   show: inr },
+      volume_share:          { ds: 'volume',   show: (v) => `${(v * 100).toFixed(0)}%` },
+    };
+    let metric = 'merchant_volume_share';
+    let selected = null;
 
+    /* ---------- table sorting ---------- */
+    let sortKey = 1, dir = -1;
     function sortBy(index, forceDir) {
       if (forceDir) { dir = forceDir; sortKey = index; }
       const isText = headCells[index].dataset.type === 'text';
-      [...rows]
-        .sort((a, b) => {
-          const av = a.cells[index].dataset.v || '';
-          const bv = b.cells[index].dataset.v || '';
-          return (isText ? av.localeCompare(bv) : Number(av) - Number(bv)) * dir;
-        })
-        .forEach((r) => tbody.appendChild(r));
-      headCells.forEach((th, i) => {
-        th.dataset.sorted = i === index ? (dir === 1 ? 'asc' : 'desc') : '';
-      });
+      [...rows].sort((a, b) => {
+        const av = a.cells[index].dataset.v || '', bv = b.cells[index].dataset.v || '';
+        return (isText ? av.localeCompare(bv) : Number(av) - Number(bv)) * dir;
+      }).forEach((r) => tbody.appendChild(r));
+      headCells.forEach((th, i) => { th.dataset.sorted = i === index ? (dir === 1 ? 'asc' : 'desc') : ''; });
     }
 
-    /* ---- metric switch: recolours the map, relabels the scale, re-ranks ---- */
-    const DATASET_KEY = {
-      merchant_volume_share: 'merchant',
-      avg_ticket_inr: 'ticket',
-      volume_share: 'volume',
-    };
-    let metric = 'merchant_volume_share';
-    let metricType = 'pct';
+    /* ---------- the choropleth, loaded only when the map is actually shown ---------- */
+    const mapEl = wb.querySelector('[data-india-map]');
+    let chart = null, mapReady = null;
 
+    const mapOption = () => {
+      const p = palette();
+      const key = metric;
+      const vals = statesData.map((s) => s[key]);
+      const lo = Math.min(...vals), hi = Math.max(...vals);
+      const show = FIELD[key].show;
+      return {
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          backgroundColor: p.surface, borderColor: p.line,
+          textStyle: { color: p.text, fontSize: 12 },
+          formatter: (o) => {
+            const s = byState.get(o.name);
+            if (!s) return o.name;
+            return `<b>${s.state}</b><br/>merchant ${pc(s.merchant_volume_share)} of its own txns`
+                 + `<br/>avg ticket ${inr(s.avg_ticket_inr)}`
+                 + `<br/>${pc(s.volume_share, 2)} of national transactions`;
+          },
+        },
+        visualMap: {
+          min: lo, max: hi, calculable: false, orient: 'horizontal',
+          left: 6, bottom: 6, itemWidth: 10, itemHeight: 78,
+          textStyle: { color: p.muted, fontSize: 10 },
+          text: [show(hi), show(lo)],
+          inRange: { color: [p.surface, p.series[0]] },
+        },
+        series: [{
+          type: 'map', map: 'india', roam: false, selectedMode: 'single',
+          left: 6, right: 6, top: 14, bottom: 34,
+          label: { show: false },
+          itemStyle: { borderColor: p.line, borderWidth: 0.6, areaColor: p.surface },
+          emphasis: { label: { show: false }, itemStyle: { borderColor: p.text, borderWidth: 1.4 } },
+          select: { label: { show: false }, itemStyle: { borderColor: p.text, borderWidth: 2 } },
+          data: statesData.map((s) => ({ name: s.state, value: s[key] })),
+        }],
+      };
+    };
+
+    const ensureMap = () => (mapReady ??= (async () => {
+      const [echarts, geo] = await Promise.all([
+        loadECharts(),
+        fetch(mapEl.dataset.src).then((r) => {
+          if (!r.ok) throw new Error(`boundary file ${r.status}`);
+          return r.json();
+        }),
+      ]);
+      echarts.registerMap('india', geo);
+      chart = echarts.init(mapEl, undefined, { renderer: 'canvas' });
+      chart.setOption(mapOption());
+      chart.on('click', (o) => { if (byState.has(o.name)) select(o.name); });
+      window.addEventListener('resize', () => chart.resize(), { passive: true });
+      mapEl.dataset.ready = 'true';
+      if (selected) chart.dispatchAction({ type: 'select', name: selected });
+    })().catch((err) => {
+      /* Fail visibly and hand the reader the view that still works. */
+      const note = wb.querySelector('[data-india-pending]');
+      if (note) note.textContent = 'Map unavailable. Use the equal-area tiles view.';
+      console.error('india map failed to load:', err);
+    }));
+
+    /* ---------- metric switch drives map, tiles, legend and ranking ---------- */
     const applyMetric = () => {
-      const vals = tiles.map((t) => Number(t.dataset[DATASET_KEY[metric]]));
-      const lo = Math.min(...vals);
-      const hi = Math.max(...vals);
-      const show = (v) => (metricType === 'inr' ? inr(v) : `${(v * 100).toFixed(0)}%`);
+      const field = FIELD[metric];
+      const vals = tiles.map((t) => Number(t.dataset[field.ds]));
+      const lo = Math.min(...vals), hi = Math.max(...vals);
       tiles.forEach((t, i) => {
         const v = vals[i];
         t.style.setProperty('--t', (hi === lo ? 0.5 : (v - lo) / (hi - lo)).toFixed(3));
         const out = t.querySelector('[data-carto-val]');
-        if (out) out.textContent = show(v);
-        /* WCAG 2.5.3: the visible value just changed, so the accessible name
-           must change with it or voice control can no longer address the tile. */
-        t.setAttribute('aria-label', `${t.dataset.code} ${show(v)}. ${t.dataset.desc}`);
+        if (out) out.textContent = field.show(v);
+        /* WCAG 2.5.3: the visible value changed, so the accessible name must too. */
+        t.setAttribute('aria-label', `${t.dataset.code} ${field.show(v)}. ${t.dataset.desc}`);
       });
-      wb.querySelector('[data-carto-lo]').textContent = show(lo);
-      wb.querySelector('[data-carto-hi]').textContent = show(hi);
+      wb.querySelector('[data-carto-lo]').textContent = field.show(lo);
+      wb.querySelector('[data-carto-hi]').textContent = field.show(hi);
       const on = wb.querySelector('[data-wb-metric].on');
       if (on) wb.querySelector('[data-carto-caption]').textContent = on.dataset.caption;
       const idx = headCells.findIndex((c) => c.dataset.key === metric);
       if (idx > -1) sortBy(idx, -1);
+      if (chart) chart.setOption(mapOption());
     };
 
     wb.querySelectorAll('[data-wb-metric]').forEach((btn) => {
       btn.addEventListener('click', () => {
         metric = btn.dataset.wbMetric;
-        metricType = btn.dataset.type;
         wb.querySelectorAll('[data-wb-metric]').forEach((b) => {
           b.classList.toggle('on', b === btn);
           b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
@@ -221,18 +302,52 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
       });
     });
 
-    /* ---- detail panel, driven from either view ---- */
+    /* ---------- map / cartogram view switch ---------- */
+    const panes = {
+      map: wb.querySelector('[data-wb-pane="map"]'),
+      carto: wb.querySelector('[data-wb-pane="carto"]'),
+    };
+    const HINTS = {
+      map: "Select a state for its full breakdown. Boundaries follow India's official depiction.",
+      carto: 'One equal tile per state, so land area does not distort the reading. Delhi gets as much ink as Rajasthan.',
+    };
+    const showView = (view, load = true) => {
+      panes.map.hidden = view !== 'map';
+      panes.carto.hidden = view !== 'carto';
+      wb.querySelector('[data-wb-hint]').textContent = HINTS[view];
+      wb.querySelectorAll('[data-wb-view]').forEach((b) => {
+        const on = b.dataset.wbView === view;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      if (view === 'map' && load) { ensureMap(); if (chart) chart.resize(); }
+    };
+    wb.querySelectorAll('[data-wb-view]').forEach((b) =>
+      b.addEventListener('click', () => showView(b.dataset.wbView)));
+
+    /* The map is the default view, so without this it would load on every page
+       hit whether or not the reader ever reaches the workbench. Same lazy trigger
+       the chart loader uses, so the boundary file and ECharts stay off the
+       critical path. */
+    const nearby = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      nearby.disconnect();
+      if (!panes.map.hidden) { ensureMap(); }
+    }, { rootMargin: '300px' });
+    nearby.observe(wb);
+
+    /* ---------- detail panel, driven from any view ---------- */
     const card = wb.querySelector('[data-wb-card]');
     const empty = wb.querySelector('[data-wb-empty]');
     const ranked = [...statesData].sort((a, b) => b.merchant_volume_share - a.merchant_volume_share);
     const set = (sel, text) => { const n = wb.querySelector(sel); if (n) n.textContent = text; };
     const width = (sel, v) => { const n = wb.querySelector(sel); if (n) n.style.width = `${v * 100}%`; };
 
-    const select = (name) => {
+    function select(name) {
       const s = byState.get(name);
       if (!s) return;
-      const rank = ranked.findIndex((x) => x.state === name) + 1;
-      set('[data-wb-rank]', `Rank ${rank} of ${statesData.length} by merchant share`);
+      selected = name;
+      set('[data-wb-rank]', `Rank ${ranked.findIndex((x) => x.state === name) + 1} of ${statesData.length} by merchant share`);
       set('[data-wb-name]', s.state);
       set('[data-wb-merchant]', pc(s.merchant_volume_share));
       set('[data-wb-p2p]', pc(s.p2p_volume_share));
@@ -243,8 +358,7 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
       set('[data-wb-vol]', pc(s.volume_share, 2));
       set('[data-wb-val]', pc(s.value_share, 2));
       const d = (s.merchant_volume_share - national) * 100;
-      set('[data-wb-vs]',
-        `${Math.abs(d).toFixed(1)}pp ${d >= 0 ? 'above' : 'below'} the national merchant share of ${pc(national)}.`);
+      set('[data-wb-vs]', `${Math.abs(d).toFixed(1)}pp ${d >= 0 ? 'above' : 'below'} the national merchant share of ${pc(national)}.`);
       width('[data-wb-bar-merchant]', s.merchant_volume_share);
       width('[data-wb-bar-p2p]', s.p2p_volume_share);
       width('[data-wb-bar-utility]', s.utility_volume_share);
@@ -252,7 +366,8 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
       empty.hidden = true;
       tiles.forEach((t) => t.toggleAttribute('data-active', t.dataset.state === name));
       rows.forEach((r) => r.classList.toggle('sel', r.dataset.state === name));
-    };
+      if (chart) chart.dispatchAction({ type: 'select', name });
+    }
 
     tiles.forEach((t) => t.addEventListener('click', () => select(t.dataset.state)));
     rows.forEach((r) => {
@@ -262,7 +377,7 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
       });
     });
 
-    /* ---- filter: hides table rows AND dims the non-matching tiles ---- */
+    /* ---------- filter hides rows and dims non-matching tiles ---------- */
     const refresh = () => {
       const term = (wb.querySelector('[data-wb-filter]').value || '').toLowerCase();
       let shown = 0;
@@ -271,8 +386,8 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
         r.hidden = !hit;
         if (hit) shown++;
       });
-      tiles.forEach((t) => t.toggleAttribute(
-        'data-dim', Boolean(term) && !t.dataset.state.toLowerCase().includes(term)));
+      tiles.forEach((t) => t.toggleAttribute('data-dim',
+        Boolean(term) && !t.dataset.state.toLowerCase().includes(term)));
       count.textContent = `${shown} of ${rows.length} · ${period}`;
     };
 
@@ -290,6 +405,7 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
 
     wb.querySelector('[data-wb-filter]').addEventListener('input', refresh);
     applyMetric();
+    showView('map', false);
   });
 </script>
 
@@ -304,6 +420,15 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
   }
   .switch button.on { border-color: var(--text); color: var(--text); background: var(--surface-2); }
   .switch button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+  .viewswitch { display: inline-flex; gap: 0.3rem; margin-bottom: 0.7rem; }
+  .viewswitch button {
+    background: transparent; border: 1px solid var(--line); color: var(--text-2);
+    padding: 0.26rem 0.62rem; border-radius: 7px; font: inherit; font-size: 0.72rem;
+    cursor: pointer;
+  }
+  .viewswitch button.on { border-color: var(--text); color: var(--text); background: var(--surface-2); }
+  .viewswitch button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
   .split { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
            gap: clamp(1rem, 3vw, 2rem); align-items: start; margin-bottom: 1.2rem; }
