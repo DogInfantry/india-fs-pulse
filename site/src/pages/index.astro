@@ -12,6 +12,8 @@ import Slopegraph from '../components/charts/Slopegraph.astro';
 import SmallMultiples from '../components/charts/SmallMultiples.astro';
 import Workbench from '../components/Workbench.astro';
 import Monogram from '../components/Monogram.astro';
+import BrandMark from '../components/BrandMark.astro';
+import Scrolly from '../components/Scrolly.astro';
 
 import hero from '../data/upi_monetisation.json';
 import split from '../data/chart_category_split.json';
@@ -280,20 +282,20 @@ const nimGap = Math.round(nim.gap_bps.at(-1));
 const wrapperX = shelf.listed_schemes / shelf.distinct_strategies;
 const execAnswer = `India's payments rails have separated volume from value and priced the busy half at zero. `
   + `Merchant payments are <strong>${pc(merchant.volume_share, 0)} of transactions but ${pc(merchant.value_share, 0)} of the rupees</strong>, `
-  + `and merchant is the only leg an MDR could touch. The market is concentrated at the same time as it is unmonetised — `
+  + `and merchant is the only leg an MDR could touch. The market is concentrated at the same time as it is unmonetised, `
   + `which is why the share cap cannot bind, and why the investable business here is <strong>distribution, not transactions</strong>.`;
 const execFindings = [
   { n: pc(merchant.volume_share, 0) + ' / ' + pc(merchant.value_share, 0),
     claim: 'Merchant payments carry the transactions; P2P carries the rupees. The busy leg earns nothing.',
     href: '#module-a' },
   { n: pc(top2, 0),
-    claim: `Two apps intermediate four in five transactions — and both breach the ${(structure.cap * 100).toFixed(0)}% cap due this December.`,
+    claim: `Two apps intermediate four in five transactions, and both breach the ${(structure.cap * 100).toFixed(0)}% cap due this December.`,
     href: '#module-structure' },
   { n: capMoveBn.toFixed(1) + 'bn',
     claim: 'Transactions a month that would have to change app for the cap to bind. It will not bind.',
     href: '#module-structure' },
   { n: nimGap + 'bps',
-    claim: 'The private-bank margin advantage — and it splits almost evenly between pricing and funding.',
+    claim: 'The private-bank margin advantage, and it splits almost evenly between pricing and funding.',
     href: '#module-c' },
   { n: '₹0',
     claim: `${(unit.merchants / 1e6).toFixed(1)}M merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, no payment revenue.`,
@@ -306,7 +308,7 @@ const execFindings = [
 ---
 
 <Base
-  title="India FS Pulse — the UPI monetisation reckoning"
+  title="India FS Pulse: the UPI monetisation reckoning"
   description="India built the world's largest real-time payments network and priced it at zero. A code-driven scan, point of view, diligence simulation and survey analysis of Indian financial services."
 >
   <header class="hero">
@@ -320,7 +322,7 @@ const execFindings = [
         In {PERIOD}, merchant payments were <strong>{pc(merchant.volume_share)} of every transaction
         but only {pc(merchant.value_share)} of the rupees</strong>. Person-to-person transfers were
         the mirror image. The merchant leg is the only one a discount rate could ever be charged
-        on — and under zero-MDR it earns nothing.
+        on, and under zero-MDR it earns nothing.
       </p>
       <dl class="stats">
         <div><dt>Merchant share of transactions</dt><dd>{pc(merchant.volume_share)}</dd></div>
@@ -336,6 +338,14 @@ const execFindings = [
   </header>
 
   <main id="main">
+    <div class="wrap">
+      <Scrolly
+        categories={hero.categories}
+        period={PERIOD}
+        merchantAvgTicket={hero.merchant_avg_ticket_inr}
+      />
+    </div>
+
     <div class="wrap"><ExecSummary answer={execAnswer} findings={execFindings} /></div>
 
     <section class="wrap module" id="module-a">
@@ -362,7 +372,7 @@ const execFindings = [
 
         <Figure
           kicker="Exhibit 3 · Ten years of volume"
-          title="Volume compounds without pause — and the series shows exactly where its data came from"
+          title="Volume compounds without pause, and the series shows exactly where its data came from"
           subtitle="The open mirror of NPCI's series stops in August 2023. Later months were transcribed from NPCI's own table, and are coloured differently rather than silently merged."
           source="NPCI monthly product statistics: open CKAN mirror to 2023-08, then transcribed from npci.org.in on 2026-08-20. Four months NPCI does not publish in its ten-row table are left as gaps, not interpolated."
         >
@@ -385,13 +395,13 @@ const execFindings = [
       <h2 class="section-head"><span>B</span> Market structure and the share cap</h2>
       <ul class="entities" aria-label="Apps analysed in this section">
         {structure.apps.filter((a) => a.app !== 'All other apps').map((a) => (
-          <li><Monogram name={a.app} /><span>{a.app}</span><b>{pc(a.volume_share, 1)}</b></li>
+          <li><BrandMark name={a.app} /><span>{a.app}</span><b>{pc(a.volume_share, 1)}</b></li>
         ))}
       </ul>
       <div class="grid">
         <Figure
           kicker="Exhibit 5 · Who captures the value"
-          title={`Two apps intermediate ${(top2 * 100).toFixed(0)}% of India's transactions — and both sit above the ${(structure.cap * 100).toFixed(0)}% cap`}
+          title={`Two apps intermediate ${(top2 * 100).toFixed(0)}% of India's transactions, and both sit above the ${(structure.cap * 100).toFixed(0)}% cap`}
           subtitle={`${structure.month}. Column width is share of transactions, height is average ticket, so area is roughly rupees moved.`}
           source="NPCI UPI Ecosystem Statistics, per-application volume and value, transcribed 2026-08-21. Shares computed against the NPCI national monthly total."
           wide
@@ -420,7 +430,7 @@ const execFindings = [
 
         <Figure
           kicker="Exhibit 8 · Concentration"
-          title="Concentration is falling — nowhere near fast enough to matter by December"
+          title="Concentration is falling, nowhere near fast enough to matter by December"
           subtitle="Herfindahl-Hirschman Index on true national volume shares. Above 2,500 is 'highly concentrated' by most competition authorities."
           source="Computed from NPCI per-application data."
         >
@@ -441,7 +451,7 @@ const execFindings = [
           kicker="Exhibit 9 · Cohort margins"
           title={`Private banks hold a ${Math.round(nim.gap_bps.at(-1)!)}bps margin advantage that has not closed`}
           subtitle="NIM proxy: net interest income over average total assets, computed from filed statements. The shaded band is the gap."
-          source="Filed annual income statements and balance sheets, retrieved via yfinance. A proxy, not reported NIM — banks use average earning assets, a smaller denominator."
+          source="Filed annual income statements and balance sheets, retrieved via yfinance. A proxy, not reported NIM. Banks use average earning assets, a smaller denominator."
         >
           <SlopeLines periods={nim.periods} series={nim.series} gapBps={nim.gap_bps} />
         </Figure>
@@ -458,7 +468,7 @@ const execFindings = [
         <Figure
           kicker="Exhibit 11 · Financial inclusion"
           title={`Each banked adult now runs ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions a month`}
-          subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story — and the cost base.`}
+          subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story, and the cost base.`}
           source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0–14. UPI volume is the mean month of each year."
         >
           <EChart id="c-inclusion" option={optInclusion} />
@@ -466,9 +476,9 @@ const execFindings = [
 
         <Figure
           kicker="Exhibit 12 · The market's verdict"
-          title="The thinner-margin cohort massively outperformed — the franchise was already in the price"
+          title="The thinner-margin cohort massively outperformed: the franchise was already in the price"
           subtitle={`Median price return by cohort, ${marketView.window[0]} to ${marketView.window[1]}.`}
-          source="Daily closes via yfinance. Price return only — excludes dividends, which understates the higher-yielding public cohort."
+          source="Daily closes via yfinance. Price return only, and it excludes dividends, which understates the higher-yielding public cohort."
         >
           <EChart id="c-marketview" option={optMarketView} />
         </Figure>
@@ -502,10 +512,10 @@ const execFindings = [
           kicker="Exhibit 14 · Episode-level NPS"
           title="One brand contains both the best and the worst episode in the market"
           subtitle="Scored per customer episode rather than per brand. A blended brand NPS averages these opposites into a number that hides the problem."
-          source="SYNTHETIC panel — 2,000 respondents generated from a documented, seeded model (analysis/04_survey_nps.py). The method is the artefact; the figures illustrate it and are not market fact."
+          source="SYNTHETIC panel of 2,000 respondents generated from a documented, seeded model (analysis/04_survey_nps.py). The method is the artefact; the figures illustrate it and are not market fact."
           wide
         >
-          <div class="synthetic-flag">Synthetic data — illustrates the method, not the market</div>
+          <div class="synthetic-flag">Synthetic data: illustrates the method, not the market</div>
           <EChart id="c-nps" option={optNps} height={300} />
         </Figure>
       </div>
@@ -544,7 +554,7 @@ const execFindings = [
       <Figure
         kicker="Interactive · Client-ready dashboard"
         title="Every state's payment mix, three linked ways, without leaving the page"
-        subtitle="The dashboard requirement, met in code: a tile cartogram, a sortable table and a detail panel, all linked — select in one and the others follow. Metric switch, live filter, no BI backend."
+        subtitle="The dashboard requirement, met in code: a tile cartogram, a sortable table and a detail panel, all linked: select in one and the others follow. Metric switch, live filter, no BI backend."
         source={SOURCE_PULSE}
         wide
       >
@@ -558,7 +568,7 @@ const execFindings = [
         kicker="Traceability"
         title="Every line of the job description, mapped to the artefact that demonstrates it"
         subtitle="Including the two it does not. A self-assessment that only says “full” is not an assessment."
-        source="Requirements transcribed from the Associate — Financial Services job description (Bain Capability Network, FS Centre of Expertise, Job ID 90399)."
+        source="Requirements transcribed from the Associate: Financial Services job description (Bain Capability Network, FS Centre of Expertise, Job ID 90399)."
         wide
       >
         <GapMatrix />
@@ -584,13 +594,13 @@ const execFindings = [
     <p>
       <strong>India FS Pulse.</strong> Built end to end in code: a Python pipeline over {meta.publishers} public
       sources, {meta.fetchers} fetchers and {meta.analysis_modules} analysis modules, feeding this static site. Every figure on this page
-      is computed from a committed dataset — including these counts, which are read from the
+      is computed from a committed dataset, including these counts, which are read from the
       provenance ledger rather than retyped.
     </p>
     <p class="fine">
       Original work. Not affiliated with, endorsed by, or using the trademarks or proprietary data
       of any consulting firm. Net Promoter Score is a public method; no proprietary benchmark data
-      is used. Each dataset retains its own publisher's terms — see the
+      is used. Each dataset retains its own publisher's terms, see the
       <a href="/methodology">methodology and sources</a>. Nothing here is investment advice.
     </p>
   </footer>

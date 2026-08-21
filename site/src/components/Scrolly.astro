@@ -1,0 +1,234 @@
+---
+/**
+ * The guided opening: the whole thesis in four scroll steps.
+ *
+ * WHY THIS EXISTS. The page is exhibit-driven, sixteen figures each making one
+ * point, and a reader arriving cold had no path through it. This is that path.
+ * It introduces the argument and then hands off to the exhibits; it is not
+ * scroll-hijacking applied to the whole document, which is what the original
+ * Scrollama plan would have done and why that plan was dropped.
+ *
+ * WHY NO LIBRARY. Scrollama and Motion were installed in an early pass and
+ * removed unused, on the grounds that carrying two dependencies for an effect the
+ * content does not want is how bundles rot. That still holds. Everything here is
+ * already in the platform: `position: sticky` is CSS, step activation is the same
+ * IntersectionObserver the chart loader already uses, and the bar widths are CSS
+ * custom properties with a transition. No dependency, no bundle cost.
+ *
+ * DEGRADATION. Without JavaScript, or under prefers-reduced-motion, every step is
+ * visible and readable as ordinary prose. Nothing is hidden behind an animation
+ * that may never run.
+ */
+interface Category { category: string; volume_share: number; value_share: number; count_bn: number }
+interface Props {
+  categories: Category[];
+  period: string;
+  merchantAvgTicket: number;
+}
+const { categories, period, merchantAvgTicket } = Astro.props;
+
+const find = (c: string) => categories.find((x) => x.category === c)!;
+const merchant = find('Retail');
+const p2p = find('P2P');
+const utility = find('Utility');
+const totalBn = categories.reduce((a, c) => a + c.count_bn, 0);
+
+const pc = (v: number) => `${(v * 100).toFixed(1)}%`;
+const pc0 = (v: number) => `${(v * 100).toFixed(0)}%`;
+
+const steps = [
+  {
+    n: '01',
+    lede: `India runs <strong>${totalBn.toFixed(1)} billion</strong> UPI transactions a quarter.`,
+    body: `More real-time payments than anywhere on earth, and still compounding. ${period}, PhonePe's own share of them.`,
+  },
+  {
+    n: '02',
+    lede: `<strong>${pc(merchant.volume_share)}</strong> of them are merchant payments.`,
+    body: 'Someone buying something. This is the leg a merchant discount rate could ever be charged on, and it is the busy one.',
+  },
+  {
+    n: '03',
+    lede: `But merchant payments are only <strong>${pc(merchant.value_share)}</strong> of the rupees.`,
+    body: `Volume and value have separated. Person-to-person transfers are ${pc(p2p.volume_share)} of transactions but ${pc(p2p.value_share)} of the money: fewer, far larger. The busy half is the small-ticket half, averaging ₹${Math.round(merchantAvgTicket).toLocaleString('en-IN')}.`,
+  },
+  {
+    n: '04',
+    lede: 'That busy half earns <strong>₹0</strong>.',
+    body: 'Under zero-MDR the merchant leg is free to accept. India built the rails, then priced the only monetisable side of them at nothing. Who captures the value, and is there a business here?',
+  },
+];
+---
+<section class="scrolly" aria-label="The argument in four steps">
+  <div class="inner">
+    <div class="sticky">
+      <figure
+        class="graphic"
+        data-scrolly-graphic
+        data-step="1"
+        data-m-vol={merchant.volume_share * 100}
+        data-p-vol={p2p.volume_share * 100}
+        data-u-vol={utility.volume_share * 100}
+        data-m-val={merchant.value_share * 100}
+        data-p-val={p2p.value_share * 100}
+        data-u-val={utility.value_share * 100}
+        style={`--m-w:${merchant.volume_share * 100}; --p-w:${p2p.volume_share * 100}; --u-w:${utility.volume_share * 100}; --m-bg:var(--s4)`}
+      >
+        <figcaption class="axis" data-scrolly-axis>Share of transactions</figcaption>
+        <div
+          class="bar"
+          role="img"
+          aria-label={`Merchant payments are ${pc(merchant.volume_share)} of transactions but ${pc(merchant.value_share)} of value. Person to person transfers are the mirror image.`}
+        >
+          <i class="seg m"><span>Merchant</span></i>
+          <i class="seg p"><span>P2P</span></i>
+          <i class="seg u"><span>Utility</span></i>
+        </div>
+        <p class="readout">
+          <!-- Server-rendered at step 1, so the no-JS view and the first
+               activated state agree instead of briefly disagreeing. -->
+          <span class="big" data-scrolly-big>100%</span>
+          <span class="cap" data-scrolly-cap>of UPI transactions, all legs</span>
+        </p>
+      </figure>
+    </div>
+
+    <ol class="steps">
+      {steps.map((s, i) => (
+        <li class="step" data-scrolly-step={i + 1}>
+          <p class="n">{s.n}</p>
+          <p class="lede" set:html={s.lede} />
+          <p class="body">{s.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<script>
+  /* Same IntersectionObserver approach as the chart loader. No library. */
+  document.querySelectorAll<HTMLElement>('.scrolly').forEach((root) => {
+    const graphic = root.querySelector<HTMLElement>('[data-scrolly-graphic]');
+    const steps = Array.from(root.querySelectorAll<HTMLElement>('[data-scrolly-step]'));
+    const big = root.querySelector<HTMLElement>('[data-scrolly-big]');
+    const cap = root.querySelector<HTMLElement>('[data-scrolly-cap]');
+    const axis = root.querySelector<HTMLElement>('[data-scrolly-axis]');
+    if (!graphic || !steps.length) return;
+
+    const read = (name: string) => Number(graphic.dataset[name]);
+    const pc0 = (v: number) => `${Math.round(v)}%`;
+
+    /* Steps 1 and 2 weight the bar by transaction count; 3 and 4 by rupees. */
+    const weight = (byValue: boolean) => {
+      const k = byValue ? 'Val' : 'Vol';
+      graphic.style.setProperty('--m-w', String(read('m' + k)));
+      graphic.style.setProperty('--p-w', String(read('p' + k)));
+      graphic.style.setProperty('--u-w', String(read('u' + k)));
+    };
+
+    /* What the readout says at each step. The values come from the same custom
+       properties that size the bar, so the number and the picture cannot drift. */
+    const STATE: Record<number, () => { big: string; cap: string; axis: string }> = {
+      1: () => ({ big: '100%', cap: 'of UPI transactions, all legs', axis: 'Share of transactions' }),
+      2: () => ({ big: pc0(read('mVol')), cap: 'merchant share of transactions', axis: 'Share of transactions' }),
+      3: () => ({ big: pc0(read('mVal')), cap: 'merchant share of value', axis: 'Share of value' }),
+      4: () => ({ big: '₹0', cap: 'revenue on the merchant leg at 0bps', axis: 'Share of value' }),
+    };
+
+    let started = false;
+    const activate = (n: number) => {
+      if (started && graphic.dataset.step === String(n)) return;
+      started = true;
+      graphic.dataset.step = String(n);
+      weight(n >= 3);
+      graphic.style.setProperty('--m-bg', n >= 2 ? 'var(--signal)' : 'var(--s4)');
+      const s = STATE[n]();
+      if (big) big.textContent = s.big;
+      if (cap) cap.textContent = s.cap;
+      if (axis) axis.textContent = s.axis;
+      steps.forEach((el) => el.toggleAttribute('data-on', el.dataset.scrollyStep === String(n)));
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        /* The step nearest the middle of the viewport wins, so fast scrolling does
+           not leave the graphic showing whichever entry happened to fire last. */
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (!visible.length) return;
+        const best = visible.reduce((a, b) =>
+          Math.abs(b.boundingClientRect.top - window.innerHeight / 2) <
+          Math.abs(a.boundingClientRect.top - window.innerHeight / 2) ? b : a);
+        activate(Number((best.target as HTMLElement).dataset.scrollyStep));
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    );
+    steps.forEach((el) => io.observe(el));
+    activate(1);
+  });
+</script>
+
+<style>
+  .scrolly { padding: clamp(1.5rem, 5vw, 3rem) 0 0; }
+  .inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+           gap: clamp(1.5rem, 5vw, 4rem); }
+
+  .sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; }
+  .graphic { margin: 0; width: 100%; }
+
+  .axis { color: var(--text-3); font-size: 0.68rem; text-transform: uppercase;
+          letter-spacing: 0.09em; margin-bottom: 0.6rem; }
+
+  .bar { display: flex; height: 74px; border: 1px solid var(--line); border-radius: 10px;
+         overflow: hidden; background: var(--surface); }
+  .seg { display: flex; align-items: center; justify-content: center; height: 100%;
+         font-style: normal; overflow: hidden;
+         transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease,
+                     background-color 0.4s ease; }
+  .seg span { font-size: 0.66rem; color: var(--text); opacity: 0.85; white-space: nowrap;
+              padding: 0 0.35rem; }
+  /* Exactly one width and one background declaration per segment. The step drives
+     the custom properties from script instead of layering descendant overrides,
+     which lost a specificity fight against these base rules under Astro's scoping. */
+  .seg.m { background: var(--m-bg); width: calc(var(--m-w) * 1%); }
+  .seg.p { background: var(--surface-2); width: calc(var(--p-w) * 1%); }
+  .seg.u { background: var(--line); width: calc(var(--u-w) * 1%); }
+
+  /* Step 1: the whole bar is one undifferentiated mass. */
+  .graphic[data-step='1'] .seg span { opacity: 0; }
+
+  .readout { margin: 1.1rem 0 0; display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .big { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1;
+         color: var(--signal-text); font-variant-numeric: tabular-nums; }
+  .cap { color: var(--text-3); font-size: 0.78rem; }
+
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center;
+          max-width: 46ch; opacity: 0.35; transition: opacity 0.35s ease; }
+  .step[data-on] { opacity: 1; }
+  .n { color: var(--signal-text); font-family: var(--font-sans); font-size: 0.7rem;
+       font-weight: 700; letter-spacing: 0.14em; margin: 0 0 0.5rem; }
+  .lede { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.35;
+          margin: 0 0 0.7rem; color: var(--text); }
+  .lede :global(strong) { color: var(--signal-text); font-weight: 600; }
+  .body { margin: 0; color: var(--text-2); font-size: 0.92rem; line-height: 1.65; }
+
+  @media (max-width: 880px) {
+    .inner { grid-template-columns: 1fr; gap: 0; }
+    .sticky { height: auto; padding: 1rem 0; background: var(--ink); z-index: 2;
+              border-bottom: 1px solid var(--line); }
+    .step { min-height: 62vh; max-width: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seg { transition: none; }
+    .step { opacity: 1; }
+  }
+</style>
+
+<noscript>
+  <style>
+    .scrolly .step { opacity: 1; }
+    .scrolly .sticky { position: static; height: auto; }
+    .scrolly .seg span { opacity: 0.85 !important; }
+  </style>
+</noscript>
