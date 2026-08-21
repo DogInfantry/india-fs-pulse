@@ -82,3 +82,94 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 | `docs/resources.md` | **All external links, tooling verdicts, data endpoints** |
 | `docs/stack-decisions.md` | What was rejected and why |
 | `docs/REFRESH.md` | How to refresh the browser-only NPCI tables |
+
+## Non-negotiable rules
+
+1. **Never fabricate a number.** Not fetched or computed → write `TODO` and leave it
+   visible. Four months NPCI does not publish are left as gaps, never interpolated.
+2. **Every figure traces to `docs/sources.md`** with source URL and access date.
+   That file is *generated* from the fetchers' provenance ledger, so it cannot drift.
+3. **Synthetic data is labelled synthetic** — in the filename, on the chart, and in the
+   memo. The NPS survey is the only synthetic dataset here.
+4. **Answer-first.** Chart titles state the conclusion, not the contents.
+5. **The pipeline stays secret-free.** `python run.py data` must work with zero
+   environment variables. Key-gated sources skip gracefully.
+6. **No firm trademarks.** No Bain/BCG/McKinsey logos, colours or proprietary data.
+   NPS as a *method* is public; NPS Prism data is not. The palette is original.
+7. **Date-stamp every snapshot.** Any single-period figure carries its period.
+8. **Never `pd.read_csv(comment="#")` on the seeded files.** Use `common.read_seeded_csv()`.
+9. **Stale data is labelled stale**, and the chart shows the seam rather than hiding it.
+10. **Fail loud on shape change.** Fetchers validate schema *and* plausible ranges.
+
+## Current state — all green
+
+- `python run.py data` — ~115s, zero secrets, 15 processed datasets
+- `python run.py analyze` — 7 modules, **21 artefacts byte-identical across runs**
+- `python run.py site` — 9 pages
+- Lighthouse: **Accessibility 100 · Best Practices 100 · SEO 100 · Agentic 100**,
+  63 audits passed / 0 failed. **LCP 676 ms, CLS 0.00**
+- Deployed, publicly reachable, auto-deploys on push
+- CI refresh workflow verified green on Linux / Python 3.12, with a real data commit
+
+### Headline findings (all computed, none typed in)
+
+| Finding | Figure |
+|---|---|
+| Merchant payments: share of transactions vs share of value | **63.9% / 23.0%** |
+| Merchant contribution to all volume growth since 2018Q1 | **64%** |
+| PhonePe / Google Pay share of national UPI volume | **45.9% / 32.3%** — both above the 30% cap |
+| Transactions that must change app for the cap to bind | **4.3 bn a month** |
+| Time for the leader to reach 30% at observed drift | **~470 months** |
+| Private vs public bank NIM gap | **114 bps** (59 pricing + 56 funding) |
+| Five-year price return, public vs private banks | **+284% vs +17%** |
+| UPI transactions per banked adult per month | **14.9**, up from 4.0 in 2021 |
+| Fund schemes vs distinct strategies | **14,288 → 3,353** (4.3× wrappers) |
+
+## Active task
+
+**Pass 2 is complete, committed and deployed.** Nothing is half-finished.
+
+The one open item is external: **the LinkedIn URL.** `site/src/components/Contact.astro`
+has `const LINKEDIN: string | null = null` and renders that row only when it is set —
+deliberately, so no placeholder link ships. Set the constant and rebuild.
+
+## Next steps, in order
+
+1. **LinkedIn URL** into `Contact.astro` (one line, blocked on the user).
+2. **Excel + PowerPoint deliverables** — the JD names both as hard requirements, and
+   the gap matrix carries an honest "Not covered" row for them. The user chose web-only;
+   the pipeline emits tidy CSV, so `openpyxl` + `python-pptx` is roughly an hour.
+3. **Extend the per-app series** — currently 12 months (2023-12 → 2026-07). More months
+   sharpen the HHI trend. Browser-transcribed; see `docs/REFRESH.md`.
+4. **AMFI quarterly AAUM** — would restate the wealth module in rupees rather than
+   scheme counts, which is the version that informs a fee pool.
+5. **Insurance** — the last JD-named sector with no coverage. IRDAI is PDF-only.
+6. **Housekeeping:** `.claude/data/*.sqlite*` and the `*.parquet` files are tracked and
+   churn every session. Untrack with
+   `git rm -r --cached .claude/data "data-pipeline/data/processed/*.parquet"` then add
+   both to `.gitignore` — CSV is the contract, parquet is only a convenience.
+
+## Gotchas — things that actually bit us
+
+- **`#` is data, not a comment.** NPCI marks third-party providers with a trailing `#`
+  ("Phone Pe #"). `pd.read_csv(comment='#')` silently truncated every row to `NaN`.
+- **Fund houses have brackets too.** `IL&FS Mutual Fund (IDF)` was parsed as a category
+  header, misattributing 2,535 AMFI rows. Category headers must match
+  `^(Open Ended|Close Ended|Interval Fund) Schemes?\(`.
+- **₹1 lakh crore = 1e12**, not 1e13. Caught before it reached a chart.
+- **CKAN's date column is `YYYY-DD-MM`**, not ISO. `2023-01-08` is 1 August 2023.
+- **NPCI's URL moved** to `/product/upi/...`; `/what-we-do/upi/...` 404s.
+- **yfinance throws `KeyError` intermittently** on healthy tickers, silently dropping a
+  bank from a cohort mean. Retried three times, plus a per-cohort minimum of 3 banks.
+- **Paytm is not a bank** — its NIM is meaningless, so it is blanked rather than averaged
+  in. The range guard caught this on the first run.
+- **Never run two pipeline invocations at once** — they race on the same output files.
+- **A failed `git pull --rebase` can silently revert the working tree.** It happened
+  here: locked `.claude/data/*.sqlite-wal` files blocked the checkout, the rebase
+  aborted mid-flight, and uncommitted work was lost. Commit before pulling; prefer
+  `--no-rebase` while those files remain tracked.
+- **Escaped quotes collapse inside Python heredocs.** Prefer `chr(10).join(...)` over
+  `"\n".join(...)` when generating code that way.
+- **`npx astro check` is very slow** here (minutes). Use `npx astro build` to validate.
+- **IntersectionObserver never fires in a hidden tab**, so lazy ECharts appear "broken"
+  when the browser pane is not composited. That is the environment, not the code.
