@@ -41,6 +41,7 @@ PULSE_STATES = Path(__file__).resolve().parents[2] / "data-pipeline" / "data" / 
 SIMPLIFY_TOLERANCE = 0.02   # degrees; 69.5 KB out, visually indistinguishable at page size
 COORD_DECIMALS = 3          # ~110 m, far finer than a state-level choropleth can show
 EXPECTED_STATES = 36
+SMALL_AREA_SHARE = 0.02   # below 2% of the largest state, a territory needs a marker
 
 # India's official northern and eastern extent. Anything materially short of this
 # is the Line of Control depiction, which must not ship.
@@ -91,11 +92,33 @@ def main() -> None:
         f"~37.1N / ~80.3E; this looks like a Line of Control map and must not ship.")
     print(f"   boundary extent {north:.2f}N / {east:.2f}E - India's official depiction, Aksai Chin included")
 
-    features = [
-        {"type": "Feature", "properties": {"name": name},
-         "geometry": mapping(geom.simplify(SIMPLIFY_TOLERANCE, preserve_topology=True))}
-        for name, geom in sorted(merged.items())
-    ]
+    # Several union territories are too small to see, let alone click: Lakshadweep
+    # renders at 0.00% of Rajasthan's area, Chandigarh 0.02%, Delhi 0.42%. They are
+    # in the file and always were, but a reader cannot find them. Each carries a
+    # representative point and a `small` flag so the map can draw a labelled marker
+    # for them, which is the standard cartographic answer to a micro-territory.
+    largest = max(g.area for g in merged.values())
+    features = []
+    small_names = []
+    for name, geom in sorted(merged.items()):
+        share = geom.area / largest
+        # representative_point stays inside concave and multipart shapes; centroid does not.
+        point = geom.representative_point()
+        small = share < SMALL_AREA_SHARE
+        if small:
+            small_names.append(f"{name} ({share * 100:.2f}%)")
+        features.append({
+            "type": "Feature",
+            "properties": {
+                "name": name,
+                "small": small,
+                "point": [round(point.x, 3), round(point.y, 3)],
+            },
+            "geometry": mapping(geom.simplify(SIMPLIFY_TOLERANCE, preserve_topology=True)),
+        })
+    print(f"   {len(small_names)} territories flagged too small to see unaided:")
+    for n in small_names:
+        print(f"     {n}")
     raw = json.dumps({"type": "FeatureCollection", "features": features}, separators=(",", ":"))
     trimmed = re.sub(r"-?\d+\.\d{4,}", lambda m: f"{float(m.group()):.{COORD_DECIMALS}f}", raw)
 

@@ -443,7 +443,7 @@ const execFindings = [
       <h2 class="section-head"><span>C</span> Banking health scan</h2>
       <ul class="entities" aria-label="Banks in the two cohorts">
         {marketView.tickers.filter((t) => t.cohort !== 'Fintech').map((t) => (
-          <li><Monogram name={t.bank} tone={t.cohort === 'Private' ? 1 : 2} /><span>{t.bank}</span><b>{t.cohort}</b></li>
+          <li><BrandMark name={t.bank} tone={t.cohort === 'Private' ? 1 : 2} /><span>{t.bank}</span><b>{t.cohort}</b></li>
         ))}
       </ul>
       <div class="grid">

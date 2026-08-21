@@ -206,7 +206,14 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
 
     /* ---------- the choropleth, loaded only when the map is actually shown ---------- */
     const mapEl = wb.querySelector('[data-india-map]');
-    let chart = null, mapReady = null;
+    let chart = null, mapReady = null, small = [];
+
+    /* Marker labels sit next to a 9px dot, so the longest official names have to
+       be trimmed or they run off the map. Only these two need it. */
+    const SHORT = {
+      'Dadra & Nagar Haveli & Daman & Diu': 'Dadra & Nagar Haveli',
+      'Andaman & Nicobar Islands': 'Andaman & Nicobar',
+    };
 
     const mapOption = () => {
       const p = palette();
@@ -214,6 +221,7 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
       const vals = statesData.map((s) => s[key]);
       const lo = Math.min(...vals), hi = Math.max(...vals);
       const show = FIELD[key].show;
+      const spread = Math.max(national - lo, hi - national);
       return {
         backgroundColor: 'transparent',
         tooltip: {
@@ -237,6 +245,7 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
            keep a sequential ramp. */
         visualMap: (() => {
           const base = {
+            seriesIndex: 0,   /* polygons only; the markers colour themselves */
             calculable: false, orient: 'horizontal',
             left: 6, bottom: 6, itemWidth: 10, itemHeight: 78,
             textStyle: { color: p.muted, fontSize: 10 },
@@ -245,7 +254,6 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
             return { ...base, min: lo, max: hi, text: [show(hi), show(lo)],
                      inRange: { color: [p.surface, p.series[0]] } };
           }
-          const spread = Math.max(national - lo, hi - national);
           return {
             ...base,
             min: national - spread, max: national + spread,
@@ -256,15 +264,55 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
             inRange: { color: [p.series[1], p.surface, p.series[0]] },
           };
         })(),
-        series: [{
-          type: 'map', map: 'india', roam: false, selectedMode: 'single',
+        geo: {
+          map: 'india', roam: false, selectedMode: 'single',
           left: 6, right: 6, top: 14, bottom: 34,
           label: { show: false },
           itemStyle: { borderColor: p.line, borderWidth: 0.6, areaColor: p.surface },
           emphasis: { label: { show: false }, itemStyle: { borderColor: p.text, borderWidth: 1.4 } },
           select: { label: { show: false }, itemStyle: { borderColor: p.text, borderWidth: 2 } },
-          data: statesData.map((s) => ({ name: s.state, value: s[key] })),
-        }],
+        },
+        series: [
+          { type: 'map', geoIndex: 0,
+            data: statesData.map((s) => ({ name: s.state, value: s[key] })) },
+          {
+            /* One labelled dot per territory too small to see. The value rides in
+               the third slot so the same visualMap colours it identically to its
+               polygon, and the dot is clickable where the polygon is a few pixels. */
+            type: 'scatter', coordinateSystem: 'geo', geoIndex: 0,
+            symbolSize: 10, z: 5,
+            label: {
+              show: true, position: 'right', distance: 5,
+              formatter: (o) => SHORT[o.name] ?? o.name,
+              color: p.text, fontSize: 9.5,
+              textBorderColor: p.ink, textBorderWidth: 3,
+            },
+            data: small
+              .filter((t) => byState.has(t.name))
+              .map((t) => {
+                const v = byState.get(t.name)[key];
+                /* A ten pixel dot cannot carry a continuous ramp: sampled on the
+                   canvas, the whole set came back within one dark red of each
+                   other. Two hues it can carry, so the marker states only which
+                   side of the national figure the territory falls, and the exact
+                   value comes from the tooltip or the panel. Polygons keep the
+                   full scale, where there is room for it. */
+                const above = key === 'merchant_volume_share'
+                  ? v >= national
+                  : v >= (lo + hi) / 2;
+                const fill = above ? p.series[0] : p.series[1];
+                return {
+                  name: t.name,
+                  value: [t.point[0], t.point[1], v],
+                  /* This one sits hard against the right edge, so its label has
+                     to hang inward or it is clipped by the container. */
+                  label: t.name.startsWith('Andaman')
+                    ? { position: 'left', distance: 5 } : undefined,
+                  itemStyle: { color: fill, borderColor: p.text, borderWidth: 1.2 },
+                };
+              }),
+          },
+        ],
       };
     };
 
@@ -277,6 +325,14 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
         }),
       ]);
       echarts.registerMap('india', geo);
+      /* Union territories are in the boundary file and always were, but several
+         render at well under one per cent of the largest state and are simply not
+         findable: Lakshadweep, Chandigarh, Puducherry, Delhi. The build flags them
+         so they can be drawn as labelled markers, which is the standard answer to
+         a micro-territory on a choropleth. */
+      small = geo.features
+        .filter((f) => f.properties.small)
+        .map((f) => ({ name: f.properties.name, point: f.properties.point }));
       chart = echarts.init(mapEl, undefined, { renderer: 'canvas' });
       chart.setOption(mapOption());
       chart.on('click', (o) => { if (byState.has(o.name)) select(o.name); });

@@ -191,6 +191,19 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
   non-composited pane, even `element.style.width = '23%'` leaves `getComputedStyle().width`
   at its stale value, so any visual assertion measured there is meaningless. Verify layout
   against the deployed site with a real rendering browser instead of the preview pane.
+- **"All states of India" means 36, and present is not the same as visible.** All 8
+  union territories were in the boundary file from the first build, and the map still
+  read as though they had been left out: Lakshadweep renders at 0.00% of Rajasthan's
+  area, Chandigarh 0.02%, Delhi 0.41%. `build_india_map.py` flags anything under 2% of
+  the largest state and the map draws a labelled marker for it. Check findability, not
+  just row counts.
+- **A 10px dot cannot carry a continuous colour ramp.** Sampled off the canvas, the
+  small-territory markers all came back within one dark red of each other because a
+  diverging scale puts mid-range values near the neutral stop. They now encode only
+  which side of the national figure they fall on, which two hues can carry.
+- **ECharts `visualMap` claims every series unless told otherwise.** It silently
+  repainted the marker series and discarded its per-item colours. Bind it with
+  `seriesIndex`.
 - **`#` is data, not a comment.** NPCI marks third-party providers with a trailing `#`
   ("Phone Pe #"). `pd.read_csv(comment='#')` silently truncated every row to `NaN`.
 - **Fund houses have brackets too.** `IL&FS Mutual Fund (IDF)` was parsed as a category

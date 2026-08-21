@@ -19,6 +19,7 @@ export const palette = () => ({
   muted: css('--text-3', '#6E7987'),
   line: css('--line', '#262F3B'),
   surface: css('--surface', '#131820'),
+  ink: css('--ink', '#0C0F14'),
 });
 
 /** Declutter defaults applied to every chart: no border, no chartjunk, thin grid. */
