@@ -113,8 +113,11 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 - `python run.py data`, ~120s, zero secrets, 8 fetchers, 17 processed datasets
 - `python run.py analyze`, 7 modules, **26 artefacts byte-identical across runs**
 - `python run.py site`, 9 pages
-- Lighthouse: **Accessibility 100 · Best Practices 100 · SEO 100 · Agentic 100**,
-  63 audits passed / 0 failed. **LCP 676 ms, CLS 0.00**
+- `python site/scripts/build_india_map.py`, run once, output committed to `site/public/`
+- Lighthouse on the **production URL**: **Accessibility 100 · Best Practices 100 ·
+  SEO 100 · Agentic 100**, 62 audits passed / 0 failed
+- 34 commits, all authored `DogInfantry <ankleshrawat5@gmail.com>` except two genuine
+  `github-actions[bot]` refresh commits. Working tree clean, `main` level with `origin`
 - Deployed, publicly reachable, auto-deploys on push
 - CI refresh workflow verified green on Linux / Python 3.12, with a real data commit
 
@@ -136,35 +139,50 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 
 ## Active task
 
-**Pass 3 is complete.** Nothing is half-finished. It did four things:
+**Pass 4 is complete and deployed. Nothing is half-finished.** It did four things:
 
-1. **Exhibit F was rebuilt on a real measure.** See the gotcha below: the old
-   `intensity_index` was a tautology, and it had the sign backwards in practice.
-2. **The Workbench became three linked views** - tile cartogram, sortable table, detail
-   panel, and the "metric switch" its subtitle had always promised now exists.
-3. **The Gap Analyser was de-slopped**: Harvey balls instead of coloured pill badges,
-   link labels instead of paragraphs, filter chips deleted.
-4. **Two new sources**, both keyless: FRED's India call money rate, and World Bank NPLs
-   and private-credit depth.
+1. **A real India choropleth**, with the equal-area tile cartogram kept behind a toggle.
+   Boundary source verified twice: current administrative geography, and India's own
+   depiction. Both are build-time assertions, see the gotchas.
+2. **Union territories made visible.** All 8 were always in the data; several render at
+   under half a percent of the largest state and could not be found. Small territories
+   now get labelled markers.
+3. **A guided opening** (`Scrolly.astro`): the whole thesis in four sticky steps, with no
+   Scrollama and no Motion. It reverses part of a documented decision, and the reasoning
+   is recorded in `docs/stack-decisions.md`.
+4. **Brand marks and a dash purge.** Real marks wherever one is freely licensed, and
+   every em dash and clause-joining hyphen removed from prose. See rule 11.
+
+**Not in the repo, and it must not be lost:** a survey pack was produced this session so
+the synthetic NPS panel can be replaced with real fieldwork. It lives in the session
+scratchpad, which is temporary. **Move it somewhere permanent before that directory is
+cleaned.** See the memory snapshot for the exact path and contents.
 
 ## Next steps, in order
 
-1. **Excel + PowerPoint deliverables**: the JD names both as hard requirements, and the
-   gap matrix still carries an honest "Not covered" row for them. The pipeline emits tidy
-   CSV, so `openpyxl` + `python-pptx` is roughly an hour.
-2. **Extend the per-app series**: currently 12 months (2023-12 → 2026-07). More months
+1. **Field the survey and de-synthesise sub-module D.** The pack exists (instrument,
+   Apps Script form builder, response loader). Target 200 responses, minimum 120. The
+   design makes the *paired episode contrast* the headline because it needs ~29
+   respondents, against ~700 for the same claim framed as a cohort NPS difference.
+   When the data lands, four `SYNTHETIC` labels must come off together: the module
+   docstring, the `synthetic` flag in `chart_nps_episodes.json`, the on-page banner in
+   `index.astro`, and the Gap Analyser note. Miss one and the site contradicts itself.
+2. **Excel + PowerPoint deliverables.** The JD names both as hard requirements and the
+   Gap Analyser still carries its only "Not covered" row for them. The pipeline emits
+   tidy CSV, so `openpyxl` + `python-pptx` is roughly two hours.
+3. **An asset-quality exhibit.** `npl_pct_gross_loans` is fetched (4.81% to 2.06%) and
+   used in no chart. It is most of why the public-bank cohort re-rated +284%.
+4. **Extend the per-app series**, currently 12 months (2023-12 to 2026-07). More months
    sharpen the HHI trend. Browser-transcribed; see `docs/REFRESH.md`.
-3. **A second operator's state-level mix.** This is now the single biggest weakness in
-   the geographic module: the merchant-share ranking is PhonePe's. If Google Pay's mix
-   inverted it, the finding would be about distribution rather than about India. Nothing
-   open publishes it today. Say so rather than pretending otherwise.
-4. **AMFI quarterly AAUM**: would restate the wealth module in rupees rather than
-   scheme counts, which is the version that informs a fee pool.
-5. **Insurance**: the last JD-named sector with no coverage. IRDAI is PDF-only.
-6. **An asset-quality exhibit.** `npl_pct_gross_loans` is now fetched (4.81% → 2.06%)
-   and used in no chart. It is most of why the public-bank cohort re-rated +284%.
-7. **Dead `vendor` script** in `site/package.json` points at `scripts/vendor-assets.mjs`,
-   which does not exist. One-line deletion.
+5. **A second operator's state-level mix.** The single biggest weakness in the geographic
+   module: the merchant-share ranking is PhonePe's. If Google Pay's mix inverted it, the
+   finding would be about distribution rather than about India. Nothing open publishes it
+   today. Say so rather than pretending otherwise.
+6. **AMFI quarterly AAUM**, which would restate the wealth module in rupees rather than
+   scheme counts, the version that informs a fee pool.
+7. **Insurance**, the last JD-named sector with no coverage. IRDAI is PDF-only.
+8. **Dead `vendor` script** in `site/package.json` points at `scripts/vendor-assets.mjs`,
+   which does not exist. Still there. One-line deletion.
 
 ## Gotchas: things that actually bit us
 
