@@ -21,3 +21,9 @@ Thumbs.db
 
 .vercel
 .env*
+
+# Committed data contract is CSV; parquet is a local convenience only.
+data-pipeline/data/processed/*.parquet
+
+# Local agent scratch DBs - these lock on Windows and have broken a rebase here before.
+.claude/data/
