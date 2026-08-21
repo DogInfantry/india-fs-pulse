@@ -249,7 +249,10 @@ const nationalMerchant = states.reduce((a, s) => a + s.merchant_volume_share * s
           return {
             ...base,
             min: national - spread, max: national + spread,
-            text: [`${show(national + spread)} above`, `${show(national - spread)} below`],
+            /* Label the meaning, not the synthetic symmetric bounds: the max end
+               sits past the real data because the scale is mirrored about the
+               national figure, and printing that number would just mislead. */
+            text: [`above ${show(national)}`, `below ${show(national)}`],
             inRange: { color: [p.series[1], p.surface, p.series[0]] },
           };
         })(),
