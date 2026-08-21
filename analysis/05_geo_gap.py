@@ -1,9 +1,17 @@
 """Sub-module E: geographic gap analysis.
 
-No population denominator is invented. The gap is measured within the payments
-data itself: a state's share of TRANSACTIONS against its share of VALUE. A state
-transacting far more often than its rupee share implies is merchant-heavy - and
-merchant-heavy is exactly where zero-MDR bites.
+MEASURED, not inferred. An earlier version of this module ranked states by an
+"intensity index" of transaction share over value share. That index is
+algebraically identical to national_avg_ticket / state_avg_ticket, so it was a
+restatement of ticket size wearing a merchant-behaviour label - and it had the
+sign backwards in practice: it put Assam top for merchant intensity because Assam
+has the smallest average ticket, when Assam is in fact among the most P2P-heavy
+states in the country.
+
+The measure here is what fraction of a state's OWN transactions are merchant
+payments, read directly from PhonePe's per-state category files. It is
+independent of ticket size (observed correlation -0.05, against 1.00 for the old
+index) and it is the leg zero-MDR actually applies to.
 """
 from __future__ import annotations
 
@@ -22,26 +30,39 @@ def main() -> None:
     period = df.period.iloc[0]
     material = df[df.volume_share >= MIN_SHARE].copy()
 
-    high = material.nlargest(5, "intensity_index")
-    low = material.nsmallest(5, "intensity_index")
+    high = material.nlargest(5, "merchant_volume_share")
+    low = material.nsmallest(5, "merchant_volume_share")
     top10_share = df.nlargest(10, "volume_share").volume_share.sum()
+
+    spread_pp = (material.merchant_volume_share.max() - material.merchant_volume_share.min()) * 100
+    ticket_corr = material.merchant_volume_share.corr(material.avg_ticket_inr)
+    national_merchant = df.merchant_volume_share.mul(df.volume_share).sum() / df.volume_share.sum()
 
     write_json("chart_state_gap", {
         "period": period,
-        "metric": "Intensity index = share of transactions / share of value. Above 1.0 = "
-                  "transacts more often than its rupee share implies (merchant-heavy).",
+        "metric": "Merchant share = a state's merchant (Retail) transactions as a share of its "
+                  "own transactions. Measured from PhonePe's per-state category files, not "
+                  "derived from ticket size.",
+        "national_merchant_volume_share": round(float(national_merchant), 4),
+        "min_share_for_extremes": MIN_SHARE,
         "states": [
-            {"state": r.state.title(), "volume_share": round(r.volume_share, 4),
+            {"state": r.state.title(),
+             "volume_share": round(r.volume_share, 4),
              "value_share": round(r.value_share, 4),
-             "intensity_index": round(r.intensity_index, 3),
-             "avg_ticket_inr": round(r.avg_ticket_inr, 0)}
+             "merchant_volume_share": round(r.merchant_volume_share, 4),
+             "merchant_value_share": round(r.merchant_value_share, 4),
+             "p2p_volume_share": round(r.p2p_volume_share, 4),
+             "utility_volume_share": round(r.utility_volume_share, 4),
+             "merchant_avg_ticket_inr": round(r.merchant_avg_ticket_inr, 0),
+             "avg_ticket_inr": round(r.avg_ticket_inr, 0),
+             "ticket_vs_national": round(r.ticket_vs_national, 3)}
             for r in df.itertuples()
         ],
     })
 
     def describe(frame):
         return ", ".join(
-            f"**{r.state.title()}** ({r.intensity_index:.2f}, average ticket Rs {r.avg_ticket_inr:,.0f})"
+            f"**{r.state.title()}** ({pct(r.merchant_volume_share)} of its own transactions)"
             for r in frame.head(3).itertuples()
         )
 
@@ -51,44 +72,68 @@ def main() -> None:
 ## The answer
 
 Digital payments in India are not one market. In {period}, the ten largest states
-carried **{pct(top10_share)} of all transactions**, and the states differ less in *how
-much* they transact than in *what kind* of transaction they run. Ranking states by an
-intensity index - share of transactions divided by share of value - separates
-merchant-heavy states from remittance-heavy ones, and the two need different
-strategies and carry different economics.
+carried **{pct(top10_share)} of all transactions**, but the more useful split is not size -
+it is *what kind of transaction* a state runs. Measuring each state's merchant share
+of its own transactions separates retail economies from remittance economies, and the
+two carry different economics and need different strategies. Across the material
+states the merchant share ranges over **{spread_pp:.0f} percentage points**.
 
 ## Two supporting arguments
 
-**1. Merchant-heavy states transact often and small.** The highest-intensity material
-states are {high_str}. High frequency, low ticket: this is everyday retail spend, the leg that generates cost and no MDR revenue.
+**1. Merchant-heavy states are the urban retail economies.** The highest merchant
+shares sit in {high_str}. These are dense, high-income, high-merchant-density states
+where the everyday retail leg dominates - the leg that generates processing cost and,
+at zero MDR, no revenue.
 
-**2. Remittance-heavy states move fewer, larger transactions.** At the other end sit
-{low_str}. Larger tickets point
-to P2P transfers and remittance corridors rather than merchant checkout.
+**2. P2P-heavy states are the remittance economies.** At the other end sit {low_str}.
+A larger share of person-to-person transfers is the signature of money being *sent*
+rather than *spent*: labour-exporting states receiving inbound remittance flows.
 
 ## So what
 
-- **Merchant acquisition and lending should follow the high-intensity states.** That
-  is where merchant density and transaction frequency support underwriting.
-- **The zero-MDR burden is geographically concentrated.** The cost of processing sits
-  disproportionately in the high-intensity states, which is where a tiered MDR would
-  land hardest and where a small-merchant exemption would matter most.
-- **Do not read this as adoption.** Intensity is a mix measure, not a penetration
-  measure.
+- **Merchant acquisition and lending should follow the merchant-heavy states.** That
+  is where merchant density and repeat transaction frequency support underwriting.
+- **The zero-MDR burden is geographically concentrated.** Processing cost sits
+  disproportionately where the merchant share is highest, which is where a tiered MDR
+  would land hardest and where a small-merchant exemption would matter most.
+- **Do not read this as adoption.** It is a mix measure, not a penetration measure.
 
 ## Method and its limits
 
-Computed from PhonePe Pulse state-level transaction counts and values for {period}.
-Two limits, stated plainly: this is **one operator's** mix, not the market's; and with
-**no population denominator** in the open data used here, this is deliberately a
-*composition* measure, not a per-capita one. States below {MIN_SHARE:.0%} of national
-volume are excluded when naming extremes, so a small union territory cannot top the
-ranking on a thin base.
+Computed from PhonePe Pulse per-state category files for {period}, cross-checked
+against the separately-fetched country file: the 36 state files reconcile to the
+national totals at a ratio of 1.000000 on both transaction count and value, and imply
+a national merchant share of {pct(national_merchant)}.
+
+Three limits, stated plainly. This is **one operator's** mix, not the market's -
+though a *within-state* mix ratio is far less sensitive to PhonePe's uneven regional
+footprint than a *between-state* volume ratio would be, which is the main reason this
+measure is preferred. There is **no population denominator** in the open data used
+here, so this is deliberately a composition measure, not a per-capita one. And states
+below {MIN_SHARE:.0%} of national volume are excluded when naming extremes, so a small
+union territory cannot top the ranking on a thin base.
+
+**What would change this answer:** a second operator's state-level category split. If
+Google Pay's mix inverted this ranking, the finding would be about PhonePe's
+distribution rather than about India. Nothing open publishes that today.
+
+## A note on the previous version
+
+This module previously ranked states by transaction share divided by value share,
+calling it an "intensity index". That quantity is identical to national average ticket
+divided by state average ticket - it restated ticket size and nothing else. Measured
+against the real merchant share it correlates at {ticket_corr:+.2f}, i.e. not at all.
+The old index ranked Assam most merchant-intense; Assam is in fact among the most
+P2P-heavy states here. The exhibit was replaced rather than relabelled.
 """
-    write_memo("gap-geographic", "India runs two different payments markets, not one",
-               body, sources=["PhonePe Pulse state-level transaction data"])
+    write_memo("gap-geographic", "India runs two payments markets: one that spends, one that sends",
+               body, sources=["PhonePe Pulse state-level transaction data",
+                              "PhonePe Pulse per-state category split"])
     print(f"   {period}: top-10 states = {pct(top10_share)} of volume; "
-          f"most merchant-intense material state = {high.state.iloc[0].title()}")
+          f"merchant share {pct(material.merchant_volume_share.min())}-"
+          f"{pct(material.merchant_volume_share.max())} across {len(material)} material states")
+    print(f"   most merchant-heavy: {high.state.iloc[0].title()}; "
+          f"most P2P-heavy: {low.state.iloc[0].title()}; ticket correlation {ticket_corr:+.3f}")
 
 
 if __name__ == "__main__":

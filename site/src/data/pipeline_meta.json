@@ -1,0 +1,15 @@
+{
+  "fetchers": 8,
+  "analysis_modules": 7,
+  "publishers": 7,
+  "publisher_names": [
+    "Association of Mutual Funds in India (AMFI)",
+    "FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI",
+    "NPCI (UPI Ecosystem Statistics)",
+    "NPCI via India Data Portal (CKAN mirror)",
+    "PhonePe Pulse",
+    "World Bank Open Data",
+    "Yahoo Finance"
+  ],
+  "datasets": 17
+}

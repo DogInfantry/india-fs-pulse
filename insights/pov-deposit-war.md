@@ -1,6 +1,6 @@
 ---
 title: "The private-bank margin advantage is half pricing, half funding"
-generated: 2026-08-20
+generated: 2026-08-21
 generator: analysis/02_banking_health.py
 sources:
   - Filed annual income statements and balance sheets via yfinance
@@ -21,10 +21,13 @@ net interest margin (FY2026: 3.52% versus
 Neither side dominates. Private banks earned 7.38% on assets against 6.79% for public banks - a 59bps asset-side advantage - while paying 3.86% for funding against 4.42% - a 56bps liability-side advantage. The two halves are within 3% of each other, so a public bank cannot close the gap by repricing loans alone; it has to win the deposit too. The two components sum to 115bps against a measured NIM gap
 of 114bps, so the decomposition is complete.
 
-**2. The gap is stable, which means it is structural, not cyclical.** Across
+**2. The gap is stable across a rate cycle, which makes it structural.** Across
 FY2023 to FY2026 the cohort gap moved from
-116bps to 114bps. A cyclical gap would
-compress when rates fall; a franchise gap does not.
+116bps to 114bps. That is the weaker half of the
+claim; the stronger half is that it held while the price of money did not. Over the
+same window India's call money rate ranged from **4.25% to 6.75%**
+(250bps of travel, 4.25% at the start against 5.50%
+at the end). A 250bps swing in funding costs moved the cohort gap by only 2bps, so the advantage is not a rate artefact - it is a franchise.
 
 **3. The mechanism is deposit mix, and payments is upstream of it.** Low-cost
 current and savings balances are won through primary-relationship behaviour -
@@ -50,8 +53,8 @@ same year, each banked adult now runs **14.9 transactions a month** - up from
 4.0 in 2021. Access stopped being the constraint some years ago; usage intensity
 is the story now, and it is what makes the zero-MDR cost base grow.
 
-**The market's verdict.** Over 2021-08-20 to 2026-08-19, the median private bank returned
-15% on price against 285% for the median public bank. The market has NOT paid for the margin franchise - public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
+**The market's verdict.** Over 2021-08-23 to 2026-08-21, the median private bank returned
+18% on price against 289% for the median public bank. The market has NOT paid for the margin franchise - public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
 return only - dividends excluded, so this understates total return for the higher-
 yielding public cohort.
 

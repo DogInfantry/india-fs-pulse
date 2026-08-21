@@ -83,6 +83,7 @@ def main() -> None:
     # --- Exhibit: does the market pay for the margin franchise?
     px = prices.copy()
     px["date"] = px.date.astype(str)
+    names = dict(zip(fund.ticker, fund.bank))
     first_last = px.sort_values("date").groupby("ticker").agg(
         cohort=("cohort", "first"), start=("close", "first"), end=("close", "last"),
         d0=("date", "first"), d1=("date", "last"))
@@ -93,7 +94,10 @@ def main() -> None:
         "note": "Median price return by cohort over the window. Price only - excludes dividends.",
         "window": [first_last.d0.min(), first_last.d1.max()],
         "series": [{"cohort": c, "median_price_return": round(float(v), 4)} for c, v in cohort_ret.items()],
-        "tickers": [{"ticker": t, "cohort": r.cohort, "price_return": round(float(r.total_return), 4)}
+        # Carry the readable bank name, not just the ticker: the exhibit claims a
+        # cohort gap, and a reader is owed the constituents behind each cohort.
+        "tickers": [{"ticker": t, "bank": names.get(t, t), "cohort": r.cohort,
+                     "price_return": round(float(r.total_return), 4)}
                     for t, r in first_last.iterrows()],
     })
 
@@ -153,6 +157,28 @@ def main() -> None:
     priv_ret = pct(ret_priv, 0)
     publ_ret = pct(ret_publ, 0)
 
+    # Rate context, so argument 2 is evidenced rather than asserted. A gap that
+    # survives a real rate cycle is structural; one measured over a flat cycle
+    # has not actually been tested, and the memo should say which it is.
+    rates = load("india_rates")
+    window = rates[(rates.month >= f"{first_fy - 1}-04") & (rates.month <= f"{int(close_row.fy)}-03")]
+    rate_lo = float(window.call_money_rate_pct.min())
+    rate_hi = float(window.call_money_rate_pct.max())
+    rate_first = float(window.call_money_rate_pct.iloc[0])
+    rate_last = float(window.call_money_rate_pct.iloc[-1])
+    rate_swing = (rate_hi - rate_lo) * 100
+    gap_move = abs(close_row.gap_bps - open_row.gap_bps)
+    if rate_swing >= 100:
+        rate_verdict = (
+            f"A {rate_swing:.0f}bps swing in funding costs moved the cohort gap by only "
+            f"{gap_move:.0f}bps, so the advantage is not a rate artefact - it is a franchise."
+        )
+    else:
+        rate_verdict = (
+            f"Rates moved only {rate_swing:.0f}bps over this window, so the gap has **not** "
+            f"yet been tested against a real cycle. Read argument 2 as unproven, not as proven."
+        )
+
     body = f"""
 ## The answer
 
@@ -168,10 +194,13 @@ net interest margin (FY{int(close_row.fy)}: {close_row.Private:.2f}% versus
 {argument_one} The two components sum to {total_gap:.0f}bps against a measured NIM gap
 of {close_row.gap_bps:.0f}bps, so the decomposition is complete.
 
-**2. The gap is stable, which means it is structural, not cyclical.** Across
+**2. The gap is stable across a rate cycle, which makes it structural.** Across
 FY{first_fy} to FY{int(close_row.fy)} the cohort gap moved from
-{open_row.gap_bps:.0f}bps to {close_row.gap_bps:.0f}bps. A cyclical gap would
-compress when rates fall; a franchise gap does not.
+{open_row.gap_bps:.0f}bps to {close_row.gap_bps:.0f}bps. That is the weaker half of the
+claim; the stronger half is that it held while the price of money did not. Over the
+same window India's call money rate ranged from **{rate_lo:.2f}% to {rate_hi:.2f}%**
+({rate_swing:.0f}bps of travel, {rate_first:.2f}% at the start against {rate_last:.2f}%
+at the end). {rate_verdict}
 
 **3. The mechanism is deposit mix, and payments is upstream of it.** Low-cost
 current and savings balances are won through primary-relationship behaviour -

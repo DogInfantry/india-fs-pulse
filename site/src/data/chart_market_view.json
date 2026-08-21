@@ -1,74 +1,85 @@
 {
   "note": "Median price return by cohort over the window. Price only - excludes dividends.",
   "window": [
-    "2021-08-20",
-    "2026-08-19"
+    "2021-08-23",
+    "2026-08-21"
   ],
   "series": [
     {
       "cohort": "Private",
-      "median_price_return": 0.1516
+      "median_price_return": 0.1777
     },
     {
       "cohort": "Public",
-      "median_price_return": 2.8476
+      "median_price_return": 2.8891
     }
   ],
   "tickers": [
     {
       "ticker": "AXISBANK.NS",
+      "bank": "Axis Bank",
       "cohort": "Private",
-      "price_return": 0.6766
+      "price_return": 0.6952
     },
     {
       "ticker": "BANKBARODA.NS",
+      "bank": "Bank of Baroda",
       "cohort": "Public",
-      "price_return": 2.8476
+      "price_return": 2.8891
     },
     {
       "ticker": "CANBK.NS",
+      "bank": "Canara Bank",
       "cohort": "Public",
-      "price_return": 3.9905
+      "price_return": 3.9807
     },
     {
       "ticker": "HDFCBANK.NS",
+      "bank": "HDFC Bank",
       "cohort": "Private",
-      "price_return": 0.0159
+      "price_return": 0.024
     },
     {
       "ticker": "ICICIBANK.NS",
+      "bank": "ICICI Bank",
       "cohort": "Private",
-      "price_return": 1.1412
+      "price_return": 1.1605
     },
     {
       "ticker": "INDUSINDBK.NS",
+      "bank": "IndusInd Bank",
       "cohort": "Private",
-      "price_return": 0.0714
+      "price_return": 0.0469
     },
     {
       "ticker": "KOTAKBANK.NS",
+      "bank": "Kotak Mahindra Bank",
       "cohort": "Private",
-      "price_return": 0.1516
+      "price_return": 0.1777
     },
     {
       "ticker": "PAYTM.NS",
+      "bank": "One97 (Paytm)",
       "cohort": "Fintech",
-      "price_return": 0.0145
+      "price_return": 0.0473
     },
     {
       "ticker": "PNB.NS",
+      "bank": "Punjab National Bank",
       "cohort": "Public",
-      "price_return": 2.66
+      "price_return": 2.574
     },
     {
       "ticker": "SBIN.NS",
+      "bank": "State Bank of India",
       "cohort": "Public",
-      "price_return": 1.8186
+      "price_return": 1.7871
     },
     {
       "ticker": "UNIONBANK.NS",
+      "bank": "Union Bank of India",
       "cohort": "Public",
-      "price_return": 5.6506
+      "price_return": 5.6141
     }
   ]
 }
