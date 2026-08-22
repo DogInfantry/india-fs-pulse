@@ -4,7 +4,7 @@
      Do not edit by hand: re-run `python docs/build_docs.py`. -->
 
 Every processed dataset in this repo, with the URL it came from and the date
-it was accessed. Code in this repository is MIT licensed; **each dataset
+it was accessed. Code in this repository is Apache 2.0 licensed; **each dataset
 retains its own publisher's terms**, recorded below.
 
 | Dataset | Publisher | Coverage | Rows | Accessed | Licence / terms |

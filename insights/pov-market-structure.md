@@ -1,6 +1,6 @@
 ---
 title: "Concentrated and unmonetised at once, which is why the share cap cannot bind"
-generated: 2026-08-21
+generated: 2026-08-22
 generator: analysis/06_competitive_structure.py
 sources:
   - "NPCI UPI Ecosystem Statistics, per-application volume and value"

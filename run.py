@@ -39,6 +39,7 @@ ANALYZE = [
     "analysis/05_geo_gap.py",
     "analysis/06_competitive_structure.py",
     "analysis/07_wealth_amfi.py",
+    "docs/build_readme_charts.py",   # README exhibits + its generated regions
 ]
 
 
