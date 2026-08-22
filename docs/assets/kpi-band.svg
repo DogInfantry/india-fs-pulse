@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 128" width="960" height="128" role="img" aria-label="Four headline figures for 2026Q2: merchant share of transactions 63.9%, merchant share of value 23.0%, average merchant ticket 425 rupees, and payment revenue at zero-MDR of zero rupees.">
+<title>Four headline figures for 2026Q2: merchant share of transactions 63.9%, merchant share of value 23.0%, average merchant ticket 425 rupees, and payment revenue at zero-MDR of zero rupees.</title>
+<rect x="0" y="0" width="960" height="128" rx="14" fill="#0C0F14"/>
+<rect x="34" y="24" width="892" height="80" rx="10" fill="#1E262F"/>
+<rect x="34" y="24" width="222.2" height="80" rx="10" fill="#131820"/>
+<text x="52" y="48" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="600" fill="#7F8A97" text-anchor="start" letter-spacing="1.2">MERCHANT SHARE OF TRANSACTIONS</text>
+<text x="52" y="86" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="30" font-weight="600" fill="#E9EDF2" text-anchor="start">63.9%</text>
+<rect x="257.2" y="24" width="222.2" height="80" rx="0" fill="#131820"/>
+<text x="275.2" y="48" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="600" fill="#7F8A97" text-anchor="start" letter-spacing="1.2">MERCHANT SHARE OF VALUE</text>
+<text x="275.2" y="86" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="30" font-weight="600" fill="#E9EDF2" text-anchor="start">23.0%</text>
+<rect x="480.5" y="24" width="222.2" height="80" rx="0" fill="#131820"/>
+<text x="498.5" y="48" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="600" fill="#7F8A97" text-anchor="start" letter-spacing="1.2">AVERAGE MERCHANT TICKET</text>
+<text x="498.5" y="86" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="30" font-weight="600" fill="#E9EDF2" text-anchor="start">Rs 425</text>
+<rect x="703.8" y="24" width="222.2" height="80" rx="10" fill="#131820"/>
+<text x="721.8" y="48" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="600" fill="#7F8A97" text-anchor="start" letter-spacing="1.2">PAYMENT REVENUE AT ZERO-MDR</text>
+<text x="721.8" y="86" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="30" font-weight="600" fill="#DF5F6A" text-anchor="start">Rs 0</text>
+<text x="34" y="120" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="start">PhonePe Pulse, 2026Q2. PhonePe's own transactions, not all of UPI.</text>
+</svg>

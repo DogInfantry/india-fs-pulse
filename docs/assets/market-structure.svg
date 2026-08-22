@@ -1,41 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 432" width="960" height="432" role="img" aria-label="Line chart. In 2026-07 PhonePe holds 45.9 percent and Google Pay 32.3 percent of national UPI volume, both above the 30 percent NPCI cap. About 4.3 billion transactions a month would have to move between apps for the cap to bind.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 448" width="960" height="448" role="img" aria-label="Line chart. In 2026-07 PhonePe holds 45.9 percent and Google Pay 32.3 percent of national UPI volume, both above the 30 percent NPCI cap. About 4.3 billion transactions a month would have to move between apps for the cap to bind.">
 <title>Line chart. In 2026-07 PhonePe holds 45.9 percent and Google Pay 32.3 percent of national UPI volume, both above the 30 percent NPCI cap. About 4.3 billion transactions a month would have to move between apps for the cap to bind.</title>
-<rect x="0" y="0" width="960" height="432" rx="14" fill="#0C0F14"/>
-<rect x="0.5" y="0.5" width="959" height="431" rx="13.5" fill="none" stroke="#262F3B"/>
-<rect x="34" y="30" width="3" height="21" rx="0" fill="#C02734"/>
-<text x="47" y="47" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="20" font-weight="600" fill="#E9EDF2" text-anchor="start">Both leaders sit above a cap that neither is on course to meet</text>
-<text x="47" y="70" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#A6B0BE" text-anchor="start">Share of national UPI volume, 2023-12 to 2026-07, plotted on elapsed months so the thinning series does not flatter the trend.</text>
-<line x1="34" y1="390" x2="926" y2="390" stroke="#1E262F" stroke-width="1"/>
-<text x="34" y="410" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">Source: NPCI UPI ecosystem statistics, transcribed (see docs/REFRESH.md). Shares are of the national total, so the residual is real. Computed by analysis/06_competitive_structure.py.</text>
-<rect x="82" y="128" width="722" height="95.6" rx="0" fill="rgba(192,39,52,0.10)"/>
-<line x1="82" y1="310.5" x2="804" y2="310.5" stroke="#1E262F" stroke-width="1"/>
-<text x="72" y="314.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">10%</text>
-<line x1="82" y1="267.1" x2="804" y2="267.1" stroke="#1E262F" stroke-width="1"/>
-<text x="72" y="271.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">20%</text>
-<line x1="82" y1="223.6" x2="804" y2="223.6" stroke="#1E262F" stroke-width="1"/>
-<text x="72" y="227.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">30%</text>
-<line x1="82" y1="180.2" x2="804" y2="180.2" stroke="#1E262F" stroke-width="1"/>
-<text x="72" y="184.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">40%</text>
-<line x1="82" y1="136.7" x2="804" y2="136.7" stroke="#1E262F" stroke-width="1"/>
-<text x="72" y="140.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">50%</text>
-<line x1="82" y1="223.6" x2="804" y2="223.6" stroke="#C02734" stroke-width="1.4" stroke-dasharray="6 4" opacity="0.9"/>
-<text x="90" y="214.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#DF5F6A" text-anchor="start">NPCI cap: 30% of national volume per app, due December 2026</text>
-<text x="82" y="376" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2023-12</text>
-<text x="361.5" y="376" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2024-12</text>
-<text x="641" y="376" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2025-12</text>
-<text x="804" y="376" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2026-07</text>
-<line x1="82" y1="354" x2="804" y2="354" stroke="#262F3B" stroke-width="1"/>
-<polyline points="82,150 221.7,143.8 361.5,146.6 501.2,152.1 641,157.2 664.3,155.5 687.5,156.2 710.8,152.4 734.1,153.1 757.4,152.9 780.7,153.4 804,154.6" fill="none" stroke="#C02734" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="804" cy="154.6" r="3.4" fill="#C02734"/>
-<text x="818" y="152.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">PhonePe</text>
-<text x="818" y="169.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#C02734" text-anchor="start">45.9%</text>
-<polyline points="82,195.8 221.7,194.2 361.5,194.5 501.2,199.5 641,207.1 664.3,209.2 687.5,209.8 710.8,209.4 734.1,210.9 757.4,211.7 780.7,212.3 804,213.5" fill="none" stroke="#1F7A8C" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="804" cy="213.5" r="3.4" fill="#1F7A8C"/>
-<text x="818" y="211.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">Google Pay</text>
-<text x="818" y="228.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1F7A8C" text-anchor="start">32.3%</text>
-<polyline points="82,297.1 221.7,319.4 361.5,324.1 501.2,324 641,321.4 664.3,320.8 687.5,320 710.8,320 734.1,319.4 757.4,319.6 780.7,319.6 804,319" fill="none" stroke="#5B6673" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="804" cy="319" r="3.4" fill="#5B6673"/>
-<text x="818" y="317" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">Paytm</text>
-<text x="818" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5B6673" text-anchor="start">8.1%</text>
-<text x="47" y="95" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#A6B0BE" text-anchor="start">4.3 billion transactions a month would have to change app for the cap to bind</text>
+<rect x="0" y="0" width="960" height="448" rx="14" fill="#0C0F14"/>
+<rect x="0.5" y="0.5" width="959" height="447" rx="13.5" fill="none" stroke="#262F3B"/>
+<text x="47" y="34" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#DF5F6A" text-anchor="start" letter-spacing="1.6">EXHIBIT 4 · SHARE SHIFT</text>
+<rect x="34" y="46" width="3" height="21" rx="0" fill="#C02734"/>
+<text x="47" y="63" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="20" font-weight="600" fill="#E9EDF2" text-anchor="start">Both leaders sit above a cap that neither is on course to meet</text>
+<text x="47" y="85" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#A6B0BE" text-anchor="start">Share of national UPI volume, 2023-12 to 2026-07, plotted on elapsed months so the thinning series does not flatter the trend.</text>
+<line x1="34" y1="402" x2="926" y2="402" stroke="#1E262F" stroke-width="1"/>
+<text x="34" y="418" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">Source: NPCI UPI ecosystem statistics, transcribed (see docs/REFRESH.md). Shares are of the national total, so the residual is real. Computed by</text>
+<text x="34" y="432" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">analysis/06_competitive_structure.py.</text>
+<rect x="34" y="104" width="892" height="288" rx="8" fill="#131820" stroke="#1E262F" stroke-width="1"/>
+<rect x="96" y="148" width="704" height="85.5" rx="0" fill="rgba(192,39,52,0.10)"/>
+<line x1="96" y1="311.2" x2="800" y2="311.2" stroke="#1E262F" stroke-width="1"/>
+<text x="86" y="315.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">10%</text>
+<line x1="96" y1="272.3" x2="800" y2="272.3" stroke="#1E262F" stroke-width="1"/>
+<text x="86" y="276.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">20%</text>
+<line x1="96" y1="233.5" x2="800" y2="233.5" stroke="#1E262F" stroke-width="1"/>
+<text x="86" y="237.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">30%</text>
+<line x1="96" y1="194.6" x2="800" y2="194.6" stroke="#1E262F" stroke-width="1"/>
+<text x="86" y="198.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">40%</text>
+<line x1="96" y1="155.8" x2="800" y2="155.8" stroke="#1E262F" stroke-width="1"/>
+<text x="86" y="159.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="end">50%</text>
+<line x1="96" y1="233.5" x2="800" y2="233.5" stroke="#C02734" stroke-width="1.4" stroke-dasharray="6 4" opacity="0.9"/>
+<text x="104" y="224.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#DF5F6A" text-anchor="start">NPCI cap: 30% of national volume per app, due December 2026</text>
+<text x="96" y="372" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2023-12</text>
+<text x="368.5" y="372" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2024-12</text>
+<text x="641" y="372" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2025-12</text>
+<text x="800" y="372" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">2026-07</text>
+<line x1="96" y1="350" x2="800" y2="350" stroke="#262F3B" stroke-width="1"/>
+<polyline points="96,167.7 232.3,162.1 368.5,164.6 504.8,169.5 641,174.1 663.7,172.6 686.5,173.2 709.2,169.8 731.9,170.4 754.6,170.3 777.3,170.7 800,171.7" fill="none" stroke="#C02734" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="800" cy="171.7" r="3.4" fill="#C02734"/>
+<text x="814" y="169.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">PhonePe</text>
+<text x="814" y="186.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#C02734" text-anchor="start">45.9%</text>
+<polyline points="96,208.6 232.3,207.2 368.5,207.4 504.8,211.9 641,218.7 663.7,220.6 686.5,221.1 709.2,220.7 731.9,222.1 754.6,222.8 777.3,223.3 800,224.4" fill="none" stroke="#1F7A8C" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="800" cy="224.4" r="3.4" fill="#1F7A8C"/>
+<text x="814" y="222.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">Google Pay</text>
+<text x="814" y="239.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1F7A8C" text-anchor="start">32.3%</text>
+<polyline points="96,299.2 232.3,319.1 368.5,323.3 504.8,323.2 641,320.8 663.7,320.3 686.5,319.6 709.2,319.6 731.9,319.1 754.6,319.3 777.3,319.2 800,318.7" fill="none" stroke="#5B6673" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="800" cy="318.7" r="3.4" fill="#5B6673"/>
+<text x="814" y="316.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">Paytm</text>
+<text x="814" y="333.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5B6673" text-anchor="start">8.1%</text>
+<text x="54" y="130" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#A6B0BE" text-anchor="start">4.3 billion transactions a month would have to change app for the cap to bind</text>
 </svg>

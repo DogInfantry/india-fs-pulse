@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 524" width="960" height="524" role="img" aria-label="Two panels. On the left, the private bank margin proxy runs from 3.75 to 3.52 percent between FY2023 and FY2026 and the public bank proxy from 2.58 to 2.37 percent, a gap of 116 basis points at the start and 114 at the end. On the right, five year price returns for all 11 banks, where the public bank median of 293 percent far exceeds the private bank median of 18 percent and the two cohorts do not overlap.">
+<title>Two panels. On the left, the private bank margin proxy runs from 3.75 to 3.52 percent between FY2023 and FY2026 and the public bank proxy from 2.58 to 2.37 percent, a gap of 116 basis points at the start and 114 at the end. On the right, five year price returns for all 11 banks, where the public bank median of 293 percent far exceeds the private bank median of 18 percent and the two cohorts do not overlap.</title>
+<rect x="0" y="0" width="960" height="524" rx="14" fill="#0C0F14"/>
+<rect x="0.5" y="0.5" width="959" height="523" rx="13.5" fill="none" stroke="#262F3B"/>
+<text x="47" y="34" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#DF5F6A" text-anchor="start" letter-spacing="1.6">EXHIBIT 6 · COHORT MARGINS AND THE MARKET'S VERDICT</text>
+<rect x="34" y="46" width="3" height="21" rx="0" fill="#C02734"/>
+<text x="47" y="63" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="20" font-weight="600" fill="#E9EDF2" text-anchor="start">The thinner-margin cohort re-rated many times harder</text>
+<text x="47" y="85" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#A6B0BE" text-anchor="start">Left: the margin gap across a full rate cycle. Right: what each of the 11 banks returned over five years.</text>
+<line x1="34" y1="478" x2="926" y2="478" stroke="#1E262F" stroke-width="1"/>
+<text x="34" y="494" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">Source: Yahoo Finance fundamentals and prices for 11 NSE tickers. Proxy, not reported NIM: banks use average EARNING assets, a smaller denominator. Price only, excluding</text>
+<text x="34" y="508" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">dividends. Computed by analysis/02_banking_health.py.</text>
+<rect x="34" y="104" width="446" height="364" rx="8" fill="#131820" stroke="#1E262F" stroke-width="1"/>
+<rect x="502" y="104" width="424" height="364" rx="8" fill="#131820" stroke="#1E262F" stroke-width="1"/>
+<text x="54" y="132" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">The gap that would not move</text>
+<text x="54" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="start">NIM proxy (net interest income / average total assets), %</text>
+<line x1="90" y1="315.3" x2="392" y2="315.3" stroke="#1E262F" stroke-width="1"/>
+<text x="82" y="319.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">2.5%</text>
+<line x1="90" y1="280.7" x2="392" y2="280.7" stroke="#1E262F" stroke-width="1"/>
+<text x="82" y="284.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">3.0%</text>
+<line x1="90" y1="246.1" x2="392" y2="246.1" stroke="#1E262F" stroke-width="1"/>
+<text x="82" y="250.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">3.5%</text>
+<line x1="90" y1="211.5" x2="392" y2="211.5" stroke="#1E262F" stroke-width="1"/>
+<text x="82" y="215.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">4.0%</text>
+<text x="104" y="374" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">FY2023</text>
+<text x="198.7" y="374" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">FY2024</text>
+<text x="293.3" y="374" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">FY2025</text>
+<text x="388" y="374" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="middle">FY2026</text>
+<line x1="90" y1="352" x2="392" y2="352" stroke="#262F3B" stroke-width="1"/>
+<polygon points="104,228.8 198.7,208.8 293.3,230.9 388,244.7 388,324.3 293.3,308.4 198.7,295.9 104,309.8" fill="#C02734" opacity="0.09"/>
+<polyline points="104,228.8 198.7,208.8 293.3,230.9 388,244.7" fill="none" stroke="#C02734" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="104" cy="228.8" r="3.2" fill="#C02734"/>
+<circle cx="198.7" cy="208.8" r="3.2" fill="#C02734"/>
+<circle cx="293.3" cy="230.9" r="3.2" fill="#C02734"/>
+<circle cx="388" cy="244.7" r="3.2" fill="#C02734"/>
+<text x="400" y="242.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#E9EDF2" text-anchor="start">Private</text>
+<text x="400" y="257.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#C02734" text-anchor="start">3.52%</text>
+<polyline points="104,309.8 198.7,295.9 293.3,308.4 388,324.3" fill="none" stroke="#1F7A8C" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="104" cy="309.8" r="3.2" fill="#1F7A8C"/>
+<circle cx="198.7" cy="295.9" r="3.2" fill="#1F7A8C"/>
+<circle cx="293.3" cy="308.4" r="3.2" fill="#1F7A8C"/>
+<circle cx="388" cy="324.3" r="3.2" fill="#1F7A8C"/>
+<text x="400" y="322.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#E9EDF2" text-anchor="start">Public</text>
+<text x="400" y="337.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#1F7A8C" text-anchor="start">2.37%</text>
+<text x="112" y="273.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#DF5F6A" text-anchor="start">116 bps</text>
+<text x="380" y="288.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#DF5F6A" text-anchor="end">114 bps</text>
+<line x1="54" y1="382" x2="460" y2="382" stroke="#1E262F" stroke-width="1"/>
+<text x="54" y="398" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9" font-weight="600" fill="#7F8A97" text-anchor="start" letter-spacing="1.1">WHERE THE FY2026 GAP COMES FROM</text>
+<text x="54" y="418" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#A6B0BE" text-anchor="start">Yield on assets</text>
+<text x="224" y="418" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#C02734" text-anchor="end">private 7.38%</text>
+<text x="324" y="418" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#1F7A8C" text-anchor="end">public 6.79%</text>
+<text x="460" y="418" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#E9EDF2" text-anchor="end">+59 bps</text>
+<text x="54" y="437" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#A6B0BE" text-anchor="start">Cost of funds</text>
+<text x="224" y="437" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#C02734" text-anchor="end">private 3.86%</text>
+<text x="324" y="437" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#1F7A8C" text-anchor="end">public 4.42%</text>
+<text x="460" y="437" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#E9EDF2" text-anchor="end">+56 bps</text>
+<text x="522" y="132" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="600" fill="#E9EDF2" text-anchor="start">What the market paid for it</text>
+<text x="522" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="start">Five year price return, 2021-08-23 to 2026-08-21</text>
+<line x1="644" y1="168" x2="644" y2="412" stroke="#1E262F" stroke-width="1"/>
+<text x="644" y="430" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">0%</text>
+<line x1="717.3" y1="168" x2="717.3" y2="412" stroke="#1E262F" stroke-width="1"/>
+<text x="717.3" y="430" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">200%</text>
+<line x1="790.7" y1="168" x2="790.7" y2="412" stroke="#1E262F" stroke-width="1"/>
+<text x="790.7" y="430" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">400%</text>
+<line x1="864" y1="168" x2="864" y2="412" stroke="#1E262F" stroke-width="1"/>
+<text x="864" y="430" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">600%</text>
+<text x="518" y="184" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">HDFC Bank</text>
+<line x1="644" y1="180" x2="644.7" y2="180" stroke="#C02734" stroke-width="1.6" opacity="0.55"/>
+<circle cx="644.7" cy="180" r="4" fill="#C02734"/>
+<text x="653.7" y="184" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#C02734" text-anchor="start">2%</text>
+<text x="518" y="206" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">One97 (Paytm)</text>
+<line x1="644" y1="202" x2="645.7" y2="202" stroke="#C98A2E" stroke-width="1.6" opacity="0.55"/>
+<circle cx="645.7" cy="202" r="4" fill="#C98A2E"/>
+<text x="654.7" y="206" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#C98A2E" text-anchor="start">5%</text>
+<text x="518" y="228" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">IndusInd Bank</text>
+<line x1="644" y1="224" x2="645.8" y2="224" stroke="#C02734" stroke-width="1.6" opacity="0.55"/>
+<circle cx="645.8" cy="224" r="4" fill="#C02734"/>
+<text x="654.8" y="228" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#C02734" text-anchor="start">5%</text>
+<text x="518" y="250" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Kotak Mahindra Bank</text>
+<line x1="644" y1="246" x2="650.6" y2="246" stroke="#C02734" stroke-width="1.6" opacity="0.55"/>
+<circle cx="650.6" cy="246" r="4" fill="#C02734"/>
+<text x="659.6" y="250" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#C02734" text-anchor="start">18%</text>
+<text x="518" y="272" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Axis Bank</text>
+<line x1="644" y1="268" x2="669.7" y2="268" stroke="#C02734" stroke-width="1.6" opacity="0.55"/>
+<circle cx="669.7" cy="268" r="4" fill="#C02734"/>
+<text x="678.7" y="272" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#C02734" text-anchor="start">70%</text>
+<text x="518" y="294" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">ICICI Bank</text>
+<line x1="644" y1="290" x2="686.6" y2="290" stroke="#C02734" stroke-width="1.6" opacity="0.55"/>
+<circle cx="686.6" cy="290" r="4" fill="#C02734"/>
+<text x="695.6" y="294" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#C02734" text-anchor="start">116%</text>
+<text x="518" y="316" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">State Bank of India</text>
+<line x1="644" y1="312" x2="710" y2="312" stroke="#1F7A8C" stroke-width="1.6" opacity="0.55"/>
+<circle cx="710" cy="312" r="4" fill="#1F7A8C"/>
+<text x="719" y="316" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#1F7A8C" text-anchor="start">180%</text>
+<text x="518" y="338" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Punjab National Bank</text>
+<line x1="644" y1="334" x2="738.4" y2="334" stroke="#1F7A8C" stroke-width="1.6" opacity="0.55"/>
+<circle cx="738.4" cy="334" r="4" fill="#1F7A8C"/>
+<text x="747.4" y="338" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#1F7A8C" text-anchor="start">258%</text>
+<text x="518" y="360" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Bank of Baroda</text>
+<line x1="644" y1="356" x2="751.4" y2="356" stroke="#1F7A8C" stroke-width="1.6" opacity="0.55"/>
+<circle cx="751.4" cy="356" r="4" fill="#1F7A8C"/>
+<text x="760.4" y="360" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#1F7A8C" text-anchor="start">293%</text>
+<text x="518" y="382" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Canara Bank</text>
+<line x1="644" y1="378" x2="791.4" y2="378" stroke="#1F7A8C" stroke-width="1.6" opacity="0.55"/>
+<circle cx="791.4" cy="378" r="4" fill="#1F7A8C"/>
+<text x="800.4" y="382" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#1F7A8C" text-anchor="start">402%</text>
+<text x="518" y="404" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Union Bank of India</text>
+<line x1="644" y1="400" x2="850.3" y2="400" stroke="#1F7A8C" stroke-width="1.6" opacity="0.55"/>
+<circle cx="850.3" cy="400" r="4" fill="#1F7A8C"/>
+<text x="859.3" y="404" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#1F7A8C" text-anchor="start">563%</text>
+<line x1="644" y1="168" x2="644" y2="412" stroke="#262F3B" stroke-width="1"/>
+<text x="518" y="454" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">Cohort medians: public 293%, private 18%.</text>
+<text x="518" y="470" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="start">The two cohorts do not overlap at any point.</text>
+</svg>

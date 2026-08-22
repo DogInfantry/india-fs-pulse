@@ -14,19 +14,14 @@
 </p>
 
 <p align="center">
-  <a href="https://india-fs-pulse.vercel.app">
-    <img src="site/public/og.png" width="840"
-         alt="India FS Pulse social card: merchant payments are 63.9 percent of UPI transactions and 23.0 percent of value.">
-  </a>
-</p>
-
-<p align="center">
   <a href="https://india-fs-pulse.vercel.app"><strong>Read the report</strong></a> ·
   <a href="insights/pov-upi-monetization.md">Point of view</a> ·
   <a href="insights/diligence-merchant-payments.md">Diligence memo</a> ·
   <a href="docs/sources.md">Sources and provenance</a> ·
   <a href="docs/data-dictionary.md">Data dictionary</a>
 </p>
+
+![Four headline figures for 2026 Q2: merchant share of transactions 63.9%, merchant share of value 23.0%, average merchant ticket 425 rupees, and payment revenue at zero-MDR of zero rupees.](docs/assets/kpi-band.svg)
 
 ---
 
@@ -45,8 +40,8 @@ each per quarter, ₹2.07 lakh of GMV each, ₹0 of payment revenue.
 The market that carries it is **concentrated at the same time as it is unmonetised**. This
 repository is the analysis behind that claim: a reproducible Python pipeline over seven public
 sources, seven analysis modules, and a static site. **Every figure traces to a committed dataset
-and a dated source. Nothing is typed in by hand, and that includes the exhibits, the key figures
-table and the machine-readable summary on this page.**
+and a dated source. Nothing is typed in by hand, and that includes the nine exhibits, the key
+figures table and the machine-readable summary on this page.**
 
 ## Key figures
 
@@ -61,6 +56,7 @@ table and the machine-readable summary on this page.**
 | PhonePe and Google Pay share of national UPI volume | **45.9% / 32.3%**, both above the 30% cap | NPCI, 2026-07 |
 | Transactions that must change app for the cap to bind | **4.3 bn a month** | NPCI, 2026-07 |
 | Private against public bank margin gap | **114 bps** (59 pricing, 56 funding) | Yahoo Finance, FY2026 |
+| Five year price return, public against private banks | **+293% / +18%** median | Yahoo Finance, 2021-08-23 to 2026-08-21 |
 | Merchant share of own transactions: most against least, material states | **Delhi 68.5% against West Bengal 56.4%** | PhonePe Pulse, 2026Q2 |
 | UPI transactions per banked adult per month | **14.9**, up from 4.0 in 2021 | World Bank Findex and NPCI, 2024 |
 | Fund schemes against distinct strategies | **14,288 to 3,353** (4.3x wrappers) | AMFI, 20-Aug-2026 |
@@ -85,7 +81,8 @@ Read: [Underwrite distribution economics, not transaction economics](insights/di
 **Zero-MDR is the rule that forbids charging Indian merchants for UPI acceptance. On PhonePe's
 merchant volume alone, a 30bps rate would be worth about ₹3,144 crore a quarter; the rule makes
 it ₹0.** The scenarios in `analysis/03_pe_diligence.py` price the same volume at 0, 10, 30 and
-50 basis points, so the size of the forgone pool is explicit rather than rhetorical.
+50 basis points, so the size of the forgone pool is explicit rather than rhetorical. Per
+merchant, 30bps is about ₹2,480 a year against ₹2.07 lakh of GMV.
 
 Read: [India's payments network monetises the wrong leg](insights/pov-upi-monetization.md)
 
@@ -96,20 +93,15 @@ Read: [India's payments network monetises the wrong leg](insights/pov-upi-moneti
 bind, and at the observed rate of share drift the leader reaches 30% in about 470 months.**
 Concentration is falling, but through the tail gaining rather than the leaders shedding.
 
+The first exhibit draws the market as area: column width is share of transactions, column
+height is average ticket, so the area of each column is the rupees it moves. It shows that
+scale and ticket size are unrelated. CRED is the tallest column in the market and 0.6% of it.
+
+![Variable width bar chart for 2026-07. PhonePe occupies 45.9 percent of national transactions and Google Pay 32.3 percent, both breaching the 30 percent cap, which is drawn on the width axis. The tallest column, CRED, has a 4,172 rupee ticket but only 0.6 percent of transactions.](docs/assets/market-mekko.svg)
+
 ![Line chart. In 2026-07 PhonePe holds 45.9 percent and Google Pay 32.3 percent of national UPI volume, both above the 30 percent NPCI cap. About 4.3 billion transactions a month would have to move for the cap to bind.](docs/assets/market-structure.svg)
 
 Read: [Concentrated and unmonetised at once, which is why the share cap cannot bind](insights/pov-market-structure.md)
-
-### Why do Indian private banks out-earn public banks on margin?
-
-**Roughly half pricing and half funding: of the 114bps margin gap in FY2026, 59bps comes from
-what private banks earn on assets and 56bps from what they pay for deposits.** The interesting
-part is stability. The policy rate travelled 250bps across FY2023 to FY2026 and the gap moved
-2bps, which says the advantage is structural rather than cyclical.
-
-![Slope chart. The private bank margin proxy runs from 3.75 to 3.52 percent between FY2023 and FY2026 and the public bank proxy from 2.58 to 2.37 percent. The gap is 116 basis points at the start and 114 at the end.](docs/assets/bank-nim-gap.svg)
-
-Read: [The private-bank margin advantage is half pricing, half funding](insights/pov-deposit-war.md)
 
 ### Which Indian states run on merchant payments, and which on person-to-person?
 
@@ -118,14 +110,64 @@ runs two different payments markets, not one.** The measure is a state's merchan
 as a share of its own transactions, taken from the per-state category files rather than derived
 from average ticket size, which would have produced a tautology.
 
+All 36 states and union territories are on the map. Seven of them render at under 2% of the
+largest state's area, so they get numbered markers and a key rather than being present but
+invisible.
+
+![Choropleth map of India for 2026 Q2 showing each state's merchant transactions as a share of its own against the national 63.9 percent. Delhi is highest at 68.5 percent and West Bengal lowest at 56.4 percent among states above one percent of national volume.](docs/assets/india-merchant-map.svg)
+
 Read: [India runs two different payments markets, not one](insights/gap-geographic.md)
+
+### Why do Indian private banks out-earn public banks on margin?
+
+**Roughly half pricing and half funding: of the 114bps margin gap in FY2026, 59bps comes from
+what private banks earn on assets and 56bps from what they pay for deposits.** The interesting
+part is stability. The policy rate travelled 250bps across FY2023 to FY2026 and the gap moved
+2bps, which says the advantage is structural rather than cyclical.
+
+The market had already decided. Over five years the public bank cohort returned a median
+**+293%** against the private cohort's **+18%**, and the two cohorts do not overlap at any
+point: the worst public bank beat the best private one.
+
+![Two panels. The private bank margin proxy runs from 3.75 to 3.52 percent between FY2023 and FY2026 and the public proxy from 2.58 to 2.37 percent, a gap of 116 basis points at the start and 114 at the end. On the right, five year price returns for all 11 banks, where the public median far exceeds the private median and the cohorts do not overlap.](docs/assets/bank-margin-verdict.svg)
+
+Read: [The private-bank margin advantage is half pricing, half funding](insights/pov-deposit-war.md)
+
+### What does episode-level NPS show that a brand-level score hides?
+
+**That a single brand can hold both the best and the worst experience in a market.** The
+neobank cohort scores +47 on making a payment and -47 on getting support. Its overall score,
++11.8, shows neither. Measuring satisfaction per episode rather than per brand is what turns a
+survey into a roadmap, because it names the episode to fix.
+
+The panel below is **synthetic and labelled synthetic**, in the filename, on the chart, in the
+memo and in the module docstring. It demonstrates the method; it is not evidence about the
+market. Replacing it with real fieldwork is the top item in the backlog.
+
+![Grouped bar chart of synthetic Net Promoter Scores across four service episodes for three provider cohorts. The neobank cohort scores plus 47 on its best episode and minus 47 on its worst, while its overall score is plus 11.8.](docs/assets/nps-episodes.svg)
+
+Read: [Episode-level NPS reveals what brand-level NPS hides](insights/survey-nps-episodes.md)
+
+### How much of India's mutual fund shelf is packaging rather than strategy?
+
+**Most of it. 14,288 listed schemes resolve to 3,353 distinct strategies, about 4.3 wrappers
+each.** Debt is the heaviest at 5.3 wrappers per strategy, and ETFs are the honest exception at
+1.0, because an ETF cannot easily be sold in growth, dividend, direct and regular flavours.
+This is a scheme count and not assets under management, which is stated on the chart, because
+AMFI's public NAV file carries no AUM.
+
+![Paired bar chart. India's 14,288 listed mutual fund schemes resolve to 3,353 distinct strategies, about 4.3 wrappers per strategy. Debt is the heaviest at 8,016 schemes over 1,525 strategies.](docs/assets/fund-shelf.svg)
+
+Read: [India's fund shelf is four times more administered than it is diverse](insights/wealth-fund-shelf.md)
 
 ### Is there an investable business model in Indian payments?
 
 **Yes, but not in the payment.** The investable object is the merchant relationship and what
 can be sold through it, in a market where acquisition is subsidised by regulation and the
 incumbent leaders cannot easily be dislodged by a cap that does not bind. The diligence memo
-carries an explicit ambiguity register for the parts that public data cannot settle.
+carries an explicit ambiguity register for the parts that public data cannot settle, including
+the largest one: the state-level merchant mix above is PhonePe's, and no open source publishes
+a second operator's to check it against.
 
 Read: [Diligence memo, with the ambiguity register](insights/diligence-merchant-payments.md)
 
@@ -141,6 +183,18 @@ Read: [Diligence memo, with the ambiguity register](insights/diligence-merchant-
 | **Wealth and asset management** | [India's fund shelf is four times more administered than it is diverse](insights/wealth-fund-shelf.md) |
 | **Gap analysis** | [India runs two different payments markets, not one](insights/gap-geographic.md) |
 | **Method** | [Sources and provenance](docs/sources.md) · [data dictionary](docs/data-dictionary.md) · [stack decisions](docs/stack-decisions.md) |
+
+### The interactive half
+
+The exhibits above are static because a README is. The report itself carries a linked
+workbench: pick a state on the map or in the table and the other two follow it, switch between
+the map and an equal-area cartogram, change the ranking metric and every label rewrites, filter
+the 36 rows as you type. No BI backend, no page reload, and the whole thing is server-rendered
+markup plus one small script.
+
+[![The analyst workbench on the live site: a choropleth of all 36 states with markers for the small territories, a metric switch, a map and cartogram toggle, a live filter, a sortable table of every state and union territory, and a detail panel that fills once a state is selected.](docs/assets/workbench.png)](https://india-fs-pulse.vercel.app#workbench)
+
+**[Open it on the live site](https://india-fs-pulse.vercel.app#workbench)**
 
 ## Run it
 
@@ -173,8 +227,13 @@ flowchart LR
 ```
 
 **Stack:** Python 3.12+ with pandas · Astro 5 static output · Tailwind v4 · ECharts, lazily
-imported · five hand-written SVG chart components · Vercel · GitHub Actions monthly refresh.
+imported · seven hand-written SVG chart components · Vercel · GitHub Actions monthly refresh.
 Accessibility, Best Practices and SEO all score 100 in Lighthouse on the production URL.
+
+The README exhibits share no code with the site. They are drawn by
+[`docs/build_readme_charts.py`](docs/build_readme_charts.py) in about 600 lines of stdlib
+Python, with no plotting dependency, on the site's own palette from
+`site/src/styles/tokens.css`.
 
 ## Three rules the pipeline enforces
 
@@ -186,9 +245,9 @@ Accessibility, Best Practices and SEO all score 100 in Lighthouse on the product
 3. **Synthetic data announces itself**, in the filename, on the chart, and in the memo. One
    dataset here is synthetic and it says so in four places.
 
-The same discipline applies to this page. The key figures table and the machine-readable
-summary below are written by `docs/build_readme_charts.py` from the committed data, and the
-four exhibits are drawn from it, so the README cannot drift from the pipeline.
+The same discipline applies to this page. The nine exhibits, the key figures table and the
+machine-readable summary are all written by `docs/build_readme_charts.py` from the committed
+data, so the README cannot drift from the pipeline.
 
 ## Data spine
 
@@ -284,6 +343,26 @@ findings:
     unit: basis points
     period: FY2026
     source: Yahoo Finance fundamentals
+  - metric: median five year price return, public banks
+    value: 2.9294
+    unit: price return
+    period: 2021-08-23 to 2026-08-21
+    source: Yahoo Finance prices
+  - metric: median five year price return, private banks
+    value: 0.1794
+    unit: price return
+    period: 2021-08-23 to 2026-08-21
+    source: Yahoo Finance prices
+  - metric: highest merchant share of own transactions, material states
+    value: Delhi 0.6851
+    unit: share of own transactions
+    period: 2026Q2
+    source: PhonePe Pulse
+  - metric: lowest merchant share of own transactions, material states
+    value: West Bengal 0.5643
+    unit: share of own transactions
+    period: 2026Q2
+    source: PhonePe Pulse
   - metric: mutual fund schemes against distinct strategies
     value: 14288 to 3353
     unit: count

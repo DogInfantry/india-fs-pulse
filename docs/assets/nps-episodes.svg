@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 458" width="960" height="458" role="img" aria-label="Grouped bar chart of synthetic Net Promoter Scores across 4 service episodes for three provider cohorts. The Neobank / payments app cohort scores +47 on its best episode and -47 on its worst, while its overall score is +11.8. The data is synthetic and illustrates the method, not the market.">
+<title>Grouped bar chart of synthetic Net Promoter Scores across 4 service episodes for three provider cohorts. The Neobank / payments app cohort scores +47 on its best episode and -47 on its worst, while its overall score is +11.8. The data is synthetic and illustrates the method, not the market.</title>
+<rect x="0" y="0" width="960" height="458" rx="14" fill="#0C0F14"/>
+<rect x="0.5" y="0.5" width="959" height="457" rx="13.5" fill="none" stroke="#262F3B"/>
+<text x="47" y="34" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#DF5F6A" text-anchor="start" letter-spacing="1.6">EXHIBIT 7 · EPISODE-LEVEL NPS</text>
+<rect x="34" y="46" width="3" height="21" rx="0" fill="#C02734"/>
+<text x="47" y="63" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="20" font-weight="600" fill="#E9EDF2" text-anchor="start">One brand holds both the best and the worst episode in the market</text>
+<text x="47" y="85" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#A6B0BE" text-anchor="start">2,000 simulated respondents, 4 service episodes, three provider cohorts. The method is real; the panel is not.</text>
+<line x1="34" y1="412" x2="926" y2="412" stroke="#1E262F" stroke-width="1"/>
+<text x="34" y="428" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">SYNTHETIC DATA: illustrates the method, not the market. Seed 20260820, so it reproduces exactly. NPS as a method is public; no proprietary benchmark data is used. Computed by</text>
+<text x="34" y="442" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">analysis/04_survey_nps.py.</text>
+<rect x="34" y="104" width="892" height="298" rx="8" fill="#131820" stroke="#1E262F" stroke-width="1"/>
+<line x1="118" y1="352" x2="902" y2="352" stroke="#1E262F" stroke-width="1"/>
+<text x="110" y="356" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">-60</text>
+<line x1="118" y1="323.7" x2="902" y2="323.7" stroke="#1E262F" stroke-width="1"/>
+<text x="110" y="327.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">-40</text>
+<line x1="118" y1="295.3" x2="902" y2="295.3" stroke="#1E262F" stroke-width="1"/>
+<text x="110" y="299.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">-20</text>
+<line x1="118" y1="267" x2="902" y2="267" stroke="#262F3B" stroke-width="1"/>
+<text x="110" y="271" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">0</text>
+<line x1="118" y1="238.7" x2="902" y2="238.7" stroke="#1E262F" stroke-width="1"/>
+<text x="110" y="242.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">+20</text>
+<line x1="118" y1="210.3" x2="902" y2="210.3" stroke="#1E262F" stroke-width="1"/>
+<text x="110" y="214.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">+40</text>
+<line x1="118" y1="182" x2="902" y2="182" stroke="#1E262F" stroke-width="1"/>
+<text x="110" y="186" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">+60</text>
+<text x="226.5" y="378" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">Open an account</text>
+<rect x="161.7" y="207.6" width="41.9" height="59.4" rx="2" fill="#C02734"/>
+<text x="182.6" y="201.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">+42</text>
+<rect x="205.6" y="263.9" width="41.9" height="3.1" rx="2" fill="#1F7A8C" opacity="0.8"/>
+<text x="226.5" y="257.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">+2</text>
+<rect x="249.4" y="267" width="41.9" height="56.5" rx="2" fill="#5B6673" opacity="0.8"/>
+<text x="270.4" y="337.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">-40</text>
+<text x="419.5" y="378" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">Make a payment</text>
+<rect x="354.7" y="200.1" width="41.9" height="66.9" rx="2" fill="#C02734"/>
+<text x="375.6" y="194.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">+47</text>
+<rect x="398.6" y="238.5" width="41.9" height="28.5" rx="2" fill="#1F7A8C" opacity="0.8"/>
+<text x="419.5" y="232.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">+20</text>
+<rect x="442.4" y="267" width="41.9" height="14.4" rx="2" fill="#5B6673" opacity="0.8"/>
+<text x="463.4" y="295.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">-10</text>
+<text x="612.5" y="378" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">Get support</text>
+<rect x="547.7" y="267" width="41.9" height="66.7" rx="2" fill="#C02734"/>
+<text x="568.6" y="347.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">-47</text>
+<rect x="591.6" y="267" width="41.9" height="4.1" rx="2" fill="#1F7A8C" opacity="0.8"/>
+<text x="612.5" y="285.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">-3</text>
+<rect x="635.4" y="267" width="41.9" height="45.2" rx="2" fill="#5B6673" opacity="0.8"/>
+<text x="656.4" y="326.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">-32</text>
+<text x="805.5" y="378" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">Apply for credit</text>
+<rect x="740.7" y="259.4" width="41.9" height="7.6" rx="2" fill="#C02734"/>
+<text x="761.6" y="253.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">+5</text>
+<rect x="784.6" y="266.3" width="41.9" height="0.7" rx="2" fill="#1F7A8C" opacity="0.8"/>
+<text x="805.5" y="260.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">+0</text>
+<rect x="828.4" y="267" width="41.9" height="53.4" rx="2" fill="#5B6673" opacity="0.8"/>
+<text x="849.4" y="334.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">-38</text>
+<rect x="54" y="122" width="10" height="10" rx="2" fill="#C02734"/>
+<text x="71" y="131" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#A6B0BE" text-anchor="start">Neobank / payments app (overall +11.8)</text>
+<rect x="300" y="122" width="10" height="10" rx="2" fill="#1F7A8C"/>
+<text x="317" y="131" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#A6B0BE" text-anchor="start">Private bank (overall +5.0)</text>
+<rect x="546" y="122" width="10" height="10" rx="2" fill="#5B6673"/>
+<text x="563" y="131" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#A6B0BE" text-anchor="start">Public bank (overall -29.9)</text>
+<text x="54" y="158" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#A6B0BE" text-anchor="start">Net Promoter Score by episode. The Neobank cohort owns both the best (+47) and the worst (-47); its overall score, +11.8, shows neither.</text>
+<rect x="782" y="118" width="128" height="22" rx="11" fill="none" stroke="#C02734" stroke-width="1.2"/>
+<text x="846" y="133" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#DF5F6A" text-anchor="middle" letter-spacing="1.2">SYNTHETIC DATA</text>
+</svg>

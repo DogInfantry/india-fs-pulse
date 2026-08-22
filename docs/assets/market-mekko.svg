@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 476" width="960" height="476" role="img" aria-label="Variable width bar chart for 2026-07. PhonePe occupies 45.9% of national transactions at an average ticket of 1,330 rupees, and Google Pay 32.3% at 1,309 rupees. Both breach the 30 percent cap, which is drawn on the width axis. The tallest column, CRED, has an average ticket of 4,172 rupees but only 0.6% of transactions against 2.0% of value.">
+<title>Variable width bar chart for 2026-07. PhonePe occupies 45.9% of national transactions at an average ticket of 1,330 rupees, and Google Pay 32.3% at 1,309 rupees. Both breach the 30 percent cap, which is drawn on the width axis. The tallest column, CRED, has an average ticket of 4,172 rupees but only 0.6% of transactions against 2.0% of value.</title>
+<rect x="0" y="0" width="960" height="476" rx="14" fill="#0C0F14"/>
+<rect x="0.5" y="0.5" width="959" height="475" rx="13.5" fill="none" stroke="#262F3B"/>
+<text x="47" y="34" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#DF5F6A" text-anchor="start" letter-spacing="1.6">EXHIBIT 3 · WHO HOLDS WHAT</text>
+<rect x="34" y="46" width="3" height="21" rx="0" fill="#C02734"/>
+<text x="47" y="63" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="20" font-weight="600" fill="#E9EDF2" text-anchor="start">Two apps hold 78% of transactions, and the tallest column holds 0.6%</text>
+<text x="47" y="85" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#A6B0BE" text-anchor="start">Column width is share of national transactions; height is average ticket, so area is rupees moved. 2026-07.</text>
+<line x1="34" y1="430" x2="926" y2="430" stroke="#1E262F" stroke-width="1"/>
+<text x="34" y="446" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">Source: NPCI UPI ecosystem statistics, 2026-07, transcribed (see docs/REFRESH.md). Shares are of the national total, so the residual is real. Computed by</text>
+<text x="34" y="460" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#7F8A97" text-anchor="start">analysis/06_competitive_structure.py.</text>
+<rect x="34" y="104" width="892" height="316" rx="8" fill="#131820" stroke="#1E262F" stroke-width="1"/>
+<line x1="112" y1="368" x2="908" y2="368" stroke="#1E262F" stroke-width="1"/>
+<text x="102" y="372" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">Rs 0</text>
+<line x1="112" y1="330.4" x2="908" y2="330.4" stroke="#1E262F" stroke-width="1"/>
+<text x="102" y="334.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">Rs 1,000</text>
+<line x1="112" y1="292.8" x2="908" y2="292.8" stroke="#1E262F" stroke-width="1"/>
+<text x="102" y="296.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">Rs 2,000</text>
+<line x1="112" y1="255.2" x2="908" y2="255.2" stroke="#1E262F" stroke-width="1"/>
+<text x="102" y="259.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">Rs 3,000</text>
+<line x1="112" y1="217.6" x2="908" y2="217.6" stroke="#1E262F" stroke-width="1"/>
+<text x="102" y="221.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">Rs 4,000</text>
+<line x1="112" y1="180" x2="908" y2="180" stroke="#1E262F" stroke-width="1"/>
+<text x="102" y="184" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">Rs 5,000</text>
+<text x="54" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="start">Average ticket</text>
+<rect x="113" y="318" width="363.3" height="50" rx="2" fill="#C02734"/>
+<text x="294.6" y="295" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#E9EDF2" text-anchor="middle">PhonePe</text>
+<text x="294.6" y="309" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">45.9% of transactions</text>
+<text x="294.6" y="358" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#E9EDF2" text-anchor="middle">Rs 1,330</text>
+<rect x="478.3" y="318.8" width="255.3" height="49.2" rx="2" fill="#C02734"/>
+<text x="606" y="295.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#E9EDF2" text-anchor="middle">Google Pay</text>
+<text x="606" y="309.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">32.3% of transactions</text>
+<text x="606" y="358" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#E9EDF2" text-anchor="middle">Rs 1,309</text>
+<rect x="735.6" y="327.6" width="62.1" height="40.4" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<text x="766.7" y="304.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#E9EDF2" text-anchor="middle">Paytm</text>
+<text x="766.7" y="318.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#A6B0BE" text-anchor="middle">8.1% of transactions</text>
+<text x="766.7" y="358" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#A6B0BE" text-anchor="middle">Rs 1,074</text>
+<rect x="799.7" y="308.7" width="30.3" height="59.3" rx="2" fill="#5B6673" opacity="0.5"/>
+<rect x="832" y="348.8" width="29.8" height="19.2" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<rect x="863.9" y="350.1" width="12.7" height="17.9" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<rect x="878.6" y="323.6" width="6.1" height="44.4" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<rect x="886.7" y="362.8" width="4.9" height="5.2" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<rect x="893.6" y="339" width="3.7" height="29" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<rect x="899.3" y="331.5" width="2.9" height="36.5" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<rect x="904.1" y="211.1" width="2.8" height="156.9" rx="2" fill="#1F7A8C" opacity="0.75"/>
+<line x1="112" y1="368" x2="908" y2="368" stroke="#262F3B" stroke-width="1"/>
+<text x="112" y="390" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">0%</text>
+<text x="311" y="390" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">25%</text>
+<text x="510" y="390" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">50%</text>
+<text x="709" y="390" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">75%</text>
+<text x="908" y="390" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="middle">100%</text>
+<text x="908" y="406" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#7F8A97" text-anchor="end">cumulative share of national transactions</text>
+<line x1="350.8" y1="146" x2="350.8" y2="376" stroke="#C02734" stroke-width="1.4" stroke-dasharray="6 4" opacity="0.9"/>
+<text x="358.8" y="142" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#DF5F6A" text-anchor="start">the 30% cap falls here, on the width axis</text>
+<line x1="905.5" y1="205.1" x2="859.5" y2="185.1" stroke="#7F8A97" stroke-width="1" opacity="0.7"/>
+<text x="853.5" y="183.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#E9EDF2" text-anchor="end">CRED</text>
+<text x="853.5" y="196.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#A6B0BE" text-anchor="end">Rs 4,172 ticket, 0.6% of transactions</text>
+<text x="853.5" y="208.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#A6B0BE" text-anchor="end">but 2.0% of value</text>
+<text x="54" y="130" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#A6B0BE" text-anchor="start">Area is rupees. PhonePe and Google Pay are the only two columns wide enough to breach the cap, and neither is unusual on ticket</text>
+</svg>

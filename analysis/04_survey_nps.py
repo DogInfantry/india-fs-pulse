@@ -74,7 +74,7 @@ def main() -> None:
 
     write_json("chart_nps_episodes", {
         "synthetic": True,
-        "label": "SYNTHETIC DATA - illustrates the method, not the market",
+        "label": "SYNTHETIC DATA: illustrates the method, not the market",
         "seed": SEED, "respondents": N,
         "episodes": EPISODES,
         "series": [{"cohort": c, "overall": float(overall[c]),
