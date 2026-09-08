@@ -1,0 +1,24 @@
+# National UPI transaction value, split person-to-merchant against
+# person-to-person, by fiscal year, in Rs lakh crore.
+#
+# This is the ONLY open national P2M/P2P split this project has found. PhonePe
+# Pulse gives the same cut for PhonePe's own book, which is one operator; these
+# rows are the whole country, which is what the subsidy has to be measured
+# against. Cross-checking the two is a genuine reconciliation rather than a
+# restatement.
+#
+# Source: PIB, Ministry of Finance, "Advancing Cashless India", 24 March 2025.
+# https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335
+# Published as a stacked bar chart image with printed data labels; transcribed
+# from those labels in a browser session, since PIB returns 403 to scripts.
+#
+# months  how many months of the fiscal year the row covers. FY2024-25 is 10,
+#         because the release states "Till Jan'25". A full-year outlay must not
+#         be divided by a part-year base, and the fetcher refuses to.
+fy,months,total_lakh_cr,p2m_lakh_cr,p2p_lakh_cr,source_url,accessed
+2019-20,12,21.3,2.2,19.1,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2020-21,12,41.0,6.2,34.8,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2021-22,12,84.2,16.0,68.2,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2022-23,12,139.2,30.7,108.5,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2023-24,12,199.9,51.5,148.4,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2024-25,10,213.8,59.3,154.6,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09

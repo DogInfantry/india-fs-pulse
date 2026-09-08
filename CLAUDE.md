@@ -69,11 +69,12 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 | `data-pipeline/fetch/fetch_upi_apps.py` | NPCI per-app shares, HHI, national reconciliation |
 | `data-pipeline/fetch/fetch_bank_stocks.py` | yfinance fundamentals (NIM proxy) + 5y prices; retries flaky tickers |
 | `data-pipeline/fetch/fetch_worldbank.py` · `fetch_amfi.py` | Inclusion denominators, NPLs, private credit · fund scheme universe |
+| `data-pipeline/fetch/fetch_upi_incentive.py` | **The cost side.** Government incentive payout joined to the NATIONAL P2M/P2P value split. Both seeds are PIB, browser-only. Cross-checks its merchant share against Pulse |
 | `data-pipeline/fetch/fetch_fred_rates.py` | India call money rate, monthly to 2026-06. **Keyless** CSV endpoint, so rule 5 holds |
 | `data-pipeline/data/manual/*.csv` | Hand-seeded NPCI rows. **Header comments are `#`-leading lines only** |
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json` |
 | `analysis/_lib.py` | `load`, `write_json`, `write_memo`, `inr`, `pct` |
-| `analysis/01..07_*.py` | Seven modules → `insights/*.md` + chart JSON |
+| `analysis/01..08_*.py` | Eight modules → `insights/*.md` + chart JSON |
 | `site/src/pages/index.astro` | The whole scrollable report: 16 exhibits, 10 sections |
 | `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth` |
 | `site/src/components/` | `Figure` (action-title frame), `EChart`, `Workbench` (cartogram + table + detail, linked), `GapMatrix` (Harvey balls), `ExecSummary`, `Contact`, `Monogram`, `BrandMark`, `Scrolly` |
@@ -124,6 +125,8 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 | Finding | Figure |
 |---|---|
 | Merchant payments: share of transactions vs share of value | **63.9% / 23.0%** |
+| What zero MDR actually costs, blended over all national merchant value | **7.05bps in FY2023-24, paid by the state**, down from 8.68bps in FY2021-22 |
+| FY2024-25 incentive outlay against the FY2023-24 payout | **Rs 1,500cr vs Rs 3,631cr**: a 58.7% cut while the base still grew |
 | Merchant share of own transactions: most vs least (material states) | **Delhi 68.5% vs West Bengal 56.4%** |
 | Rate travel over FY2023-FY2026 vs movement in the NIM gap | **250bps vs 2bps**: the gap survived a full cycle |
 | Merchant contribution to all volume growth since 2018Q1 | **64%** |

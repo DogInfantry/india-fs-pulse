@@ -1,0 +1,27 @@
+# Government incentive paid to acquiring banks on low-value BHIM-UPI merchant
+# transactions. This is the money that makes "zero MDR" possible: the merchant
+# does not pay, and the state does instead.
+#
+# Source: PIB, Ministry of Finance, "Advancing Cashless India", 24 March 2025.
+# https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335
+# PIB serves HTTP 403 to every scripted request, exactly like npci.org.in, so
+# these rows are transcribed from a browser session. The year-wise payout is
+# published as a chart image rather than as text, so it is read off the chart's
+# printed data labels, which are exact figures and not estimated from bar height.
+#
+# payout_cr        Rs crore actually paid (status=actual) or approved (status=budgeted)
+# rate_pct         statutory incentive rate on an ELIGIBLE transaction
+# ceiling_inr      transaction value ceiling for eligibility
+# scope            which merchants qualify
+#
+# FY2024-25 is the approved outlay, not a payout: the scheme ran 01.04.2024 to
+# 31.03.2025 and the release predates its close. It is 59% below the FY2023-24
+# payout, which is the point of the exhibit, but it is not yet an actual.
+#
+# STALE: this release is the latest that publishes the year-wise series. It stops
+# at FY2024-25. FY2025-26 is not covered here and is not interpolated.
+fy,payout_cr,status,rate_pct,ceiling_inr,scope,source_url,accessed
+2021-22,1389,actual,0.15,2000,Small merchants,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2022-23,2210,actual,0.15,2000,Small merchants,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2023-24,3631,actual,0.15,2000,Small merchants,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09
+2024-25,1500,budgeted,0.15,2000,Small merchants,https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335,2026-09-09

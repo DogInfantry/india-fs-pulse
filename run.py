@@ -29,6 +29,7 @@ FETCH = [
     "data-pipeline/fetch/fetch_worldbank.py",
     "data-pipeline/fetch/fetch_fred_rates.py",
     "data-pipeline/fetch/fetch_amfi.py",
+    "data-pipeline/fetch/fetch_upi_incentive.py",   # reads pulse_txn_national for the cross-check
 ]
 TRANSFORM = ["data-pipeline/transform/build_kpis.py"]
 ANALYZE = [
@@ -39,6 +40,7 @@ ANALYZE = [
     "analysis/05_geo_gap.py",
     "analysis/06_competitive_structure.py",
     "analysis/07_wealth_amfi.py",
+    "analysis/08_rail_cost.py",
     "docs/build_readme_charts.py",   # README exhibits + its generated regions
     "docs/build_docs.py",            # sources.md + data-dictionary.md from the ledger
 ]

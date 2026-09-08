@@ -220,6 +220,29 @@ NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 12 rows · accessed 202
 | `month` | str | YYYY-MM | 2023-12 |
 | `hhi` | float64 | index, 0-10,000 | 3701.9322538929127 |
 
+## `upi_incentive`
+
+Press Information Bureau, Ministry of Finance · FY2021-22 to FY2024-25, incentive payout and national UPI value split · 4 rows · accessed 2026-09-09
+
+| Column | Type | Unit | Example |
+|---|---|---|---|
+| `fy` | str |  | 2021-22 |
+| `payout_cr` | int64 | INR crore | 1389 |
+| `status` | str |  | actual |
+| `rate_pct` | float64 | per cent | 0.15 |
+| `ceiling_inr` | int64 | INR | 2000 |
+| `scope` | str |  | Small merchants |
+| `source_url` | str |  | https://www.pib.gov.in/Press |
+| `accessed` | str |  | 2026-09-09 |
+| `months` | int64 |  | 12 |
+| `total_lakh_cr` | float64 | INR lakh crore | 84.2 |
+| `p2m_lakh_cr` | float64 | INR lakh crore | 16.0 |
+| `p2p_lakh_cr` | float64 | INR lakh crore | 68.2 |
+| `source_url_val` | str |  | https://www.pib.gov.in/Press |
+| `accessed_val` | str |  | 2026-09-09 |
+| `effective_bps` | float64 | basis points | 8.68 |
+| `rate_basis` | str |  | full year |
+
 ## `upi_monthly`
 
 NPCI via India Data Portal (CKAN mirror) · 2016-07 to 2026-07 · 116 rows · accessed 2026-08-21

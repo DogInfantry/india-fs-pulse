@@ -68,3 +68,31 @@ Same WAF problem, different table. To add newly published months:
   2023-12 for that reason.
 - **The `#` in an app name is NPCI's third-party-provider marker, not a comment.**
   Parsing the seed file with pandas' `comment='#'` silently truncates every row.
+
+## PIB: the incentive payout and the national P2M split
+
+Two seeds, one release, and the only open national merchant/P2P value split this
+project has found. `pib.gov.in` returns HTTP 403 to every scripted request, exactly
+like `npci.org.in`, so both are transcribed from a browser session.
+
+1. Open `https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335` in a real browser.
+2. The two figures are published as **chart images, not text**. Open each image in its
+   own tab to read the printed data labels. Read the labels, never the bar heights.
+   - Year-wise government incentive payout, Rs crore, into
+     `data-pipeline/data/manual/govt_upi_incentive.csv`
+   - UPI transaction value split into P2M and P2P, Rs lakh crore, into
+     `data-pipeline/data/manual/npci_upi_value_split.csv`
+3. Record `months` honestly. A row labelled "Till Jan'25" covers ten months, not
+   twelve, and the fetcher refuses to compute a rate against a part-year base.
+4. Every row needs its own `source_url` and `accessed`. The fetcher fails without them.
+5. Run `python data-pipeline/fetch/fetch_upi_incentive.py`. It reconciles P2M plus P2P
+   against the published total to 0.15 lakh crore, and cross-checks the national
+   merchant share of value against PhonePe Pulse's own. A wide divergence means one of
+   the two is being read wrong.
+
+**Trap.** The statutory rate is 0.15% and the blended rate is about 0.07%. They are
+different quantities and the exhibit says so. Do not seed one as the other.
+
+**When a newer release appears**, add rows rather than replacing them. The FY2024-25
+row is a budgeted outlay; when its actual payout is published, change `status` to
+`actual` and correct `payout_cr`, so the series keeps saying which is which.

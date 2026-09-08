@@ -1,0 +1,39 @@
+{
+  "note": "Incentive actually paid by the government, over all national merchant value. Not the statutory rate: that applies only to transactions at or under Rs 2,000 to small merchants.",
+  "statutory_rate_bps": 15.0,
+  "npci_permitted_mdr_bps": 30.0,
+  "years": [
+    {
+      "fy": "2021-22",
+      "payout_cr": 1389,
+      "status": "actual",
+      "p2m_lakh_cr": 16.0,
+      "effective_bps": 8.68,
+      "basis": "full year"
+    },
+    {
+      "fy": "2022-23",
+      "payout_cr": 2210,
+      "status": "actual",
+      "p2m_lakh_cr": 30.7,
+      "effective_bps": 7.2,
+      "basis": "full year"
+    },
+    {
+      "fy": "2023-24",
+      "payout_cr": 3631,
+      "status": "actual",
+      "p2m_lakh_cr": 51.5,
+      "effective_bps": 7.05,
+      "basis": "full year"
+    },
+    {
+      "fy": "2024-25",
+      "payout_cr": 1500,
+      "status": "budgeted",
+      "p2m_lakh_cr": 59.3,
+      "effective_bps": null,
+      "basis": "not computed: part-year base"
+    }
+  ]
+}
