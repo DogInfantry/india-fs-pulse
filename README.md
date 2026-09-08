@@ -226,7 +226,7 @@ flowchart LR
   C --> G["docs/sources.md<br/>generated"]
 ```
 
-**Stack:** Python 3.12+ with pandas · Astro 5 static output · Tailwind v4 · ECharts, lazily
+**Stack:** Python 3.12+ with pandas · Astro 5 static output · hand-written CSS · ECharts, lazily
 imported · seven hand-written SVG chart components · Vercel · GitHub Actions monthly refresh.
 Accessibility, Best Practices and SEO all score 100 in Lighthouse on the production URL.
 

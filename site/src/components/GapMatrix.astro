@@ -1,52 +1,56 @@
 ---
 /**
- * Gap analyser: JD-to-artefact traceability.
+ * Coverage and limits: what this report covers, what it half covers, and what it
+ * does not touch at all.
  *
- * Rows are the requirements as written in the job description. Coverage is a
- * Harvey ball, the convention this exact table has used in consulting decks for
- * decades: a geometric glyph, read at a glance, no colour needed. It replaced a
- * row of coloured pill badges reading "Demonstrated" / "Partial", which is the
- * house style of generated UI rather than of a coverage matrix.
+ * Coverage is a Harvey ball, the convention this exact table has used in consulting
+ * decks for decades: a geometric glyph, read at a glance, no colour needed. It
+ * replaced a row of coloured pill badges reading "Demonstrated" / "Partial", which
+ * is the house style of generated UI rather than of a coverage matrix.
  *
- * The artefact column is a link, not a paragraph. The artefact argues its own
- * case one click away. A caveat is kept ONLY where coverage is short of full,
- * because that is where the reader is owed one, and the "Not covered" row is
- * kept deliberately: a self-assessment that only ever says "full" is not an
- * assessment.
+ * The artefact column is a link, not a paragraph, so the artefact argues its own
+ * case one click away. A note is kept ONLY where coverage is short of full, because
+ * that is where the reader is owed one. The "Not covered" rows are the point of the
+ * exhibit rather than an embarrassment in it: a scan that only ever reports full
+ * coverage is not a scan.
  */
 const rows = [
-  { need: 'Drive open-ended research', level: 'full',
-    artefact: 'Seven-module scan, seven live sources', href: '/#module-a' },
-  { need: 'Create industry points of view', level: 'full',
-    artefact: 'pov-upi-monetization.md', href: '/insights/pov-upi-monetization' },
-  { need: 'Sector and industry scans', level: 'full',
-    artefact: 'Banking, market structure, wealth', href: '/insights/pov-deposit-war' },
-  { need: 'Summarise key themes, trends and challenges', level: 'full',
-    artefact: 'Every memo closes with a “so what”', href: '/insights/pov-upi-monetization' },
+  { need: 'Retail payments economics', level: 'full',
+    artefact: 'The monetisation gap, four exhibits', href: '/insights/pov-upi-monetization' },
+  { need: 'Payments market structure', level: 'full',
+    artefact: 'Shares, concentration, the cap priced', href: '/insights/pov-market-structure' },
+  { need: 'What the rail costs to run', level: 'none',
+    artefact: 'Not covered', href: null,
+    note: 'The revenue side is priced at zero here and the cost side is not priced at all. The state pays acquirers an incentive on small merchant payments, and fraud losses are reported to Parliament. Neither is in this data yet.' },
+  { need: 'Banking margins and funding', level: 'full',
+    artefact: 'Public against private, four fiscal years', href: '/insights/pov-deposit-war' },
+  { need: 'Private equity diligence framing', level: 'full',
+    artefact: 'A recommendation and an ambiguity register', href: '/insights/diligence-merchant-payments' },
+  { need: 'Geographic segmentation', level: 'partial',
+    artefact: 'All 36 states and union territories', href: '/insights/gap-geographic',
+    note: 'One quarter, and the merchant mix is a single operator’s. A second operator could invert the ranking, and nothing open publishes one.' },
+  { need: 'Wealth and asset management', level: 'partial',
+    artefact: 'The fund shelf, schemes against strategies', href: '/insights/wealth-fund-shelf',
+    note: 'Scheme counts, not assets. The public AMFI file carries no AUM, so none of this can yet be stated as a fee pool.' },
   { need: 'Survey analytics', level: 'partial',
     artefact: 'Episode-level NPS', href: '/insights/survey-nps-episodes',
-    note: 'Method is real; the panel is a seeded synthetic one, because episode benchmarks are proprietary.' },
-  { need: 'Private equity diligence support', level: 'full',
-    artefact: 'diligence-merchant-payments.md', href: '/insights/diligence-merchant-payments' },
-  { need: 'Build FS data assets and IP', level: 'full',
-    artefact: 'Reproducible pipeline, generated provenance', href: '/methodology' },
-  { need: 'Client-ready visualisation dashboards (e.g. Tableau)', level: 'partial',
-    artefact: 'Linked cartogram, table and detail panel', href: '/#workbench',
-    note: 'Bespoke exhibits and an interactive workbench, all in code, but not in Tableau itself.' },
-  { need: 'Structured communication of insights', level: 'full',
-    artefact: 'Answer-first: every title is the finding', href: '/#module-a' },
-  { need: 'Quantify a live policy question', level: 'full',
-    artefact: 'The 30% share cap, priced', href: '/insights/pov-market-structure' },
-  { need: 'Deal with ambiguity; tackle diligence questions', level: 'full',
-    artefact: 'Explicit ambiguity register', href: '/insights/diligence-merchant-payments' },
-  { need: 'Python / R / Alteryx knowledge', level: 'full',
-    artefact: 'Python end to end, zero credentials', href: '/methodology' },
-  { need: 'Advanced Microsoft Excel and PowerPoint', level: 'none',
-    artefact: 'Not demonstrated', href: null,
-    note: 'Scoped as web-only. The pipeline emits tidy CSV, so a model workbook and a deck are a short addition.' },
+    note: 'The method and the instrument are real; the panel is seeded and synthetic, because episode benchmarks are proprietary. The chart says so as well.' },
+  { need: 'Interactive analysis', level: 'full',
+    artefact: 'Linked cartogram, table and detail panel', href: '/#workbench' },
+  { need: 'Reproducible sourcing', level: 'full',
+    artefact: 'Generated provenance, no figure typed by hand', href: '/methodology' },
+  { need: 'Consumer credit and lending', level: 'none',
+    artefact: 'Not covered', href: null,
+    note: 'The diligence memo concludes that the loan is the P&L, and then cannot size it. No open, current, India-wide series does. This is the largest gap on the page.' },
+  { need: 'Insurance', level: 'none',
+    artefact: 'Not covered', href: null,
+    note: 'IRDAI publishes to PDF only. There is no machine-readable series to fetch, so nothing is claimed.' },
+  { need: 'Comparison with other instant rails', level: 'none',
+    artefact: 'Not covered', href: null,
+    note: 'Whether any other zero-cost instant payment rail has found a business model is the obvious next question, and this report does not answer it.' },
 ];
 
-const LABEL = { full: 'Demonstrated', partial: 'Partial', none: 'Not covered' } as const;
+const LABEL = { full: 'Covered', partial: 'Partial', none: 'Not covered' } as const;
 type Level = keyof typeof LABEL;
 
 const counts = { full: 0, partial: 0, none: 0 };
@@ -56,23 +60,23 @@ const pct = (n: number) => (n / rows.length) * 100;
 <div class="matrix">
   <div class="summary">
     <div class="propbar" role="img"
-         aria-label={`${counts.full} of ${rows.length} requirements demonstrated, ${counts.partial} partial, ${counts.none} not covered.`}>
+         aria-label={`${counts.full} of ${rows.length} areas covered in full, ${counts.partial} partial, ${counts.none} not covered.`}>
       <i class="full" style={`width:${pct(counts.full)}%`}></i>
       <i class="partial" style={`width:${pct(counts.partial)}%`}></i>
       <i class="none" style={`width:${pct(counts.none)}%`}></i>
     </div>
     <p class="key">
-      <span><b>{counts.full}</b> demonstrated</span>
+      <span><b>{counts.full}</b> covered</span>
       <span><b>{counts.partial}</b> partial</span>
       <span><b>{counts.none}</b> not covered</span>
-      <span class="of">of {rows.length} requirements</span>
+      <span class="of">of {rows.length} areas</span>
     </p>
   </div>
 
   <table>
     <thead>
       <tr>
-        <th scope="col">What the job description asks for</th>
+        <th scope="col">What this report covers</th>
         <th scope="col" class="mid">Coverage</th>
         <th scope="col">Artefact</th>
       </tr>

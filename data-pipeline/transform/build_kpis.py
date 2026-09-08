@@ -19,13 +19,13 @@ MERCHANT = "Retail"  # PhonePe's label for merchant payments
 
 def read(name: str) -> pd.DataFrame:
     path = PROCESSED / f"{name}.csv"
-    expect(path.exists(), f"missing {path.name} - run the fetchers first")
+    expect(path.exists(), f"missing {path.name}: run the fetchers first")
     return pd.read_csv(path)
 
 
 def upi_monetisation() -> dict:
     """The hero: merchant payments dominate volume, P2P dominates value, and the
-    merchant leg - the only monetisable one - earns zero under zero-MDR."""
+    merchant leg, the only monetisable one, earns zero under zero-MDR."""
     national = read("pulse_txn_national")
     base = read("pulse_base_national")
     latest = national[national.period == national.period.max()]
@@ -69,9 +69,22 @@ def upi_monetisation() -> dict:
 
 
 def upi_trend() -> pd.DataFrame:
-    df = read("upi_monthly").sort_values("month").copy()
-    df["volume_yoy"] = df["volume_mn"].pct_change(12)
-    df["value_yoy"] = df["value_cr"].pct_change(12)
+    """Monthly headline series, with year-on-year measured against the CALENDAR
+    month a year earlier rather than the row twelve positions back.
+
+    NPCI does not publish every month (2018-07 is absent, as are the April and
+    May pairs of 2024 and 2025), so `pct_change(12)` silently compared 34 of
+    these 116 rows against the wrong month: 2026-05 was reported year-on-year
+    against 2025-03. A month whose predecessor is missing now reads null, which
+    is the honest answer, and rule 1 says a gap stays visible.
+    """
+    df = read("upi_monthly").sort_values("month").reset_index(drop=True).copy()
+    expect(df.month.is_unique, "upi_monthly has duplicate months; the year-ago lookup would fan out")
+
+    prior = df.set_index("month")
+    year_ago = df.month.map(lambda m: f"{int(m[:4]) - 1}-{m[5:]}")
+    for col, out in (("volume_mn", "volume_yoy"), ("value_cr", "value_yoy")):
+        df[out] = df[col] / year_ago.map(prior[col]) - 1
     return df
 
 
@@ -98,7 +111,7 @@ def state_gap() -> pd.DataFrame:
     restated average ticket size and could say nothing independent about merchant
     behaviour. It is gone. `ticket_vs_national` below is the same quantity stated
     honestly, and the merchant shares are the real measure: what fraction of a
-    state's OWN transactions are merchant payments - the leg zero-MDR applies to.
+    state's OWN transactions are merchant payments: the leg zero-MDR applies to.
     """
     df = read("pulse_txn_state")
     latest = df[df.period == df.period.max()].copy()
@@ -130,7 +143,7 @@ def state_gap() -> pd.DataFrame:
     expect(not missing, f"states present in totals but absent from the mix: {missing}")
     shares = latest[["merchant_volume_share", "p2p_volume_share", "utility_volume_share"]].sum(axis=1)
     expect(bool(((shares - 1.0).abs() < 1e-6).all()),
-           "per-state category shares do not sum to 1 - a category is missing")
+           "per-state category shares do not sum to 1: a category is missing")
 
     return latest.sort_values("volume_share", ascending=False).reset_index(drop=True)
 
@@ -149,7 +162,7 @@ def pipeline_meta() -> dict:
     if PROVENANCE.exists():
         ledger = json.loads(PROVENANCE.read_text(encoding="utf-8"))
         publishers = {v["publisher"] for v in ledger.values() if v.get("publisher")}
-    expect(bool(fetchers) and bool(modules), "pipeline_meta counted nothing - wrong root?")
+    expect(bool(fetchers) and bool(modules), "pipeline_meta counted nothing: wrong root?")
     return {
         "fetchers": len(fetchers),
         "analysis_modules": len(modules),
@@ -187,7 +200,7 @@ def main() -> None:
     print(f"   state gap: {len(states)} states; most merchant-heavy material state = "
           f"{lead.state.title()} at {lead.merchant_volume_share:.1%} of its own transactions")
 
-    for name in ["kpi_upi_trend", "kpi_bank_nim", "kpi_state_gap"]:
+    for name in ["kpi_upi_trend"]:
         frame = pd.read_csv(PROCESSED / f"{name}.csv")
         (SITE_DATA / f"{name}.json").write_text(
             frame.to_json(orient="records", double_precision=4), encoding="utf-8"

@@ -104,7 +104,7 @@ def main() -> None:
     lines += ["", "## Notes and caveats", ""]
     for name in sorted(ledger):
         if ledger[name].get("note"):
-            lines.append(f"- **`{name}`** - {ledger[name]['note']}")
+            lines.append(f"- **`{name}`**: {ledger[name]['note']}")
 
     lines += [
         "",
@@ -113,10 +113,11 @@ def main() -> None:
         "- **RBI DBIE** (data.rbi.org.in): an Angular application with no documented",
         "  public REST API. NIM is derived from filed income statements instead, which",
         "  is more defensible than screen-scraping a portal.",
-        "- **data.gov.in**: the public sandbox key authenticates, but filtered resource",
-        "  queries time out, and many finance resources have no active API. It would add",
-        "  nothing the spine does not already cover.",
-        "- **NPCI direct scraping** - npci.org.in serves HTTP 403 to scripted requests.",
+        "- **data.gov.in**: probed with a real key. `/catalog` 404s, `/lists` returns",
+        "  8,256 resources, and keyword-matching 132 of them against UPI, bank,",
+        "  insurance, payment and NBFC finds nothing that is both current and",
+        "  state-level. Effectively everything relevant is a 2013 to 2018 snapshot.",
+        "- **NPCI direct scraping**: npci.org.in serves HTTP 403 to scripted requests.",
         "  Recent months are transcribed from a browser session instead, with per-row",
         "  provenance. See `docs/REFRESH.md`.",
         "",

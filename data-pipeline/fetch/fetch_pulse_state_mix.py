@@ -2,14 +2,14 @@
 
 Why this exists. The geographic module previously ranked states by an "intensity
 index" of transaction share over value share. That index is algebraically
-identical to national_avg_ticket / state_avg_ticket - the same number twice - so
+identical to national_avg_ticket / state_avg_ticket, the same number twice, so
 it could never say anything about merchant behaviour that average ticket size did
 not already say. Ranking by it was ranking by inverse ticket size.
 
 This fetcher gets the real thing. Pulse publishes the category split per state at
   aggregated/transaction/country/india/state/{slug}/{year}/{q}.json
 with the same {name, paymentInstruments[]} shape as the national endpoint, so a
-state's merchant share of its own transactions is measured, not inferred - and it
+state's merchant share of its own transactions is measured, not inferred, and it
 is independent of ticket size.
 
 It also buys a genuine cross-source check: the 36 state files are a different
@@ -63,7 +63,7 @@ def load_state_universe() -> tuple[list[str], str]:
     Deliberately not re-derived: the two must agree, so they read one source.
     """
     path = PROCESSED / "pulse_txn_state.csv"
-    expect(path.exists(), f"missing {path.name} - fetch_pulse.py must run first")
+    expect(path.exists(), f"missing {path.name}: fetch_pulse.py must run first")
     df = pd.read_csv(path)
     expect_columns(df, ["period", "state", "count"], "pulse_txn_state")
     period = df.period.max()
@@ -108,7 +108,7 @@ def reconcile(mix: pd.DataFrame, period: str) -> None:
     wrong, and a silently wrong chart is worse than a broken build.
     """
     path = PROCESSED / "pulse_txn_national.csv"
-    expect(path.exists(), f"missing {path.name} - fetch_pulse.py must run first")
+    expect(path.exists(), f"missing {path.name}: fetch_pulse.py must run first")
     national = pd.read_csv(path)
     national = national[national.period == period]
     expect_nonempty(national, f"pulse_txn_national has no rows for {period}")

@@ -2,7 +2,7 @@ name: Refresh data
 
 # The point of this workflow is that the repository stays current without anyone
 # touching it. Every source it uses is public and unauthenticated, so it needs
-# NO repository secrets - which is also why it cannot silently fail on an
+# NO repository secrets, which is also why it cannot silently fail on an
 # expired token.
 on:
   schedule:
@@ -29,17 +29,29 @@ jobs:
       - name: Fetch, validate and transform
         run: python run.py data
 
-      - name: Regenerate analysis and memos
+      - name: Regenerate analysis, memos, README exhibits and provenance
         run: python run.py analyze
 
-      - name: Regenerate source provenance
-        run: python docs/build_docs.py
+      - name: Regenerate the social card from the refreshed data
+        run: python site/scripts/make_og.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # A data change can break the site build on its own: a new category, a
+      # renamed column, a colon in a generated memo title. Catch it here rather
+      # than discovering it on the deploy after the commit has already landed.
+      - name: Verify the site still builds
+        run: |
+          npm install --prefix site
+          npm run build --prefix site
 
       - name: Commit if anything moved
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data-pipeline/data/processed insights site/src/data docs/sources.md
+          git add data-pipeline/data/processed insights site/src/data docs README.md site/public/og.png
           if git diff --staged --quiet; then
             echo "No upstream changes this run."
           else

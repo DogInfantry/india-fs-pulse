@@ -2,7 +2,7 @@
 
 Governing thought: India's payments network monetises the wrong leg. The
 merchant leg carries the transactions; the P2P leg carries the rupees; and the
-merchant leg: the only one MDR could ever touch - is priced at zero.
+merchant leg, the only one MDR could ever touch, is priced at zero.
 """
 from __future__ import annotations
 

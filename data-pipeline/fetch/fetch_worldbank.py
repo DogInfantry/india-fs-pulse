@@ -1,4 +1,4 @@
-"""World Bank indicators for India - the financial-inclusion denominator.
+"""World Bank indicators for India: the financial-inclusion denominator.
 
 Account ownership is what turns raw payment volume into a penetration story:
 transactions per banked adult, and which states over- or under-index. The
@@ -25,7 +25,7 @@ INDICATORS = {
     # rather than assuming an adult share.
     "SP.POP.0014.TO": "population_0_14",
     # Asset quality and credit penetration. The banking module had margins and
-    # price returns but no answer to "what happened to credit costs" - which is
+    # price returns but no answer to "what happened to credit costs", which is
     # most of why the public-bank cohort re-rated.
     "FB.AST.NPER.ZS": "npl_pct_gross_loans",
     "FS.AST.PRVT.GD.ZS": "domestic_credit_private_pct_gdp",

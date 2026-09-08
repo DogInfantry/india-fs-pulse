@@ -2,7 +2,7 @@
 
 This is the only open source that attributes UPI activity to a PLAYER. PhonePe
 Pulse is PhonePe-only; the NPCI headline series is market-total. Without this,
-the project's central question - who captures the value - has no data behind it.
+the project's central question, who captures the value, has no data behind it.
 
 Shares are computed against the NPCI NATIONAL total for the same month rather
 than against the sum of the ten listed apps. NPCI caps the table at ten rows, so
@@ -102,7 +102,7 @@ def main() -> None:
         bool((covered > 0.90).all()),
         f"top-ten coverage implausibly low: {covered[covered <= 0.90].round(3).to_dict()}",
     )
-    print(f"   reconciliation ok - top ten cover {covered.min():.1%} to {covered.max():.1%} of national volume")
+    print(f"   reconciliation ok: top ten cover {covered.min():.1%} to {covered.max():.1%} of national volume")
 
     # Honest residual so the shares add to the whole market.
     residual = []

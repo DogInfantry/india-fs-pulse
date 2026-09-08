@@ -1,6 +1,6 @@
 ---
 title: "Underwrite distribution economics, not transaction economics"
-generated: 2026-08-22
+generated: 2026-09-09
 generator: analysis/03_pe_diligence.py
 sources:
   - "PhonePe Pulse: merchant base and merchant GMV"
@@ -75,9 +75,9 @@ dwarfs that. The payment is the acquisition channel; the loan is the P&L.
 
 ## Ambiguity register
 
-The JD asks for the ability to deal with ambiguity and to develop approaches to
-tackle diligence questions. Stated explicitly, here is what this analysis does
-**not** know, and how a real diligence would resolve it:
+A diligence that lists only what it found is worth less than one that lists what
+it could not find. Stated explicitly, here is what this analysis does **not**
+know, and how a real diligence would resolve it:
 
 | Unknown | Why it is unresolved here | How to resolve it |
 |---|---|---|

@@ -3,7 +3,7 @@
 RBI's DBIE has no clean public API, so the NIM story is built from filed income
 statements instead of a ready-made series. yfinance exposes `Net Interest Income`,
 `Interest Income` and `Interest Expense` for NSE-listed banks, and Total Assets
-from the balance sheet - enough for a defensible NIM PROXY:
+from the balance sheet, enough for a defensible NIM PROXY:
 
     nim_proxy = net interest income / average total assets
 
@@ -64,7 +64,7 @@ def fundamentals() -> pd.DataFrame:
         try:
             # yfinance intermittently raises KeyError on a healthy ticker. Left
             # unretried it silently drops a bank from the cohort and shifts the
-            # published margin - so retry before accepting an absence as real.
+            # published margin, so retry before accepting an absence as real.
             income = balance = None
             for attempt in range(3):
                 try:
@@ -73,7 +73,7 @@ def fundamentals() -> pd.DataFrame:
                     balance = handle.balance_sheet
                     if income is not None and not income.empty:
                         break
-                except Exception:  # noqa: BLE001 - transient; surfaced below if it persists
+                except Exception:  # noqa: BLE001. Transient, surfaced below if it persists
                     if attempt == 2:
                         raise
                 time.sleep(1.5 * (attempt + 1))
@@ -92,7 +92,7 @@ def fundamentals() -> pd.DataFrame:
                 record["total_assets"] = pick(balance, "Total Assets", col) if balance is not None else None
                 rows.append(record)
             print(f"   {ticker:<15} {len(income.columns)} fiscal years")
-        except Exception as exc:  # noqa: BLE001 - one bad ticker must not kill the pull
+        except Exception as exc:  # noqa: BLE001. One bad ticker must not kill the pull
             print(f"   {ticker:<15} FAILED ({type(exc).__name__}), skipped")
     df = pd.DataFrame(rows)
     expect(
@@ -117,7 +117,7 @@ def add_nim(df: pd.DataFrame) -> pd.DataFrame:
     df["yield_on_assets_pct"] = 100 * df["interest_income"] / df["avg_total_assets"]
 
     # NIM is a banking metric. Paytm is a payments company whose net interest
-    # income is incidental, so the ratio is meaningless there - blank it rather
+    # income is incidental, so the ratio is meaningless there, so blank it rather
     # than publish a number that invites a wrong comparison.
     is_bank = df["cohort"].isin(["Public", "Private"])
     df.loc[~is_bank, ["nim_proxy_pct", "cost_of_funds_pct", "yield_on_assets_pct"]] = pd.NA

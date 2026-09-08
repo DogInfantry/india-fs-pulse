@@ -16,9 +16,9 @@ Two things were checked before this source was chosen, and both matter.
 2. BOUNDARY DEPICTION. Verified numerically at build time below: the northern
    extent must reach ~37.1N / ~80.3E, which is India's official depiction
    including Aksai Chin and Gilgit-Baltistan. A map of India drawn to the Line of
-   Control instead is a live legal and political problem in India, and this
-   project is aimed at an Indian employer. The assertion fails the build rather
-   than shipping the wrong boundary quietly.
+   Control instead is a live legal and political problem in India, and a report
+   about India should not ship one by accident. The assertion fails the build
+   rather than shipping the wrong boundary quietly.
 
 Output: site/public/india_states.geojson, fetched by the browser on demand rather
 than imported into the page, so it costs nothing until the map is actually shown.
@@ -90,7 +90,7 @@ def main() -> None:
     assert north >= MIN_NORTH_LAT and east >= MIN_EAST_LON, (
         f"boundary reaches only {north:.2f}N / {east:.2f}E. India's official depiction extends to "
         f"~37.1N / ~80.3E; this looks like a Line of Control map and must not ship.")
-    print(f"   boundary extent {north:.2f}N / {east:.2f}E - India's official depiction, Aksai Chin included")
+    print(f"   boundary extent {north:.2f}N / {east:.2f}E, India's official depiction, Aksai Chin included")
 
     # Several union territories are too small to see, let alone click: Lakshadweep
     # renders at 0.00% of Rajasthan's area, Chandigarh 0.02%, Delhi 0.42%. They are

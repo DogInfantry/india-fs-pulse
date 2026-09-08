@@ -2,7 +2,7 @@
 
 PRIMARY SOURCE for this project. PhonePe publishes its own transaction data openly
 on GitHub, currently through 2026 Q2. It is the only open, current, no-auth source
-that splits Indian digital payments into P2P vs merchant vs utility - which is the
+that splits Indian digital payments into P2P vs merchant vs utility, which is the
 whole monetisation question, because MDR applies (or would) only to the merchant leg.
 
 Caveat carried into every chart built on this: these are PhonePe's OWN transactions,
@@ -150,7 +150,7 @@ def sanity_check(national: pd.DataFrame, base: pd.DataFrame) -> None:
     merchants = base["registered_merchants"].dropna()
     expect(bool(merchants.is_monotonic_increasing), "registered merchants went backwards")
 
-    print(f"\n   sanity ok - latest period {latest.period.iloc[0]}")
+    print(f"\n   sanity ok: latest period {latest.period.iloc[0]}")
     agg = latest.groupby("category")[["count", "amount_inr"]].sum()
     for cat, row in agg.iterrows():
         vol_share = row["count"] / total_count

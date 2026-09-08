@@ -4,6 +4,37 @@ interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://india-fs-pulse.vercel.app");
 const ogImage = new URL("/og.png", Astro.site ?? "https://india-fs-pulse.vercel.app");
+
+/* Structured data. The dataset count and the publisher list are read from the
+   same provenance ledger the methodology page renders, so what search engines
+   are told and what the page says cannot disagree. */
+import provenance from '../../../data-pipeline/data/processed/_provenance.json';
+const ledger = provenance as Record<string, { publisher: string; url: string; licence: string }>;
+const publishers = [...new Set(Object.values(ledger).map((e) => e.publisher))].sort();
+const AUTHOR = {
+  '@type': 'Person',
+  name: 'Anklesh Rawat',
+  url: 'https://github.com/DogInfantry/india-fs-pulse',
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Dataset',
+      name: 'India FS Pulse',
+      description: "Computed indicators on India's UPI payments network, banking margins and "
+        + 'fund shelf, rebuilt monthly from public sources with per-figure provenance.',
+      url: 'https://india-fs-pulse.vercel.app',
+      license: 'https://www.apache.org/licenses/LICENSE-2.0',
+      isAccessibleForFree: true,
+      creator: AUTHOR,
+      variableMeasured: Object.keys(ledger).sort(),
+      citation: publishers,
+      spatialCoverage: { '@type': 'Place', name: 'India' },
+    },
+    { '@type': 'WebSite', name: 'India FS Pulse', url: 'https://india-fs-pulse.vercel.app', author: AUTHOR },
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -28,6 +59,7 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://india-fs-pulse.vercel.
     <meta name="twitter:image" content={ogImage} />
     <meta name="author" content="Anklesh Rawat" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23C02734'/><path d='M9 22V10h3.2l4 7.2V10H19v12h-3.1l-4.1-7.4V22z' fill='%23fff'/></svg>" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <!-- No webfonts: the type stack is system-resident, so the page renders
          offline and costs zero network requests. -->
   </head>

@@ -1,6 +1,6 @@
 """AMFI daily NAV file -> Indian mutual-fund scheme master.
 
-Wealth and asset management is one of the JD's named FS sectors. AMFI publishes
+Wealth and asset management is the fee pool next door to payments. AMFI publishes
 the full scheme universe daily as a semicolon-delimited text file with no auth.
 
 Structure of NAVAll.txt:
@@ -71,7 +71,7 @@ def parse(text: str) -> pd.DataFrame:
     df = pd.DataFrame(rows)
     expect_nonempty(df, "AMFI NAVAll", minimum=5000)
     expect(df.fund_house.notna().mean() > 0.95, "AMFI: fund house missing on >5% of schemes")
-    expect(df.nav.notna().mean() > 0.8, "AMFI: NAV parsed as null on >20% of rows - column layout changed")
+    expect(df.nav.notna().mean() > 0.8, "AMFI: NAV parsed as null on >20% of rows: column layout changed")
     expect(df.nav_date.notna().mean() > 0.8, "AMFI: NAV date missing on >20% of rows")
     return df
 
@@ -91,7 +91,7 @@ def main() -> None:
     df["asset_class"] = inner.map(classify)
     expect(
         (df.asset_class == "Other").mean() < 0.10,
-        f"{(df.asset_class == 'Other').mean():.1%} of schemes unclassified - AMFI labels changed",
+        f"{(df.asset_class == 'Other').mean():.1%} of schemes unclassified: AMFI labels changed",
     )
     print(f"   {len(df):,} schemes across {df.fund_house.nunique()} fund houses")
     print(f"   NAV date: {df.nav_date.dropna().mode().iloc[0]}")

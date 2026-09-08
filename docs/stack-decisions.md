@@ -8,12 +8,34 @@ choosing a tool is only half of a sourcing decision.
 | Layer | Choice | Why |
 |---|---|---|
 | Site | Astro 5, static output | Zero JavaScript by default; the whole site is 7 static pages. |
-| Styling | Tailwind v4 via the Vite plugin | The `@astrojs/tailwind` integration is deprecated for v4. |
-| Charts | ECharts, lazily imported | One dynamic import keeps a 1 MB library out of the critical path; the entry script is 2.6 kB. |
+| Styling | Hand-written scoped CSS over one token file | Tailwind v4 was installed and wired through the Vite plugin, then never used: not one utility class, not one `@import "tailwindcss"`. Every component styles itself in a scoped `<style>` block against `tokens.css`. Two dependencies that emitted nothing, removed in pass 5. |
+| Charts | ECharts, lazily imported | One dynamic import keeps a 1 MB library out of the critical path; the entry script is 1.6 kB. |
 | Cohort chart | Hand-written SVG, server-rendered | Four points per series does not need a charting library, a canvas, or any JavaScript. |
 | Workbench | ~40 lines of DOM code | Sorting and filtering 36 rows is a table, not a BI platform. |
 | Pipeline | Python 3.14 + pandas | Already present; the largest dataset is 14,283 rows. |
 | Host | Vercel, static | No backend needed. |
+| Deployment config | `vercel.json`, not `vercel.ts` | `vercel.ts` is the current recommendation and gives typed, build-time config, but it needs `@vercel/config` installed at the repository root. The only npm package here lives in `site/`, so adopting it would mean a root `package.json` that exists purely to hold a type import. Revisit if the config ever needs real logic. |
+| Analytics | None | Vercel Web Analytics and Speed Insights both inject a third-party script. The whole design is zero external requests, and the Lighthouse and privacy claims depend on that staying true. Traffic numbers are not worth the first third-party origin on the page. |
+
+## The Content-Security-Policy, and what it does not cover
+
+`script-src` is `'self'` with no `'unsafe-inline'`. That is only possible because the
+one inline module script on the page, the guided opening, was lifted into
+`site/src/scripts/scrolly.ts` and is now booted from the same entry that mounts the
+charts. Astro inlines a component script whose bundled chunk has no imports, so moving
+the file alone was not enough: it had to be called from a module that already has
+imports. The eleven `<script type="application/json">` data islands are not classic or
+module scripts, so `script-src` never applies to them.
+
+`style-src` still carries `'unsafe-inline'`, and that is a real limitation rather than
+an oversight. The built page has 74 inline `style` attributes: propbar widths, and
+geometry computed inside the server-rendered SVG components. CSP hashes do not cover
+style attributes at all, and `'unsafe-hashes'` would need one hash per distinct computed
+value, which is unmaintainable by construction. Astro 6, released March 2026, generates
+CSP hashes as part of the build and would close the script side automatically; it does
+nothing for style attributes. The honest summary is that this policy blocks every
+external origin outright, which is the whole attack surface on a site that loads nothing
+third-party, and does not pretend to defend against injected inline styles.
 
 ## Rejected, and why
 
@@ -41,7 +63,7 @@ then removed without being used.
 > this is an opening that hands off to the exhibits, not a treatment applied to all
 > sixteen.
 
-The rest of the original note still applies: The page turned out to be exhibit-driven - fifteen
+The rest of the original note still applies: The page turned out to be exhibit-driven: fifteen
 figures, each making one point, and scroll-driven sequencing fights that structure
 rather than serving it. Carrying two dependencies for an effect the content does not
 want is how bundles rot.

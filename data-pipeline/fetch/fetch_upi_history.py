@@ -1,11 +1,11 @@
-"""NPCI UPI monthly headline series - the long history.
+"""NPCI UPI monthly headline series: the long history.
 
 Two sources, deliberately, because neither alone is sufficient:
 
 1. India Data Portal CKAN mirror of NPCI product statistics. Open, no auth,
    but the series STOPS AT 2023-08 (verified 2026-08-20). History only.
-   Its date column is YYYY-DD-MM, NOT ISO - 2023-01-08 means 1 August 2023.
-2. data/manual/npci_upi_monthly.csv - hand-seeded rows for 2023-09 onward,
+   Its date column is YYYY-DD-MM, NOT ISO: 2023-01-08 means 1 August 2023.
+2. data/manual/npci_upi_monthly.csv, hand-seeded rows for 2023-09 onward,
    because npci.org.in returns HTTP 403 to every scripted request (WAF).
    Each manual row carries its own source URL and access date. See docs/REFRESH.md.
 

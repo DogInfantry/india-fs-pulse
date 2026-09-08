@@ -1,6 +1,6 @@
 ---
 title: "India runs two payments markets: one that spends, one that sends"
-generated: 2026-08-22
+generated: 2026-09-09
 generator: analysis/05_geo_gap.py
 sources:
   - "PhonePe Pulse state-level transaction data"

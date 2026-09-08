@@ -13,6 +13,7 @@ import SmallMultiples from '../components/charts/SmallMultiples.astro';
 import Workbench from '../components/Workbench.astro';
 import Monogram from '../components/Monogram.astro';
 import BrandMark from '../components/BrandMark.astro';
+import { getCollection } from 'astro:content';
 import Scrolly from '../components/Scrolly.astro';
 
 import hero from '../data/upi_monetisation.json';
@@ -296,14 +297,36 @@ const execFindings = [
     href: '#module-structure' },
   { n: nimGap + 'bps',
     claim: 'The private-bank margin advantage, and it splits almost evenly between pricing and funding.',
-    href: '#module-c' },
+    href: '#module-banking' },
   { n: '₹0',
     claim: `${(unit.merchants / 1e6).toFixed(1)}M merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, no payment revenue.`,
-    href: '#module-d' },
+    href: '#module-diligence' },
   { n: wrapperX.toFixed(1) + '×',
     claim: "Wrappers per real strategy on India’s fund shelf. Most of the product count is packaging.",
     href: '#module-wealth' },
 ];
+
+/* The memo grid reads its titles from the memos themselves. Retyping them here is
+   exactly how the page and the generator drift, and two of them already had: the
+   survey and geography cards quoted titles the analysis layer stopped writing.
+   Order and kicker are editorial, so those stay here; the guard means a memo that
+   is never given a card breaks the build instead of shipping unreachable. */
+const MEMO_KICKER: Record<string, string> = {
+  'pov-upi-monetization': 'Point of view',
+  'pov-market-structure': 'Market structure',
+  'pov-deposit-war': 'Sector scan',
+  'diligence-merchant-payments': 'Diligence',
+  'survey-nps-episodes': 'Survey',
+  'gap-geographic': 'Gap analysis',
+  'wealth-fund-shelf': 'Wealth',
+};
+const memoOrder = Object.keys(MEMO_KICKER);
+const memos = (await getCollection('insights'))
+  .sort((a, b) => memoOrder.indexOf(a.id) - memoOrder.indexOf(b.id));
+const unlisted = memos.filter((m) => !(m.id in MEMO_KICKER)).map((m) => m.id);
+if (unlisted.length) {
+  throw new Error(`memo grid: ${unlisted.join(', ')} has no card, so it would ship reachable only from the sitemap. Add it to MEMO_KICKER.`);
+}
 
 ---
 
@@ -439,7 +462,7 @@ const execFindings = [
       </div>
     </section>
 
-    <section class="wrap module" id="module-b">
+    <section class="wrap module" id="module-banking">
       <h2 class="section-head"><span>C</span> Banking health scan</h2>
       <ul class="entities" aria-label="Banks in the two cohorts">
         {marketView.tickers.filter((t) => t.cohort !== 'Fintech').map((t) => (
@@ -485,7 +508,7 @@ const execFindings = [
       </div>
     </section>
 
-    <section class="wrap module" id="module-c">
+    <section class="wrap module" id="module-diligence">
       <h2 class="section-head"><span>D</span> Private equity diligence simulation</h2>
       <div class="grid">
         <Figure
@@ -505,7 +528,7 @@ const execFindings = [
       </p>
     </section>
 
-    <section class="wrap module" id="module-d">
+    <section class="wrap module" id="module-survey">
       <h2 class="section-head"><span>E</span> Survey analytics</h2>
       <div class="grid">
         <Figure
@@ -521,7 +544,7 @@ const execFindings = [
       </div>
     </section>
 
-    <section class="wrap module" id="module-e">
+    <section class="wrap module" id="module-geo">
       <h2 class="section-head"><span>F</span> Geographic gap</h2>
       <div class="grid">
         <Figure
@@ -554,7 +577,7 @@ const execFindings = [
       <Figure
         kicker="Interactive · Client-ready dashboard"
         title="Every state's payment mix, three linked ways, without leaving the page"
-        subtitle="The dashboard requirement, met in code: a tile cartogram, a sortable table and a detail panel, all linked: select in one and the others follow. Metric switch, live filter, no BI backend."
+        subtitle="A tile cartogram, a sortable table and a detail panel, all linked: select in one and the others follow. Metric switch, live filter, no BI backend."
         source={SOURCE_PULSE}
         wide
       >
@@ -563,12 +586,12 @@ const execFindings = [
     </section>
 
     <section class="wrap module" id="gap-matrix">
-      <h2 class="section-head"><span>I</span> Gap analyser</h2>
+      <h2 class="section-head"><span>I</span> Coverage and limits</h2>
       <Figure
-        kicker="Traceability"
-        title="Every line of the job description, mapped to the artefact that demonstrates it"
-        subtitle="Including the two it does not. A self-assessment that only says “full” is not an assessment."
-        source="Requirements transcribed from the Associate: Financial Services job description (Bain Capability Network, FS Centre of Expertise, Job ID 90399)."
+        kicker="Scope"
+        title="The areas this report does not cover are the ones that would change its conclusion"
+        subtitle="A scan that only ever reports full coverage is not a scan. Every gap below says what is missing and why."
+        source="Self-assessed against the question this report set out to answer. Coverage is judged on what is computed from data in this repository, never on what is asserted in prose."
         wide
       >
         <GapMatrix />
@@ -578,11 +601,11 @@ const execFindings = [
     <section class="wrap module" id="memos">
       <h2 class="section-head"><span>J</span> The memos</h2>
       <div class="memo-grid">
-        <a href="/insights/pov-upi-monetization"><span class="kicker">Point of view</span><b>India's payments network monetises the wrong leg</b></a>
-        <a href="/insights/pov-deposit-war"><span class="kicker">Sector scan</span><b>The private-bank margin advantage is half pricing, half funding</b></a>
-        <a href="/insights/diligence-merchant-payments"><span class="kicker">Diligence</span><b>Underwrite distribution economics, not transaction economics</b></a>
-        <a href="/insights/survey-nps-episodes"><span class="kicker">Survey</span><b>Episode-level NPS reveals what brand-level NPS hides</b></a>
-        <a href="/insights/gap-geographic"><span class="kicker">Gap analysis</span><b>India runs two different payments markets, not one</b></a>
+        {memos.map((m) => (
+          <a href={`/insights/${m.id}`}>
+            <span class="kicker">{MEMO_KICKER[m.id]}</span><b>{m.data.title}</b>
+          </a>
+        ))}
         <a href="/methodology"><span class="kicker">Method</span><b>Sources, provenance and what this analysis cannot know</b></a>
       </div>
     </section>
@@ -608,7 +631,9 @@ const execFindings = [
 
 <script>
   import { mountCharts } from '../scripts/charts';
+  import { mountScrolly } from '../scripts/scrolly';
   mountCharts();
+  mountScrolly();
 </script>
 
 <style>

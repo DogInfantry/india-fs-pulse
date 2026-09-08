@@ -45,7 +45,7 @@ def get_json(url: str, *, timeout: int = 45, retries: int = 3, allow_404: bool =
                 return None
             r.raise_for_status()
             return r.json()
-        except Exception as exc:  # noqa: BLE001 - retry anything transient
+        except Exception as exc:  # noqa: BLE001, retry anything transient
             last = exc
             if attempt < retries - 1:
                 time.sleep(1.5 * (attempt + 1))
@@ -87,7 +87,7 @@ def write_processed(df: pd.DataFrame, name: str) -> Path:
     df.to_csv(csv_path, index=False)
     try:
         df.to_parquet(PROCESSED / f"{name}.parquet", index=False)
-    except Exception as exc:  # noqa: BLE001 - parquet is a convenience, CSV is the contract
+    except Exception as exc:  # noqa: BLE001. Parquet is a convenience; CSV is the contract
         print(f"   note: parquet skipped for {name} ({type(exc).__name__}); CSV is authoritative")
     print(f"   wrote {csv_path.relative_to(ROOT)}  ({len(df):,} rows x {len(df.columns)} cols)")
     return csv_path

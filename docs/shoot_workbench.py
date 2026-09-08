@@ -11,8 +11,8 @@ no credentials and no surprises.
 Why a screenshot at all. Every other exhibit in the README is generated from
 committed data, and should be. But the workbench is the one artefact whose point
 is that it responds: pick a state and the table and the detail panel follow.
-A generated SVG cannot show that, and pretending otherwise would undersell the
-thing the job description actually asks for.
+A generated SVG cannot show that, and a still frame of an interactive exhibit
+undersells the only thing that makes it interactive.
 
 Why it does not just point a headless browser at the page and scroll. Two
 things defeat that, and both were tried:

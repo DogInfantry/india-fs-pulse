@@ -91,7 +91,7 @@ def main() -> None:
     banks_only = first_last[first_last.cohort.isin(["Public", "Private"])]
     cohort_ret = banks_only.groupby("cohort")["total_return"].median()
     write_json("chart_market_view", {
-        "note": "Median price return by cohort over the window. Price only - excludes dividends.",
+        "note": "Median price return by cohort over the window. Price only, excluding dividends.",
         "window": [first_last.d0.min(), first_last.d1.max()],
         "series": [{"cohort": c, "median_price_return": round(float(v), 4)} for c, v in cohort_ret.items()],
         # Carry the readable bank name, not just the ticker: the exhibit claims a

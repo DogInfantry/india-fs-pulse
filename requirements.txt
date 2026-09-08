@@ -5,3 +5,4 @@ requests>=2.32
 yfinance>=0.2.40
 pyarrow>=17.0        # parquet; pipeline degrades to CSV if the wheel is unavailable
 numpy>=1.26
+pillow>=10.0         # social card only, site/scripts/make_og.py

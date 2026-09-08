@@ -7,10 +7,9 @@ Operating manual for this repo. Read before touching anything.
 **India FS Pulse**: a code-driven Financial Services research portfolio:
 reproducible Python pipeline → analysis → static Astro site → Vercel.
 
-Built as a work sample for **Associate, Financial Services, Bain Capability Network
-FS Centre of Expertise** (Job ID 90399): open-ended research, industry POV, sector
-scans, survey analytics, PE diligence support, client-ready dashboards, dealing with
-ambiguity.
+Independent research on a live, unresolved question: an industry point of view,
+sector scans, survey analytics, a diligence simulation and interactive exhibits, all
+computed from public data rather than asserted.
 
 **Central question:** India built the world's largest real-time payments network.
 Under zero-MDR it earns almost nothing directly. Who captures the value, and is there
@@ -20,8 +19,7 @@ an investable business model?
 - Repo: https://github.com/DogInfantry/india-fs-pulse
 - **All links, evaluated tooling and data endpoints live in `docs/resources.md`.**
 
-**Stack:** Python 3.14 + pandas (no polars) · Astro 5 static · Tailwind v4 (Vite
-plugin) · ECharts lazily imported · hand-written SVG components · Vercel · GitHub
+**Stack:** Python 3.14 + pandas (no polars) · Astro 5 static · hand-written CSS over one token file · ECharts lazily imported · hand-written SVG components · Vercel · GitHub
 Actions monthly refresh.
 
 ## Commands
@@ -54,7 +52,7 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
    number falls (e.g. "pricing or funding?") are written as *conditionals in code*.
 5. **No charting library for the bespoke exhibits.** Five server-rendered SVG components
    carry the consulting vocabulary with zero client JS. ECharts is dynamically imported
-   for the dashboard charts, keeping the entry script ~2.6 kB.
+   for the dashboard charts, keeping the entry script ~1.6 kB.
 6. **Colour is measured, not eyeballed.** `--signal` is for fills (3:1 suffices for
    non-text); `--signal-text` exists because small red text needs 4.5:1 on every surface
    token. Verified with Lighthouse.
@@ -97,7 +95,7 @@ python docs/build_docs.py   # regenerate docs/sources.md and docs/data-dictionar
 4. **Answer-first.** Chart titles state the conclusion, not the contents.
 5. **The pipeline stays secret-free.** `python run.py data` must work with zero
    environment variables. Key-gated sources skip gracefully.
-6. **No firm trademarks.** No Bain/BCG/McKinsey logos, colours or proprietary data.
+6. **No consulting firm's trademarks.** No firm's logos, colours or proprietary data.
    NPS as a *method* is public; NPS Prism data is not. The palette is original.
 7. **Date-stamp every snapshot.** Any single-period figure carries its period.
 8. **Never `pd.read_csv(comment="#")` on the seeded files.** Use `common.read_seeded_csv()`.
@@ -166,10 +164,10 @@ cleaned.** See the memory snapshot for the exact path and contents.
    respondents, against ~700 for the same claim framed as a cohort NPS difference.
    When the data lands, four `SYNTHETIC` labels must come off together: the module
    docstring, the `synthetic` flag in `chart_nps_episodes.json`, the on-page banner in
-   `index.astro`, and the Gap Analyser note. Miss one and the site contradicts itself.
-2. **Excel + PowerPoint deliverables.** The JD names both as hard requirements and the
-   Gap Analyser still carries its only "Not covered" row for them. The pipeline emits
-   tidy CSV, so `openpyxl` + `python-pptx` is roughly two hours.
+   `index.astro`, and the coverage map note. Miss one and the site contradicts itself.
+2. **Excel + PowerPoint deliverables.** A research portfolio with no model workbook
+   and no deck is incomplete. The pipeline emits tidy CSV, so `openpyxl` +
+   `python-pptx` is roughly two hours.
 3. **An asset-quality exhibit.** `npl_pct_gross_loans` is fetched (4.81% to 2.06%) and
    used in no chart. It is most of why the public-bank cohort re-rated +284%.
 4. **Extend the per-app series**, currently 12 months (2023-12 to 2026-07). More months
@@ -180,7 +178,7 @@ cleaned.** See the memory snapshot for the exact path and contents.
    today. Say so rather than pretending otherwise.
 6. **AMFI quarterly AAUM**, which would restate the wealth module in rupees rather than
    scheme counts, the version that informs a fee pool.
-7. **Insurance**, the last JD-named sector with no coverage. IRDAI is PDF-only.
+7. **Insurance**, the last major FS sector with no coverage here. IRDAI is PDF-only.
 8. **Dead `vendor` script** in `site/package.json` points at `scripts/vendor-assets.mjs`,
    which does not exist. Still there. One-line deletion.
 
@@ -188,7 +186,7 @@ cleaned.** See the memory snapshot for the exact path and contents.
 
 - **A ratio of two shares can be a tautology.** `intensity_index = volume_share /
   value_share` looked like a merchant-behaviour measure. It is algebraically identical to
-  `national_avg_ticket / state_avg_ticket` - verified to 4.4e-16 across all 36 states -
+  `national_avg_ticket / state_avg_ticket`, verified to 4.4e-16 across all 36 states,
   so the exhibit plotted one variable on the y-axis and the *same* variable as colour.
   Worse, it inverted: it ranked Assam most merchant-intense because Assam has the
   smallest ticket, when Assam is among the most P2P-heavy states in the country. **Before

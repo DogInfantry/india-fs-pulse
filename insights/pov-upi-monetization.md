@@ -1,6 +1,6 @@
 ---
 title: "India's payments network monetises the wrong leg"
-generated: 2026-08-22
+generated: 2026-09-09
 generator: analysis/01_upi_landscape.py
 sources:
   - "PhonePe Pulse (github.com/PhonePe/pulse): category split and merchant base"

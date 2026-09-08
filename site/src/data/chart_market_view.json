@@ -1,5 +1,5 @@
 {
-  "note": "Median price return by cohort over the window. Price only - excludes dividends.",
+  "note": "Median price return by cohort over the window. Price only, excluding dividends.",
   "window": [
     "2021-08-23",
     "2026-08-21"

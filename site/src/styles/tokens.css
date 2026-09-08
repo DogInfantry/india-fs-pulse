@@ -1,6 +1,6 @@
-/* India FS Pulse - design tokens.
+/* India FS Pulse: design tokens.
    Firm-neutral editorial palette. Original: no consulting firm's brand colours.
-   Single committed dark theme - see CLAUDE.md. Never hardcode a hex elsewhere. */
+   Single committed dark theme; see CLAUDE.md. Never hardcode a hex elsewhere. */
 
 :root {
   /* Surfaces: warm-shifted near-blacks so it reads as ink on paper, not as UI chrome. */
@@ -18,7 +18,7 @@
   /* Signal. Crimson focuses attention; everything else recedes. */
   --signal:      #C02734;   /* graphics and fills: 3:1 is the bar for non-text */
   /* Small red TEXT needs 4.5:1, which the fill colour does not reach on these
-     dark surfaces. Measured, not guessed - see the contrast note in CLAUDE.md. */
+     dark surfaces. Measured, not guessed; see the contrast note in CLAUDE.md. */
   --signal-text: #DF5F6A;
   --signal-soft: rgba(192, 39, 52, 0.14);
   --signal-line: rgba(192, 39, 52, 0.42);
@@ -27,15 +27,15 @@
   --s1: #C02734;  /* crimson: the subject */
   --s2: #1F7A8C;  /* teal: the comparator */
   --s3: #C98A2E;  /* amber: the third */
-  --s4: #5B6673;  /* grey     - context / "everyone else" */
-  --s5: #7C5CA8;  /* violet   - rare fifth */
+  --s4: #5B6673;  /* grey:     context / "everyone else" */
+  --s5: #7C5CA8;  /* violet:   rare fifth */
 
   /* Semantic */
   --pos: #3FA66B;
   --neg: #C02734;
   --warn: #C98A2E;
 
-  /* Type scale - editorial serif for display, system sans for UI and data. */
+  /* Type scale: editorial serif for display, system sans for UI and data. */
   --font-display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, monospace;

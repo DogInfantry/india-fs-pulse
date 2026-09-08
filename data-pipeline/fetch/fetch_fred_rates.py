@@ -65,7 +65,7 @@ def fetch(series: str, label: str) -> pd.DataFrame:
     df["month"] = pd.to_datetime(df["month"]).dt.strftime("%Y-%m")
     lo, hi = df[label].min(), df[label].max()
     expect(RATE_MIN <= lo and hi <= RATE_MAX,
-           f"FRED {series}: rates outside [{RATE_MIN}, {RATE_MAX}] - got {lo} to {hi}")
+           f"FRED {series}: rates outside [{RATE_MIN}, {RATE_MAX}]: got {lo} to {hi}")
     print(f"   {label:<22} {len(df):>4} obs  {df.month.iloc[0]} -> {df.month.iloc[-1]}  "
           f"latest {df[label].iloc[-1]:.2f}%  ({gaps} unpublished months left as gaps)")
     return df
