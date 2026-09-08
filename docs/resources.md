@@ -91,6 +91,14 @@ the same cost to learn the same thing.
 | **Alpha Vantage** | Probed with a real key, held locally and never committed. `GLOBAL_QUOTE` for `HDFCBANK.BSE` returned live data | **Rejected.** Free tier rate-limits from the second call in a session (`OVERVIEW` and `FX_MONTHLY` both returned the throttle notice immediately), and it duplicates yfinance, which is already wired and unmetered. A key-gated source would also need to skip gracefully under rule 5 |
 | **NPCI (direct)** | not probed | HTTP 403 to every scripted request. Transcribed by hand instead; see `docs/REFRESH.md` |
 
+**One fetched series is deliberately unused.** `gdp_current_usd` is in
+`worldbank_india` and nothing reads it. The obvious exhibit, UPI value as a share of GDP,
+needs an INR to USD rate for the matching period, and no FX series is in this pipeline.
+Picking a rate would be inventing a number, so the column stays fetched, documented and
+unplotted until an FX source earns its place. `npl_pct_gross_loans`,
+`domestic_credit_private_pct_gdp` and `account_ownership_female_pct` were in the same
+state and are now used, in sub-modules B and C.
+
 **Keys held but unused:** data.gov.in, Alpha Vantage and FRED. None is committed here,
 not even as a fragment. FRED's key works, but the keyless CSV endpoint serves the same
 series, so the pipeline does not use it. Rule 5 says `python run.py data` must run with zero

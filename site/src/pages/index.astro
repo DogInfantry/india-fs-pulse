@@ -209,22 +209,32 @@ const optStates = {
 const leaders = structure.apps.filter((a) => a.app !== 'All other apps').slice(0, 2);
 const top2 = structure.top2_volume_share;
 const capMoveBn = structure.cap_gap_txns_mn / 1000;   // computed in analysis/06, not here
-const slopeSeries = shareTrend.series.slice(0, 5).map((s) => ({
-  label: s.app,
-  start: (s.values.find((v) => v !== null) ?? 0) * 100,
-  end: ([...s.values].reverse().find((v) => v !== null) ?? 0) * 100,
-}));
+/* A slopegraph compares two endpoints on shared axes, so every line has to span
+   the same window. An app that entered NPCI's published table late has no
+   observation at the first month, and the `?? 0` this used to carry invented one:
+   a fabricated zero, which rule 1 forbids. Late entrants appear in the small
+   multiples above instead, where a short history reads honestly. */
+const slopeSeries = shareTrend.series
+  .filter((s) => s.values[0] != null && s.values.at(-1) != null)
+  .slice(0, 5)
+  .map((s) => ({ label: s.app, start: s.values[0]! * 100, end: s.values.at(-1)! * 100 }));
 
 /* ---- Exhibit: concentration over time ---- */
 const optHhi = {
   grid: { top: 26, left: 8, right: 16, bottom: 4, containLabel: true },
-  xAxis: { type: 'category', data: hhi.months, axisTick: { show: false },
-           axisLabel: { color: '#6E7987', fontSize: 10, interval: 2 } },
+  /* A time axis, not a category one. The series thins from six-monthly to
+     monthly, so drawing the months evenly spaced compressed two years into the
+     same width as the last seven months and the decline read far steeper than
+     it is. Rule 9: show the seam. */
+  xAxis: { type: 'time', axisTick: { show: false },
+           axisLabel: { color: '#6E7987', fontSize: 10, formatter: '{yyyy}-{MM}' } },
   yAxis: { type: 'value', name: 'HHI', min: 2500,
            nameTextStyle: { color: '#6E7987', fontSize: 11 },
            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
   tooltip: { trigger: 'axis' },
-  series: [{ type: 'line', data: hhi.values, smooth: 0.2, showSymbol: false,
+  series: [{ type: 'line',
+             data: hhi.months.map((m, i) => [`${m}-01`, hhi.values[i]]),
+             smooth: 0.2, showSymbol: false,
              lineStyle: { width: 2.5, color: '#C02734' },
              areaStyle: { color: 'rgba(192,39,52,0.10)' } }],
 };

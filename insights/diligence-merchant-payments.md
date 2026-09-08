@@ -66,6 +66,17 @@ dwarfs that. The payment is the acquisition channel; the loan is the P&L.
 
 ## Upside register
 
+**The prize is a penetration gap, not a share gap.** Domestic credit to the private
+sector was **44.0% of GDP in 2025**, against 38.2% in
+2016, the year UPI launched. Ten years of the world's largest payments
+network moved credit penetration by +5.8 points. The case for
+underwriting distribution rather than transactions rests on that gap: the merchant
+relationship is
+worth owning because the product it can carry is structurally under-supplied, not because
+the payment itself will ever be repriced. A thesis that needs credit penetration to stay
+flat is a different thesis, and a worse one.
+
+
 - **Credit on UPI at scale**, where interchange is permitted, converts the base into
   a fee-bearing channel without a policy change.
 - **A tiered MDR** exempting small merchants would monetise large-merchant GMV with

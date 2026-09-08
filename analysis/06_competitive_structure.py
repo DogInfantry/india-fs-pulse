@@ -70,7 +70,12 @@ def main() -> None:
         ],
     })
 
-    trend_apps = [a for a in apps[apps.app != RESIDUAL].app.unique()][:6]
+    # Pick the six by CURRENT share. Taking the head of a frame sorted by
+    # (month, share) gave the DECEMBER 2023 top six, which is a different set:
+    # it kept Amazon Pay long after it dropped out of NPCI's table, so the panel
+    # rendered empty, and it omitted Navi and super.money, the two challengers
+    # the "challengers are not substitutes" argument is actually about.
+    trend_apps = list(latest[latest.app != RESIDUAL].head(6).app)
     write_json("chart_share_trend", {
         "cap": CAP,
         "months": sorted(apps.month.unique()),

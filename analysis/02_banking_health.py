@@ -154,6 +154,41 @@ def main() -> None:
     tpa0 = inc0["txns_per_banked_adult_per_month"]
     yr0 = inc0["year"]
     win = f"{first_last.d0.min()} to {first_last.d1.max()}"
+
+    # Asset quality: the half of the market-verdict argument the margin series
+    # cannot supply. A cohort earning less should not re-rate harder, and NIM has
+    # nothing to say about why it did. The bad-loan ratio does, and it was being
+    # fetched and then read by nothing.
+    fem = wb.dropna(subset=["account_ownership_female_pct"]).sort_values("year")
+    fem_now = float(fem.account_ownership_female_pct.iloc[-1])
+    fem_year = int(fem.year.iloc[-1])
+    fem_then = float(fem.account_ownership_female_pct.iloc[0])
+    fem_then_year = int(fem.year.iloc[0])
+
+    npl = wb.dropna(subset=["npl_pct_gross_loans"]).sort_values("year")
+    npl_peak = npl.loc[npl.npl_pct_gross_loans.idxmax()]
+    npl_now = npl.iloc[-1]
+    npl_fall_pp = float(npl_peak.npl_pct_gross_loans - npl_now.npl_pct_gross_loans)
+    if ret_publ > ret_priv:
+        asset_quality = (
+            f"**What the margin series cannot explain.** A cohort earning "
+            f"{close_row.gap_bps:.0f}bps less on every rupee of assets should not re-rate "
+            f"harder, and the NIM series is silent on why it did. Asset quality is not: "
+            f"India's non-performing loans fell from **{npl_peak.npl_pct_gross_loans:.2f}% "
+            f"of gross loans in {int(npl_peak.year)} to {npl_now.npl_pct_gross_loans:.2f}% "
+            f"in {int(npl_now.year)}**, a {npl_fall_pp:.1f} point repair concentrated in the "
+            f"cohort that was carrying the bad book. The public-bank re-rating reads as "
+            f"balance-sheet repair rather than margin expansion, and those are different "
+            f"things to underwrite: repair is finite and largely spent, margin is not."
+        )
+    else:
+        asset_quality = (
+            f"**Asset quality, for completeness.** India's non-performing loans fell from "
+            f"{npl_peak.npl_pct_gross_loans:.2f}% of gross loans in {int(npl_peak.year)} to "
+            f"{npl_now.npl_pct_gross_loans:.2f}% in {int(npl_now.year)}, which removed most "
+            f"of the discount the public cohort carried. On this window that repair did not "
+            f"outweigh the margin advantage, so the two effects can be read separately."
+        )
     priv_ret = pct(ret_priv, 0)
     publ_ret = pct(ret_publ, 0)
 
@@ -225,11 +260,16 @@ Sub-module A is a *deposit* question for banks.
 same year, each banked adult now runs **{tpa} transactions a month**, up from
 {tpa0} in {yr0}. Access stopped being the constraint some years ago; usage intensity
 is the story now, and it is what makes the zero-MDR cost base grow.
+Ownership among women reached {fem_now:.1f}% in {fem_year}, from {fem_then:.1f}% in
+{fem_then_year}: on this measure the gender gap has closed, which means the remaining
+inclusion question is about use rather than about access for either group.
 
 **The market's verdict.** Over {win}, the median private bank returned
 {priv_ret} on price against {publ_ret} for the median public bank. {verdict} Price
 return only, dividends excluded, so this understates total return for the higher-
 yielding public cohort.
+
+{asset_quality}
 
 ## Method and its limits
 

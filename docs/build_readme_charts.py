@@ -497,8 +497,10 @@ def market_structure():
     def sy(v):
         return ybase - (ybase - ytop) * (v / ymax)
 
-    order = {s["app"]: s for s in d["series"]}
-    show = (("PhonePe", S1), ("Google Pay", S2), ("Paytm", S4))
+    # Read the three from the data rather than naming them. Hardcoding
+    # ("PhonePe", "Google Pay", "Paytm") meant that the first month one of them
+    # left the top six, this raised a bare KeyError inside an SVG generator.
+    show = list(zip(d["series"][:3], (S1, S2, S4)))
 
     b = [panel(px, py, pw, ph)]
     b.append(rect(x0, ytop, x1 - x0, sy(cap) - ytop, SOFT))
@@ -515,13 +517,18 @@ def market_structure():
         b.append(txt(sx(idx(m)), ybase + 22, m, size=10.5, fill=TEXT3, anchor="middle"))
     b.append(line(x0, ybase, x1, ybase, BORDER))
 
-    for app, colour in show:
-        s = order[app]
-        pts = [(sx(x), sy(v)) for x, v in zip(xs, s["values"])]
+    for s, colour in show:
+        app = s["app"]
+        # An app can enter or leave the published table mid-window, so skip the
+        # nulls rather than assuming every series spans every month.
+        pts = [(sx(x), sy(v)) for x, v in zip(xs, s["values"]) if v is not None]
+        if not pts:
+            continue
+        last = next(v for v in reversed(s["values"]) if v is not None)
         b.append(polyline(pts, colour))
         b.append(dot(pts[-1][0], pts[-1][1], 3.4, colour))
         b.append(txt(x1 + 14, pts[-1][1] - 2, app, size=12.5, fill=TEXT, weight="600"))
-        b.append(txt(x1 + 14, pts[-1][1] + 15, f"{s['values'][-1] * 100:.1f}%",
+        b.append(txt(x1 + 14, pts[-1][1] + 15, f"{last * 100:.1f}%",
                      size=12, fill=colour))
 
     gap_bn = ms["cap_gap_txns_mn"] / 1000
@@ -529,8 +536,13 @@ def market_structure():
                  f"{gap_bn:.1f} billion transactions a month would have to change app "
                  f"for the cap to bind", size=12))
 
-    lead = order["PhonePe"]["values"][-1]
-    second = order["Google Pay"]["values"][-1]
+    # The two leaders come from the data, in case they ever stop being the two
+    # this used to name. The last value can be null if an app left the table.
+    def latest_value(s):
+        return next(v for v in reversed(s["values"]) if v is not None)
+
+    lead_app, second_app = d["series"][0]["app"], d["series"][1]["app"]
+    lead, second = latest_value(d["series"][0]), latest_value(d["series"][1])
     write_svg("market-structure", card(
         H, "Exhibit 4 · Share shift",
         "Both leaders sit above a cap that neither is on course to meet",
@@ -540,9 +552,9 @@ def market_structure():
         "Source: NPCI UPI ecosystem statistics, transcribed (see docs/REFRESH.md). "
         "Shares are of the national total, so the residual is real. Computed by "
         "analysis/06_competitive_structure.py.",
-        f"Line chart. In {months[-1]} PhonePe holds {lead * 100:.1f} percent and Google "
-        f"Pay {second * 100:.1f} percent of national UPI volume, both above the 30 "
-        f"percent NPCI cap. About {gap_bn:.1f} billion transactions a month would have "
+        f"Line chart. In {months[-1]} {lead_app} holds {lead * 100:.1f} percent and "
+        f"{second_app} {second * 100:.1f} percent of national UPI volume, both above the "
+        f"30 percent NPCI cap. About {gap_bn:.1f} billion transactions a month would have "
         f"to move between apps for the cap to bind.",
     ))
 

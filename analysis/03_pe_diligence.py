@@ -23,6 +23,19 @@ def main() -> None:
     banner("Sub-module C: PE diligence simulation")
     hero = load_json("upi_monetisation")
     fund = load("bank_fundamentals")
+    wb = load("worldbank_india")
+
+    # Credit penetration, so the upside register sizes the prize instead of
+    # gesturing at it. This series was fetched from the first build and read by
+    # nothing until now.
+    credit = wb.dropna(subset=["domestic_credit_private_pct_gdp"]).sort_values("year")
+    credit_now = float(credit.domestic_credit_private_pct_gdp.iloc[-1])
+    credit_year = int(credit.year.iloc[-1])
+    # Baseline at UPI's launch year, not at the start of the series. The series
+    # reaches back to 1960 and a 65-year comparison says nothing about whether the
+    # rail changed anything.
+    base = credit[credit.year <= 2016].iloc[-1]
+    credit_then, credit_then_year = float(base.domestic_credit_private_pct_gdp), int(base.year)
 
     merchants = hero["registered_merchants"]
     gmv_per = hero["gmv_per_merchant_inr"]
@@ -128,6 +141,17 @@ dwarfs that. The payment is the acquisition channel; the loan is the P&L.
   bridge by instrument before signing.
 
 ## Upside register
+
+**The prize is a penetration gap, not a share gap.** Domestic credit to the private
+sector was **{credit_now:.1f}% of GDP in {credit_year}**, against {credit_then:.1f}% in
+{credit_then_year}, the year UPI launched. Ten years of the world's largest payments
+network moved credit penetration by {credit_now - credit_then:+.1f} points. The case for
+underwriting distribution rather than transactions rests on that gap: the merchant
+relationship is
+worth owning because the product it can carry is structurally under-supplied, not because
+the payment itself will ever be repriced. A thesis that needs credit penetration to stay
+flat is a different thesis, and a worse one.
+
 
 - **Credit on UPI at scale**, where interchange is permitted, converts the base into
   a fee-bearing channel without a policy change.

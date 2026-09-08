@@ -52,11 +52,16 @@ Sub-module A is a *deposit* question for banks.
 same year, each banked adult now runs **14.9 transactions a month**, up from
 4.0 in 2021. Access stopped being the constraint some years ago; usage intensity
 is the story now, and it is what makes the zero-MDR cost base grow.
+Ownership among women reached 89.2% in 2024, from 26.5% in
+2011: on this measure the gender gap has closed, which means the remaining
+inclusion question is about use rather than about access for either group.
 
 **The market's verdict.** Over 2021-08-23 to 2026-08-21, the median private bank returned
 18% on price against 293% for the median public bank. The market has NOT paid for the margin franchise: public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
 return only, dividends excluded, so this understates total return for the higher-
 yielding public cohort.
+
+**What the margin series cannot explain.** A cohort earning 114bps less on every rupee of assets should not re-rate harder, and the NIM series is silent on why it did. Asset quality is not: India's non-performing loans fell from **9.98% of gross loans in 2017 to 2.06% in 2025**, a 7.9 point repair concentrated in the cohort that was carrying the bad book. The public-bank re-rating reads as balance-sheet repair rather than margin expansion, and those are different things to underwrite: repair is finite and largely spent, margin is not.
 
 ## Method and its limits
 

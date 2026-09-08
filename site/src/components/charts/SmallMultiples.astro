@@ -3,6 +3,18 @@
  * Small-multiples grid: one sparkline panel per series, shared y-scale so the
  * panels are honestly comparable, with a reference line where one is supplied.
  * Server-rendered SVG, no client JavaScript.
+ *
+ * Two things this has to get right, because the underlying series is ragged.
+ *
+ * The months are NOT evenly spaced: NPCI's published table is sampled
+ * six-monthly early and monthly recently, so x is elapsed months rather than
+ * position in the list. Spacing them evenly drew two years at the same width as
+ * the last seven months.
+ *
+ * An app can enter or leave the top ten mid-window, so a panel may start late,
+ * end early, or carry a hole. The line breaks at a gap instead of bridging it,
+ * the end dot sits on the last real observation rather than on the last column,
+ * and a series with nothing in it says so rather than rendering NaN.
  */
 interface Series { app: string; values: (number | null)[] }
 interface Props { months: string[]; series: Series[]; reference?: number; unit?: string }
@@ -11,16 +23,48 @@ const { months, series, reference, unit = '%' } = Astro.props;
 const W = 240, H = 108, PAD = { t: 12, r: 8, b: 16, l: 8 };
 const all = series.flatMap((s) => s.values).filter((v): v is number => v !== null);
 const hi = Math.max(...all, reference ?? 0) * 1.1;
-const x = (i: number) => PAD.l + (i * (W - PAD.l - PAD.r)) / Math.max(months.length - 1, 1);
+
+const elapsed = (m: string) =>
+  (Number(m.slice(0, 4)) - Number(months[0].slice(0, 4))) * 12
+  + Number(m.slice(5, 7)) - Number(months[0].slice(5, 7));
+const span = Math.max(elapsed(months[months.length - 1]), 1);
+
+const x = (i: number) => PAD.l + (elapsed(months[i]) / span) * (W - PAD.l - PAD.r);
 const y = (v: number) => PAD.t + (1 - v / hi) * (H - PAD.t - PAD.b);
 const pct = (v: number) => `${(v * 100).toFixed(1)}${unit}`;
+
+/* Contiguous runs, so a missing month breaks the line rather than being drawn
+   across as though the value had been observed. */
+const runs = (values: (number | null)[]) => {
+  const out: string[][] = [];
+  let cur: string[] = [];
+  values.forEach((v, i) => {
+    if (v === null) { if (cur.length) out.push(cur); cur = []; }
+    else cur.push(`${x(i)},${y(v)}`);
+  });
+  if (cur.length) out.push(cur);
+  return out;
+};
 ---
 <div class="sm">
   {series.map((s) => {
-    const pts = s.values.map((v, i) => (v === null ? null : `${x(i)},${y(v)}`)).filter(Boolean).join(' ');
-    const last = [...s.values].reverse().find((v) => v !== null) as number;
-    const first = s.values.find((v) => v !== null) as number;
+    const firstIdx = s.values.findIndex((v) => v !== null);
+    const lastIdx = s.values.reduce((acc, v, i) => (v !== null ? i : acc), -1);
+
+    if (lastIdx < 0) {
+      return (
+        <figure class="panel empty">
+          <figcaption><b>{s.app}</b><span class="now">no data</span></figcaption>
+          <p class="foot">Absent from the published table across this window</p>
+        </figure>
+      );
+    }
+
+    const first = s.values[firstIdx] as number;
+    const last = s.values[lastIdx] as number;
     const over = reference !== undefined && last > reference;
+    const partial = firstIdx > 0 || lastIdx < months.length - 1;
+
     return (
       <figure class:list={['panel', over && 'over']}>
         <figcaption>
@@ -28,14 +72,20 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}${unit}`;
           <span class="now">{pct(last)}</span>
         </figcaption>
         <svg viewBox={`0 0 ${W} ${H}`} role="img"
-             aria-label={`${s.app}: ${pct(first)} to ${pct(last)}`}>
+             aria-label={`${s.app}: ${pct(first)} in ${months[firstIdx]} to ${pct(last)} in ${months[lastIdx]}.`}>
           {reference !== undefined && (
             <line class="ref" x1={PAD.l} x2={W - PAD.r} y1={y(reference)} y2={y(reference)} />
           )}
-          <polyline class="line" points={pts} />
-          <circle class="dot" cx={x(months.length - 1)} cy={y(last)} r="3" />
+          {runs(s.values).map((pts) => (
+            pts.length > 1
+              ? <polyline class="line" points={pts.join(' ')} />
+              : <circle class="dot" cx={Number(pts[0].split(',')[0])} cy={Number(pts[0].split(',')[1])} r="2" />
+          ))}
+          <circle class="dot" cx={x(lastIdx)} cy={y(last)} r="3" />
         </svg>
-        <p class="foot">{months[0]} → {months.at(-1)}</p>
+        <p class="foot">
+          {months[firstIdx]} → {months[lastIdx]}{partial && <span class="part"> partial window</span>}
+        </p>
       </figure>
     );
   })}
@@ -46,6 +96,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}${unit}`;
   .panel { margin: 0; padding: 0.7rem 0.8rem; border: 1px solid var(--line);
            border-radius: 10px; background: var(--surface-2); }
   .panel.over { border-color: var(--signal-line); }
+  .panel.empty { opacity: 0.7; }
   figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 0.4rem; }
   figcaption b { font-size: 0.78rem; color: var(--text); font-family: var(--font-sans); }
   .now { font-size: 0.78rem; font-weight: 700; color: var(--text-2); font-variant-numeric: tabular-nums; }
@@ -57,4 +108,5 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}${unit}`;
   .panel.over .dot { fill: var(--signal); }
   .ref { stroke: var(--warn); stroke-width: 1; stroke-dasharray: 3 3; }
   .foot { margin: 0.25rem 0 0; color: var(--text-3); font-size: 0.62rem; }
+  .part { color: var(--warn); }
 </style>
