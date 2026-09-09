@@ -223,10 +223,18 @@ gone; if it matters, it has to be rebuilt.
      column and show the seam (rules 9 and 1). The alternative is to drop the value side
      of the category split and restate the module on volume only. Do not silently
      `.get("amount", 0)`: that would fabricate zero value for every category.
-2. **Per-exhibit CSV downloads.** A `download` prop on `Figure.astro` pointing at a static
+2. **Cards against UPI, India's own control group.** The strongest unbuilt exhibit:
+   India charges an MDR on cards and zero on UPI, same market, same merchants, same
+   regulator. RBI publishes monthly bank-wise POS and card statistics and the direct
+   file URLs are known, but **the documents are browser-only**, verified 2026-09-09:
+   the listing page answers a script while the XLSX links return an interstitial or
+   fail. It is a manual transcription job like the NPCI seeds, so it needs a human at a
+   browser. Full evidence and the URL shape are in `docs/resources.md`; do not re-probe
+   the endpoint.
+3. **Per-exhibit CSV downloads.** A `download` prop on `Figure.astro` pointing at a static
    `/data/<name>.csv`. The reproducibility claim is the project's strongest differentiator
    and it currently stops at the repository.
-3. **Excel + PowerPoint deliverables.** `openpyxl` + `python-pptx`, roughly two hours.
+4. **Excel and PowerPoint deliverables.** The Word half is done: `python run.py report` builds `deliverables/india-fs-pulse.docx` from the generated memos. `openpyxl` and `python-pptx` would extend the same pattern.
 4. **Extend the per-app series**, currently 12 irregular months (2023-12 to 2026-07).
    More months sharpen the HHI trend. Browser-transcribed; see `docs/REFRESH.md`.
 5. **A second operator's state-level mix.** The biggest weakness in the geographic module:

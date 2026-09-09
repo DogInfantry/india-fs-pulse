@@ -141,6 +141,30 @@ total, which is why the comparator needs no BRL to INR rate. The one denominator
 transactions per banked adult, and both countries use the same one: total population, less
 ages 0 to 14, times World Bank Findex account ownership.
 
+## RBI card statistics: the control group this report cannot yet build
+
+India charges an MDR on cards and zero on UPI, in the same market, to the same
+merchants, under the same regulator. That is a natural experiment stronger than any
+cross-country comparison, and it is the most valuable exhibit still missing.
+
+The data exists and is monthly. `https://www.rbi.org.in/Scripts/ATMView.aspx` lists
+"Bank-wise ATM/POS/Card Statistics" per month, ten months on the landing page and more
+behind `ATMView.aspx?atmid=<n>`, each row carrying a direct link of the shape
+`https://rbidocs.rbi.org.in/rdocs/ATM/DOCs/ATM<MONTH><YEAR><hash>.XLSX`.
+
+**It is nonetheless browser-only, verified 2026-09-09.** The listing page answers a
+script with HTTP 200, which is misleading: the document links do not. Requested with a
+plain client the XLSX URL returns an HTML interstitial carrying no tables, and requested
+with a browser user agent it fails outright. So RBI joins NPCI and PIB in decision 2:
+transcribed in a browser, never scraped.
+
+What that means for whoever builds this: it is a manual seed under
+`data-pipeline/data/manual/`, with a per-row `source_url` and `accessed` date, exactly
+like the NPCI tables. The card side needs POS volume and value; the UPI side is already
+in `upi_monthly`. Do not spend another session probing the endpoint, and do not simulate
+the ASP.NET postbacks: the row-level links above are the real ones, and they are gated
+downstream rather than behind the form.
+
 ## How to refresh the browser-only sources
 
 `docs/REFRESH.md` has the full procedure. The short version: NPCI blocks scripted access,
