@@ -22,6 +22,9 @@ Thumbs.db
 .vercel
 .env*
 
+# Generated deliverables are reproducible from the pipeline; do not version them.
+deliverables/
+
 # Committed data contract is CSV; parquet is a local convenience only.
 data-pipeline/data/processed/*.parquet
 

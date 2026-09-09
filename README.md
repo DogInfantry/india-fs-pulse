@@ -288,9 +288,9 @@ question: >-
   investable business model?
 method: reproducible Python pipeline, then analysis, then a static site
 publishers: 9
-fetchers: 10
-analysis_modules: 9
-processed_datasets: 22
+fetchers: 11
+analysis_modules: 10
+processed_datasets: 23
 credentials_required: none
 findings:
   - metric: merchant share of UPI transactions

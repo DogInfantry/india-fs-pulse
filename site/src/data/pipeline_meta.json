@@ -1,6 +1,6 @@
 {
-  "fetchers": 10,
-  "analysis_modules": 9,
+  "fetchers": 11,
+  "analysis_modules": 10,
   "publishers": 9,
   "publisher_names": [
     "Association of Mutual Funds in India (AMFI)",
@@ -13,5 +13,5 @@
     "World Bank Open Data",
     "Yahoo Finance"
   ],
-  "datasets": 22
+  "datasets": 23
 }

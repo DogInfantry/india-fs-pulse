@@ -79,6 +79,16 @@
     "rows": 682,
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix"
   },
+  "psp_financials": {
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T08:24:40+00:00",
+    "coverage": "4 NSE tickers, FY2023 to FY2026",
+    "licence": "Yahoo Finance terms; personal/research use",
+    "note": "Filed annual income statements retrieved via the yfinance library, for four listed businesses grouped by what each one sells. A PANEL OF NAMED COMPANIES, not cohort averages: two of the groups hold a single company, and an average of one is not an average. The companies are not like-for-like, so only the shape of the margin each model produces is compared, never a league table.",
+    "publisher": "Yahoo Finance",
+    "rows": 16,
+    "url": "https://finance.yahoo.com/"
+  },
   "pulse_base_national": {
     "accessed": "2026-08-21",
     "accessed_utc": "2026-08-21T12:04:40+00:00",
@@ -121,7 +131,7 @@
   },
   "survey_SYNTHETIC_nps": {
     "accessed": "2026-09-09",
-    "accessed_utc": "2026-09-09T07:33:05+00:00",
+    "accessed_utc": "2026-09-09T08:25:24+00:00",
     "coverage": "2,000 respondents x 4 episodes, seed 20260820",
     "licence": "Apache-2.0",
     "note": "SYNTHETIC. Not a real survey. Generated from a documented seeded model to demonstrate episode-level NPS, because published episode benchmarks are proprietary.",

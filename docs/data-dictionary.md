@@ -167,6 +167,23 @@ Banco Central do Brasil · 2020-11 to 2026-08 · 682 rows · accessed 2026-09-09
 | `volume_share` | float64 | fraction of total (0-1) | 0.02158 |
 | `value_share` | float64 | fraction of total (0-1) | 0.380963 |
 
+## `psp_financials`
+
+Yahoo Finance · 4 NSE tickers, FY2023 to FY2026 · 16 rows · accessed 2026-09-09
+
+| Column | Type | Unit | Example |
+|---|---|---|---|
+| `ticker` | str |  | ANGELONE.NS |
+| `company` | str |  | Angel One |
+| `model` | str |  | Distribution |
+| `sells` | str |  | Retail broking and distribut |
+| `fy_end` | str | YYYY-MM-DD (fiscal year end) | 2023-03-31 |
+| `fy` | int64 |  | 2023 |
+| `revenue_cr` | float64 | INR crore | 2473.0 |
+| `gross_margin_pct` | float64 | per cent | 60.12 |
+| `operating_margin_pct` | float64 | per cent | 40.54 |
+| `net_margin_pct` | float64 | per cent | 35.98 |
+
 ## `pulse_base_national`
 
 PhonePe Pulse · 2018Q1 to 2026Q2 · 34 rows · accessed 2026-08-21

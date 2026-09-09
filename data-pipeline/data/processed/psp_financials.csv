@@ -1,0 +1,17 @@
+ticker,company,model,sells,fy_end,fy,revenue_cr,gross_margin_pct,operating_margin_pct,net_margin_pct
+ANGELONE.NS,Angel One,Distribution,Retail broking and distribution,2023-03-31,2023,2473.0,60.12,40.54,35.98
+ANGELONE.NS,Angel One,Distribution,Retail broking and distribution,2024-03-31,2024,3397.0,60.94,33.58,33.13
+ANGELONE.NS,Angel One,Distribution,Retail broking and distribution,2025-03-31,2025,4248.0,63.67,26.46,27.59
+ANGELONE.NS,Angel One,Distribution,Retail broking and distribution,2026-03-31,2026,4305.0,64.06,20.61,21.25
+POLICYBZR.NS,PB Fintech,Distribution,Insurance and credit distribution,2023-03-31,2023,2558.0,61.58,-28.35,-19.05
+POLICYBZR.NS,PB Fintech,Distribution,Insurance and credit distribution,2024-03-31,2024,3438.0,43.35,-7.99,1.95
+POLICYBZR.NS,PB Fintech,Distribution,Insurance and credit distribution,2025-03-31,2025,4977.0,40.91,-0.29,7.07
+POLICYBZR.NS,PB Fintech,Distribution,Insurance and credit distribution,2026-03-31,2026,6794.0,40.74,6.14,9.86
+CDSL.NS,CDSL,Infrastructure,Securities depository,2023-03-31,2023,555.0,75.97,55.66,49.71
+CDSL.NS,CDSL,Infrastructure,Securities depository,2024-03-31,2024,812.0,77.18,56.9,51.6
+CDSL.NS,CDSL,Infrastructure,Securities depository,2025-03-31,2025,1082.0,75.92,53.21,48.66
+CDSL.NS,CDSL,Infrastructure,Securities depository,2026-03-31,2026,1145.0,70.94,45.58,39.84
+PAYTM.NS,One97 (Paytm),Transactions,Payments rail and merchant services,2023-03-31,2023,7904.0,25.62,-26.46,-22.47
+PAYTM.NS,One97 (Paytm),Transactions,Payments rail and merchant services,2024-03-31,2024,9870.0,29.93,-16.5,-14.36
+PAYTM.NS,One97 (Paytm),Transactions,Payments rail and merchant services,2025-03-31,2025,6741.0,23.97,-26.76,-9.78
+PAYTM.NS,One97 (Paytm),Transactions,Payments rail and merchant services,2026-03-31,2026,8192.0,31.07,3.54,6.75

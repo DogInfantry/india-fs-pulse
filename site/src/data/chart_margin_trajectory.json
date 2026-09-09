@@ -1,0 +1,51 @@
+{
+  "note": "Net margin on filed annual accounts. A company reads null in a year it had not listed or did not report, never zero.",
+  "years": [
+    "2023",
+    "2024",
+    "2025",
+    "2026"
+  ],
+  "series": [
+    {
+      "company": "Angel One",
+      "model": "Distribution",
+      "values": [
+        35.98,
+        33.13,
+        27.59,
+        21.25
+      ]
+    },
+    {
+      "company": "CDSL",
+      "model": "Infrastructure",
+      "values": [
+        49.71,
+        51.6,
+        48.66,
+        39.84
+      ]
+    },
+    {
+      "company": "One97 (Paytm)",
+      "model": "Transactions",
+      "values": [
+        -22.47,
+        -14.36,
+        -9.78,
+        6.75
+      ]
+    },
+    {
+      "company": "PB Fintech",
+      "model": "Distribution",
+      "values": [
+        -19.05,
+        1.95,
+        7.07,
+        9.86
+      ]
+    }
+  ]
+}

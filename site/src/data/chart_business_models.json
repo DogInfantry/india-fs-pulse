@@ -1,0 +1,41 @@
+{
+  "note": "Filed annual accounts for four listed businesses, grouped by what each one sells. Named companies rather than cohort averages, because two of the groups hold a single company.",
+  "companies": [
+    {
+      "company": "One97 (Paytm)",
+      "model": "Transactions",
+      "sells": "Payments rail and merchant services",
+      "fy": "2026",
+      "revenue_cr": 8192.0,
+      "net_margin_pct": 6.75,
+      "operating_margin_pct": 3.54
+    },
+    {
+      "company": "PB Fintech",
+      "model": "Distribution",
+      "sells": "Insurance and credit distribution",
+      "fy": "2026",
+      "revenue_cr": 6794.0,
+      "net_margin_pct": 9.86,
+      "operating_margin_pct": 6.14
+    },
+    {
+      "company": "Angel One",
+      "model": "Distribution",
+      "sells": "Retail broking and distribution",
+      "fy": "2026",
+      "revenue_cr": 4305.0,
+      "net_margin_pct": 21.25,
+      "operating_margin_pct": 20.61
+    },
+    {
+      "company": "CDSL",
+      "model": "Infrastructure",
+      "sells": "Securities depository",
+      "fy": "2026",
+      "revenue_cr": 1145.0,
+      "net_margin_pct": 39.84,
+      "operating_margin_pct": 45.58
+    }
+  ]
+}

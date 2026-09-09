@@ -7,6 +7,7 @@ is the single entry point for both local runs and CI.
     python run.py data       # fetch -> clean -> transform
     python run.py analyze    # analysis scripts -> markdown + chart JSON
     python run.py site       # astro build
+    python run.py report     # the memos as one .docx deliverable
     python run.py all
 """
 from __future__ import annotations
@@ -30,6 +31,7 @@ FETCH = [
     "data-pipeline/fetch/fetch_fred_rates.py",
     "data-pipeline/fetch/fetch_amfi.py",
     "data-pipeline/fetch/fetch_pix_brazil.py",   # keyless BCB open data; caches its raw pull under data/raw
+    "data-pipeline/fetch/fetch_psp_financials.py",
     "data-pipeline/fetch/fetch_upi_incentive.py",   # reads pulse_txn_national for the cross-check
 ]
 TRANSFORM = ["data-pipeline/transform/build_kpis.py"]
@@ -43,6 +45,7 @@ ANALYZE = [
     "analysis/07_wealth_amfi.py",
     "analysis/08_rail_cost.py",
     "analysis/09_pix_comparator.py",
+    "analysis/10_business_models.py",
     "docs/build_readme_charts.py",   # README exhibits + its generated regions
     "docs/build_docs.py",            # sources.md + data-dictionary.md from the ledger
 ]
@@ -78,6 +81,10 @@ def task_analyze() -> None:
         run_py(s)
 
 
+def task_report() -> None:
+    run_py("docs/build_report.py")   # the memos, assembled into one Word document
+
+
 def task_site() -> None:
     run_py("site/scripts/make_og.py")   # social card, drawn from the computed data
     site = ROOT / "site"
@@ -86,7 +93,7 @@ def task_site() -> None:
     run_cmd(["npm", "run", "build"], site)
 
 
-TASKS = {"data": task_data, "analyze": task_analyze, "site": task_site}
+TASKS = {"data": task_data, "analyze": task_analyze, "site": task_site, "report": task_report}
 
 
 def main() -> None:

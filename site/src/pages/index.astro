@@ -37,6 +37,8 @@ import pixShape from '../data/chart_pix_shape.json';
 import pixMigration from '../data/chart_pix_migration.json';
 import pixProducts from '../data/chart_pix_products.json';
 import pixFraud from '../data/chart_pix_fraud.json';
+import bizModels from '../data/chart_business_models.json';
+import marginTrail from '../data/chart_margin_trajectory.json';
 import meta from '../data/pipeline_meta.json';
 
 const pc = (v: number, dp = 1) => `${(v * 100).toFixed(dp)}%`;
@@ -421,6 +423,55 @@ const optPixFraud = {
   ],
 };
 
+/* ---- Exhibit: what each business model actually earns ---- */
+const bizRows = bizModels.companies;
+const optBizModels = {
+  grid: { top: 52, left: 8, right: 8, bottom: 4, containLabel: true },
+  legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'category', data: bizRows.map((r) => r.company),
+           axisTick: { show: false }, axisLabel: { color: '#6E7987', fontSize: 10 } },
+  yAxis: [
+    { type: 'value', name: 'Rs crore revenue', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+    { type: 'value', name: 'net margin %', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+      splitLine: { show: false } },
+  ],
+  series: [
+    /* The transaction business is the subject, so it carries the signal colour and
+       everything else recedes to grey. */
+    { name: 'Revenue', type: 'bar',
+      data: bizRows.map((r) => ({ value: r.revenue_cr,
+        itemStyle: { color: r.model === 'Transactions' ? '#C02734' : '#5B6673' } })) },
+    { name: 'Net margin', type: 'line', yAxisIndex: 1, symbolSize: 9,
+      data: bizRows.map((r) => r.net_margin_pct),
+      lineStyle: { width: 2.5, color: '#1F7A8C' }, itemStyle: { color: '#1F7A8C' } },
+  ],
+};
+
+/* ---- Exhibit: how each margin got where it is ---- */
+const MODEL_COLOUR: Record<string, string> = {
+  Transactions: '#C02734', Distribution: '#1F7A8C', Infrastructure: '#C98A2E',
+};
+const optMarginTrail = {
+  grid: { top: 42, left: 8, right: 16, bottom: 4, containLabel: true },
+  legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'category', data: marginTrail.years.map((y) => `FY${y}`),
+           axisTick: { show: false }, axisLabel: { color: '#6E7987', fontSize: 10 } },
+  yAxis: { type: 'value', axisLabel: { formatter: '{value}%', color: '#6E7987', fontSize: 10 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  /* connectNulls false: a company that had not listed yet has no margin, and a line
+     drawn through that gap would assert one. */
+  series: marginTrail.series.map((sr) => ({
+    name: sr.company, type: 'line', connectNulls: false, symbolSize: 7,
+    data: sr.values,
+    lineStyle: { width: sr.model === 'Transactions' ? 2.8 : 1.8,
+                 color: MODEL_COLOUR[sr.model] ?? '#5B6673' },
+    itemStyle: { color: MODEL_COLOUR[sr.model] ?? '#5B6673' },
+  })),
+};
+
 /* ---- Executive summary ---- */
 const nimGap = Math.round(nim.gap_bps.at(-1));
 const wrapperX = shelf.listed_schemes / shelf.distinct_strategies;
@@ -464,6 +515,7 @@ const MEMO_KICKER: Record<string, string> = {
   'gap-geographic': 'Gap analysis',
   'wealth-fund-shelf': 'Wealth',
   'pov-pix-comparator': 'Comparator',
+  'pov-business-models': 'What it earns',
 };
 const memoOrder = Object.keys(MEMO_KICKER);
 const memos = (await getCollection('insights'))
@@ -790,8 +842,41 @@ if (unlisted.length) {
       </p>
     </section>
 
+    <section class="wrap module" id="module-models">
+      <h2 class="section-head"><span>J</span> What each model actually earns</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 22 · The margin ladder"
+          title="The transaction business carries the most revenue and converts the least of it"
+          subtitle={`Filed annual accounts, FY${bizRows[0].fy}. Bars are revenue, the line is net margin. Named companies rather than cohort averages, because two of the three groups hold a single company.`}
+          source="Filed annual income statements via Yahoo Finance. Not like-for-like companies: different revenue recognition, perimeters and regulators, so only the shape of the margin each model produces is compared. Computed by analysis/10_business_models.py."
+          wide
+        >
+          <EChart id="c-biz-models" option={optBizModels} height={300} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 23 · How they got there"
+          title="The rail took four years to reach a margin the others started above"
+          subtitle="Net margin by fiscal year. A company reads null in a year it had not listed or did not report, never zero, so the lines break rather than bridge."
+          source="Filed annual income statements via Yahoo Finance."
+          wide
+        >
+          <EChart id="c-margin-trail" option={optMarginTrail} height={300} />
+        </Figure>
+      </div>
+      <p class="callout">
+        <b>This is the recommendation, audited:</b> the report has argued since section A
+        that the business is distribution rather than transactions. The only listed
+        transaction business earns the thinnest margin in the panel, and the depository,
+        which is plumbing everyone must cross and <i>is</i> allowed to charge for it, earns
+        the widest. The difference between those two is not scale. It is price.
+        <a href="/insights/pov-business-models">Read the memo and what four companies cannot show →</a>
+      </p>
+    </section>
+
     <section class="wrap module" id="workbench">
-      <h2 class="section-head"><span>J</span> Analyst workbench</h2>
+      <h2 class="section-head"><span>K</span> Analyst workbench</h2>
       <Figure
         kicker="Interactive · Client-ready dashboard"
         title="Every state's payment mix, three linked ways, without leaving the page"
@@ -804,7 +889,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="gap-matrix">
-      <h2 class="section-head"><span>K</span> Coverage and limits</h2>
+      <h2 class="section-head"><span>L</span> Coverage and limits</h2>
       <Figure
         kicker="Scope"
         title="The areas this report does not cover are the ones that would change its conclusion"
@@ -817,7 +902,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="memos">
-      <h2 class="section-head"><span>L</span> The memos</h2>
+      <h2 class="section-head"><span>M</span> The memos</h2>
       <div class="memo-grid">
         {memos.map((m) => (
           <a href={`/insights/${m.id}`}>
