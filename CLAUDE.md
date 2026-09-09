@@ -99,6 +99,7 @@ python run.py all
 | `site/src/components/` | `Answer` (governing thought and three pillars, above the fold, fed by `answer.json` so the page and the .docx cannot differ), `Figure` (action-title frame), `EChart`, `Workbench`, `GapMatrix` (coverage and limits, Harvey balls), `ExecSummary`, `Contact` (the About section), `Monogram`, `BrandMark`, `Scrolly` |
 | `site/scripts/make_og.py` | Social card, drawn from computed data (Pillow, declared in requirements.txt) |
 | `site/scripts/build_india_map.py` | **Run once, output committed.** Boundary file for the choropleth; asserts 36 states and India's official extent |
+| `analysis/12_answer.py` | **Runs last.** Assembles the governing thought and three pillars into `answer.json` from figures other modules already computed. Introduces no new measurement, so it cannot outrun the evidence |
 | `docs/check_invariants.py` | **The one runnable check.** Rule 11 across every generated memo, every download link resolving, footer counts against the tree, no orphan memo card, provenance completeness, and that nulls survive rather than being zero-filled. Plain asserts, no framework. Runs in CI before anything is committed |
 | `docs/build_exhibit_csv.py` | Per-exhibit CSVs into `site/public/data/`, from the chart JSON each exhibit reads. Handles three JSON shapes and **exits non-zero on an unrecognised one**, so an exhibit cannot ship a download link to nothing |
 | `docs/build_report.py` | The memos assembled into `deliverables/india-fs-pulse.docx`. Run with `python run.py report`; output is gitignored |
@@ -141,7 +142,10 @@ python run.py all
   190 MB, then caches under `data/raw` for the calendar month
 - `python run.py analyze`, **12 modules**, artefacts byte-identical across consecutive runs
 - `python run.py site`, **13 pages** (index, methodology, 11 memos)
-- `python run.py report`, the memos as one `.docx` under `deliverables/` (gitignored)
+- `python run.py report`, the memos as one `.docx` under `deliverables/` (gitignored),
+  opening on the answer from `answer.json`
+- `python run.py check`, **11 invariants**, all green. Runs in CI before anything commits
+- 25 exhibits, every one carrying a CSV download; 9 hand-written SVG chart components
 - Live headers verified on the production URL with `curl -I`: CSP, HSTS, nosniff,
   Referrer-Policy, Permissions-Policy, and `max-age=31536000, immutable` on `/_astro/*`
 - ECharts 5.6.0 confirmed loading in a real browser **under the CSP**, zero console errors
@@ -177,6 +181,30 @@ python run.py all
 | Instant payments per banked adult per month, Brazil vs India | **49 vs 24**, same denominator, latest month both publish |
 
 ## Active task
+
+**Pass 8 (2026-09-09/10) did three things. Nothing is half-finished.** Five commits:
+`310eba9`, `ba9d115`, `363f993`, `0056cef`, and `27ac500` from the tail of pass 7.
+
+1. **Four joints in the argument were reconciled**, found by a director-level review of
+   the *argument* rather than the data. The worst: `execAnswer` said the rails "priced the
+   busy half at zero" while section B's callout said "the merchant leg is **not** unpriced,
+   it is priced at 7.0bps", and **no exec finding anchored to the cost module at all**.
+   Both were true of DIFFERENT PARTIES (the app earns zero; the acquiring bank receives the
+   incentive) and the page never said which. Also fixed: a cross-check that was announced
+   and never printed, a causal mechanism ("the mechanism is deposit mix") asserted while
+   `casa` is computed nowhere, and one datum rendering at two precisions.
+2. **Module 11 states the prize in rupees**, which the report had never once done. At the
+   30bps NPCI itself permits, the merchant leg would be worth **Rs 15,450cr a year, 1.9x
+   One97 (Paytm)'s entire revenue**. Two new SVG primitives: `ValuePool` (hypothetical
+   money hollow and dashed, actual money solid) and `RangeBar` (a point inside a band).
+3. **Module 12 gives the report an answer before the evidence**: one governing thought and
+   three pillars, written once to `answer.json` and read by BOTH the page and the `.docx`,
+   which now opens on the answer rather than a contents list.
+
+**A correction worth carrying.** A review agent reported that a hand-typed `7%` falsified
+the "no figure typed by hand" claim. It did not: `analysis/03` computes it and rendered at
+0dp while module 10 rendered at 1dp. Verify an agent's finding before acting on it; this
+one was wrong and was repeated once before checking.
 
 **Pass 6 added module 09, Brazil's Pix, the comparator.** The report asserted that the
 investable business is distribution rather than transactions and had nothing outside India
@@ -365,6 +393,21 @@ gone; if it matters, it has to be rebuilt.
 - **A colon inside an unquoted YAML scalar silently breaks the content collection.**
   `write_memo` runs every source through `json.dumps`, so quoting is automatic. Any new
   memo title containing a colon depends on that.
+
+- **An agent's finding is a hypothesis, not a fact.** A review agent reported a hand-typed
+  `7%` that would have falsified the repo's central integrity claim. It was computed, at a
+  different precision. Verify before acting, and before repeating it to the user.
+- **A renumber loop that guards on `count == 1` skips silently.** Inserting a section whose
+  exhibits duplicate existing numbers made the guard skip both, leaving two 6s, two 7s and
+  no 8 or 9. Renumber the OLD items before inserting the new ones, or target by position.
+- **`/impeccable` is a Claude Code slash command, not a shell command.** Presenting it in a
+  ```bash fence gives it a Run button in the desktop app, which sends it to PowerShell where
+  it fails. Persist design-hook ignores through the plugin's own
+  `skills/impeccable/scripts/hook-admin.mjs` instead of hand-writing the config.
+- **The design hook's `border-accent-on-rounded` misfires here.** It does not read WHICH
+  corners are rounded. `ExecSummary` and `Answer` both zero the radius on the accent edge,
+  which is the remedy the rule asks for. Scoped off for `Answer.astro` in
+  `.impeccable/config.json` with the reason attached.
 
 ### Working in this repo
 
