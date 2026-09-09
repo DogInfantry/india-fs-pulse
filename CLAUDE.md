@@ -96,6 +96,8 @@ python run.py all
 | `site/src/components/` | `Figure` (action-title frame), `EChart`, `Workbench`, `GapMatrix` (coverage and limits, Harvey balls), `ExecSummary`, `Contact` (the About section), `Monogram`, `BrandMark`, `Scrolly` |
 | `site/scripts/make_og.py` | Social card, drawn from computed data (Pillow, declared in requirements.txt) |
 | `site/scripts/build_india_map.py` | **Run once, output committed.** Boundary file for the choropleth; asserts 36 states and India's official extent |
+| `docs/build_exhibit_csv.py` | Per-exhibit CSVs into `site/public/data/`, from the chart JSON each exhibit reads. Handles three JSON shapes and **exits non-zero on an unrecognised one**, so an exhibit cannot ship a download link to nothing |
+| `docs/build_report.py` | The memos assembled into `deliverables/india-fs-pulse.docx`. Run with `python run.py report`; output is gitignored |
 | `docs/build_docs.py` | Generates `sources.md` + `data-dictionary.md` from the provenance ledger |
 | `docs/build_readme_charts.py` | Nine README SVGs plus two generated README regions. 1,200 lines of hand-rolled SVG, no tests. **Every chart JSON shape change flows through here** |
 | `docs/resources.md` | **All external links, tooling verdicts, data endpoints** |
@@ -231,9 +233,9 @@ gone; if it matters, it has to be rebuilt.
    fail. It is a manual transcription job like the NPCI seeds, so it needs a human at a
    browser. Full evidence and the URL shape are in `docs/resources.md`; do not re-probe
    the endpoint.
-3. **Per-exhibit CSV downloads.** A `download` prop on `Figure.astro` pointing at a static
-   `/data/<name>.csv`. The reproducibility claim is the project's strongest differentiator
-   and it currently stops at the repository.
+3. ~~Per-exhibit CSV downloads.~~ **Done.** `Figure.astro` takes a `download` prop and all
+   23 exhibits carry one. `docs/build_exhibit_csv.py` generates the files from the same
+   chart JSON the exhibit reads, so a CSV cannot disagree with the chart above it.
 4. **Excel and PowerPoint deliverables.** The Word half is done: `python run.py report` builds `deliverables/india-fs-pulse.docx` from the generated memos. `openpyxl` and `python-pptx` would extend the same pattern.
 4. **Extend the per-app series**, currently 12 irregular months (2023-12 to 2026-07).
    More months sharpen the HHI trend. Browser-transcribed; see `docs/REFRESH.md`.
