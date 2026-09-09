@@ -254,7 +254,9 @@ gone; if it matters, it has to be rebuilt.
    the merchant-share ranking is PhonePe's. Nothing open publishes an alternative today.
    Say so rather than pretending otherwise.
 7. **AMFI quarterly AAUM**, which would restate the wealth module in rupees rather than
-   scheme counts, the version that informs a fee pool.
+   scheme counts, the version that informs a fee pool. **AMFI publishes it as a JPEG**,
+   verified 2026-09-09, and the documented AUM paths now 404. So it is a manual seed like
+   the PIB tables, read off printed labels, not a fetcher. See `docs/resources.md`.
 8. **Insurance**, the last major FS sector with no coverage here. IRDAI is PDF-only.
 9. **De-synthesise sub-module D.** Needs real fieldwork. When data lands, four
    `SYNTHETIC` labels come off together: the module docstring, the `synthetic` flag in

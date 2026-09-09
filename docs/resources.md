@@ -141,6 +141,24 @@ total, which is why the comparator needs no BRL to INR rate. The one denominator
 transactions per banked adult, and both countries use the same one: total population, less
 ages 0 to 14, times World Bank Findex account ownership.
 
+## AMFI average AUM: published as a picture
+
+The wealth module counts schemes because that is what the public AMFI file carries. The
+version that would inform a fee pool needs rupees, and AMFI does publish quarterly and
+monthly average AUM.
+
+**It publishes it as a JPEG**, verified 2026-09-09. The only AUM-shaped link on
+`amfiindia.com` is an image asset of the form
+`https://www.amfiindia.com/uploads/AAUM_<Mon><Year>_<hash>.jpg`, and the documented
+`/research-information/aum-data/...` and `/modules/AverageAUMDetails` paths both return
+404, so the site has been restructured since those were written. Only
+`https://www.amfiindia.com/spages/NAVAll.txt`, the NAV file this repo already uses,
+remains machine-readable.
+
+So AAUM sits with PIB: a figure published as an image with printed labels, read off the
+labels and never estimated. It is a manual seed under `data-pipeline/data/manual/`, not a
+fetcher, and the filename hash changes each month so there is no stable URL to poll.
+
 ## RBI card statistics: the control group this report cannot yet build
 
 India charges an MDR on cards and zero on UPI, in the same market, to the same
