@@ -1,0 +1,22 @@
+{
+  "note": "Where a merchant can be paid, month end. A PoS terminal costs money to deploy and carries a fee; a UPI QR code is a printed sticker and does not.",
+  "month": "2026-07",
+  "points": [
+    {
+      "label": "PoS terminals",
+      "count": 10027614,
+      "priced": true
+    },
+    {
+      "label": "Bharat QR codes",
+      "count": 5269442,
+      "priced": true
+    },
+    {
+      "label": "UPI QR codes",
+      "count": 803047590,
+      "priced": false
+    }
+  ],
+  "qr_per_terminal": 80.1
+}

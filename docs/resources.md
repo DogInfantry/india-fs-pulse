@@ -170,7 +170,9 @@ The data exists and is monthly. `https://www.rbi.org.in/Scripts/ATMView.aspx` li
 behind `ATMView.aspx?atmid=<n>`, each row carrying a direct link of the shape
 `https://rbidocs.rbi.org.in/rdocs/ATM/DOCs/ATM<MONTH><YEAR><hash>.XLSX`.
 
-**It is nonetheless browser-only, verified 2026-09-09.** The listing page answers a
+**BUILT, one month, 2026-07.** The workbook is downloaded by hand and its national `Total` row transcribed into `data-pipeline/data/manual/rbi_card_payments.csv` and `rbi_acceptance.csv`. That Total reconciled against the sum of its 63 bank rows at 0.00% on every column, which is the check that makes a hand-transcribed figure usable. Each additional month is one more download in the same shape.
+
+**It remains browser-only, verified 2026-09-09.** The listing page answers a
 script with HTTP 200, which is misleading: the document links do not. Requested with a
 plain client the XLSX URL returns an HTML interstitial carrying no tables, and requested
 with a browser user agent it fails outright. So RBI joins NPCI and PIB in decision 2:

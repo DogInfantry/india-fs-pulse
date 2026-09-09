@@ -1,0 +1,14 @@
+# RBI Bank-wise ATM/PoS/Card Statistics, the national 'Total' row.
+# Browser-only source (decision 2): the listing page answers a script but the XLSX
+# links return an interstitial, so the workbook is downloaded by hand and transcribed.
+# Value in the workbook is stated in Rs'000 and is converted to rupees here.
+# Cash withdrawal is EXCLUDED: it is not a merchant payment.
+# The Total row reconciled against the sum of 63 bank rows at 0.00% on every
+# column transcribed, which is the cross-check that makes this figure trustworthy.
+month,instrument,channel,volume,value_inr,source_url,accessed
+2026-07,credit_card,pos,293733617,757403699000,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10
+2026-07,credit_card,ecom,307698073,1323389557000,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10
+2026-07,credit_card,other,3834990,1063731000,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10
+2026-07,debit_card,pos,74121309,221758107000,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10
+2026-07,debit_card,ecom,27352284,155158431000,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10
+2026-07,debit_card,other,82338,2408071000,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10

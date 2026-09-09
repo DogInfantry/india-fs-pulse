@@ -129,9 +129,29 @@
     "rows": 108,
     "url": "https://github.com/PhonePe/pulse"
   },
+  "rbi_acceptance": {
+    "accessed": "2026-09-10",
+    "accessed_utc": "2026-09-09T23:38:55+00:00",
+    "coverage": "2026-07 to 2026-07, national totals",
+    "licence": "Reserve Bank of India terms; data is provisional as published",
+    "note": "Browser-only: RBI's listing page answers a script but its XLSX links return an interstitial, so the monthly workbook is downloaded by hand and its national Total row transcribed. That Total reconciled against the sum of 63 bank rows at 0.00% on every column. Cash withdrawal is excluded: it is not a merchant payment. Cards are the PRICED rail: a merchant discount rate is permitted on them and prohibited on UPI, which is what makes them a control group rather than a rival.",
+    "publisher": "Reserve Bank of India",
+    "rows": 5,
+    "url": "https://www.rbi.org.in/Scripts/ATMView.aspx"
+  },
+  "rbi_card_payments": {
+    "accessed": "2026-09-10",
+    "accessed_utc": "2026-09-09T23:38:55+00:00",
+    "coverage": "2026-07 to 2026-07, national totals",
+    "licence": "Reserve Bank of India terms; data is provisional as published",
+    "note": "Browser-only: RBI's listing page answers a script but its XLSX links return an interstitial, so the monthly workbook is downloaded by hand and its national Total row transcribed. That Total reconciled against the sum of 63 bank rows at 0.00% on every column. Cash withdrawal is excluded: it is not a merchant payment. Cards are the PRICED rail: a merchant discount rate is permitted on them and prohibited on UPI, which is what makes them a control group rather than a rival.",
+    "publisher": "Reserve Bank of India",
+    "rows": 6,
+    "url": "https://www.rbi.org.in/Scripts/ATMView.aspx"
+  },
   "survey_SYNTHETIC_nps": {
     "accessed": "2026-09-10",
-    "accessed_utc": "2026-09-09T21:27:32+00:00",
+    "accessed_utc": "2026-09-09T23:43:42+00:00",
     "coverage": "2,000 respondents x 4 episodes, seed 20260820",
     "licence": "Apache-2.0",
     "note": "SYNTHETIC. Not a real survey. Generated from a documented seeded model to demonstrate episode-level NPS, because published episode benchmarks are proprietary.",

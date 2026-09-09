@@ -287,10 +287,10 @@ question: >-
   nothing for the merchant leg. Who captures the value, and is there an
   investable business model?
 method: reproducible Python pipeline, then analysis, then a static site
-publishers: 9
-fetchers: 11
-analysis_modules: 11
-processed_datasets: 23
+publishers: 10
+fetchers: 12
+analysis_modules: 13
+processed_datasets: 25
 credentials_required: none
 findings:
   - metric: merchant share of UPI transactions

@@ -1,0 +1,23 @@
+{
+  "note": "Two rails, one month, one country, one regulator. Cards may charge a merchant discount rate and UPI may not. Cash withdrawal is excluded from the card side: it is not a merchant payment.",
+  "month": "2026-07",
+  "rails": [
+    {
+      "rail": "Cards (priced)",
+      "volume_mn": 706.8,
+      "value_lakh_cr": 2.46,
+      "avg_ticket_inr": 3482,
+      "priced": true
+    },
+    {
+      "rail": "UPI (zero MDR)",
+      "volume_mn": 23658.3,
+      "value_lakh_cr": 29.88,
+      "avg_ticket_inr": 1263,
+      "priced": false
+    }
+  ],
+  "card_volume_share": 0.029,
+  "card_value_share": 0.0761,
+  "ticket_multiple": 2.76
+}

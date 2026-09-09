@@ -1,0 +1,7 @@
+month,instrument,channel,volume,value_inr,source_url,accessed,avg_ticket_inr
+2026-07,credit_card,pos,293733617,757403699000.0,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10,2579.0
+2026-07,credit_card,ecom,307698073,1323389557000.0,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10,4301.0
+2026-07,credit_card,other,3834990,1063731000.0,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10,277.0
+2026-07,debit_card,pos,74121309,221758107000.0,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10,2992.0
+2026-07,debit_card,ecom,27352284,155158431000.0,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10,5673.0
+2026-07,debit_card,other,82338,2408071000.0,https://www.rbi.org.in/Scripts/ATMView.aspx,2026-09-10,29246.0

@@ -33,6 +33,7 @@ FETCH = [
     "data-pipeline/fetch/fetch_amfi.py",
     "data-pipeline/fetch/fetch_pix_brazil.py",   # keyless BCB open data; caches its raw pull under data/raw
     "data-pipeline/fetch/fetch_psp_financials.py",
+    "data-pipeline/fetch/fetch_rbi_cards.py",   # browser-transcribed seed, the priced control group
     "data-pipeline/fetch/fetch_upi_incentive.py",   # reads pulse_txn_national for the cross-check
 ]
 TRANSFORM = ["data-pipeline/transform/build_kpis.py"]
@@ -48,6 +49,7 @@ ANALYZE = [
     "analysis/09_pix_comparator.py",
     "analysis/10_business_models.py",
     "analysis/11_value_pool.py",
+    "analysis/13_cards_control.py",
     "analysis/12_answer.py",
     "docs/build_exhibit_csv.py",     # per-exhibit CSVs the site offers for download
     "docs/build_readme_charts.py",   # README exhibits + its generated regions

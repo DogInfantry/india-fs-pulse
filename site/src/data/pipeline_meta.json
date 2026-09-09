@@ -1,7 +1,7 @@
 {
-  "fetchers": 11,
-  "analysis_modules": 12,
-  "publishers": 9,
+  "fetchers": 12,
+  "analysis_modules": 13,
+  "publishers": 10,
   "publisher_names": [
     "Association of Mutual Funds in India (AMFI)",
     "Banco Central do Brasil",
@@ -10,8 +10,9 @@
     "NPCI via India Data Portal (CKAN mirror)",
     "PhonePe Pulse",
     "Press Information Bureau, Ministry of Finance",
+    "Reserve Bank of India",
     "World Bank Open Data",
     "Yahoo Finance"
   ],
-  "datasets": 23
+  "datasets": 25
 }

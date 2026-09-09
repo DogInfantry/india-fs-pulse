@@ -85,14 +85,15 @@ python run.py all
 | `data-pipeline/fetch/fetch_upi_incentive.py` | **The cost side.** Government incentive payout joined to the NATIONAL P2M/P2P value split. Both seeds are PIB, browser-only. Cross-checks its merchant share against Pulse. Runs last: it reads `pulse_txn_national` |
 | `data-pipeline/fetch/fetch_bank_stocks.py` | yfinance fundamentals (NIM proxy) + 5y prices; retries flaky tickers |
 | `data-pipeline/fetch/fetch_psp_financials.py` | **The thesis test.** Filed accounts for four listed FS businesses grouped by what each sells. A panel of named companies, never cohort averages |
+| `data-pipeline/fetch/fetch_rbi_cards.py` | **The control group.** Cards, the rail India DOES permit a merchant discount rate on. Browser-transcribed seed: RBI answers a script on the listing page but its XLSX links return an interstitial. Guards that the priced rail is the smaller one |
 | `data-pipeline/fetch/fetch_pix_brazil.py` | **The comparator.** Brazil's Pix from the central bank's Olinda API, keyless. Caches its ~190 MB pull under `data/raw`, keyed on the calendar month |
 | `data-pipeline/fetch/fetch_worldbank.py` · `fetch_amfi.py` | Inclusion denominators, NPLs, private credit · fund scheme universe |
 | `data-pipeline/fetch/fetch_fred_rates.py` | India call money rate, monthly. **Keyless** CSV endpoint, so rule 5 holds |
 | `data-pipeline/data/manual/*.csv` | Hand-seeded NPCI and PIB rows. **Header comments are `#`-leading lines only** |
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json`. Also computes the counts the site footer renders |
 | `analysis/_lib.py` | `load`, `load_json`, `write_json`, `write_memo`, `inr`, `pct` |
-| `analysis/01..12_*.py` | Twelve modules → `insights/*.md` + chart JSON |
-| `site/src/pages/index.astro` | The whole scrollable report: 25 exhibits, 14 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
+| `analysis/01..13_*.py` | Thirteen modules → `insights/*.md` + chart JSON |
+| `site/src/pages/index.astro` | The whole scrollable report: 27 exhibits, 15 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
 | `site/src/scripts/charts.ts` | The only client entry. Memoised `loadECharts`, IntersectionObserver mount, and it boots `scrolly.ts` |
 | `site/src/scripts/scrolly.ts` | The guided opening. Lives here so nothing is inline, which is what keeps `script-src 'self'` honest |
 | `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth`, `ValuePool` (money, hypothetical against actual), `RangeBar` (an estimate as a band) |
@@ -140,12 +141,12 @@ python run.py all
   **blocked at `fetch_pulse.py`** by an upstream removal; see next steps item 1. The other
   nine fetchers and the transform run clean. The first Pix pull adds about 65s and roughly
   190 MB, then caches under `data/raw` for the calendar month
-- `python run.py analyze`, **12 modules**, artefacts byte-identical across consecutive runs
-- `python run.py site`, **13 pages** (index, methodology, 11 memos)
+- `python run.py analyze`, **13 modules**, artefacts byte-identical across consecutive runs
+- `python run.py site`, **14 pages** (index, methodology, 12 memos)
 - `python run.py report`, the memos as one `.docx` under `deliverables/` (gitignored),
   opening on the answer from `answer.json`
 - `python run.py check`, **11 invariants**, all green. Runs in CI before anything commits
-- 25 exhibits, every one carrying a CSV download; 9 hand-written SVG chart components
+- 27 exhibits, every one carrying a CSV download; 9 hand-written SVG chart components
 - Live headers verified on the production URL with `curl -I`: CSP, HSTS, nosniff,
   Referrer-Policy, Permissions-Policy, and `max-age=31536000, immutable` on `/_astro/*`
 - ECharts 5.6.0 confirmed loading in a real browser **under the CSP**, zero console errors
@@ -178,9 +179,24 @@ python run.py all
 | Everything Brazil layered on top of the free rail, six years in | **0.26% of merchant transactions**; dynamic QR is 84.1% and earns nothing |
 | Priced at the 30bps NPCI itself permits, the merchant leg would be worth | **Rs 15,450cr a year, 1.9x One97 (Paytm)'s entire revenue**; the state replaces it with Rs 3,631cr |
 | Cost of holding the subsidy rate steady, against what was appropriated | **Rs 2,681cr to Rs 3,517cr more**, a range because the published base covers ten months |
+| Cards against UPI, same month, same regulator, only cards may charge | **2.9% of transactions but 7.6% of value, at 2.8x the ticket**: a price segments a rail rather than killing it |
+| Acceptance points, UPI QR against card terminals | **803mn against 10.0mn, 80 to one** |
 | Instant payments per banked adult per month, Brazil vs India | **49 vs 24**, same denominator, latest month both publish |
 
 ## Active task
+
+**Pass 9 added module 13, the domestic control group, and it is the cleanest test in
+the report.** The user downloaded RBI's monthly workbook by hand (the document links
+return an interstitial to a script) and it was transcribed into `data/manual/`. India
+runs cards and UPI side by side, same month, same merchants, same regulator, and **only
+cards may charge a merchant discount rate**. Everything except the price is held constant.
+
+The finding is not what the rest of the report predicts: a price does not kill a rail, it
+**segments** it. Cards hold **2.9% of transactions but 7.6% of value at 2.8x the ticket**,
+and acceptance is **803mn UPI QR codes against 10.0mn card terminals, 80 to one**. That
+gives the merchant leg volume-heavy, value-light shape a mechanism rather than only a
+description, and it bounds what re-pricing UPI could move. The module deliberately does
+NOT price the card rail: RBI publishes no blended effective MDR.
 
 **Pass 8 (2026-09-09/10) did three things. Nothing is half-finished.** Five commits:
 `310eba9`, `ba9d115`, `363f993`, `0056cef`, and `27ac500` from the tail of pass 7.
@@ -266,7 +282,13 @@ gone; if it matters, it has to be rebuilt.
      column and show the seam (rules 9 and 1). The alternative is to drop the value side
      of the category split and restate the module on volume only. Do not silently
      `.get("amount", 0)`: that would fabricate zero value for every category.
-2. **Cards against UPI, India's own control group.** The strongest unbuilt exhibit:
+2. ~~Cards against UPI.~~ **Done, one month.** Module 13. Extending it needs one more
+   hand-downloaded workbook per month from `https://www.rbi.org.in/Scripts/ATMView.aspx`,
+   transcribed into `data-pipeline/data/manual/rbi_card_payments.csv` and
+   `rbi_acceptance.csv` in the same shape. A second month turns a snapshot into a trend.
+   Original note kept below because the access constraint has not changed:
+
+   **Cards against UPI, India's own control group.** The strongest unbuilt exhibit:
    India charges an MDR on cards and zero on UPI, same market, same merchants, same
    regulator. RBI publishes monthly bank-wise POS and card statistics and the direct
    file URLs are known, but **the documents are browser-only**, verified 2026-09-09:
