@@ -1,0 +1,108 @@
+---
+/**
+ * The answer, before the evidence. One governing thought and the three pillars
+ * holding it up, each linking to the section that proves it.
+ *
+ * This sits above ExecSummary rather than replacing it: the summary lists what was
+ * found, this says what it adds up to. A list of findings is not an answer, and a
+ * reader should not have to assemble twenty-five exhibits themselves to get one.
+ *
+ * Every figure comes from answer.json, which analysis/12 assembles from what the
+ * other modules already computed. Nothing here is retyped, and nothing here is a
+ * new measurement.
+ */
+interface Pillar { n: string; claim: string; support: string; href: string }
+interface Props { governing: string; pillars: Pillar[] }
+const { governing, pillars } = Astro.props;
+---
+<section class="answer" aria-labelledby="answer-h">
+  <p class="kicker" id="answer-h">The answer</p>
+  <p class="governing">{governing}</p>
+  <ol class="pillars">
+    {pillars.map((p, i) => (
+      <li>
+        <a href={p.href}>
+          <span class="ord">{i + 1}</span>
+          <b class="n">{p.n}</b>
+          <span class="claim">{p.claim}</span>
+          <span class="support">{p.support}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .answer {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--signal);
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--surface);
+    padding: clamp(1.3rem, 3vw, 2.2rem);
+    margin: 1.5rem 0 0;
+  }
+  .governing {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.42;
+    color: var(--text);
+    margin: 0.6rem 0 1.5rem;
+    max-width: 64ch;
+    text-wrap: pretty;
+  }
+  .pillars {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  }
+  .pillars a {
+    display: block;
+    background: var(--surface-2);
+    padding: 1.05rem 1.15rem;
+    height: 100%;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .pillars a:hover { background: var(--line-soft); }
+  .ord {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.08rem 0.42rem;
+    margin-bottom: 0.5rem;
+  }
+  .n {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.42rem;
+    line-height: 1.12;
+    color: var(--signal-text);
+  }
+  .claim {
+    display: block;
+    margin-top: 0.42rem;
+    color: var(--text);
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.42;
+  }
+  .support {
+    display: block;
+    margin-top: 0.42rem;
+    color: var(--text-3);
+    font-size: 0.77rem;
+    line-height: 1.5;
+  }
+</style>

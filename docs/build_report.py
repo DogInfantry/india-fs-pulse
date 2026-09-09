@@ -169,7 +169,19 @@ def main() -> None:
         f"{meta['analysis_modules']} analysis modules. Every figure below is interpolated "
         "from a computed value, so this document cannot drift from the data behind it."))
 
-    doc.add_paragraph()
+    # The answer before the contents, from the same answer.json the page reads, so
+    # the document and the site cannot state a different conclusion.
+    ans_path = SITE_DATA / "answer.json"
+    if ans_path.exists():
+        ans = json.loads(ans_path.read_text(encoding="utf-8"))
+        doc.add_page_break()
+        doc.add_heading("The answer", level=1)
+        add_runs(doc.add_paragraph(), ans["governing"])
+        for i, pil in enumerate(ans["pillars"], 1):
+            doc.add_heading(f"{i}. {pil['n']}  {pil['claim']}", level=2)
+            add_runs(doc.add_paragraph(), pil["support"])
+
+    doc.add_page_break()
     doc.add_heading("Contents", level=1)
     for _, m, _ in parsed:
         add_runs(doc.add_paragraph(style="List Number"), m.get("title", "Untitled"))

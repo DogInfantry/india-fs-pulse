@@ -1,0 +1,24 @@
+{
+  "note": "Assembled from figures other modules computed. This module introduces no new measurement, which is why it runs last.",
+  "governing": "India's instant rail moved the transactions and not the money, and the price it is not permitted to charge is larger than the industry that runs it. The merchant leg carries 64% of transactions and 23% of the value, earns nothing, and would be worth Rs 15,450 crore a year at the rate NPCI itself permits. That is not a gap any operator can close, so the investable business is the relationship the payment creates, not the payment.",
+  "pillars": [
+    {
+      "n": "64% / 23%",
+      "claim": "The busy leg is the cheap leg, and that is structural rather than Indian.",
+      "support": "Brazil's Pix reaches the same shape, 47% of transactions and 12% of value, under a central bank that never had a discount rate to remove. Two regulators, one design, one outcome.",
+      "href": "#module-pix"
+    },
+    {
+      "n": "Rs 15,450 crore",
+      "claim": "What the statute forgoes is larger than what the industry earns.",
+      "support": "Priced at the 30bps NPCI permits, the merchant leg would be worth 1.9 times One97 (Paytm)'s entire revenue. The state replaces 24% of it with an appropriation that has been thinning by arithmetic, from 8.68bps to 7.05bps.",
+      "href": "#module-pool"
+    },
+    {
+      "n": "6.8% vs 39.8%",
+      "claim": "Distribution and infrastructure earn; the transaction does not.",
+      "support": "Filed accounts, same year: One97 (Paytm) converts 6.8% of the largest revenue in the panel, Angel One 21.2% selling distribution, and CDSL, the one piece of plumbing permitted to charge a toll, 39.8%.",
+      "href": "#module-models"
+    }
+  ]
+}

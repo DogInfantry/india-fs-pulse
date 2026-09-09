@@ -5,6 +5,7 @@ import EChart from '../components/EChart.astro';
 import SlopeLines from '../components/charts/SlopeLines.astro';
 import GapMatrix from '../components/GapMatrix.astro';
 import ExecSummary from '../components/ExecSummary.astro';
+import Answer from '../components/Answer.astro';
 import Contact from '../components/Contact.astro';
 import Marimekko from '../components/charts/Marimekko.astro';
 import Waterfall from '../components/charts/Waterfall.astro';
@@ -44,6 +45,7 @@ import valuePool from '../data/chart_value_pool.json';
 import fiscalAsk from '../data/chart_fiscal_ask.json';
 import marginTrail from '../data/chart_margin_trajectory.json';
 import meta from '../data/pipeline_meta.json';
+import answer from '../data/answer.json';
 
 const pc = (v: number, dp = 1) => `${(v * 100).toFixed(dp)}%`;
 const inr = (v: number) =>
@@ -582,6 +584,7 @@ if (unlisted.length) {
       />
     </div>
 
+    <div class="wrap"><Answer governing={answer.governing} pillars={answer.pillars} /></div>
     <div class="wrap"><ExecSummary answer={execAnswer} findings={execFindings} /></div>
 
     <section class="wrap module" id="module-a">
