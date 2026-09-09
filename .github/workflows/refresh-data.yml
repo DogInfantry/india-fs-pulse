@@ -35,6 +35,12 @@ jobs:
       - name: Regenerate the social card from the refreshed data
         run: python site/scripts/make_og.py
 
+      # The refresh rewrites memos, chart JSON and the exhibit CSVs together. This
+      # asserts they still agree with each other, and with what the footer claims,
+      # before any of it is committed.
+      - name: Check the invariants this repository publishes
+        run: python run.py check
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -51,7 +57,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data-pipeline/data/processed insights site/src/data docs README.md site/public/og.png
+          git add data-pipeline/data/processed insights site/src/data site/public/data docs README.md site/public/og.png
           if git diff --staged --quiet; then
             echo "No upstream changes this run."
           else

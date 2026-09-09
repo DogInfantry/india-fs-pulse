@@ -28,9 +28,11 @@ SVG components · Vercel · GitHub Actions monthly refresh.
 `make` is unavailable on Windows. Single entry point:
 
 ```bash
-python run.py data      # 9 fetchers -> validate -> transform   (NO SECRETS REQUIRED, ~120s)
-python run.py analyze   # 8 analysis modules + README exhibits + docs regeneration
+python run.py data      # 11 fetchers -> validate -> transform  (NO SECRETS REQUIRED)
+python run.py analyze   # 10 analysis modules + exhibit CSVs + README exhibits + docs
 python run.py site      # OG card + astro build
+python run.py check     # assert the properties this repo publishes about itself
+python run.py report    # the memos as one .docx under deliverables/ (gitignored)
 python run.py all
 ```
 
@@ -82,20 +84,22 @@ python run.py all
 | `data-pipeline/fetch/fetch_upi_apps.py` | NPCI per-app shares, HHI, national reconciliation |
 | `data-pipeline/fetch/fetch_upi_incentive.py` | **The cost side.** Government incentive payout joined to the NATIONAL P2M/P2P value split. Both seeds are PIB, browser-only. Cross-checks its merchant share against Pulse. Runs last: it reads `pulse_txn_national` |
 | `data-pipeline/fetch/fetch_bank_stocks.py` | yfinance fundamentals (NIM proxy) + 5y prices; retries flaky tickers |
+| `data-pipeline/fetch/fetch_psp_financials.py` | **The thesis test.** Filed accounts for four listed FS businesses grouped by what each sells. A panel of named companies, never cohort averages |
 | `data-pipeline/fetch/fetch_pix_brazil.py` | **The comparator.** Brazil's Pix from the central bank's Olinda API, keyless. Caches its ~190 MB pull under `data/raw`, keyed on the calendar month |
 | `data-pipeline/fetch/fetch_worldbank.py` · `fetch_amfi.py` | Inclusion denominators, NPLs, private credit · fund scheme universe |
 | `data-pipeline/fetch/fetch_fred_rates.py` | India call money rate, monthly. **Keyless** CSV endpoint, so rule 5 holds |
 | `data-pipeline/data/manual/*.csv` | Hand-seeded NPCI and PIB rows. **Header comments are `#`-leading lines only** |
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json`. Also computes the counts the site footer renders |
 | `analysis/_lib.py` | `load`, `load_json`, `write_json`, `write_memo`, `inr`, `pct` |
-| `analysis/01..09_*.py` | Nine modules → `insights/*.md` + chart JSON |
-| `site/src/pages/index.astro` | The whole scrollable report: 21 exhibits, 12 sections. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
+| `analysis/01..10_*.py` | Ten modules → `insights/*.md` + chart JSON |
+| `site/src/pages/index.astro` | The whole scrollable report: 23 exhibits, 13 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
 | `site/src/scripts/charts.ts` | The only client entry. Memoised `loadECharts`, IntersectionObserver mount, and it boots `scrolly.ts` |
 | `site/src/scripts/scrolly.ts` | The guided opening. Lives here so nothing is inline, which is what keeps `script-src 'self'` honest |
 | `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth` |
 | `site/src/components/` | `Figure` (action-title frame), `EChart`, `Workbench`, `GapMatrix` (coverage and limits, Harvey balls), `ExecSummary`, `Contact` (the About section), `Monogram`, `BrandMark`, `Scrolly` |
 | `site/scripts/make_og.py` | Social card, drawn from computed data (Pillow, declared in requirements.txt) |
 | `site/scripts/build_india_map.py` | **Run once, output committed.** Boundary file for the choropleth; asserts 36 states and India's official extent |
+| `docs/check_invariants.py` | **The one runnable check.** Rule 11 across every generated memo, every download link resolving, footer counts against the tree, no orphan memo card, provenance completeness, and that nulls survive rather than being zero-filled. Plain asserts, no framework. Runs in CI before anything is committed |
 | `docs/build_exhibit_csv.py` | Per-exhibit CSVs into `site/public/data/`, from the chart JSON each exhibit reads. Handles three JSON shapes and **exits non-zero on an unrecognised one**, so an exhibit cannot ship a download link to nothing |
 | `docs/build_report.py` | The memos assembled into `deliverables/india-fs-pulse.docx`. Run with `python run.py report`; output is gitignored |
 | `docs/build_docs.py` | Generates `sources.md` + `data-dictionary.md` from the provenance ledger |
@@ -131,12 +135,13 @@ python run.py all
 
 ## Current state: all green
 
-- `python run.py data`, zero secrets, **10 fetchers, 22 processed datasets**. Currently
+- `python run.py data`, zero secrets, **11 fetchers, 23 processed datasets**. Currently
   **blocked at `fetch_pulse.py`** by an upstream removal; see next steps item 1. The other
   nine fetchers and the transform run clean. The first Pix pull adds about 65s and roughly
   190 MB, then caches under `data/raw` for the calendar month
-- `python run.py analyze`, **9 modules**, artefacts byte-identical across consecutive runs
-- `python run.py site`, **11 pages** (index, methodology, 9 memos)
+- `python run.py analyze`, **10 modules**, artefacts byte-identical across consecutive runs
+- `python run.py site`, **12 pages** (index, methodology, 10 memos)
+- `python run.py report`, the memos as one `.docx` under `deliverables/` (gitignored)
 - Live headers verified on the production URL with `curl -I`: CSP, HSTS, nosniff,
   Referrer-Policy, Permissions-Policy, and `max-age=31536000, immutable` on `/_astro/*`
 - ECharts 5.6.0 confirmed loading in a real browser **under the CSP**, zero console errors
@@ -189,6 +194,12 @@ compounding fast, and still an option rather than a business.
 parameter is the publication vintage was wrong, and following it would have returned one
 month instead of seventy. See the gotchas below.
 
+**Pass 7 added module 10, the thesis against filed accounts, plus two deliverables.**
+Four listed companies test the report's own recommendation and agree with it: the
+transaction business earns **6.8%** net margin, distribution **9.9%** and **21.2%**, and
+the depository that IS allowed to charge a toll **39.8%**. Also shipped: a CSV download on
+every exhibit, marks for State Bank and Union Bank, and `python run.py report`.
+
 **Pass 5 remains as described.** Three commits: `460b159`, `57ad435`, `c0915a1`.
 
 1. **The job-description framing is gone**, which was the point of the pass. It had shaped
@@ -237,19 +248,19 @@ gone; if it matters, it has to be rebuilt.
    23 exhibits carry one. `docs/build_exhibit_csv.py` generates the files from the same
    chart JSON the exhibit reads, so a CSV cannot disagree with the chart above it.
 4. **Excel and PowerPoint deliverables.** The Word half is done: `python run.py report` builds `deliverables/india-fs-pulse.docx` from the generated memos. `openpyxl` and `python-pptx` would extend the same pattern.
-4. **Extend the per-app series**, currently 12 irregular months (2023-12 to 2026-07).
+5. **Extend the per-app series**, currently 12 irregular months (2023-12 to 2026-07).
    More months sharpen the HHI trend. Browser-transcribed; see `docs/REFRESH.md`.
-5. **A second operator's state-level mix.** The biggest weakness in the geographic module:
+6. **A second operator's state-level mix.** The biggest weakness in the geographic module:
    the merchant-share ranking is PhonePe's. Nothing open publishes an alternative today.
    Say so rather than pretending otherwise.
-6. **AMFI quarterly AAUM**, which would restate the wealth module in rupees rather than
+7. **AMFI quarterly AAUM**, which would restate the wealth module in rupees rather than
    scheme counts, the version that informs a fee pool.
-7. **Insurance**, the last major FS sector with no coverage here. IRDAI is PDF-only.
-8. **De-synthesise sub-module D.** Needs real fieldwork. When data lands, four
+8. **Insurance**, the last major FS sector with no coverage here. IRDAI is PDF-only.
+9. **De-synthesise sub-module D.** Needs real fieldwork. When data lands, four
    `SYNTHETIC` labels come off together: the module docstring, the `synthetic` flag in
    `chart_nps_episodes.json`, the on-page banner in `index.astro`, and the coverage map
    note. Miss one and the site contradicts itself.
-9. **Optional: `site/tsconfig.json`.** There is none, so the TypeScript in `.astro`
+10. **Optional: `site/tsconfig.json`.** There is none, so the TypeScript in `.astro`
    frontmatter is stripped and never checked. Adding `astro/tsconfigs/strict` will surface
    a pile of pre-existing `as number` casts and untyped params. Its own session.
 
@@ -305,7 +316,11 @@ gone; if it matters, it has to be rebuilt.
 - **`npx astro check` is very slow** here (minutes). Use `npx astro build` to validate.
 - **The CI workflow regenerates more than it used to stage.** `run.py analyze` rewrites
   `docs/assets/*.svg` and two regions inside `README.md`. Staging only `sources.md` left
-  the repo's front door drifting from its own data.
+  the repo's front door drifting from its own data. **It happened twice:** adding
+  `docs/build_exhibit_csv.py` made `analyze` also rewrite `site/public/data/*.csv`, which
+  the workflow did not stage, so a refresh would have served downloads that disagreed
+  with the charts above them. `run.py check` now runs in CI specifically to catch this
+  class of drift. **Add a generator, add its output to the `git add` line.**
 
 ### Sources
 

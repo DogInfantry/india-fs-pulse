@@ -7,6 +7,7 @@ is the single entry point for both local runs and CI.
     python run.py data       # fetch -> clean -> transform
     python run.py analyze    # analysis scripts -> markdown + chart JSON
     python run.py site       # astro build
+    python run.py check      # assert the invariants this repo publishes
     python run.py report     # the memos as one .docx deliverable
     python run.py all
 """
@@ -82,6 +83,10 @@ def task_analyze() -> None:
         run_py(s)
 
 
+def task_check() -> None:
+    run_py("docs/check_invariants.py")   # the properties this repo publishes about itself
+
+
 def task_report() -> None:
     run_py("docs/build_report.py")   # the memos, assembled into one Word document
 
@@ -94,7 +99,8 @@ def task_site() -> None:
     run_cmd(["npm", "run", "build"], site)
 
 
-TASKS = {"data": task_data, "analyze": task_analyze, "site": task_site, "report": task_report}
+TASKS = {"data": task_data, "analyze": task_analyze, "site": task_site,
+         "check": task_check, "report": task_report}
 
 
 def main() -> None:
