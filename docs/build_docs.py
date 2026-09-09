@@ -19,7 +19,7 @@ PROCESSED = ROOT / "data-pipeline" / "data" / "processed"
 
 # Column-name conventions, so units are never guessed from context.
 UNITS = [
-    ("_mn", "millions"), ("_bn", "billions"), ("_cr", "INR crore"),
+    ("_mn", "millions"), ("_bn", "billions"), ("_brl_bn", "BRL billion"), ("_cr", "INR crore"),
     ("_lakh_cr", "INR lakh crore"), ("_inr", "INR"), ("_pct", "per cent"),
     ("_bps", "basis points"), ("_share", "fraction of total (0-1)"),
     ("_yoy", "year-on-year change (fraction)"), ("hhi", "index, 0-10,000"),

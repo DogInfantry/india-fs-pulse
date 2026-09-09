@@ -1,9 +1,10 @@
 {
-  "fetchers": 9,
-  "analysis_modules": 8,
-  "publishers": 8,
+  "fetchers": 10,
+  "analysis_modules": 9,
+  "publishers": 9,
   "publisher_names": [
     "Association of Mutual Funds in India (AMFI)",
+    "Banco Central do Brasil",
     "FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI",
     "NPCI (UPI Ecosystem Statistics)",
     "NPCI via India Data Portal (CKAN mirror)",
@@ -12,5 +13,5 @@
     "World Bank Open Data",
     "Yahoo Finance"
   ],
-  "datasets": 18
+  "datasets": 22
 }

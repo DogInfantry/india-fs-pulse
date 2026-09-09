@@ -33,6 +33,10 @@ import bridge from '../data/chart_growth_bridge.json';
 import shelf from '../data/chart_fund_shelf.json';
 import inclusion from '../data/chart_inclusion.json';
 import marketView from '../data/chart_market_view.json';
+import pixShape from '../data/chart_pix_shape.json';
+import pixMigration from '../data/chart_pix_migration.json';
+import pixProducts from '../data/chart_pix_products.json';
+import pixFraud from '../data/chart_pix_fraud.json';
 import meta from '../data/pipeline_meta.json';
 
 const pc = (v: number, dp = 1) => `${(v * 100).toFixed(dp)}%`;
@@ -326,6 +330,97 @@ const optShelf = {
 };
 
 
+/* ---- Exhibit: the same shape on two rails ---- */
+const optPixShape = {
+  grid: { top: 42, left: 8, right: 16, bottom: 4, containLabel: true },
+  legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'category', data: pixShape.rails.map((r) => r.label),
+           axisTick: { show: false }, axisLabel: { color: '#6E7987', fontSize: 10 } },
+  yAxis: { type: 'value', axisLabel: { formatter: '{value}%', color: '#6E7987', fontSize: 10 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  series: [
+    { name: 'Share of transactions', type: 'bar', barGap: '10%',
+      data: pixShape.rails.map((r) => +(r.volume_share * 100).toFixed(1)),
+      itemStyle: { color: '#C02734' } },
+    { name: 'Share of value', type: 'bar',
+      data: pixShape.rails.map((r) => +(r.value_share * 100).toFixed(1)),
+      itemStyle: { color: '#1F7A8C' } },
+  ],
+};
+
+/* ---- Exhibit: Brazil's merchant leg migrated the same way ---- */
+/* A time axis, not a category axis: the series is 70 consecutive months and the
+   x position has to carry the elapsed time rather than the row number. */
+const pixMigPoint = (vals: number[]) =>
+  pixMigration.months.map((m, i) => [`${m}-01`, +(vals[i] * 100).toFixed(2)]);
+const optPixMigration = {
+  grid: { top: 42, left: 8, right: 16, bottom: 4, containLabel: true },
+  legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'time', axisLabel: { color: '#6E7987', fontSize: 10 } },
+  yAxis: { type: 'value', axisLabel: { formatter: '{value}%', color: '#6E7987', fontSize: 10 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  series: [
+    { name: 'Merchant share of transactions', type: 'line', showSymbol: false,
+      data: pixMigPoint(pixMigration.volume_share),
+      lineStyle: { width: 2.5, color: '#C02734' }, itemStyle: { color: '#C02734' },
+      markLine: { silent: true, symbol: 'none',
+        label: { color: '#A6B0BE', fontSize: 10, formatter: '{b}', position: 'insideEndTop' },
+        lineStyle: { color: '#6E7987', type: 'dashed' },
+        data: [{ yAxis: +(pixMigration.india_merchant_volume_share * 100).toFixed(1),
+                 name: `India ${(pixMigration.india_merchant_volume_share * 100).toFixed(0)}%, ${pixMigration.india_period}` }] } },
+    { name: 'Merchant share of value', type: 'line', showSymbol: false,
+      data: pixMigPoint(pixMigration.value_share),
+      lineStyle: { width: 2, color: '#1F7A8C' }, itemStyle: { color: '#1F7A8C' } },
+  ],
+};
+
+/* ---- Exhibit: the layers built on top of the free rail ---- */
+/* Every series carries nulls before its launch month, and connectNulls stays false:
+   drawing through the gap would assert the product existed and did nothing. */
+const PIX_PRODUCT_COLOUR = ['#C02734', '#1F7A8C', '#C98A2E', '#7C5CA8'];
+const optPixProducts = {
+  grid: { top: 42, left: 8, right: 16, bottom: 4, containLabel: true },
+  legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'time', axisLabel: { color: '#6E7987', fontSize: 10 } },
+  yAxis: { type: 'value', name: '% of merchant transactions',
+           nameTextStyle: { color: '#6E7987', fontSize: 11 },
+           axisLabel: { formatter: '{value}%', color: '#6E7987', fontSize: 10 },
+           splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+  series: pixProducts.series.map((sr, i) => ({
+    name: sr.label, type: 'line', showSymbol: false, connectNulls: false,
+    data: pixProducts.months.map((m, j) => [
+      `${m}-01`, sr.values[j] == null ? null : +(sr.values[j]! * 100).toFixed(3),
+    ]),
+    lineStyle: { width: 2, color: PIX_PRODUCT_COLOUR[i % PIX_PRODUCT_COLOUR.length] },
+    itemStyle: { color: PIX_PRODUCT_COLOUR[i % PIX_PRODUCT_COLOUR.length] },
+  })),
+};
+
+/* ---- Exhibit: the disclosure asymmetry ---- */
+const optPixFraud = {
+  grid: { top: 52, left: 8, right: 8, bottom: 4, containLabel: true },
+  legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'time', axisLabel: { color: '#6E7987', fontSize: 10 } },
+  yAxis: [
+    { type: 'value', name: 'per 100k txns', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } } },
+    { type: 'value', name: '% returned', nameTextStyle: { color: '#6E7987', fontSize: 11 },
+      splitLine: { show: false } },
+  ],
+  series: [
+    { name: 'Accepted fraud disputes per 100k transactions', type: 'line', showSymbol: false,
+      data: pixFraud.months.map((m, i) => [`${m}-01`, pixFraud.accepted_per_100k_txns[i]]),
+      lineStyle: { width: 2.5, color: '#C02734' }, itemStyle: { color: '#C02734' } },
+    { name: 'Share of disputed value returned', type: 'line', yAxisIndex: 1, showSymbol: false,
+      data: pixFraud.months.map((m, i) => [`${m}-01`, pixFraud.returned_pct[i]]),
+      lineStyle: { width: 2, color: '#1F7A8C' }, itemStyle: { color: '#1F7A8C' } },
+  ],
+};
+
 /* ---- Executive summary ---- */
 const nimGap = Math.round(nim.gap_bps.at(-1));
 const wrapperX = shelf.listed_schemes / shelf.distinct_strategies;
@@ -368,6 +463,7 @@ const MEMO_KICKER: Record<string, string> = {
   'survey-nps-episodes': 'Survey',
   'gap-geographic': 'Gap analysis',
   'wealth-fund-shelf': 'Wealth',
+  'pov-pix-comparator': 'Comparator',
 };
 const memoOrder = Object.keys(MEMO_KICKER);
 const memos = (await getCollection('insights'))
@@ -561,7 +657,7 @@ if (unlisted.length) {
           kicker="Exhibit 12 · Financial inclusion"
           title={`Each banked adult now runs ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions a month`}
           subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story, and the cost base.`}
-          source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0–14. UPI volume is the mean month of each year."
+          source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0 to 14. UPI volume is the mean month of each year."
         >
           <EChart id="c-inclusion" option={optInclusion} />
         </Figure>
@@ -641,8 +737,61 @@ if (unlisted.length) {
       </Figure>
     </section>
 
+    <section class="wrap module" id="module-pix">
+      <h2 class="section-head"><span>I</span> The only comparable rail</h2>
+      <div class="grid">
+        <Figure
+          kicker="Exhibit 18 · Same shape, twice"
+          title="Both rails put the transactions in the merchant leg and the money somewhere else"
+          subtitle={`Each bar is a leg's share of its own country's total, so nothing is converted between currencies. India is ${pixShape.india_period} on PhonePe's book; Brazil is ${pixShape.brazil_month}, national.`}
+          source="Banco Central do Brasil, Pix open data, and PhonePe Pulse. Computed by analysis/09_pix_comparator.py."
+          wide
+        >
+          <EChart id="c-pix-shape" option={optPixShape} height={280} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 19 · The migration"
+          title={`Brazil's merchant leg went from ${(pixMigration.volume_share[0] * 100).toFixed(1)}% to ${(pixMigration.volume_share.at(-1)! * 100).toFixed(1)}% of the rail with no price to attract it`}
+          subtitle={`Monthly since Pix launched, on a time axis. The dashed line is India's merchant share of transactions in ${pixMigration.india_period}. The value line barely moves, which is the point.`}
+          source="Banco Central do Brasil, Pix open data. Merchant is BCB's own P2B label, not derived."
+          wide
+        >
+          <EChart id="c-pix-migration" option={optPixMigration} height={300} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 20 · What was built on top"
+          title={`Six years on, everything layered on the free rail is ${(pixProducts.add_on_share * 100).toFixed(2)}% of merchant transactions`}
+          subtitle={`Recurring debits, open-finance initiation and contactless, each as a share of Brazil's merchant-leg volume. A layer reads null before it launched, never zero. Dynamic QR, which is distribution rather than revenue, is ${(pixProducts.dynamic_qr_share * 100).toFixed(0)}% and off this scale.`}
+          source="Banco Central do Brasil, Pix open data, initiation method within the P2B leg."
+          wide
+        >
+          <EChart id="c-pix-products" option={optPixProducts} height={300} />
+        </Figure>
+
+        <Figure
+          kicker="Exhibit 21 · The disclosure gap"
+          title="Brazil publishes instant-payment fraud every month; India publishes no machine-readable equivalent"
+          subtitle={`Accepted fraud disputes per 100,000 transactions, and the share of disputed value returned. There is no Indian line to draw. The series ends ${pixFraud.latest_month}, four months behind the transaction table.`}
+          source="Banco Central do Brasil, EstatisticasFraudesPix. India's losses are answered in Parliament on perimeters that do not line up with each other, which is why no comparable series is attempted."
+          wide
+        >
+          <EChart id="c-pix-fraud" option={optPixFraud} height={300} />
+        </Figure>
+      </div>
+      <p class="callout">
+        <b>Why the comparator settles it:</b> the split this report opens with is not an
+        artefact of India's zero-MDR statute. Brazil never had a discount rate to remove
+        and arrived at the same shape, on a rail its central bank has had six years to
+        monetise. What Brazil built on top is real and still {(pixProducts.add_on_share * 100).toFixed(2)}%
+        of merchant transactions, which is an option rather than a business.
+        <a href="/insights/pov-pix-comparator">Read the memo and what one comparator cannot show →</a>
+      </p>
+    </section>
+
     <section class="wrap module" id="workbench">
-      <h2 class="section-head"><span>I</span> Analyst workbench</h2>
+      <h2 class="section-head"><span>J</span> Analyst workbench</h2>
       <Figure
         kicker="Interactive · Client-ready dashboard"
         title="Every state's payment mix, three linked ways, without leaving the page"
@@ -655,7 +804,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="gap-matrix">
-      <h2 class="section-head"><span>J</span> Coverage and limits</h2>
+      <h2 class="section-head"><span>K</span> Coverage and limits</h2>
       <Figure
         kicker="Scope"
         title="The areas this report does not cover are the ones that would change its conclusion"
@@ -668,7 +817,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="memos">
-      <h2 class="section-head"><span>K</span> The memos</h2>
+      <h2 class="section-head"><span>L</span> The memos</h2>
       <div class="memo-grid">
         {memos.map((m) => (
           <a href={`/insights/${m.id}`}>

@@ -82,13 +82,14 @@ python run.py all
 | `data-pipeline/fetch/fetch_upi_apps.py` | NPCI per-app shares, HHI, national reconciliation |
 | `data-pipeline/fetch/fetch_upi_incentive.py` | **The cost side.** Government incentive payout joined to the NATIONAL P2M/P2P value split. Both seeds are PIB, browser-only. Cross-checks its merchant share against Pulse. Runs last: it reads `pulse_txn_national` |
 | `data-pipeline/fetch/fetch_bank_stocks.py` | yfinance fundamentals (NIM proxy) + 5y prices; retries flaky tickers |
+| `data-pipeline/fetch/fetch_pix_brazil.py` | **The comparator.** Brazil's Pix from the central bank's Olinda API, keyless. Caches its ~190 MB pull under `data/raw`, keyed on the calendar month |
 | `data-pipeline/fetch/fetch_worldbank.py` · `fetch_amfi.py` | Inclusion denominators, NPLs, private credit · fund scheme universe |
 | `data-pipeline/fetch/fetch_fred_rates.py` | India call money rate, monthly. **Keyless** CSV endpoint, so rule 5 holds |
 | `data-pipeline/data/manual/*.csv` | Hand-seeded NPCI and PIB rows. **Header comments are `#`-leading lines only** |
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json`. Also computes the counts the site footer renders |
 | `analysis/_lib.py` | `load`, `load_json`, `write_json`, `write_memo`, `inr`, `pct` |
-| `analysis/01..08_*.py` | Eight modules → `insights/*.md` + chart JSON |
-| `site/src/pages/index.astro` | The whole scrollable report: 17 exhibits, 11 sections. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
+| `analysis/01..09_*.py` | Nine modules → `insights/*.md` + chart JSON |
+| `site/src/pages/index.astro` | The whole scrollable report: 21 exhibits, 12 sections. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
 | `site/src/scripts/charts.ts` | The only client entry. Memoised `loadECharts`, IntersectionObserver mount, and it boots `scrolly.ts` |
 | `site/src/scripts/scrolly.ts` | The guided opening. Lives here so nothing is inline, which is what keeps `script-src 'self'` honest |
 | `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth` |
@@ -128,9 +129,12 @@ python run.py all
 
 ## Current state: all green
 
-- `python run.py data`, ~120s, zero secrets, **9 fetchers, 18 processed datasets**
-- `python run.py analyze`, **8 modules**, artefacts byte-identical across consecutive runs
-- `python run.py site`, **10 pages** (index, methodology, 8 memos)
+- `python run.py data`, zero secrets, **10 fetchers, 22 processed datasets**. Currently
+  **blocked at `fetch_pulse.py`** by an upstream removal; see next steps item 1. The other
+  nine fetchers and the transform run clean. The first Pix pull adds about 65s and roughly
+  190 MB, then caches under `data/raw` for the calendar month
+- `python run.py analyze`, **9 modules**, artefacts byte-identical across consecutive runs
+- `python run.py site`, **11 pages** (index, methodology, 9 memos)
 - Live headers verified on the production URL with `curl -I`: CSP, HSTS, nosniff,
   Referrer-Policy, Permissions-Policy, and `max-age=31536000, immutable` on `/_astro/*`
 - ECharts 5.6.0 confirmed loading in a real browser **under the CSP**, zero console errors
@@ -158,11 +162,32 @@ python run.py all
 | Five-year price return, public vs private banks | **+284% vs +17%** |
 | UPI transactions per banked adult per month | **14.9**, up from 4.0 in 2021 |
 | Fund schemes vs distinct strategies | **14,288 → 3,353** (4.3× wrappers) |
+| Brazil Pix merchant leg: share of transactions vs share of value | **46.6% / 11.8%**, the same shape as India's 63.9% / 23.0% |
+| Brazil's merchant leg since the rail launched | **5.2% (2020-11) → 46.6% (2026-08)** |
+| Everything Brazil layered on top of the free rail, six years in | **0.26% of merchant transactions**; dynamic QR is 84.1% and earns nothing |
+| Instant payments per banked adult per month, Brazil vs India | **49 vs 24**, same denominator, latest month both publish |
 
 ## Active task
 
-**Pass 5 is complete, pushed and verified live. Nothing is half-finished.** Three commits:
-`460b159`, `57ad435`, `c0915a1`.
+**Pass 6 added module 09, Brazil's Pix, the comparator.** The report asserted that the
+investable business is distribution rather than transactions and had nothing outside India
+to test it against. It does now, and the coverage map's "comparison with other instant
+rails" row has moved from not covered to partial.
+
+What it found: Brazil's merchant leg is **46.6% of Pix transactions and 11.8% of the
+value**, against India's 63.9% and 23.0%. The same shape, under a regulator that never had
+a discount rate to remove, which turns the report's central claim from an interpretation of
+India into an observation about zero-cost instant rails. Brazil is also further along the
+curve, at **2.0x India's transactions per banked adult**, so this is not a maturity gap
+India grows out of. What Brazil built on top of the free rail (recurring debits,
+open-finance initiation, contactless) is **0.26% of merchant transactions**: real,
+compounding fast, and still an option rather than a business.
+
+**One correction carried into the code.** The pass-5 note that Olinda's `Database`
+parameter is the publication vintage was wrong, and following it would have returned one
+month instead of seventy. See the gotchas below.
+
+**Pass 5 remains as described.** Three commits: `460b159`, `57ad435`, `c0915a1`.
 
 1. **The job-description framing is gone**, which was the point of the pass. It had shaped
    the site's whole spine: sections existed to tick sector boxes on a brief. The Gap
@@ -181,16 +206,23 @@ gone; if it matters, it has to be rebuilt.
 
 ## Next steps, in order
 
-1. **Module 09: Brazil's Pix, the only comparable rail.** Endpoint verified live during
-   pass 5, keyless JSON, current to 2026-08:
-   `https://olinda.bcb.gov.br/olinda/servico/Pix_DadosAbertos/versao/v1/odata/EstatisticasTransacoesPix(Database=@Database)?@Database='YYYYMM'&$format=json`
-   `PAG_PFPJ` and `REC_PFPJ` give payer and receiver type, so person-to-business is
-   directly comparable to the merchant leg, and it is central-bank data for a whole
-   country rather than one operator's book. `EstatisticasFraudesPix` publishes fraud
-   statistics, which India does not publish in machine-readable form at all: that
-   asymmetry is itself a finding. **Note:** `Database` is the publication vintage, not the
-   reference month, so query the latest vintage and aggregate by `AnoMes`. This closes the
-   coverage map's "comparison with other instant rails" row.
+1. **URGENT, and it blocks `python run.py data`: PhonePe Pulse has removed `amount`
+   from the national category-split endpoint.** `aggregated/transaction/country/india/*`
+   now returns `paymentInstruments[]{count, type}` with **no `amount`**, and it is gone
+   across the whole history, 2018Q1 to 2026Q2, not only recent quarters. Verified
+   2026-09-09. `fetch_pulse.py` dies on `KeyError: 'amount'`, so the pipeline stops at
+   fetcher one and the CI monthly refresh will fail.
+   - The **state** endpoint `map/transaction/hover/...` still carries `amount`, so
+     state-level value survives and `pulse_txn_state` is unaffected.
+   - What breaks if it is patched carelessly: every value share on the page, including
+     the headline merchant **23.0% of value**, average ticket, GMV per merchant and the
+     MDR scenarios. The committed CSVs still hold the last good pull (2026-08-21), so
+     the site is correct as of then and only a refresh is blocked.
+   - This needs a decision, not a quick fix. The house convention already exists in
+     `upi_monthly`: keep the last known good values, mark them with a `provenance`
+     column and show the seam (rules 9 and 1). The alternative is to drop the value side
+     of the category split and restate the module on volume only. Do not silently
+     `.get("amount", 0)`: that would fabricate zero value for every category.
 2. **Per-exhibit CSV downloads.** A `download` prop on `Figure.astro` pointing at a static
    `/data/<name>.csv`. The reproducibility claim is the project's strongest differentiator
    and it currently stops at the repository.
@@ -266,6 +298,29 @@ gone; if it matters, it has to be rebuilt.
   the repo's front door drifting from its own data.
 
 ### Sources
+
+- **PhonePe Pulse dropped `amount` from the national category-split endpoint**, across the
+  whole history, verified 2026-09-09. The state endpoint still has it. This is the repo's
+  primary source and it blocks `python run.py data`. See next steps item 1 before touching
+  `fetch_pulse.py`.
+- **Olinda's `Database` parameter is the EARLIEST reference month, not the publication
+  vintage**, and every response runs cumulatively forward to the latest published month.
+  Asking for `'202608'` returns one month, `'202011'` returns all seventy and about 190 MB.
+  An earlier note in this file said the opposite, and following it would have shipped a
+  one-month series presented as a trend.
+- **Olinda ignores `$select`, `$count`, `$apply` and `$orderby`.** Only `$top` and
+  `$format` are honoured, so there is no server-side aggregation and no cheap way to ask
+  how many rows exist. `$top` without `$orderby` returns arbitrary rows, so it cannot be
+  used to find the latest month either.
+- **Some Olinda months return a truncated body that does not parse.** `'202101'` and
+  `'202401'` both returned an identical 15,613-byte fragment. Reproducible, not transient,
+  which is why `fetch_pix_brazil.py` guards on a row-count floor rather than retrying.
+- **`groupby` silently drops rows whose key is null**, which shrinks a numerator while
+  leaving its denominator whole. Pix leaves `FORMAINICIACAO` null on 1,952 early rows and
+  the share-sum guard is what caught it. Bucket nulls explicitly; never let them vanish.
+- **Guard the unrounded value, not the rounded one.** Rounding ten shares to six places and
+  then asserting they sum to 1 measures the rounding, not the data, and fails at about
+  2e-6.
 
 - **`#` is data, not a comment.** NPCI marks third-party providers with a trailing `#`
   ("Phone Pe #"). `pd.read_csv(comment='#')` silently truncated every row to `NaN`.

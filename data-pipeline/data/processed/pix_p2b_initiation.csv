@@ -1,0 +1,419 @@
+month,initiation,initiation_label,volume_mn,p2b_volume_share
+2020-11,Nao disponivel,Not disclosed,1.5497,1.0
+2020-12,Nao disponivel,Not disclosed,7.9585,1.0
+2021-01,Nao disponivel,Not disclosed,14.1345,1.0
+2021-02,Nao disponivel,Not disclosed,21.164,0.999855
+2021-02,Nao informado,Not reported,0.0031,0.000145
+2021-03,Nao disponivel,Not disclosed,35.0556,1.0
+2021-04,Nao disponivel,Not disclosed,47.6302,1.0
+2021-05,Nao disponivel,Not disclosed,64.7085,1.0
+2021-06,DICT,Pix key,6.0693,0.076812
+2021-06,MANU,Manual entry,0.8125,0.010283
+2021-06,Nao disponivel,Not disclosed,68.5789,0.867932
+2021-06,QRDN,Dynamic QR,2.4435,0.030925
+2021-06,QRES,Static QR,1.11,0.014047
+2021-07,DICT,Pix key,56.8315,0.570658
+2021-07,MANU,Manual entry,7.5434,0.075745
+2021-07,Nao disponivel,Not disclosed,0.0244,0.000245
+2021-07,Nao informado,Not reported,0.0059,5.9e-05
+2021-07,QRDN,Dynamic QR,24.3815,0.24482
+2021-07,QRES,Static QR,10.8028,0.108473
+2021-08,DICT,Pix key,64.0518,0.540325
+2021-08,MANU,Manual entry,8.7456,0.073775
+2021-08,Nao disponivel,Not disclosed,0.0342,0.000288
+2021-08,QRDN,Dynamic QR,33.1467,0.279617
+2021-08,QRES,Static QR,12.5648,0.105994
+2021-09,DICT,Pix key,69.2195,0.522432
+2021-09,MANU,Manual entry,9.5771,0.072283
+2021-09,Nao disponivel,Not disclosed,0.0372,0.000281
+2021-09,QRDN,Dynamic QR,40.7168,0.307309
+2021-09,QRES,Static QR,12.9442,0.097696
+2021-10,DICT,Pix key,76.5591,0.501332
+2021-10,MANU,Manual entry,10.9526,0.071721
+2021-10,Nao disponivel,Not disclosed,0.0401,0.000262
+2021-10,QRDN,Dynamic QR,49.5679,0.324586
+2021-10,QRES,Static QR,15.5918,0.1021
+2021-11,DICT,Pix key,81.3448,0.474547
+2021-11,MANU,Manual entry,12.0801,0.070473
+2021-11,Nao disponivel,Not disclosed,0.047,0.000274
+2021-11,QRDN,Dynamic QR,59.7206,0.348397
+2021-11,QRES,Static QR,18.223,0.106309
+2021-12,DICT,Pix key,95.9916,0.474136
+2021-12,MANU,Manual entry,13.9352,0.068831
+2021-12,Nao disponivel,Not disclosed,0.0517,0.000255
+2021-12,QRDN,Dynamic QR,70.5229,0.348337
+2021-12,QRES,Static QR,21.9546,0.108441
+2022-01,DICT,Pix key,85.0593,0.436654
+2022-01,MANU,Manual entry,12.8606,0.06602
+2022-01,Nao disponivel,Not disclosed,0.0509,0.000261
+2022-01,QRDN,Dynamic QR,76.0235,0.390269
+2022-01,QRES,Static QR,20.8033,0.106795
+2022-02,DICT,Pix key,89.4744,0.433098
+2022-02,MANU,Manual entry,13.7894,0.066747
+2022-02,Nao disponivel,Not disclosed,0.058,0.000281
+2022-02,QRDN,Dynamic QR,81.6219,0.395088
+2022-02,QRES,Static QR,21.6479,0.104786
+2022-03,DICT,Pix key,104.5874,0.418171
+2022-03,INIC,Payment initiator (open finance),0.0,0.0
+2022-03,MANU,Manual entry,16.298,0.065164
+2022-03,Nao disponivel,Not disclosed,0.0651,0.00026
+2022-03,QRDN,Dynamic QR,102.9576,0.411654
+2022-03,QRES,Static QR,26.1989,0.104751
+2022-04,DICT,Pix key,105.8802,0.394092
+2022-04,INIC,Payment initiator (open finance),0.0,0.0
+2022-04,MANU,Manual entry,16.6858,0.062105
+2022-04,Nao disponivel,Not disclosed,0.0549,0.000204
+2022-04,QRDN,Dynamic QR,117.6206,0.43779
+2022-04,QRES,Static QR,28.4274,0.105808
+2022-05,DICT,Pix key,118.2328,0.382065
+2022-05,INIC,Payment initiator (open finance),0.0001,0.0
+2022-05,MANU,Manual entry,18.8477,0.060906
+2022-05,Nao disponivel,Not disclosed,0.0736,0.000238
+2022-05,QRDN,Dynamic QR,138.6736,0.448118
+2022-05,QRES,Static QR,33.6298,0.108673
+2022-06,DICT,Pix key,119.4026,0.355312
+2022-06,INIC,Payment initiator (open finance),0.0003,1e-06
+2022-06,MANU,Manual entry,19.298,0.057426
+2022-06,Nao disponivel,Not disclosed,0.0786,0.000234
+2022-06,QRDN,Dynamic QR,160.3921,0.477287
+2022-06,QRES,Static QR,36.8782,0.10974
+2022-07,DICT,Pix key,125.0918,0.338843
+2022-07,INIC,Payment initiator (open finance),0.0002,1e-06
+2022-07,MANU,Manual entry,19.6491,0.053225
+2022-07,Nao disponivel,Not disclosed,0.083,0.000225
+2022-07,QRDN,Dynamic QR,181.7405,0.49229
+2022-07,QRES,Static QR,42.609,0.115417
+2022-08,DICT,Pix key,132.454,0.325117
+2022-08,INIC,Payment initiator (open finance),0.0003,1e-06
+2022-08,MANU,Manual entry,21.4989,0.05277
+2022-08,Nao disponivel,Not disclosed,0.0876,0.000215
+2022-08,QRDN,Dynamic QR,197.6942,0.485254
+2022-08,QRES,Static QR,55.6686,0.136642
+2022-09,DICT,Pix key,131.1202,0.304714
+2022-09,INIC,Payment initiator (open finance),0.0006,1e-06
+2022-09,MANU,Manual entry,21.4526,0.049854
+2022-09,Nao disponivel,Not disclosed,0.0925,0.000215
+2022-09,QRDN,Dynamic QR,215.5789,0.50099
+2022-09,QRES,Static QR,62.0614,0.144226
+2022-10,DICT,Pix key,135.8579,0.287629
+2022-10,INIC,Payment initiator (open finance),0.0007,1e-06
+2022-10,MANU,Manual entry,22.4882,0.04761
+2022-10,Nao disponivel,Not disclosed,0.0984,0.000208
+2022-10,QRDN,Dynamic QR,245.2401,0.519206
+2022-10,QRES,Static QR,68.6518,0.145345
+2022-11,DICT,Pix key,136.1704,0.269459
+2022-11,INIC,Payment initiator (open finance),0.0007,1e-06
+2022-11,MANU,Manual entry,23.2649,0.046037
+2022-11,Nao disponivel,Not disclosed,0.1019,0.000202
+2022-11,QRDN,Dynamic QR,271.4454,0.537147
+2022-11,QRES,Static QR,74.3636,0.147154
+2022-12,DICT,Pix key,157.2686,0.267523
+2022-12,INIC,Payment initiator (open finance),0.0009,2e-06
+2022-12,MANU,Manual entry,22.4032,0.038109
+2022-12,Nao disponivel,Not disclosed,0.1176,0.0002
+2022-12,QRDN,Dynamic QR,319.3213,0.543184
+2022-12,QRES,Static QR,88.7579,0.150982
+2023-01,DICT,Pix key,137.1998,0.242788
+2023-01,INIC,Payment initiator (open finance),0.0012,2e-06
+2023-01,MANU,Manual entry,19.3509,0.034243
+2023-01,Nao disponivel,Not disclosed,0.108,0.000191
+2023-01,QRDN,Dynamic QR,327.0433,0.578734
+2023-01,QRES,Static QR,81.3984,0.144042
+2023-02,DICT,Pix key,130.1499,0.231698
+2023-02,INIC,Payment initiator (open finance),0.0015,3e-06
+2023-02,MANU,Manual entry,19.743,0.035147
+2023-02,Nao disponivel,Not disclosed,0.1008,0.000179
+2023-02,QRDN,Dynamic QR,334.1106,0.594798
+2023-02,QRES,Static QR,77.6156,0.138175
+2023-03,DICT,Pix key,154.319,0.225694
+2023-03,INIC,Payment initiator (open finance),0.002,3e-06
+2023-03,MANU,Manual entry,24.186,0.035372
+2023-03,Nao disponivel,Not disclosed,0.1259,0.000184
+2023-03,QRDN,Dynamic QR,414.2446,0.605839
+2023-03,QRES,Static QR,90.8764,0.132908
+2023-04,DICT,Pix key,142.8304,0.202659
+2023-04,INIC,Payment initiator (open finance),0.0017,2e-06
+2023-04,MANU,Manual entry,22.1127,0.031375
+2023-04,Nao disponivel,Not disclosed,0.1212,0.000172
+2023-04,QRDN,Dynamic QR,447.3035,0.634669
+2023-04,QRES,Static QR,92.413,0.131123
+2023-05,DICT,Pix key,155.9706,0.195079
+2023-05,INIC,Payment initiator (open finance),0.0004,1e-06
+2023-05,MANU,Manual entry,24.386,0.030501
+2023-05,Nao disponivel,Not disclosed,0.1289,0.000161
+2023-05,QRDN,Dynamic QR,509.9257,0.637785
+2023-05,QRES,Static QR,109.1139,0.136473
+2023-06,DICT,Pix key,155.7524,0.182557
+2023-06,INIC,Payment initiator (open finance),0.0003,0.0
+2023-06,MANU,Manual entry,24.5875,0.028819
+2023-06,Nao disponivel,Not disclosed,0.1324,0.000155
+2023-06,QRDN,Dynamic QR,545.8198,0.639753
+2023-06,QRES,Static QR,126.8799,0.148715
+2023-07,DICT,Pix key,158.9599,0.162417
+2023-07,INIC,Payment initiator (open finance),0.0004,0.0
+2023-07,MANU,Manual entry,25.2786,0.025828
+2023-07,Nao disponivel,Not disclosed,0.1517,0.000155
+2023-07,QRDN,Dynamic QR,652.1138,0.666295
+2023-07,QRES,Static QR,142.2124,0.145305
+2023-08,DICT,Pix key,159.5988,0.146853
+2023-08,INIC,Payment initiator (open finance),0.0005,0.0
+2023-08,MANU,Manual entry,26.3421,0.024238
+2023-08,Nao disponivel,Not disclosed,0.1501,0.000138
+2023-08,QRDN,Dynamic QR,737.5347,0.678633
+2023-08,QRES,Static QR,163.1689,0.150138
+2023-09,DICT,Pix key,153.302,0.136551
+2023-09,INIC,Payment initiator (open finance),0.0007,1e-06
+2023-09,MANU,Manual entry,25.6705,0.022865
+2023-09,Nao disponivel,Not disclosed,0.1479,0.000132
+2023-09,QRDN,Dynamic QR,779.7137,0.694514
+2023-09,QRES,Static QR,163.8408,0.145938
+2023-10,DICT,Pix key,156.9628,0.127763
+2023-10,INIC,Payment initiator (open finance),0.0038,3e-06
+2023-10,MANU,Manual entry,27.2762,0.022202
+2023-10,Nao disponivel,Not disclosed,0.1338,0.000109
+2023-10,QRDN,Dynamic QR,865.6213,0.70459
+2023-10,QRES,Static QR,178.5475,0.145332
+2023-11,DICT,Pix key,158.0746,0.119766
+2023-11,INIC,Payment initiator (open finance),0.0076,6e-06
+2023-11,MANU,Manual entry,27.5512,0.020874
+2023-11,Nao disponivel,Not disclosed,0.1669,0.000126
+2023-11,QRDN,Dynamic QR,964.8405,0.731018
+2023-11,QRES,Static QR,169.2182,0.128209
+2023-12,DICT,Pix key,173.095,0.114507
+2023-12,INIC,Payment initiator (open finance),0.0106,7e-06
+2023-12,MANU,Manual entry,28.7559,0.019023
+2023-12,Nao disponivel,Not disclosed,0.1817,0.00012
+2023-12,QRDN,Dynamic QR,1109.8294,0.734185
+2023-12,QRES,Static QR,199.7764,0.132158
+2024-01,DICT,Pix key,149.2975,0.101922
+2024-01,INIC,Payment initiator (open finance),0.0097,7e-06
+2024-01,MANU,Manual entry,26.048,0.017782
+2024-01,Nao disponivel,Not disclosed,0.1804,0.000123
+2024-01,QRDN,Dynamic QR,1107.8984,0.756334
+2024-01,QRES,Static QR,181.3931,0.123832
+2024-02,DICT,Pix key,146.108,0.100203
+2024-02,INIC,Payment initiator (open finance),0.0104,7e-06
+2024-02,MANU,Manual entry,25.4874,0.01748
+2024-02,Nao disponivel,Not disclosed,0.1877,0.000129
+2024-02,QRDN,Dynamic QR,1112.1407,0.762725
+2024-02,QRES,Static QR,174.1811,0.119456
+2024-03,DICT,Pix key,160.3029,0.09632
+2024-03,INIC,Payment initiator (open finance),0.02,1.2e-05
+2024-03,MANU,Manual entry,27.979,0.016812
+2024-03,Nao disponivel,Not disclosed,0.1958,0.000118
+2024-03,QRDN,Dynamic QR,1284.2971,0.771686
+2024-03,QRES,Static QR,191.4789,0.115053
+2024-04,DICT,Pix key,160.6091,0.095403
+2024-04,INIC,Payment initiator (open finance),0.0088,5e-06
+2024-04,MANU,Manual entry,29.0432,0.017252
+2024-04,Nao disponivel,Not disclosed,0.2123,0.000126
+2024-04,QRDN,Dynamic QR,1303.3488,0.774195
+2024-04,QRES,Static QR,190.266,0.113019
+2024-05,DICT,Pix key,166.3693,0.092097
+2024-05,INIC,Payment initiator (open finance),0.0025,1e-06
+2024-05,MANU,Manual entry,31.5445,0.017462
+2024-05,Nao disponivel,Not disclosed,0.2169,0.00012
+2024-05,QRDN,Dynamic QR,1413.7064,0.782589
+2024-05,QRES,Static QR,194.6082,0.10773
+2024-06,DICT,Pix key,161.3522,0.088721
+2024-06,INIC,Payment initiator (open finance),0.0017,1e-06
+2024-06,MANU,Manual entry,30.7451,0.016905
+2024-06,Nao disponivel,Not disclosed,0.2161,0.000119
+2024-06,QRDN,Dynamic QR,1433.1699,0.788041
+2024-06,QRES,Static QR,193.1645,0.106213
+2024-07,DICT,Pix key,165.9457,0.087863
+2024-07,INIC,Payment initiator (open finance),0.0097,5e-06
+2024-07,MANU,Manual entry,31.585,0.016723
+2024-07,Nao disponivel,Not disclosed,0.236,0.000125
+2024-07,QRDN,Dynamic QR,1494.8511,0.791476
+2024-07,QRES,Static QR,196.0593,0.103807
+2024-08,DICT,Pix key,168.1917,0.084306
+2024-08,INIC,Payment initiator (open finance),0.0028,1e-06
+2024-08,MANU,Manual entry,32.5014,0.016291
+2024-08,Nao disponivel,Not disclosed,0.2339,0.000117
+2024-08,QRDN,Dynamic QR,1592.8784,0.798428
+2024-08,QRES,Static QR,201.2105,0.100856
+2024-09,DICT,Pix key,160.5861,0.082323
+2024-09,INIC,Payment initiator (open finance),0.0021,1e-06
+2024-09,MANU,Manual entry,31.3749,0.016084
+2024-09,Nao disponivel,Not disclosed,0.2406,0.000123
+2024-09,QRDN,Dynamic QR,1568.1909,0.80392
+2024-09,QRES,Static QR,190.2867,0.097549
+2024-10,DICT,Pix key,169.3477,0.083684
+2024-10,INIC,Payment initiator (open finance),0.0125,6e-06
+2024-10,MANU,Manual entry,32.6512,0.016135
+2024-10,Nao disponivel,Not disclosed,0.2771,0.000137
+2024-10,QRDN,Dynamic QR,1617.9298,0.799511
+2024-10,QRES,Static QR,203.4321,0.100527
+2024-11,DICT,Pix key,166.757,0.080793
+2024-11,INIC,Payment initiator (open finance),0.032,1.6e-05
+2024-11,MANU,Manual entry,31.9655,0.015487
+2024-11,Nao disponivel,Not disclosed,0.2846,0.000138
+2024-11,QRDN,Dynamic QR,1658.3653,0.803475
+2024-11,QRES,Static QR,206.5872,0.100091
+2024-12,DICT,Pix key,175.4257,0.076054
+2024-12,INIC,Payment initiator (open finance),0.0195,8e-06
+2024-12,MANU,Manual entry,32.9872,0.014301
+2024-12,Nao disponivel,Not disclosed,0.2813,0.000122
+2024-12,QRDN,Dynamic QR,1870.1165,0.810766
+2024-12,QRES,Static QR,227.7742,0.098749
+2025-01,DICT,Pix key,160.9601,0.07627
+2025-01,INIC,Payment initiator (open finance),0.0148,7e-06
+2025-01,MANU,Manual entry,29.0541,0.013767
+2025-01,Nao disponivel,Not disclosed,0.2702,0.000128
+2025-01,QRDN,Dynamic QR,1723.8967,0.816859
+2025-01,QRES,Static QR,196.2006,0.092969
+2025-02,DICT,Pix key,161.8087,0.078642
+2025-02,INIC,Payment initiator (open finance),0.023,1.1e-05
+2025-02,MANU,Manual entry,29.5423,0.014358
+2025-02,Nao disponivel,Not disclosed,0.2663,0.000129
+2025-02,QRDN,Dynamic QR,1658.7239,0.806173
+2025-02,QRES,Static QR,207.1643,0.100686
+2025-03,DICT,Pix key,170.7516,0.073003
+2025-03,INIC,Payment initiator (open finance),0.0253,1.1e-05
+2025-03,MANU,Manual entry,31.8769,0.013629
+2025-03,Nao disponivel,Not disclosed,0.3008,0.000129
+2025-03,QRDN,Dynamic QR,1916.1648,0.819232
+2025-03,QRES,Static QR,219.8586,0.093998
+2025-04,DICT,Pix key,172.1278,0.072379
+2025-04,INIC,Payment initiator (open finance),0.1756,7.4e-05
+2025-04,MANU,Manual entry,31.8795,0.013405
+2025-04,Nao disponivel,Not disclosed,0.3006,0.000126
+2025-04,QRDN,Dynamic QR,1960.1134,0.824223
+2025-04,QRES,Static QR,213.5366,0.089792
+2025-05,DICT,Pix key,182.0148,0.07239
+2025-05,INIC,Payment initiator (open finance),0.0488,1.9e-05
+2025-05,MANU,Manual entry,34.1692,0.01359
+2025-05,Nao disponivel,Not disclosed,0.3153,0.000125
+2025-05,QRDN,Dynamic QR,2061.4299,0.81986
+2025-05,QRES,Static QR,236.3913,0.094016
+2025-06,APDN,"Contactless, dynamic",0.0008,0.0
+2025-06,AUTO,Pix Automatico (recurring),0.0001,0.0
+2025-06,DICT,Pix key,174.4445,0.070878
+2025-06,INIC,Payment initiator (open finance),0.06,2.4e-05
+2025-06,MANU,Manual entry,32.2851,0.013118
+2025-06,Nao disponivel,Not disclosed,0.3508,0.000143
+2025-06,QRDN,Dynamic QR,2015.6496,0.818978
+2025-06,QRES,Static QR,238.3871,0.096859
+2025-07,APDN,"Contactless, dynamic",0.0268,1e-05
+2025-07,AUTO,Pix Automatico (recurring),0.0015,1e-06
+2025-07,DICT,Pix key,184.3228,0.072018
+2025-07,INIC,Payment initiator (open finance),0.225,8.8e-05
+2025-07,MANU,Manual entry,33.9912,0.013281
+2025-07,Nao disponivel,Not disclosed,0.3427,0.000134
+2025-07,QRDN,Dynamic QR,2089.6108,0.816451
+2025-07,QRES,Static QR,250.8629,0.098017
+2025-08,APDN,"Contactless, dynamic",0.4356,0.000161
+2025-08,AUTO,Pix Automatico (recurring),0.0274,1e-05
+2025-08,DICT,Pix key,181.5572,0.067169
+2025-08,INIC,Payment initiator (open finance),0.0196,7e-06
+2025-08,MANU,Manual entry,35.6579,0.013192
+2025-08,Nao disponivel,Not disclosed,0.3751,0.000139
+2025-08,QRDN,Dynamic QR,2231.3941,0.825531
+2025-08,QRES,Static QR,253.5129,0.09379
+2025-09,APDN,"Contactless, dynamic",0.4473,0.000168
+2025-09,AUTO,Pix Automatico (recurring),0.0884,3.3e-05
+2025-09,DICT,Pix key,179.0176,0.067293
+2025-09,INIC,Payment initiator (open finance),0.0125,5e-06
+2025-09,MANU,Manual entry,36.5181,0.013727
+2025-09,Nao disponivel,Not disclosed,0.3278,0.000123
+2025-09,QRDN,Dynamic QR,2199.3926,0.826761
+2025-09,QRES,Static QR,244.4488,0.091889
+2025-10,APDN,"Contactless, dynamic",0.4186,0.000149
+2025-10,AUTO,Pix Automatico (recurring),0.1775,6.3e-05
+2025-10,DICT,Pix key,187.4141,0.066609
+2025-10,INIC,Payment initiator (open finance),0.0151,5e-06
+2025-10,MANU,Manual entry,38.3646,0.013635
+2025-10,Nao disponivel,Not disclosed,0.3515,0.000125
+2025-10,QRDN,Dynamic QR,2331.754,0.828731
+2025-10,QRES,Static QR,255.1479,0.090682
+2025-11,APDN,"Contactless, dynamic",0.7327,0.000256
+2025-11,APES,"Contactless, static",0.0006,0.0
+2025-11,AUTO,Pix Automatico (recurring),0.2704,9.5e-05
+2025-11,DICT,Pix key,183.0042,0.063977
+2025-11,INIC,Payment initiator (open finance),0.3676,0.000129
+2025-11,MANU,Manual entry,35.1184,0.012277
+2025-11,Nao disponivel,Not disclosed,0.3522,0.000123
+2025-11,QRDN,Dynamic QR,2378.2766,0.831433
+2025-11,QRES,Static QR,262.3323,0.09171
+2025-12,APDN,"Contactless, dynamic",0.9508,0.000302
+2025-12,APES,"Contactless, static",0.0049,2e-06
+2025-12,AUTO,Pix Automatico (recurring),0.5761,0.000183
+2025-12,DICT,Pix key,196.7684,0.062402
+2025-12,INIC,Payment initiator (open finance),0.2116,6.7e-05
+2025-12,MANU,Manual entry,35.9058,0.011387
+2025-12,Nao disponivel,Not disclosed,0.3823,0.000121
+2025-12,QRDN,Dynamic QR,2631.3292,0.834483
+2025-12,QRES,Static QR,287.1169,0.091054
+2026-01,APDN,"Contactless, dynamic",0.841,0.000289
+2026-01,APES,"Contactless, static",0.004,1e-06
+2026-01,AUTO,Pix Automatico (recurring),0.884,0.000304
+2026-01,DICT,Pix key,175.9273,0.060539
+2026-01,INIC,Payment initiator (open finance),0.0165,6e-06
+2026-01,MANU,Manual entry,31.7952,0.010941
+2026-01,Nao disponivel,Not disclosed,0.3577,0.000123
+2026-01,QRDN,Dynamic QR,2438.2635,0.839038
+2026-01,QRES,Static QR,257.9324,0.088758
+2026-02,APDN,"Contactless, dynamic",0.857,0.000314
+2026-02,APES,"Contactless, static",0.0046,2e-06
+2026-02,AUTO,Pix Automatico (recurring),1.1438,0.000419
+2026-02,DICT,Pix key,170.7108,0.06253
+2026-02,INIC,Payment initiator (open finance),0.0152,6e-06
+2026-02,MANU,Manual entry,30.1055,0.011027
+2026-02,Nao disponivel,Not disclosed,0.3718,0.000136
+2026-02,QRDN,Dynamic QR,2283.1241,0.836295
+2026-02,QRES,Static QR,243.7139,0.089271
+2026-03,APDN,"Contactless, dynamic",1.0464,0.000339
+2026-03,APES,"Contactless, static",0.0052,2e-06
+2026-03,AUTO,Pix Automatico (recurring),1.7742,0.000574
+2026-03,DICT,Pix key,197.4355,0.063888
+2026-03,INIC,Payment initiator (open finance),0.0156,5e-06
+2026-03,MANU,Manual entry,34.3541,0.011117
+2026-03,Nao disponivel,Not disclosed,0.4107,0.000133
+2026-03,QRDN,Dynamic QR,2575.4519,0.833393
+2026-03,QRES,Static QR,279.8274,0.09055
+2026-04,APDN,"Contactless, dynamic",1.1784,0.000382
+2026-04,APES,"Contactless, static",0.0056,2e-06
+2026-04,AUTO,Pix Automatico (recurring),2.1658,0.000702
+2026-04,DICT,Pix key,190.8035,0.061839
+2026-04,INIC,Payment initiator (open finance),0.0162,5e-06
+2026-04,MANU,Manual entry,33.5613,0.010877
+2026-04,Nao disponivel,Not disclosed,0.4055,0.000131
+2026-04,QRDN,Dynamic QR,2585.8562,0.83807
+2026-04,QRES,Static QR,271.4959,0.087991
+2026-05,APDN,"Contactless, dynamic",1.2479,0.00038
+2026-05,APES,"Contactless, static",0.0056,2e-06
+2026-05,AUTO,Pix Automatico (recurring),2.7198,0.000828
+2026-05,DICT,Pix key,201.0032,0.06116
+2026-05,INIC,Payment initiator (open finance),0.0167,5e-06
+2026-05,MANU,Manual entry,34.3911,0.010464
+2026-05,Nao disponivel,Not disclosed,0.4862,0.000148
+2026-05,QRDN,Dynamic QR,2752.8346,0.837621
+2026-05,QRES,Static QR,293.7882,0.089393
+2026-06,APDN,"Contactless, dynamic",1.3221,0.000411
+2026-06,APES,"Contactless, static",0.0054,2e-06
+2026-06,AUTO,Pix Automatico (recurring),4.1075,0.001278
+2026-06,DICT,Pix key,198.8053,0.061845
+2026-06,INIC,Payment initiator (open finance),0.0141,4e-06
+2026-06,MANU,Manual entry,33.3124,0.010363
+2026-06,Nao disponivel,Not disclosed,0.4143,0.000129
+2026-06,QRDN,Dynamic QR,2691.2631,0.837206
+2026-06,QRES,Static QR,285.3309,0.088762
+2026-07,APDN,"Contactless, dynamic",1.5158,0.000451
+2026-07,APES,"Contactless, static",0.0059,2e-06
+2026-07,AUTO,Pix Automatico (recurring),5.8133,0.001731
+2026-07,DICT,Pix key,207.9742,0.061941
+2026-07,INIC,Payment initiator (open finance),0.0137,4e-06
+2026-07,MANU,Manual entry,32.951,0.009814
+2026-07,Nao disponivel,Not disclosed,0.4695,0.00014
+2026-07,QRDN,Dynamic QR,2815.684,0.838595
+2026-07,QRES,Static QR,293.1927,0.087322
+2026-08,APDN,"Contactless, dynamic",1.6322,0.000475
+2026-08,APES,"Contactless, static",0.0058,2e-06
+2026-08,AUTO,Pix Automatico (recurring),7.1791,0.002089
+2026-08,DICT,Pix key,209.9742,0.061108
+2026-08,INIC,Payment initiator (open finance),0.0133,4e-06
+2026-08,MANU,Manual entry,28.4814,0.008289
+2026-08,Nao disponivel,Not disclosed,0.4768,0.000139
+2026-08,QRDN,Dynamic QR,2888.3643,0.840593
+2026-08,QRES,Static QR,299.9769,0.087301

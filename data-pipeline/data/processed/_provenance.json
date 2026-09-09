@@ -1,53 +1,83 @@
 {
   "amfi_fund_houses": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:24+00:00",
-    "coverage": "20-Aug-2026",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:42+00:00",
+    "coverage": "08-Sep-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
     "publisher": "Association of Mutual Funds in India (AMFI)",
-    "rows": 52,
+    "rows": 53,
     "url": "https://www.amfiindia.com/spages/NAVAll.txt"
   },
   "amfi_schemes": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:24+00:00",
-    "coverage": "20-Aug-2026",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:42+00:00",
+    "coverage": "08-Sep-2026",
     "licence": "AMFI terms; publicly published daily NAV file",
     "note": "Scheme universe snapshot; scheme counts are not AUM.",
     "publisher": "Association of Mutual Funds in India (AMFI)",
-    "rows": 14288,
+    "rows": 14348,
     "url": "https://www.amfiindia.com/spages/NAVAll.txt"
   },
   "bank_fundamentals": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:18+00:00",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:23+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
     "publisher": "Yahoo Finance",
-    "rows": 47,
+    "rows": 46,
     "url": "https://finance.yahoo.com/"
   },
   "bank_prices": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:18+00:00",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:23+00:00",
     "coverage": "11 NSE tickers",
     "licence": "Yahoo Finance terms; personal/research use",
     "note": "Retrieved via the yfinance library. NIM here is a PROXY: net interest income / average total assets, not reported NIM.",
     "publisher": "Yahoo Finance",
-    "rows": 13580,
+    "rows": 13589,
     "url": "https://finance.yahoo.com/"
   },
   "india_rates": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:22+00:00",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:30+00:00",
     "coverage": "1968-01 to 2026-06",
     "licence": "FRED terms of use; underlying series (c) OECD. Free to redistribute with attribution.",
     "note": "India immediate/call money interbank rate, monthly. Fetched from FRED's keyless CSV endpoint so the pipeline needs no credentials. Months FRED does not publish are dropped, never interpolated.",
     "publisher": "FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI",
     "rows": 702,
     "url": "https://fred.stlouisfed.org/series/IRSTCI01INM156N"
+  },
+  "pix_fraud_monthly": {
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:32:04+00:00",
+    "coverage": "2022-01 to 2026-04",
+    "licence": "Banco Central do Brasil open data terms",
+    "note": "STALE relative to the transaction series: fraud stops at 2026-04 while transactions run to 2026-08. Disputed volume, accepted disputes per 100,000 transactions, and the share of disputed value returned through the special return mechanism. No Indian equivalent is published in machine-readable form. `Database` in the Olinda URL is the EARLIEST reference month, not the publication vintage: each response runs cumulatively forward to the latest published month. Olinda ignores $select, $count, $apply and $orderby, so the full cross-tab is downloaded and aggregated locally. No currency is converted anywhere: every comparison is a share of Brazil's own total.",
+    "publisher": "Banco Central do Brasil",
+    "rows": 52,
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix"
+  },
+  "pix_p2b_initiation": {
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:32:04+00:00",
+    "coverage": "2020-11 to 2026-08",
+    "licence": "Banco Central do Brasil open data terms",
+    "note": "How the P2B leg is initiated, as a share of that month's P2B volume. BCB began breaking the method out in 2021-06; earlier months carry the code 'Nao disponivel', which is kept rather than dropped so an undisclosed month cannot read as a zero. `Database` in the Olinda URL is the EARLIEST reference month, not the publication vintage: each response runs cumulatively forward to the latest published month. Olinda ignores $select, $count, $apply and $orderby, so the full cross-tab is downloaded and aggregated locally. No currency is converted anywhere: every comparison is a share of Brazil's own total.",
+    "publisher": "Banco Central do Brasil",
+    "rows": 418,
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix"
+  },
+  "pix_txn_monthly": {
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:32:04+00:00",
+    "coverage": "2020-11 to 2026-08",
+    "licence": "Banco Central do Brasil open data terms",
+    "note": "Monthly Pix volume and value by leg, where P2B is person to business and is the leg comparable to India's merchant payments. `Database` in the Olinda URL is the EARLIEST reference month, not the publication vintage: each response runs cumulatively forward to the latest published month. Olinda ignores $select, $count, $apply and $orderby, so the full cross-tab is downloaded and aggregated locally. No currency is converted anywhere: every comparison is a share of Brazil's own total.",
+    "publisher": "Banco Central do Brasil",
+    "rows": 682,
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix"
   },
   "pulse_base_national": {
     "accessed": "2026-08-21",
@@ -91,7 +121,7 @@
   },
   "survey_SYNTHETIC_nps": {
     "accessed": "2026-09-09",
-    "accessed_utc": "2026-09-08T19:49:51+00:00",
+    "accessed_utc": "2026-09-09T07:33:05+00:00",
     "coverage": "2,000 respondents x 4 episodes, seed 20260820",
     "licence": "Apache-2.0",
     "note": "SYNTHETIC. Not a real survey. Generated from a documented seeded model to demonstrate episode-level NPS, because published episode benchmarks are proprietary.",
@@ -100,8 +130,8 @@
     "url": "https://github.com/DogInfantry/india-fs-pulse/blob/main/analysis/04_survey_nps.py"
   },
   "upi_apps": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:01+00:00",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:00+00:00",
     "coverage": "2023-12 to 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "Top ten apps by volume, transcribed from a browser session because NPCI returns HTTP 403 to scripted access. Shares are computed against the NPCI national monthly total, so they are true market shares and the residual is real.",
@@ -110,8 +140,8 @@
     "url": "https://www.npci.org.in/product/ecosystem-statistics/upi"
   },
   "upi_apps_hhi": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:01+00:00",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:00+00:00",
     "coverage": "2023-12 to 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "Top ten apps by volume, transcribed from a browser session because NPCI returns HTTP 403 to scripted access. Shares are computed against the NPCI national monthly total, so they are true market shares and the residual is real.",
@@ -121,7 +151,7 @@
   },
   "upi_incentive": {
     "accessed": "2026-09-09",
-    "accessed_utc": "2026-09-08T19:43:35+00:00",
+    "accessed_utc": "2026-09-09T07:31:45+00:00",
     "coverage": "FY2021-22 to FY2024-25, incentive payout and national UPI value split",
     "licence": "Government of India, PIB terms",
     "note": "Hand-transcribed in a browser: PIB serves HTTP 403 to scripted requests, and the figures are published as chart images with printed data labels. The blended rate is incentive paid over ALL merchant value, not the statutory 0.15%, which applies only to transactions at or under Rs 2,000 to small merchants. STALE: the release stops at FY2024-25 and was accessed 2026-09-09.",
@@ -130,8 +160,8 @@
     "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335"
   },
   "upi_monthly": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:00+00:00",
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:30:57+00:00",
     "coverage": "2016-07 to 2026-07",
     "licence": "NPCI terms apply to the underlying data",
     "note": "CKAN mirror STOPS AT 2023-08. Rows after that are hand-seeded from npci.org.in, which returns HTTP 403 to scripted access. The `provenance` column marks which is which.",
@@ -139,12 +169,22 @@
     "rows": 116,
     "url": "https://ckandev.indiadataportal.com/dataset/150fe363-f61f-41f2-9215-15f61358f427/resource/8b176063-658a-41d7-9401-7461808d87a2/download/upi-product-statistics.csv"
   },
-  "worldbank_india": {
-    "accessed": "2026-08-21",
-    "accessed_utc": "2026-08-21T12:05:20+00:00",
+  "worldbank_brazil": {
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:26+00:00",
     "coverage": "1960 to 2025",
     "licence": "CC BY 4.0",
-    "note": "Indicators: FX.OWN.TOTL.ZS, FX.OWN.TOTL.FE.ZS, NY.GDP.MKTP.CD, SP.POP.TOTL, SP.POP.0014.TO, FB.AST.NPER.ZS, FS.AST.PRVT.GD.ZS",
+    "note": "The denominator for the Pix comparator only: transactions per banked adult, computed on the same 15+ base as India's. Indicators: FX.OWN.TOTL.ZS, SP.POP.TOTL, SP.POP.0014.TO",
+    "publisher": "World Bank Open Data",
+    "rows": 66,
+    "url": "https://api.worldbank.org/v2/country/BRA/indicator/"
+  },
+  "worldbank_india": {
+    "accessed": "2026-09-09",
+    "accessed_utc": "2026-09-09T07:31:26+00:00",
+    "coverage": "1960 to 2025",
+    "licence": "CC BY 4.0",
+    "note": "Inclusion denominators, asset quality and private credit for the banking and payments modules. Indicators: FX.OWN.TOTL.ZS, FX.OWN.TOTL.FE.ZS, NY.GDP.MKTP.CD, SP.POP.TOTL, SP.POP.0014.TO, FB.AST.NPER.ZS, FS.AST.PRVT.GD.ZS",
     "publisher": "World Bank Open Data",
     "rows": 66,
     "url": "https://api.worldbank.org/v2/country/IND/indicator/"

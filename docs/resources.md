@@ -104,6 +104,43 @@ not even as a fragment. FRED's key works, but the keyless CSV endpoint serves th
 series, so the pipeline does not use it. Rule 5 says `python run.py data` must run with zero
 environment variables, and it still does.
 
+## Banco Central do Brasil: the Pix comparator
+
+Keyless, no auth, current to 2026-08. This is the one instant rail comparable to UPI, and
+it is the source behind sub-module I.
+
+| Endpoint | What it gives |
+|---|---|
+| `EstatisticasTransacoesPix(Database=@Database)` | The full transaction cross-tab. `NATUREZA` labels the leg (`P2P`, `P2B`, `B2B`, `B2P`, and the government variants), so the merchant leg is published rather than derived. Also carries region, age band, initiation method and purpose |
+| `EstatisticasFraudesPix(Database=@Database)` | Monthly fraud: disputed volume, accepted disputes per 100,000 transactions, and the share of disputed value returned. 2022-01 to 2026-04. **India publishes no machine-readable equivalent** |
+| `CnaePorteRecebedor(Database=@Database)` | Receiver by sector, size band and MEI flag. Not used: a second large cross-tab, and a sample returned a future `AnoMes` that needs its own investigation |
+| `TransacoesPixPorMunicipio(DataBase=@DataBase)` | Municipality-level. Not used. Note the different capitalisation of the parameter |
+| `PixUsuariosCadastradosDICT` | Registered keys, individuals against businesses. No parameter. Not used: it counts directory registrations rather than users, so it is not comparable to PhonePe's registered base |
+
+Base: `https://olinda.bcb.gov.br/olinda/servico/Pix_DadosAbertos/versao/v1/odata`
+Landing page: <https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix>
+
+**Four traps, all verified 2026-09-09 and all costly if assumed:**
+
+1. **`Database` is the earliest reference month, not the publication vintage.** Each
+   response runs cumulatively forward to the latest published month. `'202608'` returns
+   one month and 3.4 MB; `'202011'` returns seventy months and about 190 MB. An earlier
+   note in this repo claimed the opposite.
+2. **`$select`, `$count`, `$apply` and `$orderby` are ignored.** Only `$top` and `$format`
+   work, so there is no server-side aggregation and no cheap row count. `$top` without an
+   order returns arbitrary rows, so it cannot find the latest month either.
+3. **Some months return a truncated body.** `'202101'` and `'202401'` both returned an
+   identical 15,613-byte fragment that fails to parse. Reproducible rather than transient,
+   so the fetcher guards on a row-count floor instead of retrying.
+4. **`FORMAINICIACAO` is null on a small number of early rows.** pandas drops null grouping
+   keys, which would shrink the numerator and leave the denominator whole, so those rows
+   are bucketed explicitly rather than dropped.
+
+**No currency is converted.** Every Brazil figure on the site is a share of Brazil's own
+total, which is why the comparator needs no BRL to INR rate. The one denominator used is
+transactions per banked adult, and both countries use the same one: total population, less
+ages 0 to 14, times World Bank Findex account ownership.
+
 ## How to refresh the browser-only sources
 
 `docs/REFRESH.md` has the full procedure. The short version: NPCI blocks scripted access,

@@ -3,7 +3,7 @@ title: "India's fund shelf is four times more administered than it is diverse"
 generated: 2026-09-09
 generator: analysis/07_wealth_amfi.py
 sources:
-  - "AMFI daily NAV file (NAVAll.txt), 20-Aug-2026"
+  - "AMFI daily NAV file (NAVAll.txt), 08-Sep-2026"
 ---
 
 <!-- GENERATED FILE. Edit the analysis script, not this file. -->
@@ -13,10 +13,10 @@ sources:
 
 ## The answer
 
-On 20-Aug-2026 the Indian mutual fund industry listed **14,288 schemes** across
-52 fund houses. Strip the plan and option wrappers: the same fund sold as
+On 08-Sep-2026 the Indian mutual fund industry listed **14,348 schemes** across
+53 fund houses. Strip the plan and option wrappers: the same fund sold as
 Direct and Regular, as Growth and IDCW, and those collapse to
-**3,353 distinct strategies**. About **77% of the apparent
+**3,370 distinct strategies**. About **77% of the apparent
 product count is packaging**, roughly 4.3 listed schemes for every real
 investment decision.
 
@@ -27,9 +27,9 @@ richer than it looks, it is four times more administered than it looks.
 ## Two supporting arguments
 
 **1. The wrapper multiple is remarkably uniform.** It holds across asset classes:
-debt lists 8,016 schemes for 1,525 strategies
-(5.3x), equity 3,110 for
-809 (3.8x). This is not a few
+debt lists 8,057 schemes for 1,534 strategies
+(5.3x), equity 3,184 for
+839 (3.8x). This is not a few
 houses over-engineering a product line; it is the market structure that the
 Direct-plan reform of 2013 created and that nobody has since simplified.
 
@@ -47,7 +47,7 @@ AUM weighting.
 ## So what
 
 - **For a distributor or platform:** the decision set to be curated is about
-  3,353, not 14,288. Interfaces that present the listed count are
+  3,370, not 14,348. Interfaces that present the listed count are
   presenting an artefact of plan structure as if it were choice.
 - **For an asset manager:** the wrapper multiple is a fixed operating cost carried
   per strategy: compliance, NAV publication, reconciliation, statements, on
@@ -58,7 +58,7 @@ AUM weighting.
 
 ## Method and its limits
 
-Parsed from AMFI's `NAVAll.txt` for 20-Aug-2026. Strategies are derived by stripping
+Parsed from AMFI's `NAVAll.txt` for 08-Sep-2026. Strategies are derived by stripping
 plan and option suffixes from scheme names, which is a **heuristic**: a house that
 names two genuinely different funds identically would be under-counted, and one
 that appends non-wrapper text would be over-counted. The direction and rough

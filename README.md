@@ -56,10 +56,10 @@ figures table and the machine-readable summary on this page.**
 | PhonePe and Google Pay share of national UPI volume | **45.9% / 32.3%**, both above the 30% cap | NPCI, 2026-07 |
 | Transactions that must change app for the cap to bind | **4.3 bn a month** | NPCI, 2026-07 |
 | Private against public bank margin gap | **114 bps** (59 pricing, 56 funding) | Yahoo Finance, FY2026 |
-| Five year price return, public against private banks | **+293% / +18%** median | Yahoo Finance, 2021-08-23 to 2026-08-21 |
+| Five year price return, public against private banks | **+247% / +15%** median | Yahoo Finance, 2021-09-09 to 2026-09-09 |
 | Merchant share of own transactions: most against least, material states | **Delhi 68.5% against West Bengal 56.4%** | PhonePe Pulse, 2026Q2 |
 | UPI transactions per banked adult per month | **14.9**, up from 4.0 in 2021 | World Bank Findex and NPCI, 2024 |
-| Fund schemes against distinct strategies | **14,288 to 3,353** (4.3x wrappers) | AMFI, 20-Aug-2026 |
+| Fund schemes against distinct strategies | **14,348 to 3,370** (4.3x wrappers) | AMFI, 08-Sep-2026 |
 <!-- END:KEYFIGURES -->
 
 ## Questions this repository answers
@@ -287,10 +287,10 @@ question: >-
   nothing for the merchant leg. Who captures the value, and is there an
   investable business model?
 method: reproducible Python pipeline, then analysis, then a static site
-publishers: 7
-fetchers: 8
-analysis_modules: 7
-processed_datasets: 17
+publishers: 9
+fetchers: 10
+analysis_modules: 9
+processed_datasets: 22
 credentials_required: none
 findings:
   - metric: merchant share of UPI transactions
@@ -344,14 +344,14 @@ findings:
     period: FY2026
     source: Yahoo Finance fundamentals
   - metric: median five year price return, public banks
-    value: 2.9294
+    value: 2.4702
     unit: price return
-    period: 2021-08-23 to 2026-08-21
+    period: 2021-09-09 to 2026-09-09
     source: Yahoo Finance prices
   - metric: median five year price return, private banks
-    value: 0.1794
+    value: 0.149
     unit: price return
-    period: 2021-08-23 to 2026-08-21
+    period: 2021-09-09 to 2026-09-09
     source: Yahoo Finance prices
   - metric: highest merchant share of own transactions, material states
     value: Delhi 0.6851
@@ -364,9 +364,9 @@ findings:
     period: 2026Q2
     source: PhonePe Pulse
   - metric: mutual fund schemes against distinct strategies
-    value: 14288 to 3353
+    value: 14348 to 3370
     unit: count
-    period: 20-Aug-2026
+    period: 08-Sep-2026
     source: AMFI
 caveats:
   - PhonePe Pulse covers PhonePe's own transactions, not all of UPI.

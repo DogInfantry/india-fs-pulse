@@ -48,7 +48,7 @@ product.** At 30bps: a rate that does not exist: a merchant is worth
 Rs 2,480 a year. Any working-capital product priced off the same relationship
 dwarfs that. The payment is the acquisition channel; the loan is the P&L.
 
-**3. The only listed pure-play has not solved it yet.** One97 Communications (Paytm) reported Rs 8,437 crore of revenue in FY2026 at a 7% net margin. A sponsor cannot underwrite this deal on a 'payments scale economics' thesis when the largest listed comparable, with a decade of scale, still earns a thin return on the payments business itself.
+**3. The only listed pure-play has not solved it yet.** One97 Communications (Paytm) reported Rs 8,192 crore of revenue in FY2026 at a 7% net margin. A sponsor cannot underwrite this deal on a 'payments scale economics' thesis when the largest listed comparable, with a decade of scale, still earns a thin return on the payments business itself.
 
 ## Red flags
 

@@ -45,9 +45,9 @@ const rows = [
   { need: 'Insurance', level: 'none',
     artefact: 'Not covered', href: null,
     note: 'IRDAI publishes to PDF only. There is no machine-readable series to fetch, so nothing is claimed.' },
-  { need: 'Comparison with other instant rails', level: 'none',
-    artefact: 'Not covered', href: null,
-    note: 'Whether any other zero-cost instant payment rail has found a business model is the obvious next question, and this report does not answer it.' },
+  { need: 'Comparison with other instant rails', level: 'partial',
+    artefact: 'Brazil’s Pix, measured against the same question', href: '/insights/pov-pix-comparator',
+    note: 'One comparator, not a survey of rails. Pix is the only instant rail at national scale that publishes a merchant leg its own regulator labels, so the shape can be compared without deriving it; every other candidate would have to be inferred. Brazil’s fraud series also stops four months before its transaction series, so the two are not read against each other.' },
 ];
 
 const LABEL = { full: 'Covered', partial: 'Partial', none: 'Not covered' } as const;
