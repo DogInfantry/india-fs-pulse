@@ -237,11 +237,15 @@ same window India's call money rate ranged from **{rate_lo:.2f}% to {rate_hi:.2f
 ({rate_swing:.0f}bps of travel, {rate_first:.2f}% at the start against {rate_last:.2f}%
 at the end). {rate_verdict}
 
-**3. The mechanism is deposit mix, and payments is upstream of it.** Low-cost
-current and savings balances are won through primary-relationship behaviour:
-salary credit, bill payment, and everyday transactions. That is precisely the
-behaviour UPI now intermediates, which is why the payments question in
-Sub-module A is a *deposit* question for banks.
+**3. The likely mechanism is deposit mix, and this report does not measure it.**
+Low-cost current and savings balances are won through primary-relationship
+behaviour: salary credit, bill payment, and everyday transactions, which is
+precisely what UPI intermediates. That is the standard explanation and it is
+stated here as a **hypothesis, not a finding**: no CASA or deposit-composition
+series is computed anywhere in this pipeline. What is measured is the
+*consequence*, the {funding_gap:.0f}bps funding half of the gap above. Rule 1
+applies to causal claims as much as to figures, so the joint between the payments
+sections and this one is marked as untested rather than asserted.
 
 ## So what
 
@@ -249,7 +253,8 @@ Sub-module A is a *deposit* question for banks.
   levers. The {funding_gap:.0f}bps funding half is won through primary-account status,
   which is a payments and behaviour problem, not a treasury one.
 - **For an investor:** treat the cohort gap as a franchise moat with a measurable
-  width, and underwrite convergence only where deposit mix is actually shifting.
+  width. Convergence would show up first in deposit mix, which this report does not
+  measure, so treat that as the next thing to check rather than as a finding here.
 - **The link to payments:** whoever owns the transaction owns the relationship that
   produces the cheap deposit. That is the strategic reason banks tolerate zero MDR.
 

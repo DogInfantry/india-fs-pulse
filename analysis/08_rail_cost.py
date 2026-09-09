@@ -43,6 +43,11 @@ def main() -> None:
     # incentive actually reached. It is a FLOOR, not a point: 20% of every claim
     # is conditional on the acquirer's technical decline and uptime, so unclaimed
     # entitlement pushes the true eligible share up, never down.
+    # Both readings of the same quantity, so the memo can print the gap rather than
+    # assert that a check happened somewhere upstream.
+    national_share = float(last.p2m_lakh_cr) / float(last.total_lakh_cr)
+    pulse_share = float(hero["merchant_value_share"])
+
     eligible_floor = float(last.effective_bps) / statutory_bps
     funded_share = float(last.effective_bps) / NPCI_PERMITTED_MDR_BPS
 
@@ -132,9 +137,13 @@ Both tables come from one PIB release, transcribed in a browser because PIB serv
 403 to scripted requests and publishes these figures as chart images with printed data
 labels rather than as text. The blended rate divides incentive actually paid by all
 national merchant value, so both sides are measured and neither is modelled. The national
-merchant share it implies, {pct(float(last.p2m_lakh_cr) / float(last.total_lakh_cr))} of
-UPI value, is cross-checked in the fetcher against PhonePe Pulse's own merchant share of
-value, which is the one independent read available on the same quantity.
+merchant share it implies, {pct(national_share)} of UPI value, is cross-checked against
+PhonePe Pulse's own merchant share of value, {pct(pulse_share)}: a gap of
+{abs(national_share - pulse_share) * 100:.1f} percentage points. Announcing a cross-check
+without printing its result would be worth nothing, so it is printed. The two are not the
+same quantity and are not expected to match: PIB measures the whole country, Pulse
+measures one operator's book. The rate above is computed on the **national** figure,
+because the incentive is paid against national merchant value and not against PhonePe's.
 
 What is not known: how merchant value splits above and below the Rs {ceiling:,} ceiling,
 what share of it belongs to small merchants as the scheme defines them, and how much

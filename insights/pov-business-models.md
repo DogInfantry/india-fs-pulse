@@ -1,6 +1,6 @@
 ---
 title: "The listed accounts agree with the recommendation: distribution earns, transactions do not"
-generated: 2026-09-09
+generated: 2026-09-10
 generator: analysis/10_business_models.py
 sources:
   - "Filed annual income statements via Yahoo Finance (yfinance): One97 (Paytm), PB Fintech, Angel One and CDSL"

@@ -105,12 +105,34 @@ def no_fabricated_zeros() -> None:
           "no chart carries a null; a gap may have been zero-filled")
 
 
+def margins_agree_across_memos() -> None:
+    """One datum, one value. Two memos quoted Paytm's net margin as 7% and 6.8%,
+    both computed but rendered at different precisions, which reads as two figures.
+    Any "N% net margin" in a memo must match a margin actually in psp_financials."""
+    import csv
+    path = PROCESSED / "psp_financials.csv"
+    if not path.exists():
+        return
+    with path.open(encoding="utf-8") as fh:
+        known = {round(float(r["net_margin_pct"]), 1)
+                 for r in csv.DictReader(fh) if r.get("net_margin_pct")}
+    bad = []
+    for memo in sorted(INSIGHTS.glob("*.md")):
+        for quoted in re.findall(r"(-?\d+(?:\.\d+)?)% net margin",
+                                 memo.read_text(encoding="utf-8")):
+            if round(float(quoted), 1) not in known:
+                bad.append(f"{memo.name} says {quoted}%")
+    check("every net margin quoted in a memo matches a computed one", not bad,
+          "; ".join(bad) + f"  (computed: {sorted(known)})")
+
+
 def main() -> None:
     print("\n-- Checking what this repository claims about itself")
     rule_11()
     downloads_resolve()
     meta_matches_tree()
     memos_are_reachable()
+    margins_agree_across_memos()
     provenance_is_complete()
     no_fabricated_zeros()
     if failures:

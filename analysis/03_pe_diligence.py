@@ -56,7 +56,9 @@ def main() -> None:
         comp_block = (
             "\n**3. The only listed pure-play has not solved it yet.** One97 Communications "
             f"(Paytm) reported {inr(comp_rev)} of revenue in FY{comp_fy} at a "
-            f"{pct(comp_margin, 0)} net margin. A sponsor cannot underwrite this deal on a "
+            # 1dp, matching sub-module J. The same datum rendered at two precisions reads
+            # as two figures, which is exactly what this report claims not to do.
+            f"{pct(comp_margin, 1)} net margin. A sponsor cannot underwrite this deal on a "
             "'payments scale economics' thesis when the largest listed comparable, with a "
             f"decade of scale, still earns {verdict} return on the payments business itself.\n"
         )

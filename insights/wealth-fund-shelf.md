@@ -1,6 +1,6 @@
 ---
 title: "India's fund shelf is four times more administered than it is diverse"
-generated: 2026-09-09
+generated: 2026-09-10
 generator: analysis/07_wealth_amfi.py
 sources:
   - "AMFI daily NAV file (NAVAll.txt), 08-Sep-2026"

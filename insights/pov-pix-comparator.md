@@ -1,6 +1,6 @@
 ---
 title: "The only comparable rail repeats India's shape and has not monetised the transaction either"
-generated: 2026-09-09
+generated: 2026-09-10
 generator: analysis/09_pix_comparator.py
 sources:
   - "Banco Central do Brasil, Pix statistics (Olinda open data): https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix"

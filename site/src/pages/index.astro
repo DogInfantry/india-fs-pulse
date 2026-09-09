@@ -475,9 +475,11 @@ const optMarginTrail = {
 /* ---- Executive summary ---- */
 const nimGap = Math.round(nim.gap_bps.at(-1));
 const wrapperX = shelf.listed_schemes / shelf.distinct_strategies;
-const execAnswer = `India's payments rails have separated volume from value and priced the busy half at zero. `
+const execAnswer = `India's payments rails have separated volume from value and priced the busy half at zero <em>to whoever accepts the payment</em>. `
   + `Merchant payments are <strong>${pc(merchant.volume_share, 0)} of transactions but ${pc(merchant.value_share, 0)} of the rupees</strong>, `
-  + `and merchant is the only leg an MDR could touch. The market is concentrated at the same time as it is unmonetised, `
+  + `and merchant is the only leg an MDR could touch. Zero is not free: the state pays acquiring banks `
+  + `<strong>${lastRail.effective_bps.toFixed(1)} basis points</strong> to hold it there, and that rate is falling. `
+  + `The market is concentrated at the same time as it is unmonetised, `
   + `which is why the share cap cannot bind, and why the investable business here is <strong>distribution, not transactions</strong>.`;
 const execFindings = [
   { n: pc(merchant.volume_share, 0) + ' / ' + pc(merchant.value_share, 0),
@@ -489,6 +491,9 @@ const execFindings = [
   { n: capMoveBn.toFixed(1) + 'bn',
     claim: 'Transactions a month that would have to change app for the cap to bind. It will not bind.',
     href: '#module-structure' },
+  { n: lastRail.effective_bps.toFixed(1) + 'bps',
+    claim: 'What zero MDR actually costs, paid by the taxpayer to acquiring banks, and falling every year without a decision.',
+    href: '#module-cost' },
   { n: nimGap + 'bps',
     claim: 'The private-bank margin advantage, and it splits almost evenly between pricing and funding.',
     href: '#module-banking' },
@@ -542,7 +547,9 @@ if (unlisted.length) {
         In {PERIOD}, merchant payments were <strong>{pc(merchant.volume_share)} of every transaction
         but only {pc(merchant.value_share)} of the rupees</strong>. Person-to-person transfers were
         the mirror image. The merchant leg is the only one a discount rate could ever be charged
-        on, and under zero-MDR it earns nothing.
+        on, and under zero-MDR it earns nothing for whoever accepts the payment. Zero is not
+        free, though: the state pays acquiring banks <strong>{lastRail.effective_bps.toFixed(1)}
+        basis points</strong> to hold it there, and that rate is falling.
       </p>
       <dl class="stats">
         <div><dt>Merchant share of transactions</dt><dd>{pc(merchant.volume_share)}</dd></div>
@@ -718,7 +725,7 @@ if (unlisted.length) {
 
         <Figure
           kicker="Exhibit 12 · Financial inclusion"
-          title={`Each banked adult now runs ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions a month`}
+          title={`By ${incl.at(-1).year}, each banked adult was running ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions in an average month`}
           subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story, and the cost base.`}
           source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0 to 14. UPI volume is the mean month of each year."
         download="/data/chart_inclusion.csv"

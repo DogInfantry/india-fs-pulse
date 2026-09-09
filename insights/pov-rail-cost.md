@@ -1,6 +1,6 @@
 ---
 title: "Zero MDR is not zero cost: the state pays about seven basis points, and it is falling"
-generated: 2026-09-09
+generated: 2026-09-10
 generator: analysis/08_rail_cost.py
 sources:
   - "PIB, Ministry of Finance, Advancing Cashless India, 24 March 2025: https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335"
@@ -65,9 +65,13 @@ Both tables come from one PIB release, transcribed in a browser because PIB serv
 403 to scripted requests and publishes these figures as chart images with printed data
 labels rather than as text. The blended rate divides incentive actually paid by all
 national merchant value, so both sides are measured and neither is modelled. The national
-merchant share it implies, 25.8% of
-UPI value, is cross-checked in the fetcher against PhonePe Pulse's own merchant share of
-value, which is the one independent read available on the same quantity.
+merchant share it implies, 25.8% of UPI value, is cross-checked against
+PhonePe Pulse's own merchant share of value, 23.0%: a gap of
+2.7 percentage points. Announcing a cross-check
+without printing its result would be worth nothing, so it is printed. The two are not the
+same quantity and are not expected to match: PIB measures the whole country, Pulse
+measures one operator's book. The rate above is computed on the **national** figure,
+because the incentive is paid against national merchant value and not against PhonePe's.
 
 What is not known: how merchant value splits above and below the Rs 2,000 ceiling,
 what share of it belongs to small merchants as the scheme defines them, and how much
