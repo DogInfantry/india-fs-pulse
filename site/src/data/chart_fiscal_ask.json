@@ -1,0 +1,28 @@
+{
+  "readings": [
+    {
+      "reading": "Published base as is (10 months)",
+      "cost_cr": 4181,
+      "gap_to_appropriation_cr": 2681
+    },
+    {
+      "reading": "Base scaled pro rata to twelve months",
+      "cost_cr": 5017,
+      "gap_to_appropriation_cr": 3517
+    },
+    {
+      "reading": "Actually appropriated FY2024-25",
+      "cost_cr": 1500,
+      "gap_to_appropriation_cr": 0
+    }
+  ],
+  "note": "What holding 7.05bps would cost in FY2024-25, against what was appropriated. A range, not a point: the published merchant base for that year covers 10 months, so the low end treats it as a year and the high end scales it pro rata.",
+  "fy": "2024-25",
+  "months": 10,
+  "appropriated_cr": 1500,
+  "hold_rate_bps": 7.05,
+  "low_cr": 4181,
+  "high_cr": 5017,
+  "gap_low_cr": 2681,
+  "gap_high_cr": 3517
+}

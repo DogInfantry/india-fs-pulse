@@ -8,6 +8,8 @@ import ExecSummary from '../components/ExecSummary.astro';
 import Contact from '../components/Contact.astro';
 import Marimekko from '../components/charts/Marimekko.astro';
 import Waterfall from '../components/charts/Waterfall.astro';
+import ValuePool from '../components/charts/ValuePool.astro';
+import RangeBar from '../components/charts/RangeBar.astro';
 import Slopegraph from '../components/charts/Slopegraph.astro';
 import SmallMultiples from '../components/charts/SmallMultiples.astro';
 import Workbench from '../components/Workbench.astro';
@@ -38,6 +40,8 @@ import pixMigration from '../data/chart_pix_migration.json';
 import pixProducts from '../data/chart_pix_products.json';
 import pixFraud from '../data/chart_pix_fraud.json';
 import bizModels from '../data/chart_business_models.json';
+import valuePool from '../data/chart_value_pool.json';
+import fiscalAsk from '../data/chart_fiscal_ask.json';
 import marginTrail from '../data/chart_margin_trajectory.json';
 import meta from '../data/pipeline_meta.json';
 
@@ -425,6 +429,10 @@ const optPixFraud = {
 
 /* ---- Exhibit: what each business model actually earns ---- */
 const bizRows = bizModels.companies;
+/* The state's payout is the first 'actual' row of the value pool, so the callout and
+   the exhibit cannot disagree about which figure they mean. */
+const statePaidCr = valuePool.rows.find((r) => r.kind === 'actual')!.value_cr;
+const subsidyShare = (statePaidCr / valuePool.permitted_pool_cr) * 100;
 const optBizModels = {
   grid: { top: 52, left: 8, right: 8, bottom: 4, containLabel: true },
   legend: { top: 0, textStyle: { color: '#A6B0BE', fontSize: 11 }, icon: 'roundRect' },
@@ -521,6 +529,7 @@ const MEMO_KICKER: Record<string, string> = {
   'wealth-fund-shelf': 'Wealth',
   'pov-pix-comparator': 'Comparator',
   'pov-business-models': 'What it earns',
+  'pov-value-pool': 'The prize',
 };
 const memoOrder = Object.keys(MEMO_KICKER);
 const memos = (await getCollection('insights'))
@@ -643,8 +652,49 @@ if (unlisted.length) {
       </p>
     </section>
 
+    <section class="wrap module" id="module-pool">
+      <h2 class="section-head"><span>C</span> The prize, in rupees</h2>
+      <Figure
+        kicker="Exhibit 6 · The pool that does not exist"
+        title={`Priced at the ${valuePool.permitted_bps}bps NPCI itself permits, the merchant leg would be worth ${valuePool.times_rail_revenue.toFixed(1)}x the entire revenue of India's largest listed payments company`}
+        subtitle={`FY${valuePool.fy} national merchant value of Rs ${valuePool.base_lakh_cr.toFixed(1)} lakh crore, priced at each rate. Dashed bars are money that does not exist; solid bars exist. Not a forecast: an MDR actually introduced would change behaviour rather than simply multiply out.`}
+        source="PIB national UPI value split, and filed accounts via Yahoo Finance. Every bar is a published rate times a published base. Computed by analysis/11_value_pool.py."
+        download="/data/chart_value_pool.csv"
+        wide
+      >
+        <ValuePool rows={valuePool.rows} permittedBps={valuePool.permitted_bps} fy={valuePool.fy} />
+      </Figure>
+
+      <Figure
+        kicker="Exhibit 7 · The ask nobody printed"
+        title={`Holding the subsidy rate steady would cost between ${(fiscalAsk.gap_low_cr / 1000).toFixed(1)}k and ${(fiscalAsk.gap_high_cr / 1000).toFixed(1)}k crore more than was appropriated`}
+        subtitle={`Section B recommends indexing the outlay to merchant volume and never sizes it. This is that number, as a band rather than a figure: the published merchant base for FY${fiscalAsk.fy} covers ${fiscalAsk.months} months, so the low end treats it as a year and the high end scales it pro rata.`}
+        source="PIB, Ministry of Finance. A range because a ten-month base annualised is an assumption, not a measurement, which is rule 12."
+        download="/data/chart_fiscal_ask.csv"
+        wide
+      >
+        <RangeBar
+          low={fiscalAsk.low_cr}
+          high={fiscalAsk.high_cr}
+          actual={fiscalAsk.appropriated_cr}
+          lowLabel="Ten-month base as is"
+          highLabel="Scaled pro rata"
+          actualLabel={`Appropriated FY${fiscalAsk.fy}`}
+          caption={`Holding ${fiscalAsk.hold_rate_bps.toFixed(2)}bps is the target section B names. The gap between what that costs and what was voted is the fiscal ask, and it has never appeared in this report until now.`}
+        />
+      </Figure>
+      <p class="callout">
+        <b>Why this reframes everything above it:</b> the merchant leg is not a small
+        business earning nothing. It is a large business that is not permitted to charge,
+        and the state buys back {subsidyShare.toFixed(0)}%
+        of the price it forgoes. Every recommendation in this report should be sized against
+        what operators actually earn, not against this pool.
+        <a href="/insights/pov-value-pool">Read the memo and what a pool is not →</a>
+      </p>
+    </section>
+
     <section class="wrap module" id="module-structure">
-      <h2 class="section-head"><span>C</span> Market structure and the share cap</h2>
+      <h2 class="section-head"><span>D</span> Market structure and the share cap</h2>
       <ul class="entities" aria-label="Apps analysed in this section">
         {structure.apps.filter((a) => a.app !== 'All other apps').map((a) => (
           <li><BrandMark name={a.app} /><span>{a.app}</span><b>{pc(a.volume_share, 1)}</b></li>
@@ -652,7 +702,7 @@ if (unlisted.length) {
       </ul>
       <div class="grid">
         <Figure
-          kicker="Exhibit 6 · Who captures the value"
+          kicker="Exhibit 8 · Who captures the value"
           title={`Two apps intermediate ${(top2 * 100).toFixed(0)}% of India's transactions, and both sit above the ${(structure.cap * 100).toFixed(0)}% cap`}
           subtitle={`${structure.month}. Column width is share of transactions, height is average ticket, so area is roughly rupees moved.`}
           source="NPCI UPI Ecosystem Statistics, per-application volume and value, transcribed 2026-08-21. Shares computed against the NPCI national monthly total."
@@ -663,7 +713,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 7 · The cap gap"
+          kicker="Exhibit 9 · The cap gap"
           title={`Complying would move ${capMoveBn.toFixed(1)} billion transactions a month between apps`}
           subtitle={`Share of national UPI volume by app. The dashed line is the ${(structure.cap * 100).toFixed(0)}% cap; panels that breach it are marked.`}
           source="NPCI UPI Ecosystem Statistics and NPCI monthly product statistics."
@@ -674,7 +724,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 8 · Share shift"
+          kicker="Exhibit 10 · Share shift"
           title="The leaders have barely moved; the challengers started from nothing"
           subtitle="Share of national UPI volume, first period against latest."
           source="NPCI UPI Ecosystem Statistics."
@@ -684,7 +734,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 9 · Concentration"
+          kicker="Exhibit 11 · Concentration"
           title="Concentration is falling, nowhere near fast enough to matter by December"
           subtitle="Herfindahl-Hirschman Index on true national volume shares. Above 2,500 is 'highly concentrated' by most competition authorities."
           source="Computed from NPCI per-application data."
@@ -696,7 +746,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-banking">
-      <h2 class="section-head"><span>D</span> Banking health scan</h2>
+      <h2 class="section-head"><span>E</span> Banking health scan</h2>
       <ul class="entities" aria-label="Banks in the two cohorts">
         {marketView.tickers.filter((t) => t.cohort !== 'Fintech').map((t) => (
           <li><BrandMark name={t.bank} tone={t.cohort === 'Private' ? 1 : 2} /><span>{t.bank}</span><b>{t.cohort}</b></li>
@@ -704,7 +754,7 @@ if (unlisted.length) {
       </ul>
       <div class="grid">
         <Figure
-          kicker="Exhibit 10 · Cohort margins"
+          kicker="Exhibit 12 · Cohort margins"
           title={`Private banks hold a ${Math.round(nim.gap_bps.at(-1)!)}bps margin advantage that has not closed`}
           subtitle="NIM proxy: net interest income over average total assets, computed from filed statements. The shaded band is the gap."
           source="Filed annual income statements and balance sheets, retrieved via yfinance. A proxy, not reported NIM. Banks use average earning assets, a smaller denominator."
@@ -714,7 +764,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 11 · Margin decomposition"
+          kicker="Exhibit 13 · Margin decomposition"
           title="The advantage splits almost evenly between what banks earn and what they pay"
           subtitle={`FY${spread.fy}. Neither lever alone closes the gap, which is why it persists.`}
           source="Filed annual income statements and balance sheets, retrieved via yfinance."
@@ -724,7 +774,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 12 · Financial inclusion"
+          kicker="Exhibit 14 · Financial inclusion"
           title={`By ${incl.at(-1).year}, each banked adult was running ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions in an average month`}
           subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story, and the cost base.`}
           source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0 to 14. UPI volume is the mean month of each year."
@@ -734,7 +784,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 13 · The market's verdict"
+          kicker="Exhibit 15 · The market's verdict"
           title="The thinner-margin cohort massively outperformed: the franchise was already in the price"
           subtitle={`Median price return by cohort, ${marketView.window[0]} to ${marketView.window[1]}.`}
           source="Daily closes via yfinance. Price return only, and it excludes dividends, which understates the higher-yielding public cohort."
@@ -746,10 +796,10 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-diligence">
-      <h2 class="section-head"><span>E</span> Private equity diligence simulation</h2>
+      <h2 class="section-head"><span>F</span> Private equity diligence simulation</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 14 · Unit economics"
+          kicker="Exhibit 16 · Unit economics"
           title={`${(unit.merchants / 1e6).toFixed(1)} million merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, ₹0 of payment revenue`}
           subtitle={`Each merchant runs ${Math.round(unit.txns_per_merchant_quarter)} transactions a quarter. The bars show what one merchant would be worth per year if an MDR existed.`}
           source={SOURCE_PULSE}
@@ -767,10 +817,10 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-survey">
-      <h2 class="section-head"><span>F</span> Survey analytics</h2>
+      <h2 class="section-head"><span>G</span> Survey analytics</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 15 · Episode-level NPS"
+          kicker="Exhibit 17 · Episode-level NPS"
           title="One brand contains both the best and the worst episode in the market"
           subtitle="Scored per customer episode rather than per brand. A blended brand NPS averages these opposites into a number that hides the problem."
           source="SYNTHETIC panel of 2,000 respondents generated from a documented, seeded model (analysis/04_survey_nps.py). The method is the artefact; the figures illustrate it and are not market fact."
@@ -784,10 +834,10 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-geo">
-      <h2 class="section-head"><span>G</span> Geographic gap</h2>
+      <h2 class="section-head"><span>H</span> Geographic gap</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 16 · One spends, one sends"
+          kicker="Exhibit 18 · One spends, one sends"
           title={`${mHigh.state} runs ${pc(mHigh.merchant_volume_share, 0)} of its transactions through merchants; ${mLow.state} runs ${pc(mLow.merchant_volume_share, 0)}`}
           subtitle={`Merchant share is measured from each state's own category split, not inferred from ticket size. Red is above the national ${pc(natMerchant, 0)}; bubble size is share of national transactions; states under ${(MIN_STATE * 100).toFixed(0)}% are omitted.`}
           source={SOURCE_PULSE + ' Per-state category files, reconciled against the country file at a ratio of 1.000000. A composition measure, not per-capita: no population denominator is invented.'}
@@ -800,9 +850,9 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-wealth">
-      <h2 class="section-head"><span>H</span> Wealth and asset management</h2>
+      <h2 class="section-head"><span>I</span> Wealth and asset management</h2>
       <Figure
-        kicker="Exhibit 17 · The fund shelf"
+        kicker="Exhibit 19 · The fund shelf"
         title={`${shelf.listed_schemes.toLocaleString('en-IN')} listed schemes are really ${shelf.distinct_strategies.toLocaleString('en-IN')} strategies`}
         subtitle={`Strip the Direct/Regular and Growth/IDCW wrappers and roughly ${Math.round((1 - shelf.distinct_strategies / shelf.listed_schemes) * 100)}% of the product count disappears. Counts schemes, not rupees.`}
         source={`AMFI daily NAV file, ${shelf.nav_date}. ${shelf.caveat}`}
@@ -814,10 +864,10 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-pix">
-      <h2 class="section-head"><span>I</span> The only comparable rail</h2>
+      <h2 class="section-head"><span>J</span> The only comparable rail</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 18 · Same shape, twice"
+          kicker="Exhibit 20 · Same shape, twice"
           title="Both rails put the transactions in the merchant leg and the money somewhere else"
           subtitle={`Each bar is a leg's share of its own country's total, so nothing is converted between currencies. India is ${pixShape.india_period} on PhonePe's book; Brazil is ${pixShape.brazil_month}, national.`}
           source="Banco Central do Brasil, Pix open data, and PhonePe Pulse. Computed by analysis/09_pix_comparator.py."
@@ -828,7 +878,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 19 · The migration"
+          kicker="Exhibit 21 · The migration"
           title={`Brazil's merchant leg went from ${(pixMigration.volume_share[0] * 100).toFixed(1)}% to ${(pixMigration.volume_share.at(-1)! * 100).toFixed(1)}% of the rail with no price to attract it`}
           subtitle={`Monthly since Pix launched, on a time axis. The dashed line is India's merchant share of transactions in ${pixMigration.india_period}. The value line barely moves, which is the point.`}
           source="Banco Central do Brasil, Pix open data. Merchant is BCB's own P2B label, not derived."
@@ -839,7 +889,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 20 · What was built on top"
+          kicker="Exhibit 22 · What was built on top"
           title={`Six years on, everything layered on the free rail is ${(pixProducts.add_on_share * 100).toFixed(2)}% of merchant transactions`}
           subtitle={`Recurring debits, open-finance initiation and contactless, each as a share of Brazil's merchant-leg volume. A layer reads null before it launched, never zero. Dynamic QR, which is distribution rather than revenue, is ${(pixProducts.dynamic_qr_share * 100).toFixed(0)}% and off this scale.`}
           source="Banco Central do Brasil, Pix open data, initiation method within the P2B leg."
@@ -850,7 +900,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 21 · The disclosure gap"
+          kicker="Exhibit 23 · The disclosure gap"
           title="Brazil publishes instant-payment fraud every month; India publishes no machine-readable equivalent"
           subtitle={`Accepted fraud disputes per 100,000 transactions, and the share of disputed value returned. There is no Indian line to draw. The series ends ${pixFraud.latest_month}, four months behind the transaction table.`}
           source="Banco Central do Brasil, EstatisticasFraudesPix. India's losses are answered in Parliament on perimeters that do not line up with each other, which is why no comparable series is attempted."
@@ -871,10 +921,10 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="module-models">
-      <h2 class="section-head"><span>J</span> What each model actually earns</h2>
+      <h2 class="section-head"><span>K</span> What each model actually earns</h2>
       <div class="grid">
         <Figure
-          kicker="Exhibit 22 · The margin ladder"
+          kicker="Exhibit 24 · The margin ladder"
           title="The transaction business carries the most revenue and converts the least of it"
           subtitle={`Filed annual accounts, FY${bizRows[0].fy}. Bars are revenue, the line is net margin. Named companies rather than cohort averages, because two of the three groups hold a single company.`}
           source="Filed annual income statements via Yahoo Finance. Not like-for-like companies: different revenue recognition, perimeters and regulators, so only the shape of the margin each model produces is compared. Computed by analysis/10_business_models.py."
@@ -885,7 +935,7 @@ if (unlisted.length) {
         </Figure>
 
         <Figure
-          kicker="Exhibit 23 · How they got there"
+          kicker="Exhibit 25 · How they got there"
           title="The rail took four years to reach a margin the others started above"
           subtitle="Net margin by fiscal year. A company reads null in a year it had not listed or did not report, never zero, so the lines break rather than bridge."
           source="Filed annual income statements via Yahoo Finance."
@@ -906,7 +956,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="workbench">
-      <h2 class="section-head"><span>K</span> Analyst workbench</h2>
+      <h2 class="section-head"><span>L</span> Analyst workbench</h2>
       <Figure
         kicker="Interactive · Client-ready dashboard"
         title="Every state's payment mix, three linked ways, without leaving the page"
@@ -919,7 +969,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="gap-matrix">
-      <h2 class="section-head"><span>L</span> Coverage and limits</h2>
+      <h2 class="section-head"><span>M</span> Coverage and limits</h2>
       <Figure
         kicker="Scope"
         title="The areas this report does not cover are the ones that would change its conclusion"
@@ -932,7 +982,7 @@ if (unlisted.length) {
     </section>
 
     <section class="wrap module" id="memos">
-      <h2 class="section-head"><span>M</span> The memos</h2>
+      <h2 class="section-head"><span>N</span> The memos</h2>
       <div class="memo-grid">
         {memos.map((m) => (
           <a href={`/insights/${m.id}`}>

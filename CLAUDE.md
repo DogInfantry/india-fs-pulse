@@ -91,11 +91,11 @@ python run.py all
 | `data-pipeline/data/manual/*.csv` | Hand-seeded NPCI and PIB rows. **Header comments are `#`-leading lines only** |
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json`. Also computes the counts the site footer renders |
 | `analysis/_lib.py` | `load`, `load_json`, `write_json`, `write_memo`, `inr`, `pct` |
-| `analysis/01..10_*.py` | Ten modules → `insights/*.md` + chart JSON |
-| `site/src/pages/index.astro` | The whole scrollable report: 23 exhibits, 13 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
+| `analysis/01..11_*.py` | Eleven modules → `insights/*.md` + chart JSON |
+| `site/src/pages/index.astro` | The whole scrollable report: 25 exhibits, 14 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
 | `site/src/scripts/charts.ts` | The only client entry. Memoised `loadECharts`, IntersectionObserver mount, and it boots `scrolly.ts` |
 | `site/src/scripts/scrolly.ts` | The guided opening. Lives here so nothing is inline, which is what keeps `script-src 'self'` honest |
-| `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth` |
+| `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth`, `ValuePool` (money, hypothetical against actual), `RangeBar` (an estimate as a band) |
 | `site/src/components/` | `Figure` (action-title frame), `EChart`, `Workbench`, `GapMatrix` (coverage and limits, Harvey balls), `ExecSummary`, `Contact` (the About section), `Monogram`, `BrandMark`, `Scrolly` |
 | `site/scripts/make_og.py` | Social card, drawn from computed data (Pillow, declared in requirements.txt) |
 | `site/scripts/build_india_map.py` | **Run once, output committed.** Boundary file for the choropleth; asserts 36 states and India's official extent |
@@ -139,8 +139,8 @@ python run.py all
   **blocked at `fetch_pulse.py`** by an upstream removal; see next steps item 1. The other
   nine fetchers and the transform run clean. The first Pix pull adds about 65s and roughly
   190 MB, then caches under `data/raw` for the calendar month
-- `python run.py analyze`, **10 modules**, artefacts byte-identical across consecutive runs
-- `python run.py site`, **12 pages** (index, methodology, 10 memos)
+- `python run.py analyze`, **11 modules**, artefacts byte-identical across consecutive runs
+- `python run.py site`, **13 pages** (index, methodology, 11 memos)
 - `python run.py report`, the memos as one `.docx` under `deliverables/` (gitignored)
 - Live headers verified on the production URL with `curl -I`: CSP, HSTS, nosniff,
   Referrer-Policy, Permissions-Policy, and `max-age=31536000, immutable` on `/_astro/*`
@@ -172,6 +172,8 @@ python run.py all
 | Brazil Pix merchant leg: share of transactions vs share of value | **46.6% / 11.8%**, the same shape as India's 63.9% / 23.0% |
 | Brazil's merchant leg since the rail launched | **5.2% (2020-11) → 46.6% (2026-08)** |
 | Everything Brazil layered on top of the free rail, six years in | **0.26% of merchant transactions**; dynamic QR is 84.1% and earns nothing |
+| Priced at the 30bps NPCI itself permits, the merchant leg would be worth | **Rs 15,450cr a year, 1.9x One97 (Paytm)'s entire revenue**; the state replaces it with Rs 3,631cr |
+| Cost of holding the subsidy rate steady, against what was appropriated | **Rs 2,681cr to Rs 3,517cr more**, a range because the published base covers ten months |
 | Instant payments per banked adult per month, Brazil vs India | **49 vs 24**, same denominator, latest month both publish |
 
 ## Active task

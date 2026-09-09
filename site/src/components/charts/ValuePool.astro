@@ -1,0 +1,72 @@
+---
+/**
+ * A money pool priced at several rates, set against what actually exists.
+ *
+ * Distinct from Waterfall.astro, which cascades deltas. This one answers "how big
+ * is the prize", which is a comparison between a hypothetical and an actual, so
+ * the two are drawn differently on purpose: a pool that could exist is hollow with
+ * a dashed edge, and a figure that does exist is solid. A reader should not have
+ * to consult the legend to know which bars are real.
+ */
+interface Row { label: string; value_cr: number; kind: string; rate_bps: number | null }
+interface Props {
+  rows: Row[];
+  permittedBps: number;
+  fy: string;
+}
+const { rows: input, permittedBps, fy } = Astro.props;
+
+const hypo = input.filter((r) => r.kind !== 'actual')
+  .sort((a, b) => (b.rate_bps ?? 0) - (a.rate_bps ?? 0));
+const actual = input.filter((r) => r.kind === 'actual');
+const rows = [
+  ...hypo.map((r) => ({ label: r.label, value: r.value_cr, real: false,
+                        lead: r.rate_bps === permittedBps })),
+  ...actual.map((r) => ({ label: r.label, value: r.value_cr, real: true, lead: false })),
+];
+
+const W = 680, ROW = 34, PAD = { t: 24, l: 232, r: 96, b: 8 };
+/* The two groups are different claims, so they get air between them and the second
+   heading sits in that gap rather than on top of the last hypothetical row. */
+const GAP = 22;
+const H = PAD.t + rows.length * ROW + GAP + PAD.b;
+const max = Math.max(...rows.map((r) => r.value));
+const bar = (v: number) => Math.max(2, (v / max) * (W - PAD.l - PAD.r));
+const money = (cr: number) =>
+  cr >= 100000 ? `₹${(cr / 100000).toFixed(2)} lakh cr` : `₹${cr.toLocaleString('en-IN')} cr`;
+---
+<figure class="pool">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img"
+       aria-label={`Merchant leg priced at each rate against actual figures, FY${fy}: ${
+         rows.map((r) => `${r.label} ${money(r.value)}`).join('; ')}`}>
+    <text class="head" x={PAD.l} y={14}>PRICED AT A RATE NOBODY CHARGES</text>
+    <text class="head" x={PAD.l} y={PAD.t + hypo.length * ROW + 14}>WHAT ACTUALLY EXISTS</text>
+    {rows.map((r, i) => {
+      const y = PAD.t + i * ROW + (r.real ? GAP : 0);
+      return (
+        <g class:list={['row', r.real && 'real', r.lead && 'lead']}>
+          <text class="lbl" x={PAD.l - 12} y={y + 15} text-anchor="end">{r.label}</text>
+          <rect x={PAD.l} y={y + 3} width={bar(r.value)} height={16} rx="2" />
+          <text class="val" x={PAD.l + bar(r.value) + 8} y={y + 15}>{money(r.value)}</text>
+        </g>
+      );
+    })}
+  </svg>
+</figure>
+
+<style>
+  .pool { overflow-x: auto; margin: 0; }
+  .pool svg { width: 100%; min-width: 560px; height: auto; }
+  .head { fill: var(--text-3); font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em;
+          font-family: var(--font-sans); }
+  .lbl { fill: var(--text-2); font-size: 11.5px; font-family: var(--font-sans); }
+  .val { fill: var(--text); font-size: 11.5px; font-weight: 700;
+         font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
+  /* Hollow and dashed: this money does not exist. */
+  .row rect { fill: none; stroke: var(--s4); stroke-width: 1.2; stroke-dasharray: 3 2; }
+  .row.lead rect { stroke: var(--signal); stroke-width: 1.8; }
+  .row.lead .lbl { fill: var(--signal-text); font-weight: 700; }
+  /* Solid: this money is real. */
+  .row.real rect { fill: var(--s2); stroke: none; }
+  .row.real .lbl { fill: var(--text-2); }
+</style>

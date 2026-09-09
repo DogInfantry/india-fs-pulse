@@ -47,6 +47,7 @@ ANALYZE = [
     "analysis/08_rail_cost.py",
     "analysis/09_pix_comparator.py",
     "analysis/10_business_models.py",
+    "analysis/11_value_pool.py",
     "docs/build_exhibit_csv.py",     # per-exhibit CSVs the site offers for download
     "docs/build_readme_charts.py",   # README exhibits + its generated regions
     "docs/build_docs.py",            # sources.md + data-dictionary.md from the ledger

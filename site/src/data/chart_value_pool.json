@@ -1,0 +1,46 @@
+{
+  "note": "The merchant leg priced at each rate, against what the state actually pays to keep it at zero and what the largest listed operator earns in total. Every bar is a rate times a published base; nothing is modelled.",
+  "fy": "2023-24",
+  "base_lakh_cr": 51.5,
+  "rows": [
+    {
+      "label": "10bps",
+      "value_cr": 5150,
+      "kind": "hypothetical",
+      "rate_bps": 10
+    },
+    {
+      "label": "15bps",
+      "value_cr": 7725,
+      "kind": "hypothetical",
+      "rate_bps": 15
+    },
+    {
+      "label": "30bps",
+      "value_cr": 15450,
+      "kind": "hypothetical",
+      "rate_bps": 30
+    },
+    {
+      "label": "50bps",
+      "value_cr": 25750,
+      "kind": "hypothetical",
+      "rate_bps": 50
+    },
+    {
+      "label": "Paid by the state, FY2023-24",
+      "value_cr": 3631,
+      "kind": "actual",
+      "rate_bps": null
+    },
+    {
+      "label": "One97 (Paytm) total revenue, FY2026",
+      "value_cr": 8192,
+      "kind": "actual",
+      "rate_bps": null
+    }
+  ],
+  "permitted_bps": 30,
+  "permitted_pool_cr": 15450,
+  "times_rail_revenue": 1.89
+}

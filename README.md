@@ -289,7 +289,7 @@ question: >-
 method: reproducible Python pipeline, then analysis, then a static site
 publishers: 9
 fetchers: 11
-analysis_modules: 10
+analysis_modules: 11
 processed_datasets: 23
 credentials_required: none
 findings:

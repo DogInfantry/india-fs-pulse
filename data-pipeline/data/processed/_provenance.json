@@ -131,7 +131,7 @@
   },
   "survey_SYNTHETIC_nps": {
     "accessed": "2026-09-10",
-    "accessed_utc": "2026-09-09T20:50:19+00:00",
+    "accessed_utc": "2026-09-09T21:02:21+00:00",
     "coverage": "2,000 respondents x 4 episodes, seed 20260820",
     "licence": "Apache-2.0",
     "note": "SYNTHETIC. Not a real survey. Generated from a documented seeded model to demonstrate episode-level NPS, because published episode benchmarks are proprietary.",

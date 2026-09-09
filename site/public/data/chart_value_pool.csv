@@ -1,0 +1,7 @@
+label,value_cr,kind,rate_bps
+10bps,5150,hypothetical,10.0
+15bps,7725,hypothetical,15.0
+30bps,15450,hypothetical,30.0
+50bps,25750,hypothetical,50.0
+"Paid by the state, FY2023-24",3631,actual,
+"One97 (Paytm) total revenue, FY2026",8192,actual,

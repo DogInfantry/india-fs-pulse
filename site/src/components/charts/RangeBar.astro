@@ -1,0 +1,69 @@
+---
+/**
+ * An estimate drawn as a band, with the actual marked inside or outside it.
+ *
+ * This component exists because the report had no way to draw "how big, and how
+ * sure". Every recommendation in it was therefore directional: a report with no
+ * grammar for an interval never states one, and so never sizes an ask. A band is
+ * the honest shape whenever the inputs support a bounded answer rather than a
+ * point, which under rule 12 is often.
+ */
+interface Props {
+  low: number;
+  high: number;
+  actual: number;
+  lowLabel: string;
+  highLabel: string;
+  actualLabel: string;
+  caption?: string;
+}
+const { low, high, actual, lowLabel, highLabel, actualLabel, caption } = Astro.props;
+
+const W = 680, H = 128, PAD = { l: 24, r: 24, t: 44 };
+const lo = Math.min(actual, low) * 0.86;
+const hi = Math.max(actual, high) * 1.1;
+const x = (v: number) => PAD.l + ((v - lo) / (hi - lo)) * (W - PAD.l - PAD.r);
+const money = (cr: number) =>
+  cr >= 100000 ? `₹${(cr / 100000).toFixed(2)} lakh cr` : `₹${cr.toLocaleString('en-IN')} cr`;
+---
+<figure class="range">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img"
+       aria-label={`${actualLabel} is ${money(actual)}, against an estimated range of ${
+         money(low)} to ${money(high)}.`}>
+    <line class="axis" x1={PAD.l} x2={W - PAD.r} y1={H - 26} y2={H - 26} />
+
+    <rect class="band" x={x(low)} y={PAD.t} width={Math.max(2, x(high) - x(low))} height="26" rx="3" />
+    <line class="edge" x1={x(low)} x2={x(low)} y1={PAD.t - 7} y2={PAD.t + 33} />
+    <line class="edge" x1={x(high)} x2={x(high)} y1={PAD.t - 7} y2={PAD.t + 33} />
+    <text class="cap" x={x(low)} y={PAD.t - 13} text-anchor="middle">{lowLabel}</text>
+    <text class="cap" x={x(high)} y={PAD.t - 13} text-anchor="middle">{highLabel}</text>
+    <text class="band-val" x={(x(low) + x(high)) / 2} y={PAD.t + 18} text-anchor="middle">
+      {money(low)} to {money(high)}
+    </text>
+
+    <line class="actual" x1={x(actual)} x2={x(actual)} y1={PAD.t - 18} y2={H - 26} />
+    <circle class="actual-dot" cx={x(actual)} cy={H - 26} r="4.5" />
+    <text class="actual-lbl" x={x(actual)} y={H - 8} text-anchor="middle">
+      {actualLabel} {money(actual)}
+    </text>
+  </svg>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .range { overflow-x: auto; margin: 0; }
+  .range svg { width: 100%; min-width: 520px; height: auto; overflow: visible; }
+  .axis { stroke: var(--line); stroke-width: 1; }
+  .band { fill: var(--signal-soft); stroke: var(--signal-line); stroke-width: 1; }
+  .edge { stroke: var(--signal-line); stroke-width: 1; stroke-dasharray: 2 2; }
+  .cap { fill: var(--text-3); font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
+         text-transform: uppercase; font-family: var(--font-sans); }
+  .band-val { fill: var(--signal-text); font-size: 12px; font-weight: 700;
+              font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
+  .actual { stroke: var(--text); stroke-width: 1.6; }
+  .actual-dot { fill: var(--text); }
+  .actual-lbl { fill: var(--text-2); font-size: 11px; font-family: var(--font-sans);
+                font-variant-numeric: tabular-nums; }
+  figcaption { color: var(--text-3); font-size: 0.73rem; line-height: 1.45;
+               margin-top: 0.5rem; max-width: 62ch; }
+</style>
