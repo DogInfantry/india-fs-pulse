@@ -576,6 +576,7 @@ if (unlisted.length) {
           title={`Merchant payments carry ${pc(merchant.volume_share, 0)} of transactions but ${pc(merchant.value_share, 0)} of the rupees`}
           subtitle={`P2P is the mirror image: ${pc(p2p.volume_share, 0)} of transactions, ${pc(p2p.value_share, 0)} of value. Volume and value have separated.`}
           source={SOURCE_PULSE}
+          download="/data/chart_category_split.csv"
           wide
         >
           <EChart id="c-split" option={optSplit} height={260} />
@@ -586,6 +587,7 @@ if (unlisted.length) {
           title="Every rate other than the one in force would produce real revenue"
           subtitle={`Quarterly revenue the merchant leg would generate at each MDR, on ${mdr.merchant_gmv_lakh_cr.toFixed(2)} lakh crore of merchant GMV. The rate in force is 0bps.`}
           source={SOURCE_PULSE}
+        download="/data/chart_mdr_bridge.csv"
         >
           <EChart id="c-mdr" option={optMdr} />
         </Figure>
@@ -595,6 +597,7 @@ if (unlisted.length) {
           title="Volume compounds without pause, and the series shows exactly where its data came from"
           subtitle="The open mirror of NPCI's series stops in August 2023. Later months were transcribed from NPCI's own table, and are coloured differently rather than silently merged."
           source="NPCI monthly product statistics: open CKAN mirror to 2023-08, then transcribed from npci.org.in on 2026-08-20. Four months NPCI does not publish in its ten-row table are left as gaps, not interpolated."
+        download="/data/kpi_upi_trend.csv"
         >
           <EChart id="c-trend" option={optTrend} />
         </Figure>
@@ -604,6 +607,7 @@ if (unlisted.length) {
           title={bridge.note}
           subtitle="Where the extra transactions came from. The merchant leg is the one a discount rate could be charged on."
           source={SOURCE_PULSE}
+          download="/data/chart_growth_bridge.csv"
           wide
         >
           <Waterfall steps={bridge.steps} unit={bridge.unit} highlight={bridge.highlight} />
@@ -618,6 +622,7 @@ if (unlisted.length) {
         title={`Zero MDR costs ${lastRail.effective_bps.toFixed(1)} basis points, paid by the taxpayer, and the rate is falling`}
         subtitle="Bars are the incentive the government actually paid acquiring banks. The line is that payment over ALL national merchant value, so both sides are measured. The final year is an approved outlay, not a payout, and carries no rate: its appropriation covers twelve months while the published value base covers ten."
         source="Press Information Bureau, Ministry of Finance, 24 March 2025. Transcribed in a browser: PIB serves HTTP 403 to scripted requests and publishes these figures as chart images. Computed by analysis/08_rail_cost.py."
+        download="/data/chart_rail_cost.csv"
         wide
       >
         <EChart id="c-rail" option={optRail} height={300} />
@@ -644,6 +649,7 @@ if (unlisted.length) {
           title={`Two apps intermediate ${(top2 * 100).toFixed(0)}% of India's transactions, and both sit above the ${(structure.cap * 100).toFixed(0)}% cap`}
           subtitle={`${structure.month}. Column width is share of transactions, height is average ticket, so area is roughly rupees moved.`}
           source="NPCI UPI Ecosystem Statistics, per-application volume and value, transcribed 2026-08-21. Shares computed against the NPCI national monthly total."
+          download="/data/chart_market_structure.csv"
           wide
         >
           <Marimekko apps={structure.apps} cap={structure.cap} month={structure.month} />
@@ -654,6 +660,7 @@ if (unlisted.length) {
           title={`Complying would move ${capMoveBn.toFixed(1)} billion transactions a month between apps`}
           subtitle={`Share of national UPI volume by app. The dashed line is the ${(structure.cap * 100).toFixed(0)}% cap; panels that breach it are marked.`}
           source="NPCI UPI Ecosystem Statistics and NPCI monthly product statistics."
+          download="/data/chart_share_trend.csv"
           wide
         >
           <SmallMultiples months={shareTrend.months} series={shareTrend.series} reference={shareTrend.cap} />
@@ -664,6 +671,7 @@ if (unlisted.length) {
           title="The leaders have barely moved; the challengers started from nothing"
           subtitle="Share of national UPI volume, first period against latest."
           source="NPCI UPI Ecosystem Statistics."
+        download="/data/chart_share_trend.csv"
         >
           <Slopegraph series={slopeSeries} startLabel={shareTrend.months[0]} endLabel={shareTrend.months.at(-1)} />
         </Figure>
@@ -673,6 +681,7 @@ if (unlisted.length) {
           title="Concentration is falling, nowhere near fast enough to matter by December"
           subtitle="Herfindahl-Hirschman Index on true national volume shares. Above 2,500 is 'highly concentrated' by most competition authorities."
           source="Computed from NPCI per-application data."
+        download="/data/chart_hhi.csv"
         >
           <EChart id="c-hhi" option={optHhi} />
         </Figure>
@@ -692,6 +701,7 @@ if (unlisted.length) {
           title={`Private banks hold a ${Math.round(nim.gap_bps.at(-1)!)}bps margin advantage that has not closed`}
           subtitle="NIM proxy: net interest income over average total assets, computed from filed statements. The shaded band is the gap."
           source="Filed annual income statements and balance sheets, retrieved via yfinance. A proxy, not reported NIM. Banks use average earning assets, a smaller denominator."
+        download="/data/chart_nim_slope.csv"
         >
           <SlopeLines periods={nim.periods} series={nim.series} gapBps={nim.gap_bps} />
         </Figure>
@@ -701,6 +711,7 @@ if (unlisted.length) {
           title="The advantage splits almost evenly between what banks earn and what they pay"
           subtitle={`FY${spread.fy}. Neither lever alone closes the gap, which is why it persists.`}
           source="Filed annual income statements and balance sheets, retrieved via yfinance."
+        download="/data/chart_bank_spread.csv"
         >
           <EChart id="c-spread" option={optSpread} />
         </Figure>
@@ -710,6 +721,7 @@ if (unlisted.length) {
           title={`Each banked adult now runs ${incl.at(-1).txns_per_banked_adult_per_month} UPI transactions a month`}
           subtitle={`Up from ${incl[0].txns_per_banked_adult_per_month} in ${incl[0].year}. Access stopped being the constraint; intensity is the story, and the cost base.`}
           source="World Bank Findex account ownership (% of population 15+); the 15+ base is total population minus ages 0 to 14. UPI volume is the mean month of each year."
+        download="/data/chart_inclusion.csv"
         >
           <EChart id="c-inclusion" option={optInclusion} />
         </Figure>
@@ -719,6 +731,7 @@ if (unlisted.length) {
           title="The thinner-margin cohort massively outperformed: the franchise was already in the price"
           subtitle={`Median price return by cohort, ${marketView.window[0]} to ${marketView.window[1]}.`}
           source="Daily closes via yfinance. Price return only, and it excludes dividends, which understates the higher-yielding public cohort."
+        download="/data/chart_market_view_series.csv"
         >
           <EChart id="c-marketview" option={optMarketView} />
         </Figure>
@@ -733,6 +746,7 @@ if (unlisted.length) {
           title={`${(unit.merchants / 1e6).toFixed(1)} million merchants, ${inr(unit.gmv_per_merchant_quarter_inr)} of GMV each per quarter, ₹0 of payment revenue`}
           subtitle={`Each merchant runs ${Math.round(unit.txns_per_merchant_quarter)} transactions a quarter. The bars show what one merchant would be worth per year if an MDR existed.`}
           source={SOURCE_PULSE}
+          download="/data/chart_unit_economics.csv"
           wide
         >
           <EChart id="c-unit" option={optUnit} height={280} />
@@ -753,6 +767,7 @@ if (unlisted.length) {
           title="One brand contains both the best and the worst episode in the market"
           subtitle="Scored per customer episode rather than per brand. A blended brand NPS averages these opposites into a number that hides the problem."
           source="SYNTHETIC panel of 2,000 respondents generated from a documented, seeded model (analysis/04_survey_nps.py). The method is the artefact; the figures illustrate it and are not market fact."
+          download="/data/chart_nps_episodes.csv"
           wide
         >
           <div class="synthetic-flag">Synthetic data: illustrates the method, not the market</div>
@@ -769,6 +784,7 @@ if (unlisted.length) {
           title={`${mHigh.state} runs ${pc(mHigh.merchant_volume_share, 0)} of its transactions through merchants; ${mLow.state} runs ${pc(mLow.merchant_volume_share, 0)}`}
           subtitle={`Merchant share is measured from each state's own category split, not inferred from ticket size. Red is above the national ${pc(natMerchant, 0)}; bubble size is share of national transactions; states under ${(MIN_STATE * 100).toFixed(0)}% are omitted.`}
           source={SOURCE_PULSE + ' Per-state category files, reconciled against the country file at a ratio of 1.000000. A composition measure, not per-capita: no population denominator is invented.'}
+          download="/data/chart_state_gap.csv"
           wide
         >
           <EChart id="c-states" option={optStates} height={340} />
@@ -783,6 +799,7 @@ if (unlisted.length) {
         title={`${shelf.listed_schemes.toLocaleString('en-IN')} listed schemes are really ${shelf.distinct_strategies.toLocaleString('en-IN')} strategies`}
         subtitle={`Strip the Direct/Regular and Growth/IDCW wrappers and roughly ${Math.round((1 - shelf.distinct_strategies / shelf.listed_schemes) * 100)}% of the product count disappears. Counts schemes, not rupees.`}
         source={`AMFI daily NAV file, ${shelf.nav_date}. ${shelf.caveat}`}
+        download="/data/chart_fund_shelf_by_asset_class.csv"
         wide
       >
         <EChart id="c-shelf" option={optShelf} height={320} />
@@ -797,6 +814,7 @@ if (unlisted.length) {
           title="Both rails put the transactions in the merchant leg and the money somewhere else"
           subtitle={`Each bar is a leg's share of its own country's total, so nothing is converted between currencies. India is ${pixShape.india_period} on PhonePe's book; Brazil is ${pixShape.brazil_month}, national.`}
           source="Banco Central do Brasil, Pix open data, and PhonePe Pulse. Computed by analysis/09_pix_comparator.py."
+          download="/data/chart_pix_shape.csv"
           wide
         >
           <EChart id="c-pix-shape" option={optPixShape} height={280} />
@@ -807,6 +825,7 @@ if (unlisted.length) {
           title={`Brazil's merchant leg went from ${(pixMigration.volume_share[0] * 100).toFixed(1)}% to ${(pixMigration.volume_share.at(-1)! * 100).toFixed(1)}% of the rail with no price to attract it`}
           subtitle={`Monthly since Pix launched, on a time axis. The dashed line is India's merchant share of transactions in ${pixMigration.india_period}. The value line barely moves, which is the point.`}
           source="Banco Central do Brasil, Pix open data. Merchant is BCB's own P2B label, not derived."
+          download="/data/chart_pix_migration.csv"
           wide
         >
           <EChart id="c-pix-migration" option={optPixMigration} height={300} />
@@ -817,6 +836,7 @@ if (unlisted.length) {
           title={`Six years on, everything layered on the free rail is ${(pixProducts.add_on_share * 100).toFixed(2)}% of merchant transactions`}
           subtitle={`Recurring debits, open-finance initiation and contactless, each as a share of Brazil's merchant-leg volume. A layer reads null before it launched, never zero. Dynamic QR, which is distribution rather than revenue, is ${(pixProducts.dynamic_qr_share * 100).toFixed(0)}% and off this scale.`}
           source="Banco Central do Brasil, Pix open data, initiation method within the P2B leg."
+          download="/data/chart_pix_products.csv"
           wide
         >
           <EChart id="c-pix-products" option={optPixProducts} height={300} />
@@ -827,6 +847,7 @@ if (unlisted.length) {
           title="Brazil publishes instant-payment fraud every month; India publishes no machine-readable equivalent"
           subtitle={`Accepted fraud disputes per 100,000 transactions, and the share of disputed value returned. There is no Indian line to draw. The series ends ${pixFraud.latest_month}, four months behind the transaction table.`}
           source="Banco Central do Brasil, EstatisticasFraudesPix. India's losses are answered in Parliament on perimeters that do not line up with each other, which is why no comparable series is attempted."
+          download="/data/chart_pix_fraud.csv"
           wide
         >
           <EChart id="c-pix-fraud" option={optPixFraud} height={300} />
@@ -850,6 +871,7 @@ if (unlisted.length) {
           title="The transaction business carries the most revenue and converts the least of it"
           subtitle={`Filed annual accounts, FY${bizRows[0].fy}. Bars are revenue, the line is net margin. Named companies rather than cohort averages, because two of the three groups hold a single company.`}
           source="Filed annual income statements via Yahoo Finance. Not like-for-like companies: different revenue recognition, perimeters and regulators, so only the shape of the margin each model produces is compared. Computed by analysis/10_business_models.py."
+          download="/data/chart_business_models.csv"
           wide
         >
           <EChart id="c-biz-models" option={optBizModels} height={300} />
@@ -860,6 +882,7 @@ if (unlisted.length) {
           title="The rail took four years to reach a margin the others started above"
           subtitle="Net margin by fiscal year. A company reads null in a year it had not listed or did not report, never zero, so the lines break rather than bridge."
           source="Filed annual income statements via Yahoo Finance."
+          download="/data/chart_margin_trajectory.csv"
           wide
         >
           <EChart id="c-margin-trail" option={optMarginTrail} height={300} />
