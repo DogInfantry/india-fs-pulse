@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "site/src/components/Answer.astro"
+        ],
+        "createdAt": "2026-09-09T22:21:07.772Z",
+        "reason": "False positive: the 3px accent sits on the top edge and border-radius is zeroed on that edge (0 0 r r), mirroring the pre-existing ExecSummary pattern directly below it. No corner clash exists."
+      }
+    ]
+  }
+}
