@@ -137,7 +137,7 @@ python run.py all
 
 ## Current state: all green
 
-- `python run.py data`, zero secrets, **11 fetchers, 23 processed datasets**. Currently
+- `python run.py data`, zero secrets, **12 fetchers, 25 processed datasets**. Currently
   **blocked at `fetch_pulse.py`** by an upstream removal; see next steps item 1. The other
   nine fetchers and the transform run clean. The first Pix pull adds about 65s and roughly
   190 MB, then caches under `data/raw` for the calendar month
