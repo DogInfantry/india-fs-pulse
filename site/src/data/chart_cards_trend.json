@@ -1,0 +1,30 @@
+{
+  "note": "The split between the priced and the free rail, every month transcribed. Each month is a separate hand-transcribed workbook whose own Total row was reconciled against its bank rows before being used.",
+  "months": [
+    "2026-05",
+    "2026-06",
+    "2026-07"
+  ],
+  "card_value_share": [
+    0.0738,
+    0.0756,
+    0.0761
+  ],
+  "card_volume_share": [
+    0.0291,
+    0.029,
+    0.029
+  ],
+  "ticket_multiple": [
+    2.66,
+    2.74,
+    2.76
+  ],
+  "qr_per_terminal": [
+    67.7,
+    79.9,
+    80.1
+  ],
+  "value_share_range_pp": 0.23,
+  "stable": true
+}

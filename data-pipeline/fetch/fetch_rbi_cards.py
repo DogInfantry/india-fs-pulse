@@ -76,18 +76,26 @@ def main() -> None:
     # checked is that the priced rail is the SMALLER one, because a card leg larger
     # than UPI would mean a month or a unit has been transcribed wrong.
     upi_path = Path(__file__).resolve().parent.parent / "data" / "processed" / "upi_monthly.csv"
-    month = str(pay.month.iloc[0])
+    months = sorted(pay.month.unique())
     if upi_path.exists():
         upi = pd.read_csv(upi_path)
-        row = upi[upi.month == month]
-        expect(len(row) == 1, f"upi_monthly has no row for {month}, so no comparison is possible")
-        upi_val = float(row.value_cr.iloc[0]) * 1e7
-        card_val = float(pay.value_inr.sum())
-        expect(card_val < upi_val,
-               f"card value Rs {card_val/1e12:.2f} lakh cr exceeds UPI's "
-               f"Rs {upi_val/1e12:.2f} lakh cr in {month}; check the month and the units")
-        print(f"   cross-rail ok: cards Rs {card_val/1e12:.2f} lakh cr against UPI "
-              f"Rs {upi_val/1e12:.2f} lakh cr in {month}")
+        for month in months:
+            row = upi[upi.month == month]
+            expect(len(row) == 1,
+                   f"upi_monthly has no row for {month}, so that month cannot be compared")
+            upi_val = float(row.value_cr.iloc[0]) * 1e7
+            card_val = float(pay[pay.month == month].value_inr.sum())
+            expect(card_val < upi_val,
+                   f"card value Rs {card_val/1e12:.2f} lakh cr exceeds UPI's "
+                   f"Rs {upi_val/1e12:.2f} lakh cr in {month}; check the month and the units")
+            print(f"   cross-rail ok {month}: cards Rs {card_val/1e12:.2f} lakh cr "
+                  f"against UPI Rs {upi_val/1e12:.2f} lakh cr")
+        # Months must be contiguous, or a trend drawn on them lies about elapsed time.
+        span = pd.period_range(months[0], months[-1], freq="M").astype(str).tolist()
+        missing = sorted(set(span) - set(months))
+        if missing:
+            print(f"   note: no workbook transcribed for {', '.join(missing)}; "
+                  "left as a gap, never interpolated")
 
     write_processed(pay, "rbi_card_payments")
     write_processed(acc, "rbi_acceptance")
@@ -109,14 +117,13 @@ def main() -> None:
             note=note,
         )
 
-    by_inst = pay.groupby("instrument")[["volume", "value_inr"]].sum()
-    for inst, r in by_inst.iterrows():
-        print(f"   {inst:<12} {r.volume/1e6:>7.1f} mn txns  Rs {r.value_inr/1e12:>5.2f} lakh cr"
-              f"  avg Rs {r.value_inr/r.volume:>6,.0f}")
-    qr = int(acc[acc.metric == "upi_qr_codes"]["count"].iloc[0])
-    pos = int(acc[acc.metric == "pos_terminals"]["count"].iloc[0])
-    print(f"   acceptance: {qr/1e6:,.0f}mn UPI QR against {pos/1e6:,.1f}mn PoS terminals "
-          f"({qr/pos:.0f}x)")
+    print(f"\n   {len(months)} month(s): {months[0]} to {months[-1]}")
+    for month in months:
+        m = pay[pay.month == month]
+        vol, val = float(m.volume.sum()), float(m.value_inr.sum())
+        a = acc[acc.month == month].set_index("metric")["count"]
+        print(f"   {month}  cards {vol/1e6:>7.1f}mn  Rs {val/1e12:>5.2f} lakh cr  "
+              f"avg Rs {val/vol:>6,.0f}  QR/PoS {a['upi_qr_codes']/a['pos_terminals']:>5.0f}x")
 
 
 if __name__ == "__main__":

@@ -37,10 +37,16 @@ def main() -> None:
     acc = load("rbi_acceptance")
     upi = load("upi_monthly")
 
-    month = str(cards.month.iloc[0])
+    months = sorted(cards.month.unique())
+    month = str(months[-1])
     row = upi[upi.month == month].iloc[0]
     upi_vol, upi_val = float(row.volume_mn) * 1e6, float(row.value_cr) * 1e7
-    card_vol, card_val = float(cards.volume.sum()), float(cards.value_inr.sum())
+    # Rule 12: the card side must be the SAME month as the UPI side. Summing every
+    # transcribed month against one month of UPI is the exact mismatched-period
+    # division this repo refuses elsewhere, and it silently triples the card rail.
+    latest_cards = cards[cards.month == month]
+    card_vol = float(latest_cards.volume.sum())
+    card_val = float(latest_cards.value_inr.sum())
     card_ticket, upi_ticket = card_val / card_vol, upi_val / upi_vol
 
     vol_x, val_x = upi_vol / card_vol, upi_val / card_val
@@ -48,8 +54,45 @@ def main() -> None:
     card_val_share = card_val / (card_val + upi_val)
     ticket_x = card_ticket / upi_ticket
 
-    metric = dict(zip(acc.metric, acc["count"].astype("int64")))
+    latest_acc = acc[acc.month == month]
+    metric = dict(zip(latest_acc.metric, latest_acc["count"].astype("int64")))
     qr, pos = metric["upi_qr_codes"], metric["pos_terminals"]
+
+    # Every month transcribed, so the headline can say whether the split is stable
+    # or whether one month happened to look that way.
+    series = []
+    for m in months:
+        cm = cards[cards.month == m]
+        um = upi[upi.month == m]
+        if not len(um):
+            continue
+        cv, cval = float(cm.volume.sum()), float(cm.value_inr.sum())
+        uv, uval = float(um.volume_mn.iloc[0]) * 1e6, float(um.value_cr.iloc[0]) * 1e7
+        am = acc[acc.month == m].set_index("metric")["count"].astype("int64")
+        series.append({
+            "month": str(m),
+            "card_value_share": round(cval / (cval + uval), 4),
+            "card_volume_share": round(cv / (cv + uv), 4),
+            "ticket_multiple": round((cval / cv) / (uval / uv), 2),
+            "qr_per_terminal": round(float(am["upi_qr_codes"]) / float(am["pos_terminals"]), 1),
+        })
+    shares = [d["card_value_share"] for d in series]
+    tickets = [d["ticket_multiple"] for d in series]
+    share_range = (max(shares) - min(shares)) * 100
+    stable = share_range < 1.0 and (max(tickets) - min(tickets)) < 0.5
+
+    write_json("chart_cards_trend", {
+        "note": "The split between the priced and the free rail, every month transcribed. "
+                "Each month is a separate hand-transcribed workbook whose own Total row "
+                "was reconciled against its bank rows before being used.",
+        "months": [d["month"] for d in series],
+        "card_value_share": shares,
+        "card_volume_share": [d["card_volume_share"] for d in series],
+        "ticket_multiple": tickets,
+        "qr_per_terminal": [d["qr_per_terminal"] for d in series],
+        "value_share_range_pp": round(share_range, 2),
+        "stable": bool(stable),
+    })
 
     write_json("chart_cards_control", {
         "note": "Two rails, one month, one country, one regulator. Cards may charge a "
@@ -82,6 +125,15 @@ def main() -> None:
     })
 
     # The claim turns on which way the ticket falls, so it is decided here.
+    stability = (
+        f"Across the {len(series)} months transcribed the card share of value moves by only "
+        f"{share_range:.1f} percentage points and the ticket multiple barely moves, so this "
+        "is a standing split rather than one month that happened to look this way."
+        if stable else
+        f"Across the {len(series)} months transcribed the card share of value moves by "
+        f"{share_range:.1f} percentage points, which is wide enough that the split should be "
+        "read as unsettled rather than structural."
+    )
     segments = ticket_x > 1.5
     verdict = (
         f"The priced rail did not lose. It **retreated to the large ticket**, where a fee is "
@@ -92,6 +144,7 @@ def main() -> None:
         "the market and the argument below does not hold."
     )
 
+    n_months, first_month = len(series), months[0]
     body = f"""
 ## The answer
 
@@ -107,7 +160,7 @@ But cards kept **{pct(card_val_share)} of the value**, which is
 {card_val_share / card_vol_share:.1f} times their share of transactions. {verdict}
 
 A merchant discount rate does not decide whether a rail survives. It decides **which
-transactions it gets**.
+transactions it gets**. {stability}
 
 ## Three supporting arguments
 
@@ -156,9 +209,10 @@ What this does not say. **It does not price the card rail.** RBI publishes no bl
 effective MDR; the ceiling differs by instrument, merchant category and ticket, so
 multiplying a statutory rate by total value would publish an estimate as a measurement,
 and this module refuses that exactly as sub-module B refuses a rate across mismatched
-periods. It is also **one month**: the segmentation claim rests on a ticket gap that is
-large and stable in kind, but a trend needs more months, and each one is a manual
-transcription. And card value here excludes transactions on cards routed over UPI, which
+periods. It rests on **{n_months} months**, {first_month} to {month}, each a separate workbook
+downloaded and transcribed by hand. That is enough to show the split is standing rather
+than incidental, and not enough to call a direction: three points do not make a trend, and
+every further month is another manual transcription. And card value here excludes transactions on cards routed over UPI, which
 RuPay credit-on-UPI makes a growing and separately unpublished category, so the boundary
 between the two rails is blurring in a direction this data cannot yet see.
 """
@@ -173,6 +227,9 @@ between the two rails is blurring in a direction this data cannot yet see.
             "NPCI monthly product statistics, for the UPI side of the same month",
         ],
     )
+    write_json("chart_cards_trend_meta", {"months": len(series)}) if False else None
+    print(f"   {len(series)} months {months[0]} to {months[-1]}, "
+          f"card value share range {share_range:.2f}pp, stable={stable}")
     print(f"   {month}: cards {card_vol/1e6:,.0f}mn / {inr(card_val)} at {inr(card_ticket)}")
     print(f"           UPI {upi_vol/1e6:,.0f}mn / {inr(upi_val)} at {inr(upi_ticket)}")
     print(f"   cards hold {pct(card_vol_share)} of transactions but {pct(card_val_share)} "

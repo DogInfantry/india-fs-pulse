@@ -22,7 +22,7 @@ But cards kept **7.6% of the value**, which is
 2.6 times their share of transactions. The priced rail did not lose. It **retreated to the large ticket**, where a fee is small enough to absorb: Rs 3,482 against Rs 1,263, 2.8 times.
 
 A merchant discount rate does not decide whether a rail survives. It decides **which
-transactions it gets**.
+transactions it gets**. Across the 3 months transcribed the card share of value moves by only 0.2 percentage points and the ticket multiple barely moves, so this is a standing split rather than one month that happened to look this way.
 
 ## Three supporting arguments
 
@@ -71,8 +71,9 @@ What this does not say. **It does not price the card rail.** RBI publishes no bl
 effective MDR; the ceiling differs by instrument, merchant category and ticket, so
 multiplying a statutory rate by total value would publish an estimate as a measurement,
 and this module refuses that exactly as sub-module B refuses a rate across mismatched
-periods. It is also **one month**: the segmentation claim rests on a ticket gap that is
-large and stable in kind, but a trend needs more months, and each one is a manual
-transcription. And card value here excludes transactions on cards routed over UPI, which
+periods. It rests on **3 months**, 2026-05 to 2026-07, each a separate workbook
+downloaded and transcribed by hand. That is enough to show the split is standing rather
+than incidental, and not enough to call a direction: three points do not make a trend, and
+every further month is another manual transcription. And card value here excludes transactions on cards routed over UPI, which
 RuPay credit-on-UPI makes a growing and separately unpublished category, so the boundary
 between the two rails is blurring in a direction this data cannot yet see.

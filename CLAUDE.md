@@ -93,7 +93,7 @@ python run.py all
 | `data-pipeline/transform/build_kpis.py` | Processed → KPI layer + `site/src/data/*.json`. Also computes the counts the site footer renders |
 | `analysis/_lib.py` | `load`, `load_json`, `write_json`, `write_memo`, `inr`, `pct` |
 | `analysis/01..13_*.py` | Thirteen modules → `insights/*.md` + chart JSON |
-| `site/src/pages/index.astro` | The whole scrollable report: 27 exhibits, 15 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
+| `site/src/pages/index.astro` | The whole scrollable report: 28 exhibits, 15 sections. Every exhibit carries a CSV download. Section letters and exhibit numbers are hand-maintained, so renumber in document order after inserting one |
 | `site/src/scripts/charts.ts` | The only client entry. Memoised `loadECharts`, IntersectionObserver mount, and it boots `scrolly.ts` |
 | `site/src/scripts/scrolly.ts` | The guided opening. Lives here so nothing is inline, which is what keeps `script-src 'self'` honest |
 | `site/src/components/charts/` | `Marimekko`, `Waterfall`, `Slopegraph`, `SmallMultiples`, `SlopeLines`, `HexCartogram`, `IndiaChoropleth`, `ValuePool` (money, hypothetical against actual), `RangeBar` (an estimate as a band) |
@@ -146,7 +146,7 @@ python run.py all
 - `python run.py report`, the memos as one `.docx` under `deliverables/` (gitignored),
   opening on the answer from `answer.json`
 - `python run.py check`, **11 invariants**, all green. Runs in CI before anything commits
-- 27 exhibits, every one carrying a CSV download; 9 hand-written SVG chart components
+- 28 exhibits, every one carrying a CSV download; 9 hand-written SVG chart components
 - Live headers verified on the production URL with `curl -I`: CSP, HSTS, nosniff,
   Referrer-Policy, Permissions-Policy, and `max-age=31536000, immutable` on `/_astro/*`
 - ECharts 5.6.0 confirmed loading in a real browser **under the CSP**, zero console errors
@@ -179,8 +179,8 @@ python run.py all
 | Everything Brazil layered on top of the free rail, six years in | **0.26% of merchant transactions**; dynamic QR is 84.1% and earns nothing |
 | Priced at the 30bps NPCI itself permits, the merchant leg would be worth | **Rs 15,450cr a year, 1.9x One97 (Paytm)'s entire revenue**; the state replaces it with Rs 3,631cr |
 | Cost of holding the subsidy rate steady, against what was appropriated | **Rs 2,681cr to Rs 3,517cr more**, a range because the published base covers ten months |
-| Cards against UPI, same month, same regulator, only cards may charge | **2.9% of transactions but 7.6% of value, at 2.8x the ticket**: a price segments a rail rather than killing it |
-| Acceptance points, UPI QR against card terminals | **803mn against 10.0mn, 80 to one** |
+| Cards against UPI, same month, same regulator, only cards may charge | **2.9% of transactions but 7.6% of value, at 2.8x the ticket**: a price segments a rail rather than killing it, and the split holds within 0.23pp across three months |
+| Acceptance points, UPI QR against card terminals | **803mn against 10.0mn, 80 to one**, up from 68 to one three months earlier |
 | Instant payments per banked adult per month, Brazil vs India | **49 vs 24**, same denominator, latest month both publish |
 
 ## Active task
@@ -190,6 +190,11 @@ the report.** The user downloaded RBI's monthly workbook by hand (the document l
 return an interstitial to a script) and it was transcribed into `data/manual/`. India
 runs cards and UPI side by side, same month, same merchants, same regulator, and **only
 cards may charge a merchant discount rate**. Everything except the price is held constant.
+
+Three months are transcribed (2026-05 to 2026-07), each workbook reconciled against its
+own bank rows before use, which is enough to show the split is **standing rather than
+incidental**: the card share of value moves within 0.23 of a percentage point across all
+three. Three points are not a trend and the memo says so.
 
 The finding is not what the rest of the report predicts: a price does not kill a rail, it
 **segments** it. Cards hold **2.9% of transactions but 7.6% of value at 2.8x the ticket**,

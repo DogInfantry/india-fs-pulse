@@ -242,30 +242,30 @@ PhonePe Pulse · 2026Q2 · 108 rows · accessed 2026-08-21
 
 ## `rbi_acceptance`
 
-Reserve Bank of India · 2026-07 to 2026-07, national totals · 5 rows · accessed 2026-09-10
+Reserve Bank of India · 2026-05 to 2026-07, national totals · 15 rows · accessed 2026-09-10
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
-| `month` | str | YYYY-MM | 2026-07 |
-| `metric` | str |  | pos_terminals |
-| `count` | int64 | transactions | 10027614 |
+| `month` | str | YYYY-MM | 2026-05 |
+| `metric` | str |  | bharat_qr_codes |
+| `count` | int64 | transactions | 5604866 |
 | `source_url` | str |  | https://www.rbi.org.in/Scrip |
 | `accessed` | str |  | 2026-09-10 |
 
 ## `rbi_card_payments`
 
-Reserve Bank of India · 2026-07 to 2026-07, national totals · 6 rows · accessed 2026-09-10
+Reserve Bank of India · 2026-05 to 2026-07, national totals · 18 rows · accessed 2026-09-10
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
-| `month` | str | YYYY-MM | 2026-07 |
+| `month` | str | YYYY-MM | 2026-05 |
 | `instrument` | str |  | credit_card |
-| `channel` | str |  | pos |
-| `volume` | int64 |  | 293733617 |
-| `value_inr` | float64 | INR | 757403699000.0 |
+| `channel` | str |  | ecom |
+| `volume` | int64 |  | 296723746 |
+| `value_inr` | float64 | INR | 1261795644000.0 |
 | `source_url` | str |  | https://www.rbi.org.in/Scrip |
 | `accessed` | str |  | 2026-09-10 |
-| `avg_ticket_inr` | float64 | INR | 2579.0 |
+| `avg_ticket_inr` | float64 | INR | 4252.0 |
 
 ## `survey_SYNTHETIC_nps`
 
