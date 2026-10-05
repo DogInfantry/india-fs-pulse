@@ -1,7 +1,7 @@
 {
   "note": "Each bar is a leg's share of its OWN country's total, so no exchange rate is involved and the two rails are directly comparable.",
   "india_period": "2026Q2",
-  "brazil_month": "2026-08",
+  "brazil_month": "2026-09",
   "rails": [
     {
       "label": "India merchant",
@@ -20,16 +20,16 @@
     {
       "label": "Brazil merchant",
       "rail": "Brazil, Pix",
-      "period": "2026-08",
-      "volume_share": 0.4664,
-      "value_share": 0.1179
+      "period": "2026-09",
+      "volume_share": 0.4645,
+      "value_share": 0.1147
     },
     {
       "label": "Brazil P2P",
       "rail": "Brazil, Pix",
-      "period": "2026-08",
-      "volume_share": 0.3947,
-      "value_share": 0.2434
+      "period": "2026-09",
+      "volume_share": 0.395,
+      "value_share": 0.2359
     }
   ]
 }

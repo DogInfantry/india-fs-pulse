@@ -1,6 +1,6 @@
 ---
 title: "Underwrite distribution economics, not transaction economics"
-generated: 2026-09-10
+generated: 2026-10-05
 generator: analysis/03_pe_diligence.py
 sources:
   - "PhonePe Pulse: merchant base and merchant GMV"

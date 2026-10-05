@@ -56,10 +56,10 @@ figures table and the machine-readable summary on this page.**
 | PhonePe and Google Pay share of national UPI volume | **45.9% / 32.3%**, both above the 30% cap | NPCI, 2026-07 |
 | Transactions that must change app for the cap to bind | **4.3 bn a month** | NPCI, 2026-07 |
 | Private against public bank margin gap | **114 bps** (59 pricing, 56 funding) | Yahoo Finance, FY2026 |
-| Five year price return, public against private banks | **+247% / +15%** median | Yahoo Finance, 2021-09-09 to 2026-09-09 |
+| Five year price return, public against private banks | **+219% / +6%** median | Yahoo Finance, 2021-10-04 to 2026-10-01 |
 | Merchant share of own transactions: most against least, material states | **Delhi 68.5% against West Bengal 56.4%** | PhonePe Pulse, 2026Q2 |
 | UPI transactions per banked adult per month | **14.9**, up from 4.0 in 2021 | World Bank Findex and NPCI, 2024 |
-| Fund schemes against distinct strategies | **14,348 to 3,370** (4.3x wrappers) | AMFI, 08-Sep-2026 |
+| Fund schemes against distinct strategies | **14,366 to 3,378** (4.3x wrappers) | AMFI, 01-Oct-2026 |
 <!-- END:KEYFIGURES -->
 
 ## Questions this repository answers
@@ -344,14 +344,14 @@ findings:
     period: FY2026
     source: Yahoo Finance fundamentals
   - metric: median five year price return, public banks
-    value: 2.4702
+    value: 2.1866
     unit: price return
-    period: 2021-09-09 to 2026-09-09
+    period: 2021-10-04 to 2026-10-01
     source: Yahoo Finance prices
   - metric: median five year price return, private banks
-    value: 0.149
+    value: 0.0563
     unit: price return
-    period: 2021-09-09 to 2026-09-09
+    period: 2021-10-04 to 2026-10-01
     source: Yahoo Finance prices
   - metric: highest merchant share of own transactions, material states
     value: Delhi 0.6851
@@ -364,9 +364,9 @@ findings:
     period: 2026Q2
     source: PhonePe Pulse
   - metric: mutual fund schemes against distinct strategies
-    value: 14348 to 3370
+    value: 14366 to 3378
     unit: count
-    period: 08-Sep-2026
+    period: 01-Oct-2026
     source: AMFI
 caveats:
   - PhonePe Pulse covers PhonePe's own transactions, not all of UPI.

@@ -1,6 +1,6 @@
 ---
 title: "A price does not kill a rail, it segments it: cards kept the large ticket and lost the volume"
-generated: 2026-09-10
+generated: 2026-10-05
 generator: analysis/13_cards_control.py
 sources:
   - "Reserve Bank of India, Bank-wise ATM/PoS/Card Statistics, national Total row: https://www.rbi.org.in/Scripts/ATMView.aspx"

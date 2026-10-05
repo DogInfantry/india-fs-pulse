@@ -417,3 +417,12 @@ month,initiation,initiation_label,volume_mn,p2b_volume_share
 2026-08,Nao disponivel,Not disclosed,0.4768,0.000139
 2026-08,QRDN,Dynamic QR,2888.3643,0.840593
 2026-08,QRES,Static QR,299.9769,0.087301
+2026-09,APDN,"Contactless, dynamic",1.7045,0.000512
+2026-09,APES,"Contactless, static",0.0055,2e-06
+2026-09,AUTO,Pix Automatico (recurring),8.4378,0.002534
+2026-09,DICT,Pix key,205.4751,0.061696
+2026-09,INIC,Payment initiator (open finance),0.0122,4e-06
+2026-09,MANU,Manual entry,24.7893,0.007443
+2026-09,Nao disponivel,Not disclosed,0.5184,0.000156
+2026-09,QRDN,Dynamic QR,2798.0207,0.840139
+2026-09,QRES,Static QR,291.4607,0.087515

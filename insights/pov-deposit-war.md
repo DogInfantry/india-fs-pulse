@@ -1,6 +1,6 @@
 ---
 title: "The private-bank margin advantage is half pricing, half funding"
-generated: 2026-09-10
+generated: 2026-10-05
 generator: analysis/02_banking_health.py
 sources:
   - "Filed annual income statements and balance sheets via yfinance"
@@ -61,8 +61,8 @@ Ownership among women reached 89.2% in 2024, from 26.5% in
 2011: on this measure the gender gap has closed, which means the remaining
 inclusion question is about use rather than about access for either group.
 
-**The market's verdict.** Over 2021-09-09 to 2026-09-09, the median private bank returned
-15% on price against 247% for the median public bank. The market has NOT paid for the margin franchise: public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
+**The market's verdict.** Over 2021-10-04 to 2026-10-01, the median private bank returned
+6% on price against 219% for the median public bank. The market has NOT paid for the margin franchise: public banks outperformed despite the thinner spread, which says the gap was already in the price. Price
 return only, dividends excluded, so this understates total return for the higher-
 yielding public cohort.
 

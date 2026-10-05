@@ -1,6 +1,6 @@
 ---
 title: "The leg that earns nothing would be worth more than the industry that runs it"
-generated: 2026-09-10
+generated: 2026-10-05
 generator: analysis/11_value_pool.py
 sources:
   - "PIB, Ministry of Finance: national UPI value split and incentive paid"

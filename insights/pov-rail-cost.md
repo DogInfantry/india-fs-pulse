@@ -1,6 +1,6 @@
 ---
 title: "Zero MDR is not zero cost: the state pays about seven basis points, and it is falling"
-generated: 2026-09-10
+generated: 2026-10-05
 generator: analysis/08_rail_cost.py
 sources:
   - "PIB, Ministry of Finance, Advancing Cashless India, 24 March 2025: https://www.pib.gov.in/PressReleasePage.aspx?PRID=2114335"

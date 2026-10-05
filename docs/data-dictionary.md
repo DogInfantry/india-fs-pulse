@@ -9,17 +9,17 @@ types and units. Units are derived from the naming convention (`_mn`, `_cr`,
 
 ## `amfi_fund_houses`
 
-Association of Mutual Funds in India (AMFI) · 08-Sep-2026 · 53 rows · accessed 2026-09-09
+Association of Mutual Funds in India (AMFI) · 01-Oct-2026 · 55 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
 | `fund_house` | str |  | ICICI Prudential Mutual Fund |
-| `schemes` | int64 |  | 2498 |
-| `asset_classes` | int64 |  | 7 |
+| `schemes` | int64 |  | 2506 |
+| `asset_classes` | int64 |  | 8 |
 
 ## `amfi_schemes`
 
-Association of Mutual Funds in India (AMFI) · 08-Sep-2026 · 14,348 rows · accessed 2026-09-09
+Association of Mutual Funds in India (AMFI) · 01-Oct-2026 · 14,366 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -27,15 +27,15 @@ Association of Mutual Funds in India (AMFI) · 08-Sep-2026 · 14,348 rows · acc
 | `scheme_name` | str |  | Axis Children's Fund |
 | `plan` | str |  | Direct Plan |
 | `option` | str |  | Growth Option |
-| `nav` | float64 |  | 30.2224 |
-| `nav_date` | str | YYYY-MM-DD | 08-Sep-2026 |
+| `nav` | float64 |  | 29.0001 |
+| `nav_date` | str | YYYY-MM-DD | 01-Oct-2026 |
 | `fund_house` | str |  | Axis Mutual Fund |
 | `category` | str |  | Open Ended Schemes(Childrenâ |
 | `asset_class` | str |  | Solution oriented |
 
 ## `bank_fundamentals`
 
-Yahoo Finance · 11 NSE tickers · 46 rows · accessed 2026-09-09
+Yahoo Finance · 11 NSE tickers · 46 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -56,19 +56,19 @@ Yahoo Finance · 11 NSE tickers · 46 rows · accessed 2026-09-09
 
 ## `bank_prices`
 
-Yahoo Finance · 11 NSE tickers · 13,589 rows · accessed 2026-09-09
+Yahoo Finance · 11 NSE tickers · 13,609 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
-| `date` | str | YYYY-MM-DD | 2021-09-09 |
+| `date` | str | YYYY-MM-DD | 2021-10-04 |
 | `ticker` | str |  | AXISBANK.NS |
 | `bank` | str |  | Axis Bank |
 | `cohort` | str |  | Private |
-| `close` | float64 |  | 786.2581787109375 |
+| `close` | float64 |  | 775.1630859375 |
 
 ## `india_rates`
 
-FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI · 1968-01 to 2026-06 · 702 rows · accessed 2026-09-09
+FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI · 1968-01 to 2026-07 · 703 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -128,7 +128,7 @@ Derived by the pipeline · 116 rows
 
 ## `pix_fraud_monthly`
 
-Banco Central do Brasil · 2022-01 to 2026-04 · 52 rows · accessed 2026-09-09
+Banco Central do Brasil · 2022-01 to 2026-04 · 52 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -144,7 +144,7 @@ Banco Central do Brasil · 2022-01 to 2026-04 · 52 rows · accessed 2026-09-09
 
 ## `pix_p2b_initiation`
 
-Banco Central do Brasil · 2020-11 to 2026-08 · 418 rows · accessed 2026-09-09
+Banco Central do Brasil · 2020-11 to 2026-09 · 427 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -156,7 +156,7 @@ Banco Central do Brasil · 2020-11 to 2026-08 · 418 rows · accessed 2026-09-09
 
 ## `pix_txn_monthly`
 
-Banco Central do Brasil · 2020-11 to 2026-08 · 682 rows · accessed 2026-09-09
+Banco Central do Brasil · 2020-11 to 2026-09 · 692 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -169,7 +169,7 @@ Banco Central do Brasil · 2020-11 to 2026-08 · 682 rows · accessed 2026-09-09
 
 ## `psp_financials`
 
-Yahoo Finance · 4 NSE tickers, FY2023 to FY2026 · 16 rows · accessed 2026-09-09
+Yahoo Finance · 4 NSE tickers, FY2023 to FY2026 · 16 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -186,7 +186,7 @@ Yahoo Finance · 4 NSE tickers, FY2023 to FY2026 · 16 rows · accessed 2026-09-
 
 ## `pulse_base_national`
 
-PhonePe Pulse · 2018Q1 to 2026Q2 · 34 rows · accessed 2026-08-21
+PhonePe Pulse · 2018Q1 to 2026Q2 · 34 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -198,7 +198,7 @@ PhonePe Pulse · 2018Q1 to 2026Q2 · 34 rows · accessed 2026-08-21
 
 ## `pulse_txn_national`
 
-PhonePe Pulse · 2018Q1 to 2026Q2 · 102 rows · accessed 2026-08-21
+PhonePe Pulse · 2018Q1 to 2026Q2 · 102 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -209,13 +209,14 @@ PhonePe Pulse · 2018Q1 to 2026Q2 · 102 rows · accessed 2026-08-21
 | `instrument` | str |  | TOTAL |
 | `count` | int64 | transactions | 47101116 |
 | `amount_inr` | float64 | INR | 147245883542.81802 |
+| `value_source` | str |  | frozen_2026-08-21 |
 | `avg_ticket_inr` | float64 | INR | 3126.165493463425 |
 | `amount_lakh_cr` | float64 | INR lakh crore | 0.147245883542818 |
 | `count_bn` | float64 | billions | 0.047101116 |
 
 ## `pulse_txn_state`
 
-PhonePe Pulse · 2018Q1 to 2026Q2 · 1,224 rows · accessed 2026-08-21
+PhonePe Pulse · 2018Q1 to 2026Q2 · 1,224 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -229,7 +230,7 @@ PhonePe Pulse · 2018Q1 to 2026Q2 · 1,224 rows · accessed 2026-08-21
 
 ## `pulse_txn_state_mix`
 
-PhonePe Pulse · 2026Q2 · 108 rows · accessed 2026-08-21
+PhonePe Pulse · 2026Q2 · 108 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -238,11 +239,12 @@ PhonePe Pulse · 2026Q2 · 108 rows · accessed 2026-08-21
 | `category` | str |  | P2P |
 | `count` | int64 | transactions | 2318395 |
 | `amount_inr` | float64 | INR | 6919716967.907633 |
+| `value_source` | str |  | frozen_2026-08-21 |
 | `avg_ticket_inr` | float64 | INR | 2984.70147145229 |
 
 ## `rbi_acceptance`
 
-Reserve Bank of India · 2026-05 to 2026-07, national totals · 15 rows · accessed 2026-09-10
+Reserve Bank of India · 2026-05 to 2026-07, national totals · 15 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -254,7 +256,7 @@ Reserve Bank of India · 2026-05 to 2026-07, national totals · 15 rows · acces
 
 ## `rbi_card_payments`
 
-Reserve Bank of India · 2026-05 to 2026-07, national totals · 18 rows · accessed 2026-09-10
+Reserve Bank of India · 2026-05 to 2026-07, national totals · 18 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -269,7 +271,7 @@ Reserve Bank of India · 2026-05 to 2026-07, national totals · 18 rows · acces
 
 ## `survey_SYNTHETIC_nps`
 
-Generated by this repository (SYNTHETIC) · 2,000 respondents x 4 episodes, seed 20260820 · 8,000 rows · accessed 2026-09-10
+Generated by this repository (SYNTHETIC) · 2,000 respondents x 4 episodes, seed 20260820 · 8,000 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -281,7 +283,7 @@ Generated by this repository (SYNTHETIC) · 2,000 respondents x 4 episodes, seed
 
 ## `upi_apps`
 
-NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 132 rows · accessed 2026-09-09
+NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 132 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -298,7 +300,7 @@ NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 132 rows · accessed 20
 
 ## `upi_apps_hhi`
 
-NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 12 rows · accessed 2026-09-09
+NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 12 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -307,7 +309,7 @@ NPCI (UPI Ecosystem Statistics) · 2023-12 to 2026-07 · 12 rows · accessed 202
 
 ## `upi_incentive`
 
-Press Information Bureau, Ministry of Finance · FY2021-22 to FY2024-25, incentive payout and national UPI value split · 4 rows · accessed 2026-09-09
+Press Information Bureau, Ministry of Finance · FY2021-22 to FY2024-25, incentive payout and national UPI value split · 4 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -330,7 +332,7 @@ Press Information Bureau, Ministry of Finance · FY2021-22 to FY2024-25, incenti
 
 ## `upi_monthly`
 
-NPCI via India Data Portal (CKAN mirror) · 2016-07 to 2026-07 · 116 rows · accessed 2026-09-09
+NPCI via India Data Portal (CKAN mirror) · 2016-07 to 2026-07 · 116 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -344,7 +346,7 @@ NPCI via India Data Portal (CKAN mirror) · 2016-07 to 2026-07 · 116 rows · ac
 
 ## `worldbank_brazil`
 
-World Bank Open Data · 1960 to 2025 · 66 rows · accessed 2026-09-09
+World Bank Open Data · 1960 to 2025 · 66 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -355,7 +357,7 @@ World Bank Open Data · 1960 to 2025 · 66 rows · accessed 2026-09-09
 
 ## `worldbank_india`
 
-World Bank Open Data · 1960 to 2025 · 66 rows · accessed 2026-09-09
+World Bank Open Data · 1960 to 2025 · 66 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
