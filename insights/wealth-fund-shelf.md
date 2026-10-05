@@ -13,10 +13,10 @@ sources:
 
 ## The answer
 
-On 01-Oct-2026 the Indian mutual fund industry listed **14,366 schemes** across
+On 01-Oct-2026 the Indian mutual fund industry listed **14,354 schemes** across
 55 fund houses. Strip the plan and option wrappers: the same fund sold as
 Direct and Regular, as Growth and IDCW, and those collapse to
-**3,378 distinct strategies**. About **76% of the apparent
+**3,375 distinct strategies**. About **76% of the apparent
 product count is packaging**, roughly 4.3 listed schemes for every real
 investment decision.
 
@@ -27,7 +27,7 @@ richer than it looks, it is four times more administered than it looks.
 ## Two supporting arguments
 
 **1. The wrapper multiple is remarkably uniform.** It holds across asset classes:
-debt lists 8,035 schemes for 1,529 strategies
+debt lists 8,023 schemes for 1,526 strategies
 (5.3x), equity 3,212 for
 849 (3.8x). This is not a few
 houses over-engineering a product line; it is the market structure that the
@@ -47,7 +47,7 @@ AUM weighting.
 ## So what
 
 - **For a distributor or platform:** the decision set to be curated is about
-  3,378, not 14,366. Interfaces that present the listed count are
+  3,375, not 14,354. Interfaces that present the listed count are
   presenting an artefact of plan structure as if it were choice.
 - **For an asset manager:** the wrapper multiple is a fixed operating cost carried
   per strategy: compliance, NAV publication, reconciliation, statements, on

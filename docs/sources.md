@@ -10,9 +10,9 @@ retains its own publisher's terms**, recorded below.
 | Dataset | Publisher | Coverage | Rows | Accessed | Licence / terms |
 |---|---|---|---|---|---|
 | `amfi_fund_houses` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 01-Oct-2026 | 55 | 2026-10-05 | AMFI terms; publicly published daily NAV file |
-| `amfi_schemes` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 01-Oct-2026 | 14,366 | 2026-10-05 | AMFI terms; publicly published daily NAV file |
+| `amfi_schemes` | [Association of Mutual Funds in India (AMFI)](https://www.amfiindia.com/spages/NAVAll.txt) | 01-Oct-2026 | 14,354 | 2026-10-05 | AMFI terms; publicly published daily NAV file |
 | `bank_fundamentals` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 46 | 2026-10-05 | Yahoo Finance terms; personal/research use |
-| `bank_prices` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 13,609 | 2026-10-05 | Yahoo Finance terms; personal/research use |
+| `bank_prices` | [Yahoo Finance](https://finance.yahoo.com/) | 11 NSE tickers | 13,610 | 2026-10-05 | Yahoo Finance terms; personal/research use |
 | `india_rates` | [FRED (Federal Reserve Bank of St. Louis), series sourced from OECD / RBI](https://fred.stlouisfed.org/series/IRSTCI01INM156N) | 1968-01 to 2026-07 | 703 | 2026-10-05 | FRED terms of use; underlying series (c) OECD. Free to redistribute with attribution. |
 | `pix_fraud_monthly` | [Banco Central do Brasil](https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix) | 2022-01 to 2026-04 | 52 | 2026-10-05 | Banco Central do Brasil open data terms |
 | `pix_p2b_initiation` | [Banco Central do Brasil](https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix) | 2020-11 to 2026-09 | 427 | 2026-10-05 | Banco Central do Brasil open data terms |

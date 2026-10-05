@@ -1,14 +1,14 @@
 {
   "nav_date": "01-Oct-2026",
-  "listed_schemes": 14366,
-  "distinct_strategies": 3378,
+  "listed_schemes": 14354,
+  "distinct_strategies": 3375,
   "fund_houses": 55,
   "caveat": "Scheme counts, not AUM. AMFI's NAV file carries no assets under management.",
   "by_asset_class": [
     {
       "asset_class": "Debt",
-      "schemes": 8035,
-      "strategies": 1529
+      "schemes": 8023,
+      "strategies": 1526
     },
     {
       "asset_class": "Equity",
@@ -89,8 +89,8 @@
     },
     {
       "fund_house": "DSP Mutual Fund",
-      "schemes": 365,
-      "strategies": 93
+      "schemes": 361,
+      "strategies": 92
     },
     {
       "fund_house": "Bandhan Mutual Fund",
@@ -98,14 +98,14 @@
       "strategies": 92
     },
     {
-      "fund_house": "Axis Mutual Fund",
-      "schemes": 415,
-      "strategies": 91
-    },
-    {
       "fund_house": "Motilal Oswal Mutual Fund",
       "schemes": 218,
       "strategies": 90
+    },
+    {
+      "fund_house": "Axis Mutual Fund",
+      "schemes": 407,
+      "strategies": 89
     }
   ]
 }

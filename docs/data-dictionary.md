@@ -19,7 +19,7 @@ Association of Mutual Funds in India (AMFI) · 01-Oct-2026 · 55 rows · accesse
 
 ## `amfi_schemes`
 
-Association of Mutual Funds in India (AMFI) · 01-Oct-2026 · 14,366 rows · accessed 2026-10-05
+Association of Mutual Funds in India (AMFI) · 01-Oct-2026 · 14,354 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
@@ -56,15 +56,15 @@ Yahoo Finance · 11 NSE tickers · 46 rows · accessed 2026-10-05
 
 ## `bank_prices`
 
-Yahoo Finance · 11 NSE tickers · 13,609 rows · accessed 2026-10-05
+Yahoo Finance · 11 NSE tickers · 13,610 rows · accessed 2026-10-05
 
 | Column | Type | Unit | Example |
 |---|---|---|---|
-| `date` | str | YYYY-MM-DD | 2021-10-04 |
+| `date` | str | YYYY-MM-DD | 2021-10-05 |
 | `ticker` | str |  | AXISBANK.NS |
 | `bank` | str |  | Axis Bank |
 | `cohort` | str |  | Private |
-| `close` | float64 |  | 775.1630859375 |
+| `close` | float64 |  | 778.745361328125 |
 
 ## `india_rates`
 

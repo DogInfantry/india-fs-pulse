@@ -4304,10 +4304,6 @@ scheme_code,scheme_name,plan,option,nav,nav_date,fund_house,category,asset_class
 145726,Tata Arbitrage Fund,Regular Plan,Monthly Reinvestment of Income Distribution cum capital withdrawal option,14.7412,01-Oct-2026,Tata Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
 145724,Tata Arbitrage Fund,Direct Plan,Growth Option,16.3798,01-Oct-2026,Tata Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
 145723,Tata Arbitrage Fund,Regular Plan,Growth Option,15.4214,01-Oct-2026,Tata Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
-153891,The Wealth Company Arbitrage Fund,Direct Plan,Growth,10.6156,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
-153893,The Wealth Company Arbitrage Fund,Direct Plan,IDCW,10.6142,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
-153892,The Wealth Company Arbitrage Fund,Regular Plan,Growth,10.5475,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
-153894,The Wealth Company Arbitrage Fund,Regular Plan,IDCW,10.5471,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
 153804,TRUSTMF ARBITRAGE FUND,Direct Plan,Growth,10.7032,01-Oct-2026,Trust Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
 153805,TRUSTMF ARBITRAGE FUND,Regular Plan,Growth,10.6111,01-Oct-2026,Trust Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
 146297,Union Arbitrage Fund,Direct Plan,Growth Option,15.6993,01-Oct-2026,Union Mutual Fund,Open Ended Schemes(Hybrid Scheme - Arbitrage Fund),Hybrid
@@ -4883,6 +4879,10 @@ scheme_code,scheme_name,plan,option,nav,nav_date,fund_house,category,asset_class
 119567,SBI Arbitrage Fund,Direct Plan,IDCW,20.9987,01-Oct-2026,SBI Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
 104457,SBI Arbitrage Fund,Regular Plan,Growth,36.3254,01-Oct-2026,SBI Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
 104458,SBI Arbitrage Fund,Regular Plan,IDCW,19.1032,01-Oct-2026,SBI Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
+153891,The Wealth Company Arbitrage Fund,Direct Plan,Growth,10.6156,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
+153893,The Wealth Company Arbitrage Fund,Direct Plan,IDCW,10.6142,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
+153892,The Wealth Company Arbitrage Fund,Regular Plan,Growth,10.5475,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
+153894,The Wealth Company Arbitrage Fund,Regular Plan,IDCW,10.5471,01-Oct-2026,The Wealth Company Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
 120795,UTI - Arbitrage Fund,Direct Plan,Growth,40.3394,01-Oct-2026,UTI Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
 120796,UTI - Arbitrage Fund,Direct Plan,IDCW,23.4964,01-Oct-2026,UTI Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
 104075,UTI - Arbitrage Fund,Regular Plan,Growth,37.6564,01-Oct-2026,UTI Mutual Fund,Open Ended Schemes(Hybrid Schemes - Arbitrage Fund),Hybrid
@@ -8088,8 +8088,8 @@ scheme_code,scheme_name,plan,option,nav,nav_date,fund_house,category,asset_class
 118550,Franklin U. S. Opportunities Equity Active Fund of Funds,Direct Plan,IDCW,103.9662,01-Oct-2026,Franklin Templeton Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
 116633,Franklin U. S. Opportunities Equity Active Fund of Funds,Regular Plan,Growth,94.6354,01-Oct-2026,Franklin Templeton Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
 116632,Franklin U. S. Opportunities Equity Active Fund of Funds,Regular Plan,IDCW,92.0353,01-Oct-2026,Franklin Templeton Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
-149180,HDFC Developed World Overseas Equity Passive FOF,,,22.074,30-Sep-2026,HDFC Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
-149181,HDFC Developed World Overseas Equity Passive FOF,,,21.572,30-Sep-2026,HDFC Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
+149180,HDFC Developed World Overseas Equity Passive FOF,,,21.844,01-Oct-2026,HDFC Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
+149181,HDFC Developed World Overseas Equity Passive FOF,,,21.347,01-Oct-2026,HDFC Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
 123654,ICICI Prudential Global Stable Equity Fund (FOF),Direct Plan,Growth,35.53,01-Oct-2026,ICICI Prudential Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
 123652,ICICI Prudential Global Stable Equity Fund (FOF),Direct Plan,IDCW,35.53,01-Oct-2026,ICICI Prudential Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
 123651,ICICI Prudential Global Stable Equity Fund (FOF),Regular Plan,Growth,32.65,01-Oct-2026,ICICI Prudential Mutual Fund,Open Ended Schemes(Other Scheme - FoF Overseas),Fund of funds
@@ -8147,7 +8147,7 @@ scheme_code,scheme_name,plan,option,nav,nav_date,fund_house,category,asset_class
 154294,HSBC Gold ETF,Direct Plan,Growth,127.9504,01-Oct-2026,HSBC Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
 113076,ICICI Prudential Gold ETF,,,125.9107,01-Oct-2026,ICICI Prudential Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
 106193,KOTAK GOLD ETF,,,122.7124,01-Oct-2026,Kotak Mahindra Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
-151961,LIC MF Gold Exchange Traded Fund,,,132.5052,01-Oct-2026,LIC Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
+151961,LIC MF Gold Exchange Traded Fund,,,132.2315,05-Oct-2026,LIC Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
 153780,Motilal Oswal Gold ETF,,,145.4137,01-Oct-2026,Motilal Oswal Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
 140088,Nippon India ETF Gold BeES,Direct Plan,,121.5196,01-Oct-2026,Nippon India Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
 107693,Quantum Gold ETF,,,121.8173,01-Oct-2026,Quantum Mutual Fund,Open Ended Schemes(Other Scheme - Gold ETF),ETF
@@ -10029,10 +10029,6 @@ scheme_code,scheme_name,plan,option,nav,nav_date,fund_house,category,asset_class
 150840,DSP FMP Series - 267 - 1172 Days,,,12.7129,13-Apr-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
 150843,DSP FMP Series - 267 - 1172 Days,,,12.9737,01-Oct-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
 150841,DSP FMP Series - 267 - 1172 Days,,,12.6654,13-Apr-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
-150885,DSP FMP Series - 268 - 1281 Days,,,12.7765,29-May-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
-150886,DSP FMP Series - 268 - 1281 Days,,,12.7755,29-May-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
-150884,DSP FMP Series - 268 - 1281 Days,,,12.7094,29-May-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
-150887,DSP FMP Series - 268 - 1281 Days,,,12.7094,29-May-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
 151449,DSP FMP Series - 270 - 1172 Days,,,12.7855,01-Oct-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
 151450,DSP FMP Series - 270 - 1172 Days,,,12.7869,01-Oct-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
 151447,DSP FMP Series - 270 - 1172 Days,,,12.7394,01-Oct-2026,DSP Mutual Fund,Close Ended Schemes(Income),Debt
@@ -14348,14 +14344,6 @@ scheme_code,scheme_name,plan,option,nav,nav_date,fund_house,category,asset_class
 121721,UTI Quarterly Interval Fund - III,,,11.1322,25-Mar-2025,UTI Mutual Fund,Close Ended Schemes(Income),Debt
 110024,UTI Quarterly Interval Fund - III,,,30.4741,25-Mar-2025,UTI Mutual Fund,Close Ended Schemes(Income),Debt
 110021,UTI Quarterly Interval Fund - III,,,11.0613,25-Mar-2025,UTI Mutual Fund,Close Ended Schemes(Income),Debt
-154240,Axis Fixed Maturity Plan - Series 129 (108 Days),Direct Plan,Growth Option,10.2078,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154243,Axis Fixed Maturity Plan - Series 129 (108 Days),Direct Plan,IDCW Option,10.2078,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154241,Axis Fixed Maturity Plan - Series 129 (108 Days),Regular Plan,Growth Option,10.2032,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154242,Axis Fixed Maturity Plan - Series 129 (108 Days),Regular Plan,IDCW Option,10.2032,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154292,Axis Fixed Maturity Plan - Series 130 (92 Days),Direct Plan,Growth Option,10.182,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154293,Axis Fixed Maturity Plan - Series 130 (92 Days),Direct Plan,IDCW Option,10.182,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154290,Axis Fixed Maturity Plan - Series 130 (92 Days),Regular Plan,Growth Option,10.1781,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
-154291,Axis Fixed Maturity Plan - Series 130 (92 Days),Regular Plan,IDCW Option,10.1781,11-Jun-2026,Axis Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
 151485,UTI Fixed Term Income Fund Series XXXVI - I (1574 Days),Direct Plan,Growth,13.0737,01-Oct-2026,UTI Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
 151484,UTI Fixed Term Income Fund Series XXXVI - I (1574 Days),Direct Plan,IDCW,12.5032,01-Oct-2026,UTI Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt
 151483,UTI Fixed Term Income Fund Series XXXVI - I (1574 Days),Regular Plan,Growth,12.8894,01-Oct-2026,UTI Mutual Fund,Close Ended Schemes(Income/Debt Oriented Schemes - Fixed Term Plan),Debt

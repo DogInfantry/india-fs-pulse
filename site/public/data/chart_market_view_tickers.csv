@@ -1,12 +1,12 @@
 ticker,bank,cohort,price_return
-AXISBANK.NS,Axis Bank,Private,0.5701
-BANKBARODA.NS,Bank of Baroda,Public,2.1866
-CANBK.NS,Canara Bank,Public,2.8398
-HDFCBANK.NS,HDFC Bank,Private,-0.028
-ICICIBANK.NS,ICICI Bank,Private,0.9459
-INDUSINDBK.NS,IndusInd Bank,Private,-0.1826
-KOTAKBANK.NS,Kotak Mahindra Bank,Private,0.0563
-PAYTM.NS,One97 (Paytm),Fintech,0.061
-PNB.NS,Punjab National Bank,Public,1.9568
-SBIN.NS,State Bank of India,Public,1.252
-UNIONBANK.NS,Union Bank of India,Public,4.3132
+AXISBANK.NS,Axis Bank,Private,0.5694
+BANKBARODA.NS,Bank of Baroda,Public,2.2525
+CANBK.NS,Canara Bank,Public,2.8946
+HDFCBANK.NS,HDFC Bank,Private,-0.0559
+ICICIBANK.NS,ICICI Bank,Private,0.9864
+INDUSINDBK.NS,IndusInd Bank,Private,-0.217
+KOTAKBANK.NS,Kotak Mahindra Bank,Private,0.0549
+PAYTM.NS,One97 (Paytm),Fintech,0.0789
+PNB.NS,Punjab National Bank,Public,2.0355
+SBIN.NS,State Bank of India,Public,1.2537
+UNIONBANK.NS,Union Bank of India,Public,4.397
