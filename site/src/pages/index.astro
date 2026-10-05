@@ -59,7 +59,8 @@ const inr = (v: number) =>
 const merchant = split.series.find((s) => s.category === 'Retail')!;
 const p2p = split.series.find((s) => s.category === 'P2P')!;
 const PERIOD = hero.period;
-const SOURCE_PULSE = `PhonePe Pulse, ${PERIOD}. PhonePe's own transactions, not all of UPI. Accessed 2026-08-20.`;
+const SOURCE_PULSE = `PhonePe Pulse, ${PERIOD}. PhonePe's own transactions, not all of UPI. Accessed 2026-08-20.`
+  + (hero.value_frozen_at ? ` Values as published at the ${hero.value_frozen_at} pull; PhonePe has since withdrawn them from its open data.` : '');
 
 /* ---- Exhibit 1 (hero): volume share against value share, by leg ---- */
 const cats = split.series.map((s) => s.category);

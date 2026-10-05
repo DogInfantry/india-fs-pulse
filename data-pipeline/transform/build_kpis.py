@@ -12,7 +12,9 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import PROCESSED, PROVENANCE, SITE_DATA, banner, expect, write_processed  # noqa: E402
+from common import (  # noqa: E402
+    FROZEN_AT, PROCESSED, PROVENANCE, SITE_DATA, banner, expect, latest_valued_period, write_processed,
+)
 
 MERCHANT = "Retail"  # PhonePe's label for merchant payments
 
@@ -28,7 +30,7 @@ def upi_monetisation() -> dict:
     merchant leg, the only monetisable one, earns zero under zero-MDR."""
     national = read("pulse_txn_national")
     base = read("pulse_base_national")
-    latest = national[national.period == national.period.max()]
+    latest = national[national.period == latest_valued_period(national)]
     total_count = float(latest["count"].sum())
     total_amount = float(latest["amount_inr"].sum())
 
@@ -45,7 +47,7 @@ def upi_monetisation() -> dict:
         })
 
     merchant = next(c for c in categories if c["category"] == MERCHANT)
-    latest_base = base[base.period == base.period.max()].iloc[0]
+    latest_base = base[base.period == latest.period.iloc[0]].iloc[0]  # same quarter as the GMV
     merchants = latest_base.get("registered_merchants")
     expect(pd.notna(merchants), "registered merchant count missing for the latest quarter")
 
@@ -53,6 +55,8 @@ def upi_monetisation() -> dict:
     return {
         "period": str(latest.period.iloc[0]),
         "source": "PhonePe Pulse (PhonePe's own transactions, not all of UPI)",
+        # Set when any hero value is the frozen pull rather than live (rule 9).
+        "value_frozen_at": FROZEN_AT if (latest.get("value_source", "live") != "live").any() else None,
         "categories": categories,
         "merchant_volume_share": merchant["volume_share"],
         "merchant_value_share": merchant["value_share"],
@@ -114,15 +118,15 @@ def state_gap() -> pd.DataFrame:
     state's OWN transactions are merchant payments: the leg zero-MDR applies to.
     """
     df = read("pulse_txn_state")
-    latest = df[df.period == df.period.max()].copy()
-    period = latest.period.max()
+    mix = read("pulse_txn_state_mix")
+    period = mix.period.max()  # the mix is pinned to the latest valued quarter; follow it
+    latest = df[df.period == period].copy()
 
     latest["volume_share"] = latest["count"] / latest["count"].sum()
     latest["value_share"] = latest["amount_inr"] / latest["amount_inr"].sum()
     national_ticket = latest["amount_inr"].sum() / latest["count"].sum()
     latest["ticket_vs_national"] = latest["avg_ticket_inr"] / national_ticket
 
-    mix = read("pulse_txn_state_mix")
     mix = mix[mix.period == period]
     expect(len(mix) > 0, f"pulse_txn_state_mix has no rows for {period}")
 

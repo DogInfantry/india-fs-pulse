@@ -137,9 +137,9 @@ python run.py all
 
 ## Current state: all green
 
-- `python run.py data`, zero secrets, **12 fetchers, 25 processed datasets**. Currently
-  **blocked at `fetch_pulse.py`** by an upstream removal; see next steps item 1. The other
-  nine fetchers and the transform run clean. The first Pix pull adds about 65s and roughly
+- `python run.py data`, zero secrets, **12 fetchers, 25 processed datasets**, green again
+  as of 2026-10-05. Two upstream breaks are absorbed by keep-last-good fallbacks, both
+  labelled: Pulse category value (frozen seed) and the Pix fraud table (see gotchas). The first Pix pull adds about 65s and roughly
   190 MB, then caches under `data/raw` for the calendar month
 - `python run.py analyze`, **13 modules**, artefacts byte-identical across consecutive runs
 - `python run.py site`, **14 pages** (index, methodology, 12 memos)
@@ -174,9 +174,9 @@ python run.py all
 | Five-year price return, public vs private banks | **+284% vs +17%** |
 | UPI transactions per banked adult per month | **14.9**, up from 4.0 in 2021 |
 | Fund schemes vs distinct strategies | **14,288 → 3,353** (4.3× wrappers) |
-| Brazil Pix merchant leg: share of transactions vs share of value | **46.6% / 11.8%**, the same shape as India's 63.9% / 23.0% |
-| Brazil's merchant leg since the rail launched | **5.2% (2020-11) → 46.6% (2026-08)** |
-| Everything Brazil layered on top of the free rail, six years in | **0.26% of merchant transactions**; dynamic QR is 84.1% and earns nothing |
+| Brazil Pix merchant leg: share of transactions vs share of value | **46.5% / 11.5%** (2026-09), the same shape as India's 63.9% / 23.0% |
+| Brazil's merchant leg since the rail launched | **5.2% (2020-11) → 46.5% (2026-09)** |
+| Everything Brazil layered on top of the free rail, six years in | **0.31% of merchant transactions**; dynamic QR is 84.0% and earns nothing |
 | Priced at the 30bps NPCI itself permits, the merchant leg would be worth | **Rs 15,450cr a year, 1.9x One97 (Paytm)'s entire revenue**; the state replaces it with Rs 3,631cr |
 | Cost of holding the subsidy rate steady, against what was appropriated | **Rs 2,681cr to Rs 3,517cr more**, a range because the published base covers ten months |
 | Cards against UPI, same month, same regulator, only cards may charge | **2.9% of transactions but 7.6% of value, at 2.8x the ticket**: a price segments a rail rather than killing it, and the split holds within 0.23pp across three months |
@@ -270,7 +270,14 @@ gone; if it matters, it has to be rebuilt.
 
 ## Next steps, in order
 
-1. **URGENT, and it blocks `python run.py data`: PhonePe Pulse has removed `amount`
+1. ~~PhonePe Pulse removed `amount`.~~ **Resolved 2026-10-05 by freezing the value side.**
+   Counts stay live; category value comes from `data/manual/pulse_*_value_frozen.csv` (the
+   2026-08-21 pull) via `common.fill_frozen_value`, marked in a `value_source` column, and
+   the page source line says so. A quarter published without value stays NaN and
+   `unpublished`; anything pairing volume with value reads `common.latest_valued_period`,
+   so the hero holds at 2026Q2 until value returns. When 2026Q3 lands, add memo wording
+   for the lag. Original note kept below.
+   **PhonePe Pulse has removed `amount`
    from the national category-split endpoint.** `aggregated/transaction/country/india/*`
    now returns `paymentInstruments[]{count, type}` with **no `amount`**, and it is gone
    across the whole history, 2018Q1 to 2026Q2, not only recent quarters. Verified
@@ -383,10 +390,16 @@ gone; if it matters, it has to be rebuilt.
 
 ### Sources
 
-- **PhonePe Pulse dropped `amount` from the national category-split endpoint**, across the
-  whole history, verified 2026-09-09. The state endpoint still has it. This is the repo's
-  primary source and it blocks `python run.py data`. See next steps item 1 before touching
-  `fetch_pulse.py`.
+- **PhonePe Pulse dropped `amount` from every category-split file**, national AND per-state,
+  across the whole history (verified 2026-09-09 and 2026-10-05). Only `map/transaction/hover`
+  keeps it, with no category split, so the value split cannot be rebuilt. Handled by the
+  frozen seeds; never `.get("amount", 0)`. Also: `latest_valued_period`, not
+  `period.max()`, for anything that divides value by volume.
+- **Olinda's Pix fraud table 500s for any query including 2026-04** (verified 2026-10-05;
+  `Database='202605'` works, `'202604'` and earlier fail with "Erro desconhecido"). The
+  table is cumulative, so no start month avoids it. `fetch_pix_brazil.py` keeps the
+  committed pull (`FRAUD_LAST_GOOD`) on an HTTP failure only, never on a `SchemaError`,
+  and says so in the provenance note. Bump `FRAUD_LAST_GOOD` when a fresh pull lands.
 - **Olinda's `Database` parameter is the EARLIEST reference month, not the publication
   vintage**, and every response runs cumulatively forward to the latest published month.
   Asking for `'202608'` returns one month, `'202011'` returns all seventy and about 190 MB.

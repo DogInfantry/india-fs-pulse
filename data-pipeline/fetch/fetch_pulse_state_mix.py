@@ -19,6 +19,10 @@ national Retail count is an independent validation, not a tautology.
 Shape verified 2026-08-21:
   aggregated/transaction/.../state/{slug} -> data.transactionData[]
                                             {name, paymentInstruments[]{type,count,amount}}
+
+Since September 2026 `amount` is gone from these files, as from the country file. The
+mix is taken for the latest period that still has category value (frozen or live), so
+volume and value shares stay one snapshot and the reconciliation below stays valid.
 """
 from __future__ import annotations
 
@@ -34,7 +38,9 @@ from common import (  # noqa: E402
     expect,
     expect_columns,
     expect_nonempty,
+    fill_frozen_value,
     get_json,
+    latest_valued_period,
     record_source,
     write_processed,
 )
@@ -58,7 +64,7 @@ def slug(state: str) -> str:
 
 
 def load_state_universe() -> tuple[list[str], str]:
-    """States and the latest period, taken from the file fetch_pulse just wrote.
+    """States and the latest VALUED period, taken from the files fetch_pulse just wrote.
 
     Deliberately not re-derived: the two must agree, so they read one source.
     """
@@ -66,7 +72,7 @@ def load_state_universe() -> tuple[list[str], str]:
     expect(path.exists(), f"missing {path.name}: fetch_pulse.py must run first")
     df = pd.read_csv(path)
     expect_columns(df, ["period", "state", "count"], "pulse_txn_state")
-    period = df.period.max()
+    period = latest_valued_period(pd.read_csv(PROCESSED / "pulse_txn_national.csv"))
     states = sorted(df[df.period == period].state.unique())
     expect(len(states) >= 30, f"expected >=30 states for {period}, got {len(states)}")
     return list(states), period
@@ -93,9 +99,10 @@ def fetch_state_mix(states: list[str], period: str) -> pd.DataFrame:
                     "state": state,
                     "category": entry["name"],
                     "count": int(inst["count"]),
-                    "amount_inr": float(inst["amount"]),
+                    "amount_inr": float(inst.get("amount", "nan")),
                 })
     df = pd.DataFrame(rows)
+    df = fill_frozen_value(df, "pulse_state_mix_value_frozen.csv", ["period", "state", "category"])
     expect_nonempty(df, "pulse state mix", minimum=90)   # 36 states x 3 categories
     df["avg_ticket_inr"] = df["amount_inr"] / df["count"].where(df["count"] > 0)
     return df.sort_values(["state", "category"]).reset_index(drop=True)
@@ -149,7 +156,9 @@ def main() -> None:
         rows=len(mix),
         licence="CDLA-Permissive-2.0 (see PhonePe/pulse repository LICENSE)",
         note="P2P / merchant / utility split within each state, from the per-state "
-             "aggregated endpoint. Reconciled against the country file. "
+             "aggregated endpoint. Reconciled against the country file. Counts live; "
+             "VALUE FROZEN at the last good pull where PhonePe has withdrawn it "
+             "(value_source column). "
              "PhonePe's own transactions, not all of UPI.",
     )
 

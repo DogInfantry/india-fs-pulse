@@ -126,6 +126,25 @@ def margins_agree_across_memos() -> None:
           "; ".join(bad) + f"  (computed: {sorted(known)})")
 
 
+def pulse_value_never_zero_filled() -> None:
+    """PhonePe withdrew category value; the frozen pull fills what it covers and a new
+    quarter must stay a gap. Run the real helper on a quarter the seed cannot know."""
+    sys.path.insert(0, str(ROOT / "data-pipeline"))
+    import pandas as pd
+    from common import fill_frozen_value
+
+    probe = pd.DataFrame({"period": ["2026Q2", "2099Q1"], "category": ["Retail", "Retail"],
+                          "count": [1, 1], "amount_inr": [float("nan")] * 2})
+    out = fill_frozen_value(probe, "pulse_national_value_frozen.csv", ["period", "category"])
+    new = out.iloc[1]
+    check("a quarter PhonePe publishes without value stays NaN, marked unpublished",
+          pd.isna(new.amount_inr) and new.value_source == "unpublished", str(new.to_dict()))
+    check("a frozen quarter is filled and marked frozen",
+          out.iloc[0].amount_inr > 0 and out.iloc[0].value_source.startswith("frozen_"))
+    nat = pd.read_csv(PROCESSED / "pulse_txn_national.csv")
+    check("no Pulse category value is a fabricated zero", not (nat.amount_inr == 0).any())
+
+
 def main() -> None:
     print("\n-- Checking what this repository claims about itself")
     rule_11()
@@ -135,6 +154,7 @@ def main() -> None:
     margins_agree_across_memos()
     provenance_is_complete()
     no_fabricated_zeros()
+    pulse_value_never_zero_filled()
     if failures:
         sys.exit(f"\n{len(failures)} invariant(s) failed:\n  " + "\n  ".join(failures))
     print("   all invariants hold")

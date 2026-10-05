@@ -114,7 +114,7 @@ def record_source(
     PROVENANCE.write_text(json.dumps(ledger, indent=2, sort_keys=True), encoding="utf-8")
 
 
-def read_seeded_csv(path: Path) -> pd.DataFrame:
+def read_seeded_csv(path: Path, **kwargs) -> pd.DataFrame:
     """Read a hand-seeded CSV whose header block is '#'-prefixed comment lines.
 
     pandas' `comment='#'` cannot be used here: it strips from the first '#'
@@ -123,7 +123,36 @@ def read_seeded_csv(path: Path) -> pd.DataFrame:
     Only whole lines that START with '#' are comments.
     """
     body = [ln for ln in path.read_text(encoding="utf-8").splitlines() if not ln.lstrip().startswith("#")]
-    return pd.read_csv(io.StringIO(chr(10).join(body)))
+    return pd.read_csv(io.StringIO(chr(10).join(body)), **kwargs)
+
+
+FROZEN_AT = "2026-08-21"
+
+
+def fill_frozen_value(df: pd.DataFrame, seed: str, keys: list[str]) -> pd.DataFrame:
+    """Fill a missing `amount_inr` from a frozen seed and say where each value came from.
+
+    PhonePe stopped publishing category value (see the seed headers). A missing amount
+    is filled from the last good pull when one exists, and stays NaN when not: never 0,
+    which would fabricate a quarter in which nobody paid anyone (rule 1).
+    """
+    frozen = read_seeded_csv(MANUAL / seed, float_precision="round_trip")
+    expect(not frozen.duplicated(keys).any(), f"{seed}: duplicate keys")
+    out =df.merge(frozen.rename(columns={"amount_inr": "_frozen"}), on=keys, how="left")
+    live = out["amount_inr"].notna()
+    out["value_source"] = "unpublished"
+    out.loc[out["_frozen"].notna(), "value_source"] = f"frozen_{FROZEN_AT}"
+    out.loc[live, "value_source"] = "live"
+    out["amount_inr"] = out["amount_inr"].where(live, out["_frozen"])
+    return out.drop(columns="_frozen")
+
+
+def latest_valued_period(df: pd.DataFrame) -> str:
+    """The latest period in which every row carries a value. Anything that pairs volume
+    with value reads this, not `period.max()`, so the two never span two periods."""
+    valued = df.groupby("period")["amount_inr"].apply(lambda s: s.notna().all())
+    expect(bool(valued.any()), "no period carries transaction value")
+    return str(valued[valued].index.max())
 
 
 def banner(title: str) -> None:

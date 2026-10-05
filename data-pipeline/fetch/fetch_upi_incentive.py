@@ -31,7 +31,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import (  # noqa: E402
-    MANUAL, PROCESSED, banner, expect, expect_columns, expect_nonempty,
+    MANUAL, PROCESSED, banner, expect, expect_columns, expect_nonempty, latest_valued_period,
     read_seeded_csv, record_source, today, write_processed,
 )
 
@@ -97,7 +97,7 @@ def main() -> None:
     pulse_path = PROCESSED / "pulse_txn_national.csv"
     if pulse_path.exists():
         pulse = pd.read_csv(pulse_path)
-        latest = pulse[pulse.period == pulse.period.max()]
+        latest = pulse[pulse.period == latest_valued_period(pulse)]
         pulse_share = float(
             latest[latest.category == "Retail"].amount_inr.sum() / latest.amount_inr.sum())
         national_share = float(val.p2m_lakh_cr.iloc[-1] / val.total_lakh_cr.iloc[-1])

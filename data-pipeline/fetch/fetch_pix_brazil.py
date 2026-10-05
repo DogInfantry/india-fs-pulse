@@ -56,7 +56,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import (  # noqa: E402
-    RAW, banner, expect, expect_columns, expect_nonempty, get_json,
+    PROCESSED, RAW, SchemaError, banner, expect, expect_columns, expect_nonempty, get_json,
     record_source, write_processed,
 )
 
@@ -67,6 +67,9 @@ LANDING = "https://www.bcb.gov.br/estabilidadefinanceira/estatisticaspix"
 
 PIX_LAUNCH = "202011"      # Pix went live 16 November 2020; the series starts there
 FRAUD_START = "202201"     # the fraud table starts two years after the rail did
+# ponytail: date of the committed fraud pull, used only when Olinda fails. Bump it when a
+# fresh pull is committed; a stitched live tail is the upgrade if an outage outlasts a quarter.
+FRAUD_LAST_GOOD = "2026-09-09"
 
 # A short body parses fine and yields a plausible-looking frame, which is the
 # dangerous failure. Seventy months of this cross-tab run past 700,000 rows, so
@@ -285,7 +288,19 @@ def main() -> None:
     initiation = build_initiation(df)
 
     banner("Banco Central do Brasil: Pix fraud statistics")
-    fraud = load_fraud()
+    fallback = ""
+    try:
+        fraud = load_fraud()
+    except SchemaError:
+        raise                  # a changed shape is a real failure, never papered over
+    except RuntimeError as exc:
+        # Olinda answers 500 for any query that includes a broken month (2026-04 since
+        # October 2026), and the table is cumulative, so no start date avoids it.
+        fraud = pd.read_csv(PROCESSED / "pix_fraud_monthly.csv", float_precision="round_trip")
+        fallback = (f"Olinda failed on the last run ({str(exc).splitlines()[-1].strip()}), so "
+                    f"this is the last good pull of {FRAUD_LAST_GOOD}, unchanged. ")
+        print(f"   note: fraud pull failed; keeping the {FRAUD_LAST_GOOD} pull "
+              f"({fraud.month.min()} to {fraud.month.max()})")
 
     write_processed(monthly, "pix_txn_monthly")
     write_processed(initiation, "pix_p2b_initiation")
@@ -326,7 +341,7 @@ def main() -> None:
         coverage=f"{fraud.month.min()} to {fraud.month.max()}",
         rows=len(fraud),
         licence="Banco Central do Brasil open data terms",
-        note=f"STALE relative to the transaction series: fraud stops at {fraud.month.max()} "
+        note=f"{fallback}STALE relative to the transaction series: fraud stops at {fraud.month.max()} "
              f"while transactions run to {monthly.month.max()}. Disputed volume, accepted "
              "disputes per 100,000 transactions, and the share of disputed value returned "
              "through the special return mechanism. No Indian equivalent is published in "

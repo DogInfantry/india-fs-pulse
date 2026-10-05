@@ -1,0 +1,120 @@
+# PhonePe Pulse per-state category split: transaction VALUE (amount_inr), frozen.
+#
+# WHY THIS FILE EXISTS: PhonePe removed `amount` from its aggregated/transaction
+# category files, national and per-state, across the whole history (2018Q1 onward).
+# Verified 2026-09-09 and again 2026-10-05. Counts are still published and still
+# fetched live; only the value side is frozen here.
+#
+# These rows are the last good pull, 2026-08-21 (commit 04f7e03), copied verbatim from
+# data-pipeline/data/processed/pulse_txn_state_mix.csv. common.fill_frozen_value() uses them only where the
+# live API returns no amount; if PhonePe restores the field, live wins.
+# Do not edit by hand. Source: https://github.com/PhonePe/pulse (CDLA-Permissive-2.0).
+period,state,category,amount_inr
+2026Q2,andaman & nicobar islands,P2P,6919716967.907633
+2026Q2,andaman & nicobar islands,Retail,3057475220.283496
+2026Q2,andaman & nicobar islands,Utility,465102854.636179
+2026Q2,andhra pradesh,P2P,3493292328363.7217
+2026Q2,andhra pradesh,Retail,874378874522.2871
+2026Q2,andhra pradesh,Utility,256026172035.94608
+2026Q2,arunachal pradesh,P2P,32170896129.349693
+2026Q2,arunachal pradesh,Retail,13992245529.04863
+2026Q2,arunachal pradesh,Utility,1331805822.9586844
+2026Q2,assam,P2P,365913888391.6631
+2026Q2,assam,Retail,129968718141.15704
+2026Q2,assam,Utility,23813472820.048767
+2026Q2,bihar,P2P,1942426119648.5984
+2026Q2,bihar,Retail,614969202086.779
+2026Q2,bihar,Utility,120745993670.78491
+2026Q2,chandigarh,P2P,15289686888.9889
+2026Q2,chandigarh,Retail,8132749166.987701
+2026Q2,chandigarh,Utility,1810855672.715648
+2026Q2,chhattisgarh,P2P,449961160989.97925
+2026Q2,chhattisgarh,Retail,191348370115.37585
+2026Q2,chhattisgarh,Utility,37091821355.91428
+2026Q2,dadra & nagar haveli & daman & diu,P2P,17760169467.527782
+2026Q2,dadra & nagar haveli & daman & diu,Retail,7135173536.138385
+2026Q2,dadra & nagar haveli & daman & diu,Utility,1657169648.0755792
+2026Q2,delhi,P2P,788970305372.6831
+2026Q2,delhi,Retail,297272270584.85706
+2026Q2,delhi,Utility,90318390519.361
+2026Q2,goa,P2P,45463068165.06054
+2026Q2,goa,Retail,20474518612.544815
+2026Q2,goa,Utility,3152221526.6400623
+2026Q2,gujarat,P2P,875847066384.0886
+2026Q2,gujarat,Retail,330648008438.8225
+2026Q2,gujarat,Utility,91193812865.43333
+2026Q2,haryana,P2P,851905761320.7651
+2026Q2,haryana,Retail,317501866545.9623
+2026Q2,haryana,Utility,94101050589.26193
+2026Q2,himachal pradesh,P2P,53132098062.76816
+2026Q2,himachal pradesh,Retail,24236863923.83679
+2026Q2,himachal pradesh,Utility,4699185083.220638
+2026Q2,jammu & kashmir,P2P,136514820551.84973
+2026Q2,jammu & kashmir,Retail,56421934928.14691
+2026Q2,jammu & kashmir,Utility,10091624645.520313
+2026Q2,jharkhand,P2P,639889155309.756
+2026Q2,jharkhand,Retail,226807152906.54874
+2026Q2,jharkhand,Utility,42276384216.81342
+2026Q2,karnataka,P2P,3780873849393.4824
+2026Q2,karnataka,Retail,1240271500893.2163
+2026Q2,karnataka,Utility,271195872467.55438
+2026Q2,kerala,P2P,216436499434.24576
+2026Q2,kerala,Retail,97286373064.12253
+2026Q2,kerala,Utility,21778619728.887638
+2026Q2,ladakh,P2P,11206998816.681328
+2026Q2,ladakh,Retail,3551684896.1172237
+2026Q2,ladakh,Utility,701603489.3841361
+2026Q2,lakshadweep,P2P,259453266.16378194
+2026Q2,lakshadweep,Retail,94144139.47207405
+2026Q2,lakshadweep,Utility,16980108.095038954
+2026Q2,madhya pradesh,P2P,1816270501215.9336
+2026Q2,madhya pradesh,Retail,598148260036.9344
+2026Q2,madhya pradesh,Utility,153957311924.0763
+2026Q2,maharashtra,P2P,3876458808788.0957
+2026Q2,maharashtra,Retail,1300349527402.3584
+2026Q2,maharashtra,Utility,288368216966.1335
+2026Q2,manipur,P2P,13303508278.268917
+2026Q2,manipur,Retail,3030830762.1624036
+2026Q2,manipur,Utility,644820199.395371
+2026Q2,meghalaya,P2P,17600789826.168114
+2026Q2,meghalaya,Retail,5720028376.281585
+2026Q2,meghalaya,Utility,1012892306.1801142
+2026Q2,mizoram,P2P,4658296203.56402
+2026Q2,mizoram,Retail,1222652962.4773166
+2026Q2,mizoram,Utility,197070347.22302598
+2026Q2,nagaland,P2P,12075582731.657005
+2026Q2,nagaland,Retail,3742442924.3336344
+2026Q2,nagaland,Utility,553278648.89936
+2026Q2,odisha,P2P,1199263266291.0273
+2026Q2,odisha,Retail,382712112055.28827
+2026Q2,odisha,Utility,84336761052.10901
+2026Q2,puducherry,P2P,15713366972.603334
+2026Q2,puducherry,Retail,6564405219.616926
+2026Q2,puducherry,Utility,1629907939.4616244
+2026Q2,punjab,P2P,244675165175.23608
+2026Q2,punjab,Retail,98137725177.93954
+2026Q2,punjab,Utility,26816844333.664066
+2026Q2,rajasthan,P2P,2258793597210.0557
+2026Q2,rajasthan,Retail,737008735503.4113
+2026Q2,rajasthan,Utility,193710479556.99695
+2026Q2,sikkim,P2P,11879485154.353392
+2026Q2,sikkim,Retail,5639655887.7434435
+2026Q2,sikkim,Utility,735492408.3597246
+2026Q2,tamil nadu,P2P,937916167838.1294
+2026Q2,tamil nadu,Retail,284788943434.0261
+2026Q2,tamil nadu,Utility,93999283994.46033
+2026Q2,telangana,P2P,3802953114082.1084
+2026Q2,telangana,Retail,1012378680044.0645
+2026Q2,telangana,Utility,312713949965.91516
+2026Q2,tripura,P2P,17723168398.892212
+2026Q2,tripura,Retail,7413864418.371696
+2026Q2,tripura,Utility,1606077513.4726696
+2026Q2,uttar pradesh,P2P,2690239782810.8555
+2026Q2,uttar pradesh,Retail,1005488472749.8022
+2026Q2,uttar pradesh,Utility,242977206013.3307
+2026Q2,uttarakhand,P2P,167693683641.83484
+2026Q2,uttarakhand,Retail,71763489371.60446
+2026Q2,uttarakhand,Utility,15777429763.077404
+2026Q2,west bengal,P2P,1577573871700.4841
+2026Q2,west bengal,Retail,502117923105.22217
+2026Q2,west bengal,Utility,132146318894.60046

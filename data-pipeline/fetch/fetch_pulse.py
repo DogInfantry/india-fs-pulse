@@ -14,6 +14,10 @@ Shapes verified 2026-08-20:
   aggregated/user        -> data.aggregated.registeredCount
   aggregated/merchant    -> data.aggregated.registeredCount
   map/transaction/hover  -> data.hoverDataList[]{name, metric[]{type,count,amount}}
+
+Since September 2026 aggregated/transaction carries no `amount`, for any period. Counts
+stay live; category value is frozen at the last good pull and marked in `value_source`
+(see data/manual/pulse_national_value_frozen.csv). The hover file still has `amount`.
 """
 from __future__ import annotations
 
@@ -27,9 +31,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import (  # noqa: E402
     banner,
     expect,
+    FROZEN_AT,
     expect_columns,
     expect_nonempty,
+    fill_frozen_value,
     get_json,
+    latest_valued_period,
     record_source,
     write_processed,
 )
@@ -66,11 +73,12 @@ def fetch_national_transactions() -> pd.DataFrame:
                     "category": entry["name"],
                     "instrument": inst.get("type", "TOTAL"),
                     "count": int(inst["count"]),
-                    "amount_inr": float(inst["amount"]),
+                    "amount_inr": float(inst.get("amount", "nan")),
                 })
     df = pd.DataFrame(rows)
     expect_nonempty(df, "pulse national transactions", minimum=100)
     expect_columns(df, ["period", "category", "count", "amount_inr"], "pulse national")
+    df = fill_frozen_value(df, "pulse_national_value_frozen.csv", ["period", "category"])
     df["avg_ticket_inr"] = df["amount_inr"] / df["count"].where(df["count"] > 0)
     df["amount_lakh_cr"] = df["amount_inr"] / 1e12  # 1 lakh crore = 1e5 * 1e7 = 1e12
     df["count_bn"] = df["count"] / 1e9
@@ -134,7 +142,7 @@ def fetch_base() -> pd.DataFrame:
 def sanity_check(national: pd.DataFrame, base: pd.DataFrame) -> None:
     """Fail loud if the numbers stop making sense. A silently wrong chart is worse
     than a broken build."""
-    latest = national[national.period == national.period.max()]
+    latest = national[national.period == latest_valued_period(national)]
     total_count = latest["count"].sum()
     total_amount = latest["amount_inr"].sum()
     expect(total_count > 0 and total_amount > 0, "latest quarter has no volume")
@@ -179,7 +187,10 @@ def main() -> None:
 
     coverage = f"{national.period.min()} to {national.period.max()}"
     entries = [
-        ("pulse_txn_national", national, "P2P / Retail (merchant) / Utility split"),
+        ("pulse_txn_national", national,
+         "P2P / Retail (merchant) / Utility split. Counts live; VALUE FROZEN at the "
+         f"{FROZEN_AT} pull to {latest_valued_period(national)}, because PhonePe has since "
+         "withdrawn it from this endpoint (value_source column)"),
         ("pulse_txn_state", state, "State-level transaction count and value"),
         ("pulse_base_national", base, "Registered users and registered merchants"),
     ]
